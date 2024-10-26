@@ -1,0 +1,4 @@
+11:02:01.378 [main] INFO  c.m.p.SpringBootStarterPearApplicationTests - Starting SpringBootStarterPearApplicationTests using Java 21.0.2 with PID 700 (started by 11595 in D:\LocalGit\pear\spring-boot-starter-pear)
+11:02:01.381 [main] INFO  c.m.p.SpringBootStarterPearApplicationTests - No active profile set, falling back to 1 default profile: "default"
+11:02:02.248 [main] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[cn.muzisheng.pear]' package. Please check your configuration.
+11:02:03.345 [main] INFO  c.m.p.SpringBootStarterPearApplicationTests - Started SpringBootStarterPearApplicationTests in 2.43 seconds (process running for 3.918)
