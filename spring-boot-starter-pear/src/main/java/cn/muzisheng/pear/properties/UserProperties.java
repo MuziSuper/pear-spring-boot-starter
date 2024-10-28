@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties("app.user.password.salt")
 public class UserProperties {
-    private String salt;
+    public String salt;
     @PostConstruct
     public void validate() {
         if(salt==null|| salt.isEmpty()){

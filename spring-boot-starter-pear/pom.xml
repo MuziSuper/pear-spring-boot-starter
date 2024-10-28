@@ -76,6 +76,12 @@
 			<version>3.5.7</version>
 			<optional>true</optional>
 		</dependency>
+		<!-- 进制转换  -->
+		<dependency>
+			<groupId>org.netbeans.external</groupId>
+			<artifactId>org-apache-commons-codec</artifactId>
+			<version>RELEASE230</version>
+		</dependency>
 		<!-- mysql数据库 -->
 		<dependency>
 			<groupId>mysql</groupId>

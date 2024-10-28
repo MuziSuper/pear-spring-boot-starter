@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties("app.log")
 public class LogProperties {
-    private String level;
-    private String filePath;
-    private String filePattern;
-    private String stdoutPattern;
+    public String level;
+    public String filePath;
+    public String filePattern;
+    public String stdoutPattern;
     @PostConstruct
     public void validate() {
         if(level!=null){
