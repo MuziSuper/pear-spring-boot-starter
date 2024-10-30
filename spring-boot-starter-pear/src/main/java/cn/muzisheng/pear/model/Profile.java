@@ -1,4 +1,4 @@
-package cn.muzisheng.pear.entity;
+package cn.muzisheng.pear.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

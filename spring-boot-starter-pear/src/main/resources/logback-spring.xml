@@ -9,6 +9,7 @@
     <!-- 控制台日志 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="UTF-8">
+            <charset>UTF-8</charset>
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -30,6 +31,7 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder charset="UTF-8">
+            <charset>UTF-8</charset>
             <pattern>${LOG_FILE_PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -50,6 +52,7 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder charset="UTF-8">
+            <charset>UTF-8</charset>
             <pattern>${LOG_FILE_PATTERN}</pattern>
         </encoder>
     </appender>
@@ -66,6 +69,7 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder charset="UTF-8">
+            <charset>UTF-8</charset>
             <pattern>${LOG_FILE_PATTERN}</pattern>
         </encoder>
     </appender>

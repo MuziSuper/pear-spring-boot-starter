@@ -1,4 +1,8 @@
-11:02:01.378 [main] INFO  c.m.p.SpringBootStarterPearApplicationTests - Starting SpringBootStarterPearApplicationTests using Java 21.0.2 with PID 700 (started by 11595 in D:\LocalGit\pear\spring-boot-starter-pear)
-11:02:01.381 [main] INFO  c.m.p.SpringBootStarterPearApplicationTests - No active profile set, falling back to 1 default profile: "default"
-11:02:02.248 [main] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[cn.muzisheng.pear]' package. Please check your configuration.
-11:02:03.345 [main] INFO  c.m.p.SpringBootStarterPearApplicationTests - Started SpringBootStarterPearApplicationTests in 2.43 seconds (process running for 3.918)
+17:37:12.706 [main] INFO  c.m.p.SpringBootStarterPearApplicationTests - Starting SpringBootStarterPearApplicationTests using Java 21.0.2 with PID 204 (started by 11595 in D:\LocalGit\pear\spring-boot-starter-pear)
+17:37:12.708 [main] INFO  c.m.p.SpringBootStarterPearApplicationTests - No active profile set, falling back to 1 default profile: "default"
+17:37:13.733 [main] WARN  c.b.m.core.metadata.TableInfoHelper - This primary key of "ID" is primitive !不建议如此请使用包装类 in Class: "cn.muzisheng.pear.entity.User"
+17:37:14.419 [main] INFO  c.m.p.SpringBootStarterPearApplicationTests - Started SpringBootStarterPearApplicationTests in 2.088 seconds (process running for 3.62)
+21:49:21.363 [main] INFO  c.m.p.SpringBootStarterPearApplicationTests - Starting SpringBootStarterPearApplicationTests using Java 21.0.2 with PID 4436 (started by 11595 in D:\LocalGit\pear\spring-boot-starter-pear)
+21:49:21.364 [main] INFO  c.m.p.SpringBootStarterPearApplicationTests - No active profile set, falling back to 1 default profile: "default"
+21:49:22.398 [main] WARN  c.b.m.core.metadata.TableInfoHelper - This primary key of "ID" is primitive !不建议如此请使用包装类 in Class: "cn.muzisheng.pear.entity.User"
+21:49:23.136 [main] INFO  c.m.p.SpringBootStarterPearApplicationTests - Started SpringBootStarterPearApplicationTests in 2.122 seconds (process running for 3.115)

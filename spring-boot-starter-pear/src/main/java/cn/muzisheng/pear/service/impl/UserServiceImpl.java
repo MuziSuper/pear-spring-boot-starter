@@ -7,6 +7,7 @@ import cn.muzisheng.pear.properties.UserProperties;
 import cn.muzisheng.pear.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,10 +33,39 @@ public class UserServiceImpl implements UserService {
         int rowsAffected = userMapper.update(user, updateWrapper);
 
         if (rowsAffected > 0) {
-            return "密码更新成功";
+            return "The password was updated successfully";
         } else {
-            return "密码更新失败";
+            return "Password update failed";
         }
+    }
+    @Override
+    public User getUserByEmail(String email) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("email", email);
+        return userMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public User createUserByEmail(String email, String password) {
+        User user = new User(email, HashPassword(password));
+        user.setActivated(true);
+        user.setActivated(false);
+        BaseMapper<User> baseMapper = userMapper;
+        int rowsAffected =baseMapper.insert(user);
+        if(rowsAffected>0){
+            return user;
+        }else{
+            return null;
+        }
+    }
+    @Override
+    public boolean save(User user){
+        BaseMapper<User> baseMapper = userMapper;
+        int rowsAffected =baseMapper.updateById(user);
+        if (rowsAffected>0){
+            return true;
+        }
+        return false;
     }
 
     private String HashPassword(String password) {

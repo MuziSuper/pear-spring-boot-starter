@@ -1,5 +1,7 @@
 package cn.muzisheng.pear.entity;
 
+import cn.muzisheng.pear.model.Profile;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class User {
     // 主键
+    @TableId
     private int ID;
     // 创建时间
     private Date gmtCreated;

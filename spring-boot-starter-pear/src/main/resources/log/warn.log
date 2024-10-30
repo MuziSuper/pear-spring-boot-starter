@@ -1,1 +1,2 @@
-11:02:02.248 [main] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[cn.muzisheng.pear]' package. Please check your configuration.
+17:37:13.733 [main] WARN  c.b.m.core.metadata.TableInfoHelper - This primary key of "ID" is primitive !不建议如此请使用包装类 in Class: "cn.muzisheng.pear.entity.User"
+21:49:22.398 [main] WARN  c.b.m.core.metadata.TableInfoHelper - This primary key of "ID" is primitive !不建议如此请使用包装类 in Class: "cn.muzisheng.pear.entity.User"
