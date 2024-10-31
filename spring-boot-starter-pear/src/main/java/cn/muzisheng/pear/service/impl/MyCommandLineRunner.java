@@ -1,5 +1,6 @@
 package cn.muzisheng.pear.service.impl;
 
+import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.service.LogService;
 import cn.muzisheng.pear.service.UserService;
@@ -7,6 +8,9 @@ import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Component
@@ -19,11 +23,15 @@ public class MyCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Options options = new Options();
-        options.addOption("u", "superuser", true, "username");
-        options.addOption("p", "password", true, "user password");
-        options.addOption("h", "help", false, "Help Information");
-        options.addOption("d", "driver", true, "database driven");
-        options.addOption("m", "memory", true, "sqlite is memory-enabled");
+        List<Option> optionList=new ArrayList<>();
+        optionList.add(new Option("u", "superuser", true, "username"));
+        optionList.add(new Option("p", "password", true, "user password"));
+        optionList.add(new Option("h", "help", false, "help Information"));
+        optionList.add(new Option("d", "driver", true, "database driven"));
+        optionList.add(new Option("m", "memory", true, "sqlite is memory-enabled"));
+        for(Option option:optionList){
+            options.addOption(option);
+        }
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd;
 
@@ -33,10 +41,9 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
             // 打印帮助信息
             if (cmd.hasOption("h")) {
-                Option[] optionsList =cmd.getOptions();
-                logService.info("longOpt\thasArg\tdescription");
-                for (Option option : optionsList) {
-                    logService.info("-"+option.getLongOpt()+"\t"+option.hasArg()+"\t"+option.getDescription());
+                logService.info(String.format("%-15s %-15s%-15s %-15s", Constant.HELP_OPTION,Constant.HELP_LONG_OPTION,Constant.HELP_ARGUMENTS,Constant.HELP_DESCRIPTION));
+                for (Option option : optionList) {
+                    logService.info(String.format("-%-15s %-15s %-15s %-15s",option.getOpt(),option.getLongOpt(),option.getArgs()==1,option.getDescription()));
                 }
                 System.exit(1);
             }
@@ -51,11 +58,11 @@ public class MyCommandLineRunner implements CommandLineRunner {
                 User user=userService.getUserByEmail(email);
                 if(user!=null){
                      userService.setPassword(user,password);
-                     logService.warn(email+" 超级用户更新密码");
+                     logService.warn(email+" superuser updates passwords");
                 }else{
                     user=userService.createUserByEmail(email,password);
                     if(user==null){
-                        logService.error("创建用户失败");
+                        logService.error("failed to create a user");
                         System.exit(1);
                     }
                 }
@@ -64,7 +71,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
                 user.setActivated(true);
                 user.setEnabled(true);
                 userService.save(user);
-                logService.warn("创建超级用户: "+email);
+                logService.warn("create a super administrator: "+email);
                 System.exit(1);
             }
 

@@ -2,7 +2,7 @@
 <configuration debug="false">
 
     <springProperty scope="context" name="LOG_LEVEL" source="app.log.level" defaultValue="INFO"/>
-    <springProperty scope="context" name="LOG_PATTERN" source="app.log.stdoutPattern" defaultValue="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %-17black(%thread) %-82green(%logger{70}-%line\_行) %highlight(%msg){black} %highlight(%ex){red} %n"/>
+    <springProperty scope="context" name="LOG_PATTERN" source="app.log.stdoutPattern" defaultValue="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %-17black(%thread) %-82green(%logger{70}-%line) %highlight(%msg){black} %highlight(%ex){red} \n"/>
     <springProperty scope="context" name="LOG_FILE_PATTERN" source="app.log.filePattern" defaultValue="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
     <springProperty scope="context" name="LOG_FILE_PATH" source="app.log.filePath" defaultValue="src/main/resources/log"/>
 

@@ -1,21 +1,27 @@
 package cn.muzisheng.pear.entity;
 
 import cn.muzisheng.pear.model.Profile;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.mapping.Map;
 
 import java.util.Date;
-@TableName("user")
+
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
     // 主键
-    @TableId
-    private int ID;
+    @Id
+    private Integer ID;
     // 创建时间
     private Date gmtCreated;
     // 更新时间
@@ -51,7 +57,7 @@ public class User {
     // 时区
     private String timezone;
     // 用户信息
-    private Profile profile;
+    private Map profile;
     // 用户认证令牌
     private String token;
     public User(String username, String password){
