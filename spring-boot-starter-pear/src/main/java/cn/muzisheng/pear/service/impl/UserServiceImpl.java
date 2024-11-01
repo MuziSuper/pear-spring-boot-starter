@@ -62,10 +62,7 @@ public class UserServiceImpl implements UserService {
     public boolean save(User user){
         BaseMapper<User> baseMapper = userMapper;
         int rowsAffected =baseMapper.updateById(user);
-        if (rowsAffected>0){
-            return true;
-        }
-        return false;
+        return rowsAffected > 0;
     }
 
     private String HashPassword(String password) {

@@ -1,4 +1,4 @@
-package cn.muzisheng.pear.service.impl;
+package cn.muzisheng.pear.command;
 
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.entity.User;
