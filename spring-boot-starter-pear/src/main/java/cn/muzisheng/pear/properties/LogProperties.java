@@ -1,5 +1,6 @@
 package cn.muzisheng.pear.properties;
 
+import cn.muzisheng.pear.params.LogLevel;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -24,14 +25,4 @@ public class LogProperties {
         }
     }
 
-    public enum LogLevel {
-        TRACE("TRACE"),
-        DEBUG("DEBUG"),
-        INFO("INFO"),
-        WARN("WARN"),
-        ERROR("ERROR");
-
-        LogLevel(String value) {
-        }
-    }
 }

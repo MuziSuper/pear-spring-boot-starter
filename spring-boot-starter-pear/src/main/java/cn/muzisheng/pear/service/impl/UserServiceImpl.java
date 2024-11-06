@@ -1,10 +1,13 @@
 package cn.muzisheng.pear.service.impl;
 
-import cn.muzisheng.pear.Exception.ScaleException;
+import cn.muzisheng.pear.exception.IllegalException;
+import cn.muzisheng.pear.exception.ScaleException;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.mapper.UserMapper;
+import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.properties.UserProperties;
 import cn.muzisheng.pear.service.UserService;
+import cn.muzisheng.pear.utils.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -23,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private UserProperties userProperties;
 
     @Override
-    public String setPassword(User user, String password) {
+    public boolean setPassword(User user, String password) {
         String newPassword = HashPassword(password);
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         // 设置新的密码
@@ -32,11 +35,7 @@ public class UserServiceImpl implements UserService {
         // 执行更新操作
         int rowsAffected = userMapper.update(user, updateWrapper);
 
-        if (rowsAffected > 0) {
-            return "The password was updated successfully";
-        } else {
-            return "Password update failed";
-        }
+        return rowsAffected > 0;
     }
     @Override
     public User getUserByEmail(String email) {
@@ -46,23 +45,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUserByEmail(String email, String password) {
+    public User createUser(String email, String password) {
         User user = new User(email, HashPassword(password));
-        user.setActivated(true);
         user.setActivated(false);
-        BaseMapper<User> baseMapper = userMapper;
-        int rowsAffected =baseMapper.insert(user);
-        if(rowsAffected>0){
+        user.setEnabled(true);
+        if(userMapper.insert(user)>0){
             return user;
-        }else{
+        }else {
             return null;
         }
     }
+
     @Override
     public boolean save(User user){
         BaseMapper<User> baseMapper = userMapper;
         int rowsAffected =baseMapper.updateById(user);
         return rowsAffected > 0;
+    }
+
+    @Override
+    public Result<Object> register(RegisterUserForm registerUserForm) {
+        Result<Object> result = new Result<>();
+        if(registerUserForm==null){
+            throw new IllegalException();
+        }
+        if(isExistsByEmail(registerUserForm.getEmail())){
+            result.setMessage("Email has exists");
+            return result;
+        }
+        User user=createUser(registerUserForm.getEmail(),registerUserForm.getPassword());
+    }
+
+    @Override
+    public boolean isExistsByEmail(String email) {
+        return getUserByEmail(email)==null;
     }
 
     private String HashPassword(String password) {
@@ -74,14 +90,14 @@ public class UserServiceImpl implements UserService {
             byte[] digest=md5.digest((userProperties.salt + password).getBytes());
             return bytesToHex(digest);
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+            throw new ScaleException("The password encryption algorithm is not supported",e);
         }
     }
     public static String bytesToHex(byte[] bytes) {
         try {
             return Hex.encodeHexString(bytes);
         } catch (Exception e) {
-            throw new ScaleException("Error encoding bytes to hex string", e);
+            throw new ScaleException("Bytes cannot be converted to hexadecimal strings, password encryption failure", e);
         }
     }
 
@@ -89,7 +105,7 @@ public class UserServiceImpl implements UserService {
         try {
             return Hex.decodeHex(hexString.toCharArray());
         } catch (Exception e) {
-            throw new ScaleException("Error encoding bytes to hex string", e);
+            throw new ScaleException("Hexadecimal strings cannot be converted to bytes, password decode failure", e);
         }
     }
 }

@@ -1,5 +1,7 @@
-package cn.muzisheng.pear.Exception;
-
+package cn.muzisheng.pear.exception;
+/**
+ *  Encapsulated decimal conversion exception
+ **/
 public class ScaleException extends RuntimeException {
     public ScaleException(String message){
         super(message);

@@ -2,6 +2,7 @@ package cn.muzisheng.pear.command;
 
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.entity.User;
+import cn.muzisheng.pear.exception.UserException;
 import cn.muzisheng.pear.service.LogService;
 import cn.muzisheng.pear.service.UserService;
 import org.apache.commons.cli.*;
@@ -57,12 +58,15 @@ public class MyCommandLineRunner implements CommandLineRunner {
                 String password=cmd.getOptionValue("p");
                 User user=userService.getUserByEmail(email);
                 if(user!=null){
-                     userService.setPassword(user,password);
-                     logService.warn(email+" superuser updates passwords");
+                     if(!userService.setPassword(user,password)){
+                         throw new UserException(user.getEmail(), "failed to update password");
+                     }
+                     logService.warn("superuser updates passwords, the superuser is "+email);
+                     System.exit(1);
                 }else{
-                    user=userService.createUserByEmail(email,password);
+                    user=userService.createUser(email,password);
                     if(user==null){
-                        logService.error("failed to create a user");
+                        logService.error("failed to create a user: "+email);
                         System.exit(1);
                     }
                 }
@@ -70,7 +74,9 @@ public class MyCommandLineRunner implements CommandLineRunner {
                 user.setSuperUser(true);
                 user.setActivated(true);
                 user.setEnabled(true);
-                userService.save(user);
+                if(!userService.save(user)){
+                    throw new UserException(user.getEmail(), "failed to save superuser");
+                }
                 logService.warn("create a super administrator: "+email);
                 System.exit(1);
             }
