@@ -10,29 +10,4 @@ public interface UserService {
      **/
     Result<Object> register(RegisterUserForm registerUserForm);
 
-
-
-    /**
-     * 设置加密密码
-     **/
-    boolean setPassword(User user, String password);
-    /**
-     * 根据邮箱获取用户
-     **/
-    User getUserByEmail(String email);
-
-    /**
-     * 根据邮箱创建用户
-     **/
-    User createUser(String email, String password);
-
-    /**
-     * 根据主键更新用户
-     **/
-    boolean save(User user);
-    /**
-     * 根据邮箱判断用户是否存在
-     **/
-    boolean isExistsByEmail(String email);
-
 }

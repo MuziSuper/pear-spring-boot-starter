@@ -1,10 +1,10 @@
 package cn.muzisheng.pear.command;
 
 import cn.muzisheng.pear.constant.Constant;
+import cn.muzisheng.pear.dao.UserDAO;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.UserException;
 import cn.muzisheng.pear.service.LogService;
-import cn.muzisheng.pear.service.UserService;
 import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,10 +17,15 @@ import java.util.List;
 @Component
 public class MyCommandLineRunner implements CommandLineRunner {
 
+    private final LogService logService;
+
+    private final UserDAO userDAO;
     @Autowired
-    private LogService logService;
-    @Autowired
-    private UserService userService;
+    public MyCommandLineRunner(LogService logService, UserDAO userDAO) {
+        this.userDAO = userDAO;
+        this.logService=logService;
+    }
+
     @Override
     public void run(String... args) throws Exception {
         Options options = new Options();
@@ -56,15 +61,15 @@ public class MyCommandLineRunner implements CommandLineRunner {
             if (cmd.hasOption("u")&&cmd.hasOption("p")) {
                 String email = cmd.getOptionValue("u");
                 String password=cmd.getOptionValue("p");
-                User user=userService.getUserByEmail(email);
+                User user=userDAO.getUserByEmail(email);
                 if(user!=null){
-                     if(!userService.setPassword(user,password)){
+                     if(!userDAO.setPassword(user,password)){
                          throw new UserException(user.getEmail(), "failed to update password");
                      }
                      logService.warn("superuser updates passwords, the superuser is "+email);
                      System.exit(1);
                 }else{
-                    user=userService.createUser(email,password);
+                    user=userDAO.createUser(email,password);
                     if(user==null){
                         logService.error("failed to create a user: "+email);
                         System.exit(1);
@@ -74,7 +79,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
                 user.setSuperUser(true);
                 user.setActivated(true);
                 user.setEnabled(true);
-                if(!userService.save(user)){
+                if(!userDAO.save(user)){
                     throw new UserException(user.getEmail(), "failed to save superuser");
                 }
                 logService.warn("create a super administrator: "+email);
