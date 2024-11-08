@@ -1,7 +1,5 @@
 package cn.muzisheng.pear.constant;
 
-import org.springframework.http.HttpStatus;
-
 import java.time.format.DateTimeFormatter;
 
 public class Constant {
@@ -23,7 +21,7 @@ public class Constant {
     public static final String ILLEGAL_MESSAGE_EXCEPTION = "The user passed in an illegal parameter";
 
     // 日期格式
-    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 
 @Component
 public class UserDAO {
@@ -25,6 +26,23 @@ public class UserDAO {
     public UserDAO(UserMapper userMapper, UserProperties userProperties){
         this.userMapper = userMapper;
         this.userProperties = userProperties;
+    }
+
+    /**
+     * 更新用户数据
+     **/
+    public boolean updateUserFields(User user, Map<String, String> fields){
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        // 遍历map，设置要更新的字段
+        for (Map.Entry<String, String> entry : fields.entrySet()) {
+            String fieldName = entry.getKey();
+            String fieldValue = entry.getValue();
+            updateWrapper.set(fieldName, fieldValue);
+        }
+        // 执行更新操作
+        int rowsAffected = userMapper.update(user, updateWrapper);
+
+        return rowsAffected > 0;
     }
 
     /**
@@ -68,8 +86,7 @@ public class UserDAO {
      * 根据主键更新用户
      **/
     public boolean save(User user){
-        BaseMapper<User> baseMapper = userMapper;
-        int rowsAffected =baseMapper.updateById(user);
+        int rowsAffected = userMapper.updateById(user);
         return rowsAffected > 0;
     }
     /**

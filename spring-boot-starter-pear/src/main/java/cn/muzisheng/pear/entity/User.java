@@ -50,7 +50,7 @@ public class User {
     // 是否激活
     private boolean activated;
     // 最后一次登陆时间
-    private Date lastLogin;
+    private LocalDateTime lastLogin;
     // 最后一次登陆ip
     private String lastLoginIp;
     // 用户来源渠道
