@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class UserDAO {
@@ -31,12 +32,12 @@ public class UserDAO {
     /**
      * 更新用户数据
      **/
-    public boolean updateUserFields(User user, Map<String, String> fields){
+    public boolean updateUserFields(User user, Map<String, Object> fields){
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         // 遍历map，设置要更新的字段
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        for (Map.Entry<String, Object> entry : fields.entrySet()) {
             String fieldName = entry.getKey();
-            String fieldValue = entry.getValue();
+            Object fieldValue = entry.getValue();
             updateWrapper.set(fieldName, fieldValue);
         }
         // 执行更新操作

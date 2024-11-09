@@ -14,6 +14,6 @@ public class RegisterUserForm {
     private String firstName;
     private String lastName;
     private String locale;
-    private String timeZone;
+    private String timezone;
     private String source;
 }

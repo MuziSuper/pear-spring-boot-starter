@@ -2,18 +2,16 @@ package cn.muzisheng.pear.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @TableName("user")
 public class User {
     // 主键

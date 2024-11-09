@@ -9,12 +9,15 @@ import cn.muzisheng.pear.service.LogService;
 import cn.muzisheng.pear.service.UserService;
 import cn.muzisheng.pear.utils.Response;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.PushBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -27,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response<Map<String, String>> register(RegisterUserForm registerUserForm) {
         Response<Map<String, String>> result=new Response<>();
-        Map<String,String> map=new HashMap<>();
+        Map<String,Object> map=new HashMap<>();
         if(registerUserForm==null){
             throw new IllegalException();
         }
@@ -42,27 +45,52 @@ public class UserServiceImpl implements UserService {
             result.setStatus(Constant.USER_EXCEPTION);
             return result;
         }
-        map.put("",registerUserForm.getDisplayName());
-        map.put("",registerUserForm.getFirstName());
-        map.put("",registerUserForm.getLastName());
-        map.put("",registerUserForm.getLocale());
-        map.put("",registerUserForm.getSource());
-        map.put("",registerUserForm.getTimeZone());
-        map.put("",LocalDateTime.now().format(Constant.DATE_TIME_FORMATTER));
-        map.put("",request.getRemoteAddr());
+        user.setDisplayName(registerUserForm.getDisplayName());
+        user.setFirstName(registerUserForm.getFirstName());
+        user.setLastName(registerUserForm.getLastName());
+        user.setLocale(registerUserForm.getLocale());
+        user.setSource(registerUserForm.getSource());
+        user.setTimezone(registerUserForm.getTimezone());
+        user.setLastLogin(LocalDateTime.now());
+        user.setLastLoginIp(request.getRemoteAddr());
+
+        map.put("display_name",registerUserForm.getDisplayName());
+        map.put("first_name",registerUserForm.getFirstName());
+        map.put("last_name",registerUserForm.getLastName());
+        map.put("locale",registerUserForm.getLocale());
+        map.put("source",registerUserForm.getSource());
+        map.put("timezone",registerUserForm.getTimezone());
+        map.put("last_login",LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        map.put("last_login_ip",request.getRemoteAddr());
         if(!userDAO.updateUserFields(user,map)){
             logService.error("update user fields fail, user email: "+registerUserForm.getEmail());
-            result.setStatus(Constant.USER_EXCEPTION);
-            return result;
         }
 
-        /**
-         *
-         * 触发用户注册事件，后期消息系统进行补充
-         *
-         **/
+        /*
+         * 触发用户注册事件，发送消息，
+         * 后期消息系统进行补充
+         */
+
+        Map<String, Object> req=new HashMap<>();
+        req.put("email",user.getEmail());
+        req.put("activation",user.isActivated());
+
+        /*
+         * 获取缓存中的配置项，确认用户是否启用激活用户操作，
+         * 后期缓存系统进行补充
+         */
+//        if(!user.isActivated()&&GetValue(USER_ENABLE_ACTIVATED)){
+//              sendMessage();
+//        }
+
+
 
 
     }
 
+
+
+    private void login(User user){
+
+    }
 }
