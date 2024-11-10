@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -30,8 +33,24 @@ public class UserDAO {
     }
 
     /**
-     * 更新用户数据
+     * 更新最后登录时间与ip
      **/
+    public boolean setLastLogin(User user, String ip){
+        user.setLastLogin(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        user.setLastLoginIp(ip);
+        return userMapper.updateById(user)>0;
+    }
+
+    /**
+     * 根据对象主键更新用户数据
+     **/
+    public boolean updateUserById(User user){
+        return userMapper.updateById(user)>0;
+    }
+
+        /**
+         * 根据map集合更新用户数据
+         **/
     public boolean updateUserFields(User user, Map<String, Object> fields){
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         // 遍历map，设置要更新的字段

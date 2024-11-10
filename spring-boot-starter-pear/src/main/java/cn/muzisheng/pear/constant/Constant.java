@@ -23,5 +23,7 @@ public class Constant {
     // 日期格式
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+    // session key
+    public static final String SESSION_USER_ID = "_pear_uid";
 
 }

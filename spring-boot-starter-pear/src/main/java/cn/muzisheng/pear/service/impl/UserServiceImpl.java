@@ -9,7 +9,7 @@ import cn.muzisheng.pear.service.LogService;
 import cn.muzisheng.pear.service.UserService;
 import cn.muzisheng.pear.utils.Response;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.PushBuilder;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -25,11 +24,9 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
     @Autowired
     private LogService logService;
-    @Autowired
-    private HttpServletRequest request;
     @Override
-    public Response<Map<String, String>> register(RegisterUserForm registerUserForm) {
-        Response<Map<String, String>> result=new Response<>();
+    public Response<Map<String, Object>> register(HttpServletRequest request, RegisterUserForm registerUserForm) {
+        Response<Map<String, Object>> result=new Response<>();
         Map<String,Object> map=new HashMap<>();
         if(registerUserForm==null){
             throw new IllegalException();
@@ -51,18 +48,10 @@ public class UserServiceImpl implements UserService {
         user.setLocale(registerUserForm.getLocale());
         user.setSource(registerUserForm.getSource());
         user.setTimezone(registerUserForm.getTimezone());
-        user.setLastLogin(LocalDateTime.now());
+        user.setLastLogin(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         user.setLastLoginIp(request.getRemoteAddr());
 
-        map.put("display_name",registerUserForm.getDisplayName());
-        map.put("first_name",registerUserForm.getFirstName());
-        map.put("last_name",registerUserForm.getLastName());
-        map.put("locale",registerUserForm.getLocale());
-        map.put("source",registerUserForm.getSource());
-        map.put("timezone",registerUserForm.getTimezone());
-        map.put("last_login",LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
-        map.put("last_login_ip",request.getRemoteAddr());
-        if(!userDAO.updateUserFields(user,map)){
+        if(!userDAO.updateUserById(user)){
             logService.error("update user fields fail, user email: "+registerUserForm.getEmail());
         }
 
@@ -81,16 +70,24 @@ public class UserServiceImpl implements UserService {
          */
 //        if(!user.isActivated()&&GetValue(USER_ENABLE_ACTIVATED)){
 //              sendMessage();
-//        }
+//        }else{}
 
-
-
-
+        login(request,user);
+        result.setData(req);
+        return result;
     }
 
 
 
-    private void login(User user){
+    private void login(HttpServletRequest request,User user){
+        userDAO.setLastLogin(user,request.getRemoteAddr());
+        HttpSession session= request.getSession(true);
+        session.setAttribute(Constant.SESSION_USER_ID,user.getId());
+
+        /*
+         * 触发用户登陆事件，发送消息，
+         * 后期消息系统进行补充
+         */
 
     }
 }
