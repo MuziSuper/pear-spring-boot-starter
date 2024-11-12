@@ -7,13 +7,14 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 @Setter
 @Getter
-public class Response<T> extends ResponseEntity<Result<T>> {
-    private int status;
-    private Map<String, String> headers;
+public class Response<T> extends ResponseEntity<Result<T>> implements Serializable {
+    private int status=200;
+    private Map<String, String> repHeaders;
     private String error;
     private T data;
     public Response() {
@@ -22,36 +23,38 @@ public class Response<T> extends ResponseEntity<Result<T>> {
     public Response<T> value() {
         MultiValueMap<String, String> reqHeaders = new HttpHeaders();
         Result<T> result= new Result<>(this.error, this.data);
-        for (String key:this.headers.keySet()){
-            reqHeaders.add(key,this.headers.get(key));
+        if(this.repHeaders !=null) {
+            for (String key : this.repHeaders.keySet()) {
+                reqHeaders.add(key, this.repHeaders.get(key));
+            }
         }
         return new Response<>(result,reqHeaders, this.status);
     }
     public void putHeader(String key, String value){
-        if(this.headers==null){
-            this.headers=new HashMap<>();
+        if(this.repHeaders ==null){
+            this.repHeaders =new HashMap<>();
         }
-        this.headers.put(key,value);
+        this.repHeaders.put(key,value);
     }
     public void removeHeader(String key){
-        if(this.headers!=null){
-            this.headers.remove(key);
+        if(this.repHeaders !=null){
+            this.repHeaders.remove(key);
         }
     }
     public void clearHeader(){
-        this.headers=null;
+        this.repHeaders =null;
     }
 
     public String getHeader(String key){
-        return this.headers.get(key);
+        return this.repHeaders.get(key);
     }
 
     public Map<String, String> getAllHeader() {
-        return this.headers;
+        return this.repHeaders;
     }
 
-    public Response(Result<T> result, MultiValueMap<String, String> headers, int rawStatus) {
-        super(result, headers, rawStatus);
+    public Response(Result<T> result, MultiValueMap<String, String> repHeaders, int rawStatus) {
+        super(result, repHeaders, rawStatus);
     }
 
 }

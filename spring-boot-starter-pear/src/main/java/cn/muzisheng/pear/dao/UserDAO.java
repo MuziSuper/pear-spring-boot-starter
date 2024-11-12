@@ -113,7 +113,7 @@ public class UserDAO {
      * 根据邮箱判断用户是否存在
      **/
     public boolean isExistsByEmail(String email) {
-        return getUserByEmail(email)==null;
+        return getUserByEmail(email)!=null;
     }
 
 

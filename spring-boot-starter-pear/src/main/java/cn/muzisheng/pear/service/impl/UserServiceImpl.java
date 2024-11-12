@@ -27,8 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response<Map<String, Object>> register(HttpServletRequest request, RegisterUserForm registerUserForm) {
         Response<Map<String, Object>> result=new Response<>();
-        Map<String,Object> map=new HashMap<>();
-        if(registerUserForm==null){
+        if(registerUserForm==null||registerUserForm.equals(new RegisterUserForm())){
             throw new IllegalException();
         }
         if(userDAO.isExistsByEmail(registerUserForm.getEmail())){
@@ -74,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
         login(request,user);
         result.setData(req);
-        return result;
+        return result.value();
     }
 
 
