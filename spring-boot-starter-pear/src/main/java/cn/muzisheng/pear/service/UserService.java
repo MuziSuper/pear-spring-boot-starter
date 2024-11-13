@@ -1,8 +1,10 @@
 package cn.muzisheng.pear.service;
 
+import cn.muzisheng.pear.params.LoginForm;
 import cn.muzisheng.pear.params.RegisterUserForm;
-import cn.muzisheng.pear.utils.Response;
+import cn.muzisheng.pear.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
 
@@ -10,6 +12,11 @@ public interface UserService {
     /**
      * 注册用户
      **/
-    Response<Map<String, Object>> register(HttpServletRequest request, RegisterUserForm registerUserForm);
+    ResponseEntity<Result<Map<String, Object>>> register(HttpServletRequest request, RegisterUserForm registerUserForm);
+
+    /**
+     * 登陆用户
+     **/
+    ResponseEntity<Result<Map<String, Object>>> login(HttpServletRequest request, LoginForm loginForm);
 
 }

@@ -26,8 +26,8 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(IllegalException.class)
-    public ResponseEntity<ExceptionResponse> handleIllegalException() {
-        ExceptionResponse errorResponse = new ExceptionResponse(Constant.ILLEGAL_EXCEPTION, Constant.ILLEGAL_MESSAGE_EXCEPTION,System.currentTimeMillis());
+    public ResponseEntity<ExceptionResponse> handleIllegalException(IllegalException e) {
+        ExceptionResponse errorResponse = new ExceptionResponse(Constant.ILLEGAL_EXCEPTION, e.getMessage()==null?Constant.ILLEGAL_MESSAGE_EXCEPTION:e.getMessage(),System.currentTimeMillis());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

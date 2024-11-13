@@ -6,9 +6,8 @@ import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.service.LogService;
-import cn.muzisheng.pear.service.UserService;
 import cn.muzisheng.pear.service.impl.UserServiceImpl;
-import cn.muzisheng.pear.utils.Response;
+import cn.muzisheng.pear.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,15 +15,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-
+@SpringBootTest
 public class UserServiceTests {
     @Mock
     private UserDAO userDAO;
@@ -56,14 +56,14 @@ public class UserServiceTests {
     @Test
     void register_EmailExists_ReturnsError() {
         HttpServletRequest request = mock(HttpServletRequest.class);
-        RegisterUserForm registerUserForm = new RegisterUserForm("test@example.com", "password", "displayName", "firstName", "lastName", "locale", "timezone", "source");
+        RegisterUserForm registerUserForm = new RegisterUserForm("test@example.com", "123", "displayName", "firstName", "lastName", "locale", "timezone", "source");
 
-        when(userDAO.isExistsByEmail(anyString())).thenReturn(false);
+        when(userDAO.isExistsByEmail(anyString())).thenReturn(true);
 
-        Response<Map<String, Object>> response = userService.register(request, registerUserForm);
+        ResponseEntity<Result<Map<String, Object>>> response = userService.register(request, registerUserForm);
 
-        assertEquals(Constant.USER_EXCEPTION, response.getStatus());
-        assertEquals("Email has exists", response.getError());
+        assertEquals(Constant.USER_EXCEPTION, response.getStatusCode().value());
+        assertEquals("Email has exists", Objects.requireNonNull(response.getBody()).getError());
         verify(userDAO, never()).createUser(anyString(), anyString());
     }
 
@@ -75,9 +75,9 @@ public class UserServiceTests {
         when(userDAO.isExistsByEmail(anyString())).thenReturn(false);
         when(userDAO.createUser(anyString(), anyString())).thenReturn(null);
 
-        Response<Map<String, Object>> response = userService.register(request, registerUserForm);
+        ResponseEntity<Result<Map<String, Object>>> response = userService.register(request, registerUserForm);
 
-        assertEquals(Constant.USER_EXCEPTION, response.getStatus());
+        assertEquals(Constant.USER_EXCEPTION, response.getStatusCode().value());
         verify(logService).error("failed to create a user: " + registerUserForm.getEmail());
     }
 
@@ -87,20 +87,18 @@ public class UserServiceTests {
         HttpSession session = mock(HttpSession.class);
         when(request.getSession(true)).thenReturn(session);
 
-        RegisterUserForm registerUserForm = new RegisterUserForm("test@example.com", "password", "displayName", "firstName", "lastName", "locale", "timezone", "source");
+        RegisterUserForm registerUserForm = new RegisterUserForm("test@example.com", "123", "displayName", "firstName", "lastName", "locale", "timezone", "source");
 
-        User user = new User();
-        user.setId(1L);
-        user.setEmail("test@example.com");
+        User user = new User("test@example.com", "123");
 
         when(userDAO.isExistsByEmail(anyString())).thenReturn(false);
         when(userDAO.createUser(anyString(), anyString())).thenReturn(user);
         when(userDAO.updateUserById(any(User.class))).thenReturn(true);
 
-        Response<Map<String, Object>> response = userService.register(request, registerUserForm);
+        ResponseEntity<Result<Map<String, Object>>> response = userService.register(request, registerUserForm);
 
-        assertEquals(200, response.getStatus());
-        assertNotNull(response.getData());
+        assertEquals(200, response.getStatusCode().value());
+        assertNotNull(response.getBody());
 
         verify(userDAO).setLastLogin(user, request.getRemoteAddr());
         verify(session).setAttribute(eq(Constant.SESSION_USER_ID), eq(user.getId()));
@@ -122,10 +120,10 @@ public class UserServiceTests {
         when(userDAO.createUser(anyString(), anyString())).thenReturn(user);
         when(userDAO.updateUserById(any(User.class))).thenReturn(false);
 
-        Response<Map<String, Object>> response = userService.register(request, registerUserForm);
+        ResponseEntity<Result<Map<String, Object>>> response = userService.register(request, registerUserForm);
 
-        assertEquals(200, response.getStatus());
-        assertNotNull(response.getData());
+        assertEquals(200, response.getStatusCode().value());
+        assertNotNull(response.getBody());
 
         verify(logService).error("update user fields fail, user email: " + registerUserForm.getEmail());
         verify(userDAO).setLastLogin(user, request.getRemoteAddr());
