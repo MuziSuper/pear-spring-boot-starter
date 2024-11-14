@@ -8,6 +8,7 @@ import cn.muzisheng.pear.params.LoginForm;
 import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.service.LogService;
 import cn.muzisheng.pear.service.UserService;
+import cn.muzisheng.pear.utils.Context;
 import cn.muzisheng.pear.utils.Response;
 import cn.muzisheng.pear.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +21,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -100,10 +100,31 @@ public class UserServiceImpl implements UserService {
                 result.setStatus(Constant.USER_EXCEPTION);
                 return result.value();
             }
+            if(!checkPassword(user,loginForm.getPassword())){
+                result.setError("unauthorized");
+                result.setStatus(Constant.USER_EXCEPTION);
+                return result.value();
+            }
+        }else{
 
         }
     }
-
+    User user;
+    public User currentUser(HttpServletRequest request){
+        User user=null;
+        Object objectUser = Context.get(Constant.SESSION_USER_ID);
+        if(objectUser !=null){
+            return (User) objectUser;
+        }
+        HttpSession session = request.getSession(true);
+        objectUser =session.getAttribute(Constant.SESSION_USER_ID);
+        if(objectUser ==null){
+            return null;
+        }else{
+            user = (User) objectUser;
+        }
+        User userDAO.getUserById(user.getId());
+    }
 
     private void login(HttpServletRequest request, User user) {
         userDAO.setLastLogin(user, request.getRemoteAddr());
@@ -115,5 +136,9 @@ public class UserServiceImpl implements UserService {
          * 后期消息系统进行补充
          */
 
+    }
+
+    private boolean checkPassword(User user, String password) {
+        return user.getPassword().equals(userDAO.HashPassword(password));
     }
 }

@@ -116,8 +116,10 @@ public class UserDAO {
         return getUserByEmail(email)!=null;
     }
 
-
-    private String HashPassword(String password) {
+    /**
+     * 密码加密
+     **/
+    public String HashPassword(String password) {
         if("".equals(password)){
             return "";
         }
@@ -129,6 +131,22 @@ public class UserDAO {
             throw new ScaleException("The password encryption algorithm is not supported",e);
         }
     }
+    public User getUserById(long userId){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("enabled", true).eq("id", userId);
+        return userMapper.selectOne(queryWrapper);
+    }
+
+
+    /**
+     * 解密hashToken
+     **/
+    public User decodeHashToken(String hashPassword,boolean useLastLogin){
+
+    }
+    /**
+     * 将字节数组转换为十六进制字符串
+     **/
     public static String bytesToHex(byte[] bytes) {
         try {
             return Hex.encodeHexString(bytes);
@@ -136,7 +154,9 @@ public class UserDAO {
             throw new ScaleException("Bytes cannot be converted to hexadecimal strings, password encryption failure", e);
         }
     }
-
+    /**
+     * 将十六进制字符串转换为字节数组
+     **/
     public static byte[] hexToBytes(String hexString) {
         try {
             return Hex.decodeHex(hexString.toCharArray());
