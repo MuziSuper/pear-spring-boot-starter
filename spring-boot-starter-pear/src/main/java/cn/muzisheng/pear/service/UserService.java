@@ -19,4 +19,8 @@ public interface UserService {
      **/
     ResponseEntity<Result<Map<String, Object>>> login(HttpServletRequest request, LoginForm loginForm);
 
+    /**
+     * 获取用户信息
+     **/
+    ResponseEntity<Result<Map<String, Object>>> userInfo(HttpServletRequest request, String token);
 }

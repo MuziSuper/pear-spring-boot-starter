@@ -109,21 +109,25 @@ public class UserServiceImpl implements UserService {
 
         }
     }
-    User user;
+    /**
+     * 获取当前用户信息，并且缓存到上下文中
+     **/
     public User currentUser(HttpServletRequest request){
-        User user=null;
         Object objectUser = Context.get(Constant.SESSION_USER_ID);
         if(objectUser !=null){
             return (User) objectUser;
         }
         HttpSession session = request.getSession(true);
-        objectUser =session.getAttribute(Constant.SESSION_USER_ID);
-        if(objectUser ==null){
+        Object userId =session.getAttribute(Constant.SESSION_USER_ID);
+        if(userId == null){
             return null;
-        }else{
-            user = (User) objectUser;
         }
-        User userDAO.getUserById(user.getId());
+        User user=userDAO.getUserById((long) userId);
+        if(user==null){
+            return null;
+        }
+        Context.set(Constant.SESSION_USER_ID,user);
+        return user;
     }
 
     private void login(HttpServletRequest request, User user) {
