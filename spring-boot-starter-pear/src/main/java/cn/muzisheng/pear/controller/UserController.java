@@ -1,5 +1,6 @@
 package cn.muzisheng.pear.controller;
 
+import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.params.LoginForm;
 import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.service.UserService;
@@ -24,7 +25,7 @@ public class UserController {
         return userService.register(request, registerUserForm);
     }
     @PostMapping("login")
-    public ResponseEntity<Result<Map<String, Object>>> login(HttpServletRequest request, @RequestBody LoginForm loginForm) {
+    public ResponseEntity<Result<User>> login(HttpServletRequest request, @RequestBody LoginForm loginForm) {
         return userService.login(request, loginForm);
     }
 }

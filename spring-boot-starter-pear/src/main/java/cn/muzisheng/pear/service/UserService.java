@@ -1,5 +1,6 @@
 package cn.muzisheng.pear.service;
 
+import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.params.LoginForm;
 import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.utils.Result;
@@ -17,7 +18,7 @@ public interface UserService {
     /**
      * 登陆用户
      **/
-    ResponseEntity<Result<Map<String, Object>>> login(HttpServletRequest request, LoginForm loginForm);
+    ResponseEntity<Result<User>> login(HttpServletRequest request, LoginForm loginForm);
 
     /**
      * 获取用户信息

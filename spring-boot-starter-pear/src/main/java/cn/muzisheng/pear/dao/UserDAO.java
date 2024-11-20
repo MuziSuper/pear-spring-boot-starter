@@ -142,7 +142,7 @@ public class UserDAO {
      * 解密hashToken
      **/
     public User decodeHashToken(String hashPassword,boolean useLastLogin){
-
+        return null;
     }
     /**
      * 将字节数组转换为十六进制字符串

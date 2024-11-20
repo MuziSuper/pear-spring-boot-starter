@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 @TableName("user")
-public class User {
+public class User implements Serializable {
     // 主键
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -16,6 +16,7 @@ public class Constant {
     public static final int SCALE_EXCEPTION = 502;
     public static final int USER_EXCEPTION = 503;
     public static final int ILLEGAL_EXCEPTION = 400;
+    public static final int UNAPPROVED_EXCEPTION = 401;
 
     // 响应信息
     public static final String ILLEGAL_MESSAGE_EXCEPTION = "The user passed in an illegal parameter";
@@ -25,5 +26,10 @@ public class Constant {
 
     // session key
     public static final String SESSION_USER_ID = "_pear_uid";
+
+    // token expire
+    public static final long TOKEN_DEFAULT_EXPIRE_DAY = 7 * 24 * 60 * 60 * 1000L;
+    public static final String TOKEN_DEFAULT_SECRET_SALT = "pear_token_";
+    public static final String TOKEN_DEFAULT_SECRET_PREFIX = "Bearer ";
 
 }

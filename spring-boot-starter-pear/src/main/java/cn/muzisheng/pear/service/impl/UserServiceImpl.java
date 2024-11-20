@@ -2,6 +2,7 @@ package cn.muzisheng.pear.service.impl;
 
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.dao.UserDAO;
+import cn.muzisheng.pear.exception.AuthorizationException;
 import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.params.LoginForm;
@@ -9,6 +10,7 @@ import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.service.LogService;
 import cn.muzisheng.pear.service.UserService;
 import cn.muzisheng.pear.utils.Context;
+import cn.muzisheng.pear.utils.JwtUtil;
 import cn.muzisheng.pear.utils.Response;
 import cn.muzisheng.pear.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +30,8 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
     @Autowired
     private LogService logService;
-
+    @Autowired
+    private JwtUtil jwtUtil;
     @Override
     public ResponseEntity<Result<Map<String, Object>>> register(HttpServletRequest request, RegisterUserForm registerUserForm) {
         Response<Map<String, Object>> result = new Response<>();
@@ -60,16 +63,17 @@ public class UserServiceImpl implements UserService {
         }
 
         /*
-         * 触发用户注册事件，发送消息，
+         * 触发用户注册事件，发布消息，
          * 后期消息系统进行补充
          */
+        logService.info("register user success, user email: " + registerUserForm.getEmail());
 
         Map<String, Object> req = new HashMap<>();
         req.put("email", user.getEmail());
         req.put("activation", user.isActivated());
 
         /*
-         * 获取缓存中的配置项，确认用户是否启用激活用户操作，
+         * 获取缓存中的配置项，确认用户是否启用激活用户操作，触发身份校验事件，发布消息
          * 后期缓存系统进行补充
          */
 //        if(!user.isActivated()&&GetValue(USER_ENABLE_ACTIVATED)){
@@ -82,8 +86,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<Result<Map<String, Object>>> login(HttpServletRequest request, LoginForm loginForm) {
-        Response<Map<String, Object>> result = new Response<>();
+    public ResponseEntity<Result<User>> login(HttpServletRequest request, LoginForm loginForm) {
+        Response<User> result = new Response<>();
         if(loginForm==null||loginForm.equals(new LoginForm())){
             throw new IllegalException();
         }
@@ -93,8 +97,9 @@ public class UserServiceImpl implements UserService {
         if("".equals(loginForm.getAuthToken())&&"".equals(loginForm.getPassword())){
             throw new IllegalException("empty password");
         }
+        User user;
         if(!"".equals(loginForm.getPassword())){
-            User user=userDAO.getUserByEmail(loginForm.getEmail());
+            user=userDAO.getUserByEmail(loginForm.getEmail());
             if(user==null){
                 result.setError("user not exist");
                 result.setStatus(Constant.USER_EXCEPTION);
@@ -106,9 +111,19 @@ public class UserServiceImpl implements UserService {
                 return result.value();
             }
         }else{
-
+            user=decodeHashToken(loginForm.getAuthToken());
         }
+        login(request,user);
+        user.setToken(jwtUtil.generateTokenWithEmail(user.getEmail()));
+        result.setData(user);
+        return result.value();
     }
+
+    @Override
+    public ResponseEntity<Result<Map<String, Object>>> userInfo(HttpServletRequest request, String token) {
+        return null;
+    }
+
     /**
      * 获取当前用户信息，并且缓存到上下文中
      **/
@@ -136,13 +151,26 @@ public class UserServiceImpl implements UserService {
         session.setAttribute(Constant.SESSION_USER_ID, user.getId());
 
         /*
-         * 触发用户登陆事件，发送消息，
+         * 触发用户登陆事件，发布消息，
          * 后期消息系统进行补充
          */
-
+        logService.info("login user success, user email: " + user.getEmail());
     }
 
     private boolean checkPassword(User user, String password) {
         return user.getPassword().equals(userDAO.HashPassword(password));
+    }
+
+    private User decodeHashToken(String token) {
+        String email;
+        email=jwtUtil.getEmailFromToken(token);
+        if (email == null){
+            throw new AuthorizationException("token expired");
+        }
+        User user=userDAO.getUserByEmail(email);
+        if (user==null){
+            throw new AuthorizationException("bad token");
+        }
+        return user;
     }
 }

@@ -1,22 +1,25 @@
-package cn.muzisheng.pear.command;
+package cn.muzisheng.pear.initialize;
 
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.dao.UserDAO;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.UserException;
+import cn.muzisheng.pear.properties.TokenProperties;
 import cn.muzisheng.pear.service.LogService;
+import jakarta.annotation.Resource;
 import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 
 @Component
 public class MyCommandLineRunner implements CommandLineRunner {
-
     private final LogService logService;
 
     private final UserDAO userDAO;
