@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private LogService logService;
     @Autowired
     private JwtUtil jwtUtil;
+
     @Override
     public ResponseEntity<Result<Map<String, Object>>> register(HttpServletRequest request, RegisterUserForm registerUserForm) {
         Response<Map<String, Object>> result = new Response<>();
@@ -88,32 +89,36 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<Result<User>> login(HttpServletRequest request, LoginForm loginForm) {
         Response<User> result = new Response<>();
-        if(loginForm==null||loginForm.equals(new LoginForm())){
+
+        // 判断参数是否为空,有token直接判断token (携带token且只输入密码也可以过，但前端要限制)，没有token就必须有email和password
+        if (loginForm == null || loginForm.equals(new LoginForm())) {
             throw new IllegalException();
         }
-        if("".equals(loginForm.getAuthToken())&&"".equals(loginForm.getEmail())){
+        if (loginForm.getAuthToken().isEmpty() && loginForm.getEmail().isEmpty()) {
             throw new IllegalException("email is required");
         }
-        if("".equals(loginForm.getAuthToken())&&"".equals(loginForm.getPassword())){
+        if (loginForm.getAuthToken().isEmpty() && loginForm.getPassword().isEmpty()) {
             throw new IllegalException("empty password");
         }
+
+        // 获取用户信息
         User user;
-        if(!"".equals(loginForm.getPassword())){
-            user=userDAO.getUserByEmail(loginForm.getEmail());
-            if(user==null){
+        if (loginForm.getPassword()!=null) {
+            user = userDAO.getUserByEmail(loginForm.getEmail());
+            if (user == null) {
                 result.setError("user not exist");
                 result.setStatus(Constant.USER_EXCEPTION);
                 return result.value();
             }
-            if(!checkPassword(user,loginForm.getPassword())){
+            if (!checkPassword(user, loginForm.getPassword())) {
                 result.setError("unauthorized");
                 result.setStatus(Constant.USER_EXCEPTION);
                 return result.value();
             }
-        }else{
-            user=decodeHashToken(loginForm.getAuthToken());
+        } else {
+            user = decodeHashToken(loginForm.getAuthToken());
         }
-        login(request,user);
+        login(request, user);
         user.setToken(jwtUtil.generateTokenWithEmail(user.getEmail()));
         result.setData(user);
         return result.value();
@@ -127,24 +132,27 @@ public class UserServiceImpl implements UserService {
     /**
      * 获取当前用户信息，并且缓存到上下文中
      **/
-    public User currentUser(HttpServletRequest request){
+    public User currentUser(HttpServletRequest request) {
         Object objectUser = Context.get(Constant.SESSION_USER_ID);
-        if(objectUser !=null){
+        if (objectUser != null) {
             return (User) objectUser;
         }
         HttpSession session = request.getSession(true);
-        Object userId =session.getAttribute(Constant.SESSION_USER_ID);
-        if(userId == null){
+        Object userId = session.getAttribute(Constant.SESSION_USER_ID);
+        if (userId == null) {
             return null;
         }
-        User user=userDAO.getUserById((long) userId);
-        if(user==null){
+        User user = userDAO.getUserById((long) userId);
+        if (user == null) {
             return null;
         }
-        Context.set(Constant.SESSION_USER_ID,user);
+        Context.set(Constant.SESSION_USER_ID, user);
         return user;
     }
 
+    /**
+     * 刷新用户最新登陆ip, 将用户id存入session中
+     **/
     private void login(HttpServletRequest request, User user) {
         userDAO.setLastLogin(user, request.getRemoteAddr());
         HttpSession session = request.getSession(true);
@@ -157,18 +165,24 @@ public class UserServiceImpl implements UserService {
         logService.info("login user success, user email: " + user.getEmail());
     }
 
-    private boolean checkPassword(User user, String password) {
+    /**
+     * 校验密码, 正确返回true
+     **/
+    public boolean checkPassword(User user, String password) {
         return user.getPassword().equals(userDAO.HashPassword(password));
     }
 
-    private User decodeHashToken(String token) {
+    /**
+     * 解析token，返回用户信息
+     **/
+    public User decodeHashToken(String token) {
         String email;
-        email=jwtUtil.getEmailFromToken(token);
-        if (email == null){
+        email = jwtUtil.getEmailFromToken(token);
+        if (email == null) {
             throw new AuthorizationException("token expired");
         }
-        User user=userDAO.getUserByEmail(email);
-        if (user==null){
+        User user = userDAO.getUserByEmail(email);
+        if (user == null) {
             throw new AuthorizationException("bad token");
         }
         return user;

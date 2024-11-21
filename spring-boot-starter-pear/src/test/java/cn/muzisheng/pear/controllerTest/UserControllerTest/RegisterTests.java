@@ -1,4 +1,4 @@
-package cn.muzisheng.pear.controller;
+package cn.muzisheng.pear.controllerTest.UserControllerTest;
 
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.dao.UserDAO;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 @SpringBootTest
-public class UserServiceTests {
+public class RegisterTests {
     @Mock
     private UserDAO userDAO;
 

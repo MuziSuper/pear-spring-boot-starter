@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -19,8 +20,7 @@ import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-
-
+@SpringBootTest
 class JwtUtilTests {
 
     @Mock
@@ -31,7 +31,6 @@ class JwtUtilTests {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        Properties props = new Properties();
         when(tokenProperties.getTokenExpire()).thenReturn(1000000000L);
         when(tokenProperties.getTokenHead()).thenReturn("Bearer ");
         when(tokenProperties.getTokenSalt()).thenReturn("secret");
