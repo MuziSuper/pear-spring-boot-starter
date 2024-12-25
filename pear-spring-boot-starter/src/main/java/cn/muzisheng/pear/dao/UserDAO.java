@@ -97,7 +97,7 @@ public class UserDAO {
         user.setActivated(false);
         user.setEnabled(true);
         if(userMapper.insert(user)>0){
-            return user;
+            return getUserByEmail(email);
         }else {
             return null;
         }

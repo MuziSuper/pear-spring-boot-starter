@@ -1,9 +1,12 @@
 package cn.muzisheng.pear.utils;
 
 import cn.muzisheng.pear.model.ExpiredCacheValue;
+import com.sun.istack.NotNull;
+import jakarta.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,14 +42,15 @@ public class ExpiredCache<K,V> {
         ExpiredCacheValue<V> expiredCacheValue=new ExpiredCacheValue<>(LocalDateTime.now(),value);
         this.cache.put(key,expiredCacheValue);
     }
-
+    @NotNull
     // 判断缓存中是否存在该键
     public boolean contains(K key){
         return this.cache.containsKey(key);
     }
 
     // 删除缓存
-    public boolean remove(K key){
-        return this.cache.remove(key)!=null;
+    @NotNull
+    public void remove(K key){
+        this.cache.remove(key);
     }
 }

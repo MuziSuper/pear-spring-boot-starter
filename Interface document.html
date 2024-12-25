@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>API 文档 - 用户管理</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 28px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        h2 {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        .endpoint {
+            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .endpoint p {
+            margin: 5px 0;
+        }
+        .endpoint strong {
+            color: #2c3e50;
+        }
+        .fa-icon {
+            margin-right: 5px;
+        }
+        @media (max-width: 768px) {
+            body {
+                margin: 10px;
+            }
+            .endpoint {
+                padding: 15px;
+            }
+            pre {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>API 文档 - 用户管理</h1>
+
+<div class="endpoint">
+    <h2><i class="fas fa-user-plus fa-icon"></i> 注册用户</h2>
+    <p><strong>URL:</strong> /user/register</p>
+    <p><strong>方法:</strong> POST</p>
+    <p><strong>请求体:</strong></p>
+    <pre>
+{
+    "username": "string",
+    "password": "string",
+    "email": "string"
+}
+    </pre>
+    <p><strong>响应:</strong></p>
+    <pre>
+{
+    "success": true,
+    "data": {
+        "userId": "string",
+        "username": "string",
+        "email": "string"
+    },
+    "message": "注册成功"
+}
+    </pre>
+</div>
+
+<div class="endpoint">
+    <h2><i class="fas fa-sign-in-alt fa-icon"></i> 用户登录</h2>
+    <p><strong>URL:</strong> /user/login</p>
+    <p><strong>方法:</strong> POST</p>
+    <p><strong>请求体:</strong></p>
+    <pre>
+{
+    "username": "string",
+    "password": "string"
+}
+    </pre>
+    <p><strong>响应:</strong></p>
+    <pre>
+{
+    "success": true,
+    "data": {
+        "userId": "string",
+        "username": "string",
+        "token": "string"
+    },
+    "message": "登录成功"
+}
+    </pre>
+</div>
+
+<div class="endpoint">
+    <h2><i class="fas fa-info-circle fa-icon"></i> 获取用户信息</h2>
+    <p><strong>URL:</strong> /user/info</p>
+    <p><strong>方法:</strong> POST</p>
+    <p><strong>请求参数:</strong></p>
+    <pre>
+{
+    "with_token": "string"
+}
+    </pre>
+    <p><strong>响应:</strong></p>
+    <pre>
+{
+    "success": true,
+    "data": {
+        "userId": "string",
+        "username": "string",
+        "email": "string",
+        "token": "string"
+    },
+    "message": "获取用户信息成功"
+}
+    </pre>
+</div>
+
+</body>
+</html>

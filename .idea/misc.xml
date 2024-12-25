@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
     <writeAnnotations>
@@ -10,6 +11,7 @@
       <list>
         <option value="$PROJECT_DIR$/spring-boot-starter-pear/pom.xml" />
         <option value="$PROJECT_DIR$/spring-boot-starter-pear-test/pom.xml" />
+        <option value="$PROJECT_DIR$/pear-spring-boot-starter/pom.xml" />
       </list>
     </option>
   </component>

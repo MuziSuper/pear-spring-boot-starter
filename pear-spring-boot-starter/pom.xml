@@ -71,7 +71,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-            <version>3.5.7</version>
+            <version>3.5.9</version>
             <optional>true</optional>
         </dependency>
         <!-- 进制转换  -->
