@@ -4,10 +4,10 @@
     <springProperty scope="context" name="LOG_LEVEL" source="app.log.level" defaultValue="INFO"/>
     <springProperty scope="context" name="LOG_PATTERN" source="app.log.stdoutPattern" defaultValue="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %-17black(%thread) %-82green(%logger{70}-%line) %highlight(%msg){black} %highlight(%ex){red} \n"/>
     <springProperty scope="context" name="LOG_FILE_PATTERN" source="app.log.filePattern" defaultValue="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
-    <springProperty scope="context" name="FILE_PATH" source="app.log.filePath" defaultValue="src/main/resources/log"/>
-    <springProperty scope="context" name="LOG_CATALOGUE_PATH" source="app.log.logCataloguePath" defaultValue="src/main/resources/log/log-day"/>
-    <springProperty scope="context" name="WARN_CATALOGUE_PATH" source="app.log.warnCataloguePath" defaultValue="src/main/resources/log/warn-day"/>
-    <springProperty scope="context" name="ERROR_CATALOGUE_PATH" source="app.log.errorCataloguePath" defaultValue="src/main/resources/log/error-day"/>
+    <springProperty scope="context" name="FILE_PATH" source="app.log.filePath" defaultValue="log"/>
+    <springProperty scope="context" name="LOG_CATALOGUE_PATH" source="app.log.logCatalogueAddress" defaultValue="log/log-day"/>
+    <springProperty scope="context" name="WARN_CATALOGUE_PATH" source="app.log.warnCatalogueAddress" defaultValue="log/warn-day"/>
+    <springProperty scope="context" name="ERROR_CATALOGUE_PATH" source="app.log.errorCatalogueAddress" defaultValue="log/error-day"/>
 
     <!-- 控制台日志 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

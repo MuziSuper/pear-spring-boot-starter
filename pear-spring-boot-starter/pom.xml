@@ -12,7 +12,7 @@
     <artifactId>pear-spring-boot-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>spring-boot-starter-pear</name>
+    <name>pear-spring-boot-starter</name>
     <description>Convenient server developers to manage the background framework, built-in a visual management
         interface
     </description>

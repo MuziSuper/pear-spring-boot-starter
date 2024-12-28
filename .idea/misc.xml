@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/spring-boot-starter-pear/pom.xml" />
         <option value="$PROJECT_DIR$/spring-boot-starter-pear-test/pom.xml" />
         <option value="$PROJECT_DIR$/pear-spring-boot-starter/pom.xml" />
+        <option value="$PROJECT_DIR$/pear-spring-boot-starter-test/pom.xml" />
       </list>
     </option>
   </component>

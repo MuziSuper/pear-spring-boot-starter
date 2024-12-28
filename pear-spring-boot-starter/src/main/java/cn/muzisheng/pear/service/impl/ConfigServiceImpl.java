@@ -7,13 +7,13 @@ import cn.muzisheng.pear.service.ConfigService;
 import cn.muzisheng.pear.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Component
 public class ConfigServiceImpl implements ConfigService {
     private final Environment environment;
     private final ConfigDAO configDAO;

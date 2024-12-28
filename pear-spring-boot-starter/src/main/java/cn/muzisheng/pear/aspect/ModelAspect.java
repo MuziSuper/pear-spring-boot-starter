@@ -13,13 +13,14 @@ import org.springframework.stereotype.Component;
 public class ModelAspect {
     @Autowired
     private LogService logger;
-    @Pointcut("@annotation(cn.muzisheng.pear.annotation.Model)")
+    @Pointcut("@annotation(cn.muzisheng.pear.annotation.BackgroundApi)")
     public void modelPoint() {
     }
     @Around("modelPoint()")
     public Object around(ProceedingJoinPoint jp) throws Throwable {
         Object target = jp.getTarget();
         String className=target.getClass().getSimpleName();
+        System.out.println(className);
         return jp.proceed();
     }
 }
