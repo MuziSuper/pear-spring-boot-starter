@@ -2,6 +2,9 @@ package cn.muzisheng.pear.service;
 
 import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.service.impl.ConfigServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
+
 
 public interface ConfigService {
     public String getEnv(String key);

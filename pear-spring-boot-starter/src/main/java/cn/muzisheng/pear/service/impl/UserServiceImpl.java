@@ -16,6 +16,8 @@ import cn.muzisheng.pear.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
-@Component
+@Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;
@@ -32,6 +34,7 @@ public class UserServiceImpl implements UserService {
     private LogService logService;
     @Autowired
     private JwtUtil jwtUtil;
+
 
     @Override
     public ResponseEntity<Result<Map<String, Object>>> register(HttpServletRequest request, RegisterUserForm registerUserForm) {

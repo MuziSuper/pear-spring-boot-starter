@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnClass(TokenProperties.class)
-@EnableConfigurationProperties(TokenProperties.class)
-public class TokenAutoConfigure {
-    @Bean("tokenProperties")
+@ConditionalOnClass(UserProperties.class)
+@EnableConfigurationProperties(UserProperties.class)
+public class UserAutoConfigure {
+    @Bean("userProperties")
     @ConditionalOnMissingBean
-    public TokenProperties tokenProperties() {
-        return new TokenProperties(Constant.TOKEN_DEFAULT_SECRET_SALT, Constant.TOKEN_DEFAULT_SECRET_PREFIX,Constant.TOKEN_DEFAULT_EXPIRE_DAY);
+    public UserProperties tokenProperties() {
+        return new UserProperties(Constant.APP_USER_PASSWORD_SALT);
     }
 }

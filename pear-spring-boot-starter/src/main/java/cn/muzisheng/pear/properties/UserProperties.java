@@ -12,5 +12,5 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @ConfigurationProperties("app.user.password.salt")
 public class UserProperties {
-    public String salt=Constant.APP_USER_PASSWORD_SALT;
+    public String salt;
 }

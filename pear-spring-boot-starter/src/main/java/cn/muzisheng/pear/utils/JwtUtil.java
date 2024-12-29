@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Component
 public class JwtUtil {
-    @Resource(name = "tokenConfig")
+    @Resource(name = "tokenProperties")
     private TokenProperties tokenProperties;
 
     /**
