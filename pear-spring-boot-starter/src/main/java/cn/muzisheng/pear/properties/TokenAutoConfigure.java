@@ -13,7 +13,10 @@ import org.springframework.context.annotation.Configuration;
 public class TokenAutoConfigure {
     @Bean("tokenProperties")
     @ConditionalOnMissingBean
-    public TokenProperties tokenProperties() {
-        return new TokenProperties(Constant.TOKEN_DEFAULT_SECRET_SALT, Constant.TOKEN_DEFAULT_SECRET_PREFIX,Constant.TOKEN_DEFAULT_EXPIRE_DAY);
+    public TokenProperties tokenProperties(TokenProperties tokenProperties) {
+        tokenProperties.setTokenExpire(Constant.TOKEN_DEFAULT_EXPIRE_DAY);
+        tokenProperties.setTokenHead(Constant.TOKEN_DEFAULT_SECRET_PREFIX);
+        tokenProperties.setTokenSalt(Constant.TOKEN_DEFAULT_SECRET_SALT);
+        return tokenProperties;
     }
 }

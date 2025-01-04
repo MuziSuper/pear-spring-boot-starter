@@ -24,7 +24,7 @@ public class ExpiredCache<K,V> {
     }
 
     /**
-     * 获取缓存中保存的值，未命中则返回null
+     * 获取缓存中保存的值，未命中则返回null，若过期则删除并返回null
      */
     public V get(K key){
         ExpiredCacheValue<V> value=this.cache.get(key);

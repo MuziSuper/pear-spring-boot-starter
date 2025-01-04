@@ -4,9 +4,12 @@ import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.dao.UserDAO;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.UserException;
+import cn.muzisheng.pear.service.ConfigService;
 import cn.muzisheng.pear.utils.ExpiredCache;
 import cn.muzisheng.pear.service.LogService;
+import jakarta.annotation.Resource;
 import org.apache.commons.cli.*;
+import org.hibernate.annotations.Source;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,21 +20,29 @@ import java.util.List;
 
 @Component
 public class ApplicationInitialization implements CommandLineRunner {
+    @Resource
+    private long cacheSize;
 
     private final UserDAO userDAO;
     private final LogService logService;
+    private final ConfigService configService;
 
-    public static final ExpiredCache<String,String> ConfigCache=new ExpiredCache<String,String>().newExpiredCache(Constant.CACHE_EXPIRED);
-    public static final ExpiredCache<String,String> EnvCache=new ExpiredCache<String,String>().newExpiredCache(Constant.CACHE_EXPIRED);
+    public static ExpiredCache<String,String> ConfigCache;
+    public static ExpiredCache<String,String> EnvCache;
 
     @Autowired
-    public ApplicationInitialization(LogService logService, UserDAO userDAO) {
+    public ApplicationInitialization(LogService logService, UserDAO userDAO,ConfigService configService) {
         this.userDAO = userDAO;
         this.logService=logService;
+        this.configService=configService;
+
+        ConfigCache=new ExpiredCache<String,String>().newExpiredCache(Constant.CACHE_EXPIRED);
+        EnvCache=new ExpiredCache<String,String>().newExpiredCache(Constant.CACHE_EXPIRED);
     }
 
     @Override
     public void run(String... args) throws Exception {
+        // 命令行参数
         Options options = new Options();
         List<Option> optionList=new ArrayList<>();
         optionList.add(new Option("u", "superuser", true, "username"));
@@ -94,6 +105,7 @@ public class ApplicationInitialization implements CommandLineRunner {
             System.out.println(e.getMessage());
             System.exit(1);
         }
+
 
     }
 }

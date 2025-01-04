@@ -1,19 +1,28 @@
 package cn.muzisheng.pear.properties;
 
 import cn.muzisheng.pear.constant.Constant;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@Slf4j
 @Configuration
-@ConditionalOnClass(LogAutoConfigure.class)
+@ConditionalOnClass(LogProperties.class)
 @EnableConfigurationProperties(LogProperties.class)
 public class LogAutoConfigure {
     @Bean("logProperties")
     @ConditionalOnMissingBean
-    public LogProperties logProperties() {
-        return new LogProperties("INFO","%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %-17black(%thread) %-82green(%logger{70}-%line) %highlight(%msg){black} %highlight(%ex){red} \\n","%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n","log","log/log-day","log/warn-day","log/error-day");
+    public LogProperties logProperties(LogProperties logProperties) {
+        logProperties.setLogCatalogueAddress(Constant.LOG_DEFAULT_LOG_CATALOGUE_PATH);
+        logProperties.setWarnCatalogueAddress(Constant.LOG_DEFAULT_WARN_CATALOGUE_PATH);
+        logProperties.setErrorCatalogueAddress(Constant.LOG_DEFAULT_ERROR_CATALOGUE_PATH);
+        logProperties.setFilePath(Constant.LOG_DEFAULT_FILE_PATH);
+        logProperties.setFilePattern(Constant.LOG_DEFAULT_FILE_PATTERN);
+        logProperties.setLevel(Constant.LOG_DEFAULT_LEVEL);
+        logProperties.setStdoutPattern(Constant.LOG_DEFAULT_PATTERN);
+        return logProperties;
     }
 }

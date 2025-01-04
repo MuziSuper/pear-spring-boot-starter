@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
-@Service
+
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;

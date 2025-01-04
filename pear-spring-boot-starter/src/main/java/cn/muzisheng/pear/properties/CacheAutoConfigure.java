@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnClass(UserProperties.class)
-@EnableConfigurationProperties(UserProperties.class)
-public class UserAutoConfigure {
-    @Bean("userProperties")
+@ConditionalOnClass(CacheProperties.class)
+@EnableConfigurationProperties(CacheProperties.class)
+public class CacheAutoConfigure {
+    @Bean("cacheSize")
     @ConditionalOnMissingBean
-    public UserProperties tokenProperties(UserProperties userProperties) {
-        userProperties.setSalt(Constant.APP_USER_PASSWORD_SALT);
-        return userProperties;
+    public Long cacheProperties(CacheProperties cacheProperties) {
+        return cacheProperties.getSize();
     }
+
 }

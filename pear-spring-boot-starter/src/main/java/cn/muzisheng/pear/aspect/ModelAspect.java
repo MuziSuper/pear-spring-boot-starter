@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class ModelAspect {
-    @Qualifier("logService")
     @Autowired
     private LogService logger;
     @Pointcut("@annotation(cn.muzisheng.pear.annotation.BackgroundApi)")

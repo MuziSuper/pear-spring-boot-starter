@@ -5,6 +5,8 @@ import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.initialize.ApplicationInitialization;
 import cn.muzisheng.pear.service.ConfigService;
 import cn.muzisheng.pear.service.LogService;
+import com.sun.istack.NotNull;
+import io.micrometer.common.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
@@ -27,23 +29,26 @@ public class ConfigServiceImpl implements ConfigService {
         this.configDAO=configDAO;
     }
     @Override
+    @Nullable
     public String getEnv(String key) {
         if (ApplicationInitialization.EnvCache != null) {
             String value = ApplicationInitialization.EnvCache.get(key);
             if (value != null) {
+                ApplicationInitialization.EnvCache.add(key,value);
                 return value;
             }
         }
         return environment.getProperty(key, String.class);
     }
-
+    @Nullable
     public <T> T getEnv(String key,Class<T> type) {
         if (ApplicationInitialization.EnvCache != null) {
             String valueStr = ApplicationInitialization.EnvCache.get(key);
             if (valueStr != null) {
-                try{
+                try {
+                    ApplicationInitialization.EnvCache.add(key,valueStr);
                     return type.cast(valueStr);
-                }catch(ClassCastException e){
+                } catch (ClassCastException e) {
                     return null;
                 }
             }
