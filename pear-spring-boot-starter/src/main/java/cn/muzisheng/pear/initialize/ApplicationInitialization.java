@@ -36,8 +36,8 @@ public class ApplicationInitialization implements CommandLineRunner {
         this.logService=logService;
         this.configService=configService;
 
-        ConfigCache=new ExpiredCache<String,String>().newExpiredCache(Constant.CACHE_EXPIRED);
-        EnvCache=new ExpiredCache<String,String>().newExpiredCache(Constant.CACHE_EXPIRED);
+        ConfigCache=new ExpiredCache<String,String>().newExpiredCache(cacheSize);
+        EnvCache=new ExpiredCache<String,String>().newExpiredCache(cacheSize);
     }
 
     @Override

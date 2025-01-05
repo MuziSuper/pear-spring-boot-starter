@@ -5,15 +5,13 @@ import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.initialize.ApplicationInitialization;
 import cn.muzisheng.pear.service.ConfigService;
 import cn.muzisheng.pear.service.LogService;
-import com.sun.istack.NotNull;
+import cn.muzisheng.pear.utils.ReadProperties;
 import io.micrometer.common.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -21,39 +19,46 @@ public class ConfigServiceImpl implements ConfigService {
     private final Environment environment;
     private final ConfigDAO configDAO;
     private final LogService LOG;
-
+    private final ReadProperties readProperties;
     @Autowired
-    public ConfigServiceImpl(Environment environment, ConfigDAO configDAO, LogService logService){
+    public ConfigServiceImpl(Environment environment, ConfigDAO configDAO, LogService logService,ReadProperties readProperties){
         this.environment = environment;
         this.LOG = logService;
         this.configDAO=configDAO;
+        this.readProperties=readProperties;
     }
+
     @Override
     @Nullable
     public String getEnv(String key) {
         if (ApplicationInitialization.EnvCache != null) {
             String value = ApplicationInitialization.EnvCache.get(key);
             if (value != null) {
+                // 刷新缓存
+                ApplicationInitialization.EnvCache.add(key,value);
+                return value;
+            }
+            value = searchAllEnv(key);
+            if(value != null){
                 ApplicationInitialization.EnvCache.add(key,value);
                 return value;
             }
         }
+
         return environment.getProperty(key, String.class);
     }
     @Nullable
     public <T> T getEnv(String key,Class<T> type) {
-        if (ApplicationInitialization.EnvCache != null) {
-            String valueStr = ApplicationInitialization.EnvCache.get(key);
-            if (valueStr != null) {
-                try {
-                    ApplicationInitialization.EnvCache.add(key,valueStr);
-                    return type.cast(valueStr);
-                } catch (ClassCastException e) {
-                    return null;
-                }
-            }
+        String valueStr=getEnv(key);
+        if (valueStr == null){
+            return null;
         }
-        return environment.getProperty(key, type);
+        try {
+            return type.cast(valueStr);
+        } catch (ClassCastException e) {
+            LOG.warn("Type conversion failure");
+            return null;
+        }
     }
     @Override
     public boolean getBoolEnv(String key) {
@@ -100,27 +105,14 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     public <T> T getValue(String key,Class<T> type) {
-        key=key.toLowerCase();
-        if (ApplicationInitialization.ConfigCache != null) {
-            String value = ApplicationInitialization.ConfigCache.get(key);
-            if (value != null) {
-                try{
-                    return type.cast(value);
-                }catch(ClassCastException e){
-                    return null;
-                }
-            }
-        }
-        Config config=configDAO.get(key);
-        if(config==null){
+        String valueStr=getValue(key);
+        if (valueStr == null){
             return null;
         }
-        if (ApplicationInitialization.ConfigCache != null) {
-            ApplicationInitialization.ConfigCache.add(key,config.getValue());
-        }
-        try {
-            return type.cast(config.getValue());
-        }catch (ClassCastException e){
+        try{
+            return type.cast(valueStr);
+        }catch(ClassCastException e){
+            LOG.warn("Type conversion failure");
             return null;
         }
     }
@@ -175,6 +167,19 @@ public class ConfigServiceImpl implements ConfigService {
         }
         return configs.toArray(new Config[0]);
     }
-
-
+    /**
+     * 查找所有配置文件，遍历配置项，将遍历到的配置项加载到缓存中，直到查找到对应key键的配置项，停止遍历。
+     **/
+    private String searchAllEnv(String key){
+        Map<String,String> propertiesMap=readProperties.loadAllProperties();
+        for (Map.Entry<String,String> entry:propertiesMap.entrySet()){
+            if(ApplicationInitialization.EnvCache != null){
+                ApplicationInitialization.EnvCache.add(entry.getKey(),entry.getValue());
+                if(entry.getKey().equals(key)){
+                    return entry.getValue();
+                }
+            }
+        }
+        return null;
+    }
 }

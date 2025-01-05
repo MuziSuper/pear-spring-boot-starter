@@ -14,6 +14,9 @@ public class CacheAutoConfigure {
     @Bean("cacheSize")
     @ConditionalOnMissingBean
     public Long cacheProperties(CacheProperties cacheProperties) {
+        if(cacheProperties.getSize()==0L){
+            cacheProperties.setSize(Constant.CACHE_EXPIRED);
+        }
         return cacheProperties.getSize();
     }
 

@@ -22,6 +22,8 @@ public class testApi {
         logService.info("hello world");
         logService.warn("hello world");
         logService.error("hello world");
-        configService.g;
+        configService.setValue("test","test","test",true,true);
+        configService.loadAutoLoads();
+
     }
 }

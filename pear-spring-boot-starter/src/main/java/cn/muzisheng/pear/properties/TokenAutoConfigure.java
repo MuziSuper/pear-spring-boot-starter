@@ -14,9 +14,15 @@ public class TokenAutoConfigure {
     @Bean("tokenProperties")
     @ConditionalOnMissingBean
     public TokenProperties tokenProperties(TokenProperties tokenProperties) {
-        tokenProperties.setTokenExpire(Constant.TOKEN_DEFAULT_EXPIRE_DAY);
-        tokenProperties.setTokenHead(Constant.TOKEN_DEFAULT_SECRET_PREFIX);
-        tokenProperties.setTokenSalt(Constant.TOKEN_DEFAULT_SECRET_SALT);
+        if(tokenProperties.getTokenExpire() == 0L|| tokenProperties.getTokenSalt().isEmpty()){
+            tokenProperties.setTokenExpire(Constant.TOKEN_DEFAULT_EXPIRE_DAY);
+        }
+        if(tokenProperties.getTokenHead()==null ||tokenProperties.getTokenHead().isEmpty()){
+            tokenProperties.setTokenHead(Constant.TOKEN_DEFAULT_SECRET_PREFIX);
+        }
+        if(tokenProperties.getTokenSalt() == null||tokenProperties.getTokenSalt().isEmpty()){
+            tokenProperties.setTokenSalt(Constant.TOKEN_DEFAULT_SECRET_SALT);
+        }
         return tokenProperties;
     }
 }

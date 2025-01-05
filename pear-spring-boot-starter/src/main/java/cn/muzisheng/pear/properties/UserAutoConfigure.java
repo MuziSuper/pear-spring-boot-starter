@@ -14,7 +14,9 @@ public class UserAutoConfigure {
     @Bean("userProperties")
     @ConditionalOnMissingBean
     public UserProperties tokenProperties(UserProperties userProperties) {
-        userProperties.setSalt(Constant.APP_USER_PASSWORD_SALT);
+        if(userProperties.getSalt()==null||userProperties.getSalt().isEmpty()){
+            userProperties.setSalt(Constant.APP_USER_PASSWORD_SALT);
+        }
         return userProperties;
     }
 }

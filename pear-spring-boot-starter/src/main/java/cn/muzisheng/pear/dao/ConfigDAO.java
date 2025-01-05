@@ -20,10 +20,12 @@ public class ConfigDAO {
     }
     public boolean createConfig(Config config){
         QueryWrapper<Config> queryWrapper = new QueryWrapper<>();
-        UpdateWrapper<Config> updateWrapper = new UpdateWrapper<>();
         // 查询数据是否存在
         Config existingConfig = configMapper.selectOne(queryWrapper.eq("`key`", config.getKey()));
         if (existingConfig != null) {
+            config.setDesc(existingConfig.getDesc());
+            config.setPub(existingConfig.isPub());
+            config.setId(existingConfig.getId());
             // 数据存在，更新数据
             return configMapper.updateById(config) > 0;
         } else {
