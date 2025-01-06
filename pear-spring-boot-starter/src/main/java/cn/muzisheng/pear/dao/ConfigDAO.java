@@ -18,7 +18,10 @@ public class ConfigDAO {
     public ConfigDAO(ConfigMapper configMapper){
         this.configMapper = configMapper;
     }
-    public boolean createConfig(Config config){
+    /**
+     * 创建或更新config,若发生冲突，则只更新value、format、autoload、public字段
+     **/
+    public boolean createConfigClausesPartialField(Config config){
         QueryWrapper<Config> queryWrapper = new QueryWrapper<>();
         // 查询数据是否存在
         Config existingConfig = configMapper.selectOne(queryWrapper.eq("`key`", config.getKey()));
@@ -33,15 +36,36 @@ public class ConfigDAO {
             return configMapper.insert(config) > 0;
         }
     }
-
+    /**
+     * 创建或更新config,若发生冲突，则不执行任何操作
+     **/
+    public boolean createConfig(Config config){
+        QueryWrapper<Config> queryWrapper = new QueryWrapper<>();
+        // 查询数据是否存在
+        Config existingConfig = configMapper.selectOne(queryWrapper.eq("`key`", config.getKey()));
+        if (existingConfig == null){
+            return configMapper.insert(config)>0;
+        }
+        return false;
+    }
+    /**
+     * 获取config
+     * @param key 键
+     **/
     public Config get(String key){
         QueryWrapper<Config> queryWrapper = new QueryWrapper<>();
         return configMapper.selectOne(queryWrapper.eq("`key`", key));
     }
+    /**
+     * 获取所有autoload为true的config
+     **/
     public List<Config> getConfigsWithTrueAutoload(){
         QueryWrapper<Config> queryWrapper = new QueryWrapper<>();
         return configMapper.selectList(queryWrapper.eq("autoload", true));
     }
+    /**
+     * 获取所有pub为true的config
+     **/
     public List<Config> getConfigsWithTruePub(){
         QueryWrapper<Config> queryWrapper = new QueryWrapper<>();
         return configMapper.selectList(queryWrapper.eq("pub", true));

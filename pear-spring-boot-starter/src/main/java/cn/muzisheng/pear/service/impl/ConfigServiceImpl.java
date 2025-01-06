@@ -1,31 +1,36 @@
 package cn.muzisheng.pear.service.impl;
 
+import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.dao.ConfigDAO;
 import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.initialize.ApplicationInitialization;
 import cn.muzisheng.pear.service.ConfigService;
 import cn.muzisheng.pear.service.LogService;
-import cn.muzisheng.pear.utils.ReadProperties;
 import io.micrometer.common.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 
 public class ConfigServiceImpl implements ConfigService {
     private final Environment environment;
     private final ConfigDAO configDAO;
     private final LogService LOG;
-    private final ReadProperties readProperties;
     @Autowired
-    public ConfigServiceImpl(Environment environment, ConfigDAO configDAO, LogService logService,ReadProperties readProperties){
+    public ConfigServiceImpl(Environment environment, ConfigDAO configDAO, LogService logService){
         this.environment = environment;
         this.LOG = logService;
         this.configDAO=configDAO;
-        this.readProperties=readProperties;
     }
 
     @Override
@@ -53,12 +58,18 @@ public class ConfigServiceImpl implements ConfigService {
         if (valueStr == null){
             return null;
         }
-        try {
-            return type.cast(valueStr);
-        } catch (ClassCastException e) {
-            LOG.warn("Type conversion failure");
-            return null;
-        }
+            if(type == Integer.class){
+                try{
+                    return (T) Integer.valueOf(valueStr);
+                }catch (NumberFormatException e){
+                    LOG.warn("Type conversion failure");
+                    return null;
+                }
+            }else if (type == Boolean.class){
+                    return (T) Boolean.valueOf(valueStr);
+            }else{
+                return type.cast(valueStr);
+            }
     }
     @Override
     public boolean getBoolEnv(String key) {
@@ -80,7 +91,7 @@ public class ConfigServiceImpl implements ConfigService {
         config.setFormat(format);
         config.setAutoload(autoload);
         config.setPub(pub);
-        if(!configDAO.createConfig(config)){
+        if(!configDAO.createConfigClausesPartialField(config)){
             LOG.warn("setValue fail, key "+key+" value "+value+" format "+format+" autoload "+autoload+" pub "+pub);
         }
     }
@@ -144,9 +155,7 @@ public class ConfigServiceImpl implements ConfigService {
         config.setPub(pub);
         configDAO.createConfig(config);
     }
-    /**
-     * 将数据库中存储的autoload设为true的configs加载到缓存中
-     **/
+
     @Override
     public void loadAutoLoads() {
         List<Config> configs=configDAO.getConfigsWithTrueAutoload();
@@ -168,18 +177,49 @@ public class ConfigServiceImpl implements ConfigService {
         return configs.toArray(new Config[0]);
     }
     /**
-     * 查找所有配置文件，遍历配置项，将遍历到的配置项加载到缓存中，直到查找到对应key键的配置项，停止遍历。
+     * 搜索/src/main/resources目录下所有properties文件,遍历配置项，将遍历到的配置项加载到缓存中，直到查找到对应key键的配置项，停止遍历。
      **/
-    private String searchAllEnv(String key){
-        Map<String,String> propertiesMap=readProperties.loadAllProperties();
-        for (Map.Entry<String,String> entry:propertiesMap.entrySet()){
-            if(ApplicationInitialization.EnvCache != null){
-                ApplicationInitialization.EnvCache.add(entry.getKey(),entry.getValue());
-                if(entry.getKey().equals(key)){
-                    return entry.getValue();
-                }
-            }
+    public String searchAllEnv(String key) {
+        HashMap<String,String> map = new HashMap<>();
+        try(Stream<Path> paths= Files.walk(Paths.get(Constant.APP_DEFAULT_SEARCH_PROPERTIES_PATH))){
+            paths.filter(Files::isRegularFile)
+                    .filter(p -> p.toString().endsWith(".properties"))
+                    .forEach(p -> {
+                        try {
+                            String line="";
+                            BufferedReader buf = new BufferedReader(new FileReader(p.toFile()));
+                            while((line=buf.readLine())!=null){
+                                line=line.trim();
+                                if(line.isEmpty()){
+                                    continue;
+                                }
+                                if(line.startsWith("#")){
+                                    continue;
+                                }
+                                if(!line.contains("=")){
+                                    continue;
+                                }
+                                String[] properties =line.split("=",2);
+                                if(properties.length!=2){
+                                    continue;
+                                }
+                                properties[0]=properties[0].trim().toLowerCase();
+                                properties[1]=properties[1].trim();
+                                if(ApplicationInitialization.EnvCache != null){
+                                    ApplicationInitialization.EnvCache.add(properties[0],properties[1]);
+                                }
+                                if(key.equalsIgnoreCase(properties[0])){
+                                    map.put(key, properties[1]);
+                                    break;
+                                }
+                            }
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+        } catch(Exception e){
+            LOG.error("File cannot be accessed");
         }
-        return null;
+        return map.get(key);
     }
 }

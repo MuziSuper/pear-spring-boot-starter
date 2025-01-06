@@ -47,6 +47,12 @@ public interface ConfigService {
      * 将配置信息存入到数据库的config表中
      **/
     public void checkValue(String key,String defaultValue,String format,boolean autoload,boolean pub);
+    /**
+     * 将数据库中存储的autoload设为true的configs加载到缓存中
+     **/
     public void loadAutoLoads();
+    /**
+     * 将数据库中存储的pub设为true的configs加载到缓存中,并返回configs数组
+     **/
     public Config[] loadPublicConfigs();
 }
