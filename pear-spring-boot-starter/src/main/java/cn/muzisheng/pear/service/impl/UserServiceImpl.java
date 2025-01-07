@@ -15,12 +15,10 @@ import cn.muzisheng.pear.utils.Response;
 import cn.muzisheng.pear.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -28,10 +26,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserServiceImpl implements UserService {
+    private final static Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserDAO userDAO;
-    @Autowired
-    private LogService logService;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -49,7 +46,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = userDAO.createUser(registerUserForm.getEmail(), registerUserForm.getPassword());
         if (user == null) {
-            logService.error("failed to create a user: " + registerUserForm.getEmail());
+            LOG.error("failed to create a user: " + registerUserForm.getEmail());
             result.setStatus(Constant.USER_EXCEPTION);
             return result.value();
         }
@@ -63,14 +60,14 @@ public class UserServiceImpl implements UserService {
         user.setLastLoginIp(request.getRemoteAddr());
 
         if (!userDAO.updateUserById(user)) {
-            logService.error("update user fields fail, user email: " + registerUserForm.getEmail());
+            LOG.error("update user fields fail, user email: " + registerUserForm.getEmail());
         }
 
         /*
          * 触发用户注册事件，发布消息，
          * 后期消息系统进行补充
          */
-        logService.info("register user success, user email: " + registerUserForm.getEmail());
+        LOG.info("register user success, user email: " + registerUserForm.getEmail());
 
         Map<String, Object> req = new HashMap<>();
         req.put("email", user.getEmail());
@@ -184,7 +181,7 @@ public class UserServiceImpl implements UserService {
          * 触发用户登陆事件，发布消息，
          * 后期消息系统进行补充
          */
-        logService.info("login user success, user email: " + user.getEmail());
+        LOG.info("login user success, user email: " + user.getEmail());
     }
 
     /**

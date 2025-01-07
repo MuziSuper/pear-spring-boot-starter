@@ -4,12 +4,16 @@ import cn.muzisheng.pear.service.LogService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
 public class LogServiceImpl implements LogService {
-    private static final Logger LOG= LoggerFactory.getLogger(LogServiceImpl.class);
+    private Logger LOG;
+    public void setClass(Class<?> clazz) {
+        this.LOG = LoggerFactory.getLogger(clazz);
+    }
     @Override
     public void warn(String message) {
         LOG.warn(message);
