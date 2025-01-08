@@ -157,10 +157,10 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public void checkValue(String key, String defaultValue, String format, boolean autoload, boolean pub) {
+    public void checkValue(String key, String value, String format, boolean autoload, boolean pub) {
         Config config = new Config();
         config.setKey(key.toUpperCase());
-        config.setValue(defaultValue);
+        config.setValue(value);
         config.setFormat(format);
         config.setAutoload(autoload);
         config.setPub(pub);

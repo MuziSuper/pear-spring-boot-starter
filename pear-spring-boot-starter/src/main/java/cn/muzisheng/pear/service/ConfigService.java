@@ -50,12 +50,12 @@ public interface ConfigService {
     /**
      * 将配置信息存入到数据库的config表中,若发生冲突，则不执行任何操作
      * @param key 键名
-     * @param defaultValue 键值默认值
+     * @param value 键值
      * @param format 键值数据类型
      * @param autoload 是否项目启动时自动加载
      * @param pub 是否为公开数据
      **/
-    public void checkValue(String key,String defaultValue,String format,boolean autoload,boolean pub);
+    public void checkValue(String key,String value,String format,boolean autoload,boolean pub);
     /**
      * 将数据库中存储的autoload设为true的configs加载到缓存中
      **/

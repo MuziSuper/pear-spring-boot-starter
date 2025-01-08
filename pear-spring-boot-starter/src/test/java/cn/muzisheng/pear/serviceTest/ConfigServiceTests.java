@@ -4,7 +4,7 @@ import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.dao.ConfigDAO;
 import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.initialize.ApplicationInitialization;
-import cn.muzisheng.pear.service.LogService;
+import cn.muzisheng.pear.mapper.ConfigMapper;
 import cn.muzisheng.pear.service.impl.ConfigServiceImpl;
 import cn.muzisheng.pear.utils.ExpiredCache;
 import jakarta.transaction.Transactional;
@@ -18,10 +18,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -40,6 +44,8 @@ public class ConfigServiceTests {
     private ConfigServiceImpl configService;
     @Autowired
     private ConfigServiceImpl configServiceImpl;
+    @MockBean
+    private ConfigMapper configMapper;
 
     @BeforeEach
     public void setUp() {
@@ -223,25 +229,151 @@ public class ConfigServiceTests {
     @DisplayName("getIntegerValueTest")
     class GetIntegerValueTests {
         @Test
-        public void getIntegerValue_Normal() throws Exception{
+        public void getIntegerValue_Normal_Null() throws Exception{
             configService=spy(new ConfigServiceImpl(environment, configDAO));
-            when(configService.getValue("key")).thenReturn("123");
-            assertEquals(123, configService.getIntValue("key", 0));
+            when(configDAO.get("key")).thenReturn(null);
+            assertEquals(1, configService.getIntValue("key", 1));
         }
 
         @Test
-        public void getIntegerValue_Error_Null() throws Exception{
+        public void getIntegerValue_Normal_Value() throws Exception{
             configService=spy(new ConfigServiceImpl(environment, configDAO));
-            when(configService.getValue("key")).thenReturn(null);
-            int defaultValue = 0;
-            assertEquals(0, configService.getIntValue("key", defaultValue));
+            Config config = new Config();
+            config.setValue("2");
+            when(configDAO.get("key")).thenReturn(config);
+            assertEquals(2, configService.getIntValue("key", 1));
         }
         @Test
-        public void getValue_Normal_Error_type() throws Exception{
+        public void getIntegerValue_Error_Type() throws Exception{
             configService=spy(new ConfigServiceImpl(environment, configDAO));
-            when(configService.getValue("key")).thenReturn("hello world");
-            int defaultValue = 0;
-            assertEquals(0, configService.getIntValue("key", defaultValue));
+            Config config = new Config();
+            config.setKey("key");
+            config.setValue("hello world");
+            when(configDAO.get("key")).thenReturn(config);
+            assertEquals(1, configService.getIntValue("key", 1));
+        }
+    }
+    @Nested
+    @Transactional
+    @DisplayName("getIntegerValueTest")
+    class GetBoolValueTests {
+        @Test
+        public void getBoolValue_Normal_Null() throws Exception{
+            configService=spy(new ConfigServiceImpl(environment, configDAO));
+            when(configDAO.get("key")).thenReturn(null);
+            assertFalse(configService.getBoolValue("key"));
+        }
+
+        @Test
+        public void getBoolValue_Normal_Value() throws Exception{
+            configService=spy(new ConfigServiceImpl(environment, configDAO));
+            Config config = new Config();
+            config.setValue("true");
+            when(configDAO.get("key")).thenReturn(config);
+            assertTrue(configService.getBoolValue("key"));
+        }
+        @Test
+        public void getBoolValue_Error_Type() throws Exception{
+            configService=spy(new ConfigServiceImpl(environment, configDAO));
+            Config config = new Config();
+            config.setKey("key");
+            config.setValue("hello world");
+            when(configDAO.get("key")).thenReturn(config);
+            assertFalse(configService.getBoolValue("key"));
+        }
+    }
+    @Nested
+    @Transactional
+    @DisplayName("getIntegerValueTest")
+    class CheckValueTests {
+        @Test
+        public void checkValue_Normal() throws Exception{
+            configService=spy(new ConfigServiceImpl(environment, configDAO));
+            when(configDAO.createConfig(any(Config.class))).thenReturn(false);
+            configService.checkValue("key","value","string",true,true);
+            verify(configDAO).createConfig(any());
+        }
+    }
+    @Nested
+    @Transactional
+    @DisplayName("getIntegerValueTest")
+    class LoadAutoLoadsTests {
+        @Test
+        public void loadAutoLoads_Normal() throws Exception{
+            configService=spy(new ConfigServiceImpl(environment, configDAO));
+            ArrayList<Config> configList = new ArrayList<>();
+            Config config = new Config();
+            config.setId(1000L);
+            config.setKey("key");
+            config.setValue("value");
+            config.setAutoload(true);
+            configList.add(config);
+            when(configDAO.getConfigsWithTrueAutoload()).thenReturn(configList);
+            configService.loadAutoLoads();
+            assertEquals("value", ApplicationInitialization.ConfigCache.get("key"));
+        }
+        @Test
+        public void loadAutoLoads_Error_Null() throws Exception{
+            configService=spy(new ConfigServiceImpl(environment, configDAO));
+            ArrayList<Config> configList = new ArrayList<>();
+            Config config = new Config();
+            config.setId(1000L);
+            config.setKey("key");
+            config.setValue("value");
+            config.setAutoload(false);
+            configList.add(config);
+            when(configDAO.getConfigsWithTrueAutoload()).thenReturn(configList);
+            configService.loadAutoLoads();
+            assertEquals("value",ApplicationInitialization.ConfigCache.get("key"));
+        }
+    }
+    @Nested
+    @Transactional
+    @DisplayName("getIntegerValueTest")
+    class LoadPublicConfigsTests {
+        @Test
+        public void loadPublicConfigs_Normal() throws Exception{
+            configService=spy(new ConfigServiceImpl(environment, configDAO));
+            ArrayList<Config> configList = new ArrayList<>();
+            Config config = new Config();
+            config.setId(1000L);
+            config.setKey("key");
+            config.setValue("value");
+            config.setAutoload(true);
+            config.setPub(true);
+            configList.add(config);
+            Config config2 = new Config();
+            config2.setId(1001L);
+            config2.setKey("key2");
+            config2.setValue("value2");
+            config2.setAutoload(true);
+            config2.setPub(true);
+            configList.add(config2);
+            when(configDAO.getConfigsWithTruePub()).thenReturn(configList);
+            assertEquals(2, configService.loadPublicConfigs().length);
+        }
+        @Test
+        public void loadPublicConfigs_Error_Null() throws Exception{
+            configService=spy(new ConfigServiceImpl(environment, configDAO));
+            ArrayList<Config> configList = new ArrayList<>();
+            Config config = new Config();
+            config.setId(1000L);
+            config.setKey("key");
+            config.setValue("value");
+            config.setAutoload(true);
+            config.setPub(true);
+            configList.add(config);
+            Config config2 = new Config();
+            config2.setId(1001L);
+            config2.setKey("key2");
+            config2.setValue("value2");
+            config2.setAutoload(true);
+            config2.setPub(false);
+            configList.add(config2);
+            when(configDAO.getConfigsWithTruePub()).thenReturn(configList);
+            Config[] res= configService.loadPublicConfigs();
+            assertTrue(List.of(res).contains(config));
+            assertTrue(ApplicationInitialization.ConfigCache.contains("key"));
         }
     }
 }

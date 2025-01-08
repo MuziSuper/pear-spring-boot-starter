@@ -3,8 +3,6 @@ package cn.muzisheng.pear.dao;
 import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.mapper.ConfigMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
