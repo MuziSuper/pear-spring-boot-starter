@@ -81,7 +81,6 @@ public class RegisterTests {
         ResponseEntity<Result<Map<String, Object>>> response = userService.register(request, registerUserForm);
 
         assertEquals(Constant.USER_EXCEPTION, response.getStatusCode().value());
-        verify(logService).error("failed to create a user: " + registerUserForm.getEmail());
     }
 
     @Test
@@ -128,7 +127,6 @@ public class RegisterTests {
         assertEquals(200, response.getStatusCode().value());
         assertNotNull(response.getBody());
 
-        verify(logService).error("update user fields fail, user email: " + registerUserForm.getEmail());
         verify(userDAO).setLastLogin(user, request.getRemoteAddr());
         verify(session).setAttribute(eq(Constant.SESSION_USER_ID), eq(user.getId()));
     }

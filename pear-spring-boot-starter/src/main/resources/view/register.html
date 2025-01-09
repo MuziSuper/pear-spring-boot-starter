@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/element-plus@2.0.0-beta.24/dist/index.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/element-plus@2.0.0-beta.24/dist/index.full.js"></script>
+</head>
+<body class="bg-gray-100 h-screen flex justify-center items-center">
+
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+        <h2 class="text-2xl font-bold text-center mb-6">用户注册</h2>
+
+        <form id="register-form">
+            <div class="mb-4">
+                <label for="register-username" class="block text-gray-700">用户名</label>
+                <input type="text" id="register-username" class="el-input__inner w-full p-2 border rounded" placeholder="请输入用户名">
+            </div>
+
+            <div class="mb-4">
+                <label for="register-password" class="block text-gray-700">密码</label>
+                <input type="password" id="register-password" class="el-input__inner w-full p-2 border rounded" placeholder="请输入密码">
+            </div>
+
+            <div class="mb-4">
+                <label for="confirm-password" class="block text-gray-700">确认密码</label>
+                <input type="password" id="confirm-password" class="el-input__inner w-full p-2 border rounded" placeholder="确认密码">
+            </div>
+
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">注册</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#register-form').submit(function(event) {
+                event.preventDefault();
+
+                const username = $('#register-username').val();
+                const password = $('#register-password').val();
+                const confirmPassword = $('#confirm-password').val();
+
+                if (!username || !password || !confirmPassword) {
+                    alert('所有字段都是必填的');
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    alert('密码不一致');
+                    return;
+                }
+
+                $.ajax({
+                    url: 'http://localhost:8080/api/register',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ username, password }),
+                    success: function(response) {
+                        if (response.success) {
+                            alert('注册成功');
+                            window.location.href = '/login.html';
+                        } else {
+                            alert('注册失败');
+                        }
+                    },
+                    error: function() {
+                        alert('请求失败');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

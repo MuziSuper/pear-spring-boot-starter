@@ -6,6 +6,7 @@ import cn.muzisheng.pear.properties.TokenProperties;
 import cn.muzisheng.pear.utils.JwtUtil;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.antlr.v4.runtime.Token;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,31 +15,29 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class JwtUtilTests {
 
-    @Mock
+
     private TokenProperties tokenProperties;
     @InjectMocks
     private JwtUtil jwtUtil;
 
-    @BeforeEach
-    void setUp() {
-        when(tokenProperties.getTokenExpire()).thenReturn(1000000000L);
-        when(tokenProperties.getTokenHead()).thenReturn("Bearer ");
-        when(tokenProperties.getTokenSalt()).thenReturn("secret");
-    }
 
     @Test
     void generateTokenWithEmail_normal() {
+        TokenProperties tokenProperties=new TokenProperties("secret", "Bearer ", 1000000000L);
+        jwtUtil=spy(new JwtUtil(tokenProperties));
         String email="test@example.com";
         String token=jwtUtil.generateTokenWithEmail(email);
         assertNotNull(token);
@@ -46,6 +45,8 @@ class JwtUtilTests {
 
     @Test
     void refreshToken_normal(){
+        TokenProperties tokenProperties=new TokenProperties("secret", "Bearer ", 1000000000L);
+        jwtUtil=spy(new JwtUtil(tokenProperties));
         String email="test@example.com";
         String token=jwtUtil.generateTokenWithEmail(email);
         String newToken=jwtUtil.refreshToken(token);
@@ -53,16 +54,22 @@ class JwtUtilTests {
     }
     @Test
     void refreshToken_wrong_tokenIsNull(){
+        TokenProperties tokenProperties=new TokenProperties("secret", "Bearer ", 1000000000L);
+        jwtUtil=spy(new JwtUtil(tokenProperties));
         String token="";
         assertThrows(AuthorizationException.class, ()->jwtUtil.refreshToken(token), "bad token");
     }
     @Test
     void refreshToken_wrong_tokenIsError(){
+        TokenProperties tokenProperties=new TokenProperties("secret", "Bearer ", 1000000000L);
+        jwtUtil=spy(new JwtUtil(tokenProperties));
         String token="1fueiwfbewfu";
         assertThrows(AuthorizationException.class, ()->jwtUtil.refreshToken(token), "bad token");
     }
     @Test
      void refreshToken_wrong_tokenIsExpired(){
+        TokenProperties tokenProperties=new TokenProperties("secret", "Bearer ", 1000000000L);
+        jwtUtil=spy(new JwtUtil(tokenProperties));
         String email="test@example.com";
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);
@@ -76,6 +83,8 @@ class JwtUtilTests {
 
     @Test
     void getEmailFromToken_normal(){
+        TokenProperties tokenProperties=new TokenProperties("secret", "Bearer ", 1000000000L);
+        jwtUtil=spy(new JwtUtil(tokenProperties));
         String email="test@example.com";
         String token=jwtUtil.generateTokenWithEmail(email);
         String newEmail=jwtUtil.getEmailFromToken(token);
@@ -84,11 +93,15 @@ class JwtUtilTests {
 
     @Test
     void getEmailFromToken_wrong_tokenIsNull(){
+        TokenProperties tokenProperties=new TokenProperties("secret", "Bearer ", 1000000000L);
+        jwtUtil=spy(new JwtUtil(tokenProperties));
         String token="";
         assertThrows(AuthorizationException.class, ()->jwtUtil.getEmailFromToken(token));
     }
     @Test
     void getEmailFromToken_wrong_tokenIsExpired(){
+        TokenProperties tokenProperties=new TokenProperties("secret", "Bearer ", 1000000000L);
+        jwtUtil=spy(new JwtUtil(tokenProperties));
         String email="test@example.com";
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);

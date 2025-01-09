@@ -42,10 +42,6 @@ public class ConfigServiceTests {
     private ConfigDAO configDAO;
     @InjectMocks
     private ConfigServiceImpl configService;
-    @Autowired
-    private ConfigServiceImpl configServiceImpl;
-    @MockBean
-    private ConfigMapper configMapper;
 
     @BeforeEach
     public void setUp() {
