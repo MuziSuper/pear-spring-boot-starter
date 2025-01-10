@@ -10,7 +10,7 @@
     </parent>
     <groupId>cn.muzisheng.pear</groupId>
     <artifactId>pear-spring-boot-starter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
     <name>pear-spring-boot-starter</name>
     <description>Convenient server developers to manage the background framework, built-in a visual management
