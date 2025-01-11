@@ -17,7 +17,7 @@
         <form id="login-form">
             <div class="mb-4">
                 <label for="email" class="block text-gray-700">邮箱</label>
-                <input type="text" id="username" class="el-input__inner w-full p-2 border rounded" placeholder="请输入邮箱">
+                <input type="text" id="email" class="el-input__inner w-full p-2 border rounded" placeholder="请输入邮箱">
             </div>
 
             <div class="mb-4">
@@ -53,10 +53,10 @@
                 }
                 
                 $.ajax({
-                    url: 'http://localhost:8080/api/login',
+                    url: 'http://localhost:8080/user/login',
                     method: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify({ email, password }),
+                    data: loginForm,
                     success: function(response) {
                         if (response.success) {
                             window.location.href = '/dashboard.html';

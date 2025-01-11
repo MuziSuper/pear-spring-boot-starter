@@ -1,6 +1,9 @@
 package cn.muzisheng.pear.test.api;
 
 
+import cn.muzisheng.pear.service.ConfigService;
+import cn.muzisheng.pear.service.LogService;
+import cn.muzisheng.pear.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
