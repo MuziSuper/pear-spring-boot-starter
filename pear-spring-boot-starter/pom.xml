@@ -5,10 +5,10 @@
 
     <groupId>cn.muzisheng.pear</groupId>
     <artifactId>pear-spring-boot-starter</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
         <spring-boot.version>3.3.5</spring-boot.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -74,12 +74,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -158,10 +156,12 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
+            <optional>true</optional>
             <version>2.3.1</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
+            <optional>true</optional>
             <artifactId>jaxb-runtime</artifactId>
             <version>2.3.1</version>
         </dependency>
@@ -170,6 +170,7 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
+            <optional>true</optional>
             <version>0.9.1</version>
         </dependency>
         <!-- jwt -->
@@ -183,6 +184,7 @@
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
+            <optional>true</optional>
             <version>3.0.2</version>
         </dependency>
 
@@ -191,18 +193,28 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <!-- 配置 maven-surefire-plugin 跳过测试 -->
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version> <!-- 最新稳定版 -->
                 <configuration>
-                    <skipTests>true</skipTests> <!-- 跳过测试的执行 -->
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.3.5</version>
+            </plugin>
+            <!-- 配置 maven-surefire-plugin 跳过测试 -->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                <version>3.0.0-M5</version>-->
+<!--                <configuration>-->
+<!--                    <skipTests>true</skipTests> &lt;!&ndash; 跳过测试的执行 &ndash;&gt;-->
+<!--                </configuration>-->
+<!--            </plugin>-->
 
             <!-- 可选: 使用 maven-jar-plugin 排除测试类 -->
             <plugin>

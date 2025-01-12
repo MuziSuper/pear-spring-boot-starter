@@ -5,7 +5,6 @@ import cn.muzisheng.pear.dao.ConfigDAO;
 import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.initialize.ApplicationInitialization;
 import cn.muzisheng.pear.service.ConfigService;
-import cn.muzisheng.pear.service.LogService;
 import io.micrometer.common.lang.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +53,7 @@ public class ConfigServiceImpl implements ConfigService {
 
         return environment.getProperty(key, String.class);
     }
-
+    @SuppressWarnings("unchecked")
     @Nullable
     public <T> T getEnv(String key, Class<T> type) {
         String valueStr = getEnv(key);
@@ -118,7 +117,7 @@ public class ConfigServiceImpl implements ConfigService {
         }
         return config.getValue();
     }
-
+    @SuppressWarnings("unchecked")
     public <T> T getValue(String key, Class<T> type) {
         String valueStr = getValue(key);
         if (valueStr == null) {
@@ -198,7 +197,7 @@ public class ConfigServiceImpl implements ConfigService {
                     .filter(p -> p.toString().endsWith(".properties"))
                     .forEach(p -> {
                         try {
-                            String line = "";
+                            String line;
                             BufferedReader buf = new BufferedReader(new FileReader(p.toFile()));
                             while ((line = buf.readLine()) != null) {
                                 line = line.trim();
