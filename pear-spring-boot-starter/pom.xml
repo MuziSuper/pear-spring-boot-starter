@@ -2,19 +2,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.4</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
     <groupId>cn.muzisheng.pear</groupId>
     <artifactId>pear-spring-boot-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <java.version>17</java.version>
-        <spring-boot.version>3.3.5</spring-boot.version>
+        <spring-boot.version>2.4.5</spring-boot.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <url>https://github.com/Lonely-LiXinghao/pear</url>
+
+    <licenses>
+        <license/>
+    </licenses>
+
+    <description>
+        Pear is a back-end framework that facilitates the development of back-end personnel, with a built-in visual background management interface
+    </description>
 
     <dependencyManagement>
         <dependencies>
@@ -29,13 +42,6 @@
     </dependencyManagement>
 
 
-    <description>
-        Pear is a back-end framework that facilitates the development of back-end personnel, with a built-in visual background management interface
-    </description>
-
-    <licenses>
-        <license/>
-    </licenses>
 
     <developers>
         <developer>
@@ -52,6 +58,29 @@
     </scm>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- module-core-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.10.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- AOP切面 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
         <!-- 提供了自动装配功能-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -75,6 +104,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+        <!-- web接口 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -100,9 +130,13 @@
         </dependency>
         <!-- mysql数据库 -->
         <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <optional>true</optional>
             <version>8.0.33</version>
         </dependency>
         <!-- sqlite数据库 -->
@@ -180,14 +214,6 @@
             <version>3.10.0</version>
             <optional>true</optional>
         </dependency>
-
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>jsr305</artifactId>
-            <optional>true</optional>
-            <version>3.0.2</version>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -195,16 +221,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version> <!-- 最新稳定版 -->
                 <configuration>
-                    <source>17</source>
-                    <target>17</target>
+                    <source>8</source>
+                    <target>8</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.3.5</version>
             </plugin>
             <!-- 配置 maven-surefire-plugin 跳过测试 -->
 <!--            <plugin>-->
@@ -217,17 +244,17 @@
 <!--            </plugin>-->
 
             <!-- 可选: 使用 maven-jar-plugin 排除测试类 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/*Test.class</exclude>
-                        <exclude>**/*Tests.class</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jar-plugin</artifactId>-->
+<!--                <version>3.1.0</version>-->
+<!--                <configuration>-->
+<!--                    <excludes>-->
+<!--                        <exclude>**/*Test.class</exclude>-->
+<!--                        <exclude>**/*Tests.class</exclude>-->
+<!--                    </excludes>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
 
             <!--sonatype发布插件-->
 <!--            <plugin>-->

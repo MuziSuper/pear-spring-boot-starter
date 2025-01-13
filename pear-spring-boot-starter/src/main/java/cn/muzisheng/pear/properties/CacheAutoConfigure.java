@@ -8,11 +8,9 @@
 //import org.springframework.context.annotation.Configuration;
 //
 //@Configuration
-//@ConditionalOnClass(CacheProperties.class)
 //@EnableConfigurationProperties(CacheProperties.class)
 //public class CacheAutoConfigure {
-//    @Bean("cacheSize")
-//    @ConditionalOnMissingBean
+//    @Bean
 //    public Long cacheProperties(CacheProperties cacheProperties) {
 //        if(cacheProperties.getSize()==0L){
 //            cacheProperties.setSize(Constant.CACHE_EXPIRED);

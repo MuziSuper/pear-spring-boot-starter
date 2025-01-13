@@ -1,7 +1,7 @@
 package cn.muzisheng.pear.test.api;
 
 
-import cn.muzisheng.pear.service.ConfigService;
+import cn.muzisheng.pear;
 import cn.muzisheng.pear.service.LogService;
 import cn.muzisheng.pear.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

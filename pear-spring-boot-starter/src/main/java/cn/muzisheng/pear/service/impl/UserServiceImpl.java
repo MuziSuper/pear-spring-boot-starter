@@ -15,16 +15,19 @@ import cn.muzisheng.pear.utils.Response;
 import cn.muzisheng.pear.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
-
+@Component
 public class UserServiceImpl implements UserService {
     private final static Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired

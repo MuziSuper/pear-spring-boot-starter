@@ -1,8 +1,0 @@
-cn.muzisheng.pear.service.impl.LogServiceImpl
-cn.muzisheng.pear.service.impl.ConfigServiceImpl
-cn.muzisheng.pear.service.impl.UserServiceImpl
-cn.muzisheng.pear.properties.UserProperties
-cn.muzisheng.pear.properties.TokenProperties
-cn.muzisheng.pear.properties.LogProperties
-cn.muzisheng.pear.properties.CacheProperties
-
