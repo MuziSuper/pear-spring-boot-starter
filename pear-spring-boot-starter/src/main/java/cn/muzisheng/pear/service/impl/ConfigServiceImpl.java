@@ -24,13 +24,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-@Component
+@Service
 public class ConfigServiceImpl implements ConfigService {
     private final Environment environment;
     private final ConfigDAO configDAO;
     private final static Logger LOG = LoggerFactory.getLogger(ConfigServiceImpl.class);
 
-    @Autowired
     public ConfigServiceImpl(Environment environment, ConfigDAO configDAO) {
         this.environment = environment;
         this.configDAO = configDAO;

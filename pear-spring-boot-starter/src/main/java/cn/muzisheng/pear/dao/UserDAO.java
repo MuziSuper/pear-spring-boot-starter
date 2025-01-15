@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@Component
+@Service
 public class UserDAO {
 
     private final UserMapper userMapper;

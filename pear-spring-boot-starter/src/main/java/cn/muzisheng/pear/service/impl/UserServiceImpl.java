@@ -27,13 +27,15 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
-@Component
+@Service
 public class UserServiceImpl implements UserService {
     private final static Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
-    @Autowired
-    private UserDAO userDAO;
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final UserDAO userDAO;
+    private final JwtUtil jwtUtil;
+    public UserServiceImpl(UserDAO userDAO, JwtUtil jwtUtil) {
+        this.userDAO=userDAO;
+        this.jwtUtil = jwtUtil;
+    }
 
 
     @Override

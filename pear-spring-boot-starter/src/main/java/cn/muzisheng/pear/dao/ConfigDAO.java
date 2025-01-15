@@ -4,11 +4,12 @@ import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.mapper.ConfigMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-@Component
+@Service
 public class ConfigDAO {
 
     private final ConfigMapper configMapper;
