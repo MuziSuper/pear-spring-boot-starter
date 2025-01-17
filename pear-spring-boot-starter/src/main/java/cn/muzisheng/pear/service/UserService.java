@@ -6,7 +6,6 @@ import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
