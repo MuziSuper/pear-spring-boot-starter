@@ -8,26 +8,32 @@
         <version>3.3.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>cn.muzisheng.pear</groupId>
     <artifactId>pear-spring-boot-starter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2</version>
+    <description>
+        Pear is a back-end framework that facilitates the development of back-end personnel, with a built-in visual background management interface
+    </description>
 
     <properties>
         <java.version>17</java.version>
-        <spring-boot.version>2.4.5</spring-boot.version>
+        <spring-boot.version>3.3.4</spring-boot.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <url>https://github.com/Lonely-LiXinghao/pear</url>
+    <url>https://github.com/MuziSuper/pear</url>
 
     <licenses>
-        <license/>
+        <license>
+            <name>muzisheng.pear</name>
+            <url>https://github.com/MuziSuper/pear</url>
+            <distribution>repo</distribution>
+        </license>
     </licenses>
 
-    <description>
-        Pear is a back-end framework that facilitates the development of back-end personnel, with a built-in visual background management interface
-    </description>
+
 
     <dependencyManagement>
         <dependencies>
@@ -46,16 +52,26 @@
     <developers>
         <developer>
             <name>MuZisheng</name>
-
+            <email>lxh2022304460@163.com</email>
         </developer>
     </developers>
 
     <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
+        <connection>https://github.com/MuziSuper/pear.git</connection>
+        <developerConnection>scm:git:https://github.com/MuziSuper/pear.git</developerConnection>
+        <url>https://github.com/MuziSuper/pear</url>
     </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>
@@ -257,60 +273,60 @@
 <!--            </plugin>-->
 
             <!--sonatype发布插件-->
-<!--            <plugin>-->
-<!--                <groupId>org.sonatype.central</groupId>-->
-<!--                <artifactId>central-publishing-maven-plugin</artifactId>-->
-<!--                <version>0.4.0</version>-->
-<!--                <extensions>true</extensions>-->
-<!--                <configuration>-->
-<!--                    <publishingServerId>central</publishingServerId>-->
-<!--                    <tokenAuth>true</tokenAuth>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.4.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>cn.muzisheng</publishingServerId>
+                    <tokenAuth>true</tokenAuth>
+                    <autoPublish>false</autoPublish>
+                </configuration>
+            </plugin>
             <!-- 生成source -->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-source-plugin</artifactId>-->
-<!--                <version>3.2.1</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>oss</id>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>jar-no-fork</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Javadoc -->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-javadoc-plugin</artifactId>-->
-<!--                <version>2.9.1</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>attach-javadocs</id>-->
-<!--                        <goals>-->
-<!--                            <goal>jar</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- 工程文件自动签名-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-gpg-plugin</artifactId>-->
-<!--                <version>1.6</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>sign-artifacts</id>-->
-<!--                        <phase>verify</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>sign</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

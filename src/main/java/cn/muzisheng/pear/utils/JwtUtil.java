@@ -18,7 +18,6 @@ import java.util.Map;
 @Component
 @AllArgsConstructor
 public class JwtUtil {
-    @Resource(name = "tokenProperties")
     private TokenProperties tokenProperties;
 
     /**
