@@ -11,7 +11,7 @@
 
     <groupId>cn.muzisheng.pear</groupId>
     <artifactId>pear-spring-boot-starter</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <description>
         Pear is a back-end framework that facilitates the development of back-end personnel, with a built-in visual background management interface
     </description>
@@ -28,7 +28,7 @@
     <licenses>
         <license>
             <name>muzisheng.pear</name>
-            <url>https://github.com/MuziSuper/pear</url>
+            <url>https://github.com/MuziSuper/pear-spring-boot-starter</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -250,27 +250,27 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <!-- 配置 maven-surefire-plugin 跳过测试 -->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-surefire-plugin</artifactId>-->
-<!--                <version>3.0.0-M5</version>-->
-<!--                <configuration>-->
-<!--                    <skipTests>true</skipTests> &lt;!&ndash; 跳过测试的执行 &ndash;&gt;-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <skipTests>true</skipTests> <!-- 跳过测试的执行 -->
+                </configuration>
+            </plugin>
 
             <!-- 可选: 使用 maven-jar-plugin 排除测试类 -->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-jar-plugin</artifactId>-->
-<!--                <version>3.1.0</version>-->
-<!--                <configuration>-->
-<!--                    <excludes>-->
-<!--                        <exclude>**/*Test.class</exclude>-->
-<!--                        <exclude>**/*Tests.class</exclude>-->
-<!--                    </excludes>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*Test.class</exclude>
+                        <exclude>**/*Tests.class</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
 
             <!--sonatype发布插件-->
             <plugin>

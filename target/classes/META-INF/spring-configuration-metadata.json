@@ -1,0 +1,87 @@
+{
+  "groups": [
+    {
+      "name": "app.cache",
+      "type": "cn.muzisheng.pear.properties.CacheProperties",
+      "sourceType": "cn.muzisheng.pear.properties.CacheProperties"
+    },
+    {
+      "name": "app.log",
+      "type": "cn.muzisheng.pear.properties.LogProperties",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "app.token",
+      "type": "cn.muzisheng.pear.properties.TokenProperties",
+      "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
+    },
+    {
+      "name": "app.user.password",
+      "type": "cn.muzisheng.pear.properties.UserProperties",
+      "sourceType": "cn.muzisheng.pear.properties.UserProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.cache.size",
+      "type": "java.lang.Long",
+      "sourceType": "cn.muzisheng.pear.properties.CacheProperties"
+    },
+    {
+      "name": "app.log.error-catalogue-address",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "app.log.file-path",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "app.log.file-pattern",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "app.log.level",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "app.log.log-catalogue-address",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "app.log.stdout-pattern",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "app.log.warn-catalogue-address",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "app.token.token-expire",
+      "type": "java.lang.Long",
+      "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
+    },
+    {
+      "name": "app.token.token-head",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
+    },
+    {
+      "name": "app.token.token-salt",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
+    },
+    {
+      "name": "app.user.password.salt",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.UserProperties"
+    }
+  ],
+  "hints": []
+}

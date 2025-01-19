@@ -177,7 +177,6 @@ public class UserServiceImpl implements UserService {
         userDAO.setLastLogin(user, request.getRemoteAddr());
         HttpSession session = request.getSession(true);
         session.setAttribute(Constant.SESSION_USER_ID, user.getId());
-
         /*
          * 触发用户登陆事件，发布消息，
          * 后期消息系统进行补充

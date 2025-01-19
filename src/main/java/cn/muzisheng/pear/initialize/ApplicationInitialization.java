@@ -4,12 +4,10 @@ import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.dao.UserDAO;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.UserException;
-import cn.muzisheng.pear.service.ConfigService;
+import cn.muzisheng.pear.properties.CacheProperties;
 import cn.muzisheng.pear.utils.ExpiredCache;
 import cn.muzisheng.pear.service.LogService;
-import jakarta.annotation.Resource;
 import org.apache.commons.cli.*;
-import org.hibernate.annotations.Source;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -20,28 +18,22 @@ import java.util.List;
 
 @Component
 public class ApplicationInitialization implements CommandLineRunner {
-    @Resource
-    private long cacheSize;
-
     private final UserDAO userDAO;
     private final LogService logService;
-    private final ConfigService configService;
 
     public static ExpiredCache<String,String> ConfigCache;
     public static ExpiredCache<String,String> EnvCache;
 
     @Autowired
-    public ApplicationInitialization(LogService logService, UserDAO userDAO,ConfigService configService) {
+    public ApplicationInitialization(LogService logService, UserDAO userDAO, CacheProperties cacheProperties) {
         this.userDAO = userDAO;
         this.logService=logService;
-        this.configService=configService;
-
-        ConfigCache=new ExpiredCache<String,String>().newExpiredCache(cacheSize);
-        EnvCache=new ExpiredCache<String,String>().newExpiredCache(cacheSize);
+        ConfigCache=new ExpiredCache<String,String>().newExpiredCache(cacheProperties.getSize());
+        EnvCache=new ExpiredCache<String,String>().newExpiredCache(cacheProperties.getSize());
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         // 命令行参数
         Options options = new Options();
         List<Option> optionList=new ArrayList<>();

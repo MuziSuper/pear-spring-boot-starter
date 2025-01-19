@@ -1,5 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.muzisheng.pear.service.impl.LogServiceImpl\
-cn.muzisheng.pear.service.impl.ConfigServiceImpl\
-cn.muzisheng.pear.service.impl.UserServiceImpl\
-cn.muzisheng.pear.dao.ConfigDAO

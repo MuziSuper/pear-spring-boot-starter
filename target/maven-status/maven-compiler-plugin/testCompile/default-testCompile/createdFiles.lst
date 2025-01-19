@@ -1,0 +1,16 @@
+cn\muzisheng\pear\serviceTest\ConfigServiceTests$GetValueTests.class
+cn\muzisheng\pear\controllerTest\UserControllerTest\InfoTests.class
+cn\muzisheng\pear\serviceTest\ConfigServiceTests$GetIntegerEnvTests.class
+cn\muzisheng\pear\serviceTest\ConfigServiceTests.class
+cn\muzisheng\pear\serviceTest\ConfigServiceTests$GetIntegerValueTests.class
+cn\muzisheng\pear\serviceTest\ConfigServiceTests$SetValueTests.class
+cn\muzisheng\pear\serviceTest\ConfigServiceTests$LoadAutoLoadsTests.class
+cn\muzisheng\pear\serviceTest\ConfigServiceTests$LoadPublicConfigsTests.class
+cn\muzisheng\pear\serviceTest\ConfigServiceTests$GetBoolValueTests.class
+cn\muzisheng\pear\serviceTest\JwtUtilTests.class
+cn\muzisheng\pear\serviceTest\ConfigServiceTests$GetBoolEnvTests.class
+cn\muzisheng\pear\controllerTest\UserControllerTest\LoginTests.class
+cn\muzisheng\pear\serviceTest\ConfigServiceTests$GetEnvTests.class
+cn\muzisheng\pear\controllerTest\UserControllerTest\RegisterTests.class
+cn\muzisheng\pear\PearTestApplication.class
+cn\muzisheng\pear\serviceTest\ConfigServiceTests$CheckValueTests.class

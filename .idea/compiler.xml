@@ -8,13 +8,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="pear-spring-boot-starter-test" />
+        <module name="pear-spring-boot-starter (1)" />
         <module name="pear-spring-boot-starter" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="pear-main" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="pear-spring-boot-starter" options="-parameters" />
+      <module name="pear-spring-boot-starter" options="-parameters -parameters" />
+      <module name="pear-spring-boot-starter (1)" options="-parameters -parameters" />
       <module name="pear-spring-boot-starter-test" options="-parameters" />
     </option>
   </component>
