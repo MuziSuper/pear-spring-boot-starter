@@ -5,32 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/element-plus@2.0.0-beta.24/dist/index.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 font-mono text-lg">
     <div class="flex h-screen">
         <!-- 左侧导航 -->
         <div class="w-64 bg-white shadow-lg">
-            <div class="p-4 text-lg font-bold text-gray-800 border-b flex items-center">
-                <img src="favicon.png" alt="Logo" class="inline-block w-8 h-8 rounded-full mr-2">
-                可视化后台数据
+            <div class="text-2xl p-4 font-bold text-gray-800 border-b flex items-center">
+                <img src="favicon.png" alt="Logo" class="inline-block w-12 h-12 rounded-full mr-2">
+                后台管理面板
             </div>
-            <ul class="mt-4 space-y-2">
+            <p class="ml-4 mt-4 text-gray-600">基础部分</p>
+            <ul class="space-y-2">
                 <li>
-                    <a href="#" class="flex items-center p-4 text-gray-700 hover:bg-gray-100">
-                        <span class="material-icons-outlined mr-2">person</span> 用户管理
+                    <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100">
+                        <i class="fa-solid fa-user fa-ms mr-4 ml-2"></i> 用户管理
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="flex items-center p-4 text-gray-700 hover:bg-gray-100">
-                        <span class="material-icons-outlined mr-2">group</span> 组管理
+                    <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100">
+                        <i class="fa-solid fa-user-group fa-ms mr-4 ml-2"></i> 组管理
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="flex items-center p-4 text-gray-700 hover:bg-gray-100">
-                        <span class="material-icons-outlined mr-2">settings</span> 配置管理
+                    <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100">
+                        <i class="fa-solid fa-gear mr-4 ml-2 fa-ms"></i> 配置管理
                     </a>
                 </li>
             </ul>

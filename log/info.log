@@ -202,3 +202,6 @@ Consider defining a bean of type 'long' in your configuration.
 23:02:20.157 [http-nio-8080-exec-5] INFO  c.m.p.service.impl.UserServiceImpl - login user success, user email: 5555
 23:04:34.916 [http-nio-8080-exec-9] INFO  c.m.p.service.impl.UserServiceImpl - register user success, user email: 77
 23:04:34.919 [http-nio-8080-exec-9] INFO  c.m.p.service.impl.UserServiceImpl - login user success, user email: 77
+23:22:50.080 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+23:22:50.099 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+23:22:50.104 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
