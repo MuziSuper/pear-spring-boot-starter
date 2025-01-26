@@ -9,8 +9,7 @@ import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.params.LoginForm;
 import cn.muzisheng.pear.properties.TokenProperties;
 import cn.muzisheng.pear.properties.UserProperties;
-import cn.muzisheng.pear.service.LogService;
-import cn.muzisheng.pear.service.impl.UserServiceImpl;
+import cn.muzisheng.pear.core.user.Impl.UserServiceImpl;
 import cn.muzisheng.pear.utils.JwtUtil;
 import cn.muzisheng.pear.utils.Result;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -30,26 +30,23 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class LoginTests {
 
-    @Mock
+    @MockBean
     private UserDAO userDAO;
-    @Mock
+    @MockBean
     private JwtUtil jwtUtil;
-    @Mock
+    @MockBean
     private TokenProperties tokenProperties;
-    @Mock
+    @MockBean
     private UserProperties userProperties;
-    @Mock
-    private LogService logService;
     @InjectMocks
     private UserServiceImpl userService;
-
+    @Mock
     private MockHttpServletRequest request;
 
     @BeforeEach
     void setUp() {
         request = new MockHttpServletRequest();
     }
-
     @Test
     void login_InvalidForm() {
         LoginForm loginForm = null;
@@ -76,6 +73,7 @@ public class LoginTests {
 
     @Test
     void login_InvalidUser() {
+        userService=spy(new UserServiceImpl(userDAO, jwtUtil));
         LoginForm loginForm = new LoginForm();
         loginForm.setAuthToken("");
         loginForm.setEmail("test@example.com");
@@ -90,7 +88,7 @@ public class LoginTests {
 
     @Test
     void login_WrongDecodeHashToken_Expired() {
-
+        userService=spy(new UserServiceImpl(userDAO, jwtUtil));
             LoginForm loginForm = new LoginForm();
             loginForm.setAuthToken("test");
             when(jwtUtil.getEmailFromToken("test")).thenReturn(null);

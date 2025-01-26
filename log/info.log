@@ -1,207 +1,156 @@
-11:31:38.729 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 30588 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-11:31:38.731 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
-11:31:39.534 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-11:31:39.552 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10 ms. Found 0 JPA repository interfaces.
-11:31:40.078 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-11:31:40.089 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-11:31:40.091 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-11:31:40.092 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
-11:31:40.135 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-11:31:40.136 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1372 ms
-11:31:40.329 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
-11:31:40.363 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-11:31:40.629 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-11:31:40.660 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-11:31:41.029 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@72ceafeb
-11:31:41.030 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-11:31:41.784 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-11:31:41.891 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-11:31:42.107 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'applicationInitialization': Injection of resource dependencies failed
-11:31:42.108 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-11:31:42.110 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-11:31:42.116 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-11:31:42.117 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
-11:31:42.142 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-A component required a bean of type 'long' that could not be found.
-
-
-Action:
-
-Consider defining a bean of type 'long' in your configuration.
-
-11:32:07.499 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 23448 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-11:32:07.501 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
-11:32:08.004 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-11:32:08.020 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11 ms. Found 0 JPA repository interfaces.
-11:32:08.502 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-11:32:08.510 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-11:32:08.512 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-11:32:08.512 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
-11:32:08.552 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-11:32:08.552 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1023 ms
-11:32:08.719 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
-11:32:08.746 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-11:32:08.967 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-11:32:08.989 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-11:32:09.203 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@63d3c9dc
-11:32:09.204 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-11:32:09.870 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-11:32:09.917 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-11:32:10.094 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'applicationInitialization': Injection of resource dependencies failed
-11:32:10.095 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-11:32:10.097 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-11:32:10.103 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-11:32:10.104 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
-11:32:10.128 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-A component required a bean of type 'long' that could not be found.
-
-
-Action:
-
-Consider defining a bean of type 'long' in your configuration.
-
-11:35:33.823 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 29372 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-11:35:33.824 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
-11:35:34.325 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-11:35:34.342 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11 ms. Found 0 JPA repository interfaces.
-11:35:34.822 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-11:35:34.830 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-11:35:34.833 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-11:35:34.833 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
-11:35:34.872 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-11:35:34.873 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1020 ms
-11:35:35.034 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
-11:35:35.061 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-11:35:35.271 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-11:35:35.296 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-11:35:35.512 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@63d3c9dc
-11:35:35.514 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-11:35:36.167 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-11:35:36.227 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-11:35:36.662 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-11:35:36.778 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-11:35:36.793 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-11:35:36.801 [main] INFO  cn.muzisheng.pear.Application - Started Application in 3.318 seconds (process running for 3.761)
-11:42:52.570 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-11:42:52.572 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-11:42:52.577 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-11:43:20.404 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 27108 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-11:43:20.405 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
-11:43:20.876 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-11:43:20.892 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10 ms. Found 0 JPA repository interfaces.
-11:43:21.350 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-11:43:21.358 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-11:43:21.360 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-11:43:21.360 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
-11:43:21.399 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-11:43:21.399 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 965 ms
-11:43:21.555 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
-11:43:21.580 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-11:43:21.789 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-11:43:21.817 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-11:43:22.024 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@c87787d
-11:43:22.026 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-11:43:22.692 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-11:43:22.736 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-11:43:23.143 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-11:43:23.252 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-11:43:23.267 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-11:43:23.275 [main] INFO  cn.muzisheng.pear.Application - Started Application in 3.223 seconds (process running for 3.679)
-11:51:39.783 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-11:51:39.784 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-11:51:39.785 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-11:51:39.823 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public org.springframework.http.ResponseEntity<cn.muzisheng.pear.utils.Result<java.util.Map<java.lang.String, java.lang.Object>>> cn.muzisheng.pear.controller.UserController.register(jakarta.servlet.http.HttpServletRequest,cn.muzisheng.pear.params.RegisterUserForm)]
-11:52:43.012 [http-nio-8080-exec-3] INFO  c.m.p.service.impl.UserServiceImpl - register user success, user email: 123
-11:52:43.028 [http-nio-8080-exec-3] INFO  c.m.p.service.impl.UserServiceImpl - login user success, user email: 123
-11:56:32.907 [http-nio-8080-exec-7] ERROR c.m.p.service.impl.UserServiceImpl - failed to create a user: null
-12:04:30.417 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-12:04:30.419 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-12:04:30.428 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-12:07:12.469 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 11464 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-12:07:12.471 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
-12:07:12.986 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-12:07:13.002 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10 ms. Found 0 JPA repository interfaces.
-12:07:13.561 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-12:07:13.571 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-12:07:13.574 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-12:07:13.574 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
-12:07:13.622 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-12:07:13.623 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1124 ms
-12:07:13.857 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
-12:07:13.893 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-12:07:14.167 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-12:07:14.199 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-12:07:14.495 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@520ee6b3
-12:07:14.497 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-12:07:15.316 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-12:07:15.370 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-12:07:15.848 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-12:07:15.981 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-12:07:16.000 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-12:07:16.008 [main] INFO  cn.muzisheng.pear.Application - Started Application in 3.947 seconds (process running for 4.857)
-12:07:26.771 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-12:07:26.772 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-12:07:26.773 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-12:07:27.173 [http-nio-8080-exec-2] ERROR c.m.p.service.impl.UserServiceImpl - failed to create a user: null
-12:07:39.331 [http-nio-8080-exec-4] ERROR c.m.p.service.impl.UserServiceImpl - failed to create a user: null
-12:13:24.517 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m1s184ms702µs100ns).
-12:13:24.561 [http-nio-8080-exec-5] ERROR c.m.p.service.impl.UserServiceImpl - failed to create a user: null
-12:14:35.047 [http-nio-8080-exec-8] INFO  c.m.p.service.impl.UserServiceImpl - register user success, user email: 666
-12:16:56.603 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m21s558ms112µs700ns).
-12:17:21.134 [http-nio-8080-exec-8] INFO  c.m.p.service.impl.UserServiceImpl - login user success, user email: 666
-12:17:42.674 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=46s72ms61µs900ns).
-14:03:02.919 [http-nio-8080-exec-1] INFO  c.m.p.service.impl.UserServiceImpl - register user success, user email: 0123
-14:03:02.923 [http-nio-8080-exec-1] INFO  c.m.p.service.impl.UserServiceImpl - login user success, user email: 0123
-15:33:45.349 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h31m963ms195µs700ns).
-15:45:32.505 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11m8s149ms527µs700ns).
-15:45:32.548 [http-nio-8080-exec-2] INFO  c.m.p.service.impl.UserServiceImpl - login user success, user email: 0123
-15:57:08.118 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-15:57:08.153 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-15:57:08.167 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-15:57:13.804 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 38024 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-15:57:13.806 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
-15:57:14.321 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-15:57:14.344 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 0 JPA repository interfaces.
-15:57:14.849 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-15:57:14.858 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-15:57:14.860 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-15:57:14.861 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
-15:57:14.900 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-15:57:14.900 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1063 ms
-15:57:15.091 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
-15:57:15.123 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-15:57:15.351 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-15:57:15.380 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-15:57:15.649 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@26679788
-15:57:15.651 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-15:57:16.385 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-15:57:16.510 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-15:57:16.945 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-15:57:17.067 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-15:57:17.081 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-15:57:17.090 [main] INFO  cn.muzisheng.pear.Application - Started Application in 3.687 seconds (process running for 4.23)
-15:57:23.909 [http-nio-8080-exec-3] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-15:57:23.910 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-15:57:23.911 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-15:57:24.088 [http-nio-8080-exec-3] INFO  c.m.p.service.impl.UserServiceImpl - login user success, user email: 0123
-23:02:20.144 [http-nio-8080-exec-5] INFO  c.m.p.service.impl.UserServiceImpl - register user success, user email: 5555
-23:02:20.157 [http-nio-8080-exec-5] INFO  c.m.p.service.impl.UserServiceImpl - login user success, user email: 5555
-23:04:34.916 [http-nio-8080-exec-9] INFO  c.m.p.service.impl.UserServiceImpl - register user success, user email: 77
-23:04:34.919 [http-nio-8080-exec-9] INFO  c.m.p.service.impl.UserServiceImpl - login user success, user email: 77
-23:22:50.080 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-23:22:50.099 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-23:22:50.104 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+19:21:50.421 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Starting InfoTests using Java 21.0.2 with PID 27976 (started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+19:21:50.423 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - No active profile set, falling back to 1 default profile: "default"
+19:21:51.387 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+19:21:51.409 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 JPA repository interfaces.
+19:21:53.636 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+19:21:53.690 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+19:21:53.856 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+19:21:53.903 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+19:21:54.343 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@30ed2a26
+19:21:54.345 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+19:21:55.229 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+19:21:55.309 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+19:21:56.738 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+19:21:57.052 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Started InfoTests in 7.015 seconds (process running for 7.92)
+19:21:57.197 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+19:21:57.198 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+19:21:57.203 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+19:21:57.313 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+19:21:57.342 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+19:21:57.343 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+19:21:57.343 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+19:21:57.347 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+19:21:57.357 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+19:21:57.357 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+19:21:57.358 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+19:21:57.359 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+19:21:57.371 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+19:21:57.371 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+19:21:57.372 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+19:21:57.376 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
+19:21:57.393 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+19:21:57.396 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+19:21:57.417 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+22:27:44.192 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Starting InfoTests using Java 21.0.2 with PID 33148 (started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+22:27:44.194 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - No active profile set, falling back to 1 default profile: "default"
+22:27:44.898 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+22:27:44.920 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 JPA repository interfaces.
+22:27:47.344 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+22:27:47.408 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+22:27:47.555 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+22:27:47.608 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+22:27:48.041 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5308e79d
+22:27:48.044 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+22:27:48.954 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+22:27:49.034 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+22:27:50.592 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+22:27:50.943 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Started InfoTests in 7.13 seconds (process running for 8.029)
+22:27:51.085 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:27:51.086 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:27:51.089 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+22:27:51.262 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'with_token' for method parameter type String is not present]
+22:27:51.292 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:27:51.292 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:27:51.292 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+22:27:51.296 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'with_token' for method parameter type String is not present]
+22:27:51.306 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:27:51.308 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:27:51.309 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+22:27:51.311 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'with_token' for method parameter type String is not present]
+22:27:51.322 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:27:51.323 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:27:51.324 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+22:27:51.326 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'with_token' for method parameter type String is not present]
+22:27:51.342 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+22:27:51.345 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+22:27:51.364 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+22:30:17.047 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Starting InfoTests using Java 21.0.2 with PID 28680 (started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+22:30:17.048 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - No active profile set, falling back to 1 default profile: "default"
+22:30:17.703 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+22:30:17.724 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 JPA repository interfaces.
+22:30:19.890 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+22:30:19.934 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+22:30:20.088 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+22:30:20.131 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+22:30:20.479 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7577589
+22:30:20.481 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+22:30:21.335 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+22:30:21.387 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+22:30:22.932 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+22:30:23.272 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Started InfoTests in 6.58 seconds (process running for 7.378)
+22:30:23.409 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:30:23.409 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:30:23.413 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+22:30:23.603 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:30:23.603 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:30:23.604 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+22:30:23.625 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:30:23.626 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:30:23.627 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+22:30:23.644 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:30:23.645 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:30:23.647 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+22:30:23.674 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+22:30:23.678 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+22:30:23.691 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+22:50:49.892 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Starting InfoTests using Java 21.0.2 with PID 31508 (started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+22:50:49.894 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - No active profile set, falling back to 1 default profile: "default"
+22:50:50.549 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+22:50:50.572 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 JPA repository interfaces.
+22:50:52.756 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+22:50:52.819 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+22:50:52.976 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+22:50:53.025 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+22:50:53.379 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2431050d
+22:50:53.381 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+22:50:54.227 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+22:50:54.275 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+22:50:55.720 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+22:50:56.045 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Started InfoTests in 6.55 seconds (process running for 7.406)
+22:50:56.182 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:50:56.182 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:50:56.185 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+22:50:56.309 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:50:56.310 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:50:56.311 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+22:50:56.328 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:50:56.328 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:50:56.329 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+22:50:56.339 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:50:56.339 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:50:56.340 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+22:50:56.361 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+22:50:56.365 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+22:50:56.381 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+22:51:01.673 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Starting InfoTests using Java 21.0.2 with PID 33248 (started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+22:51:01.675 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - No active profile set, falling back to 1 default profile: "default"
+22:51:02.430 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+22:51:02.451 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 JPA repository interfaces.
+22:51:04.665 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+22:51:04.716 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+22:51:04.851 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+22:51:04.890 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+22:51:05.212 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@78829412
+22:51:05.215 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+22:51:06.036 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+22:51:06.091 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+22:51:07.740 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+22:51:08.090 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Started InfoTests in 6.822 seconds (process running for 8.057)
+22:51:08.251 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+22:51:08.251 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+22:51:08.254 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+22:53:27.100 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m21s770ms630µs800ns).
+22:56:08.782 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m41s682ms669µs700ns).
+23:00:27.732 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m18s949ms291µs400ns).
+23:00:37.992 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+23:00:37.993 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+23:00:37.994 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+23:00:41.565 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+23:00:41.566 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+23:00:41.567 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+23:00:44.485 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
+23:00:44.485 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+23:00:44.487 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+23:00:47.448 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+23:00:47.450 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+23:00:47.463 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

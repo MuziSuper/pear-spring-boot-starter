@@ -18,8 +18,8 @@
 
         <form id="register-form">
             <div class="mb-4">
-                <label for="register-username" class="block text-gray-700">用户名</label>
-                <input type="text" id="register-username" class="el-input__inner w-full p-2 border rounded" placeholder="请输入用户名">
+                <label for="register-email" class="block text-gray-700">用户名</label>
+                <input type="text" id="register-email" class="el-input__inner w-full p-2 border rounded" placeholder="请输入用户名">
             </div>
 
             <div class="mb-4">
@@ -31,39 +31,53 @@
                 <label for="confirm-password" class="block text-gray-700">确认密码</label>
                 <input type="password" id="confirm-password" class="el-input__inner w-full p-2 border rounded" placeholder="确认密码">
             </div>
-
             <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">注册</button>
+            
+            <div class="mt-4 m-auto text-center">
+                <p class=" text-blue-500 underline inline-block hover:text-blue-700" style="text-underline-offset: 4px">已有账号，前往登录</p>
+            </div>            
         </form>
     </div>
-
     <script>
+        
         $(document).ready(function() {
             $('#register-form').submit(function(event) {
+                
                 event.preventDefault();
 
-                const username = $('#register-username').val();
+                const email = $('#register-email').val();
                 const password = $('#register-password').val();
                 const confirmPassword = $('#confirm-password').val();
-
-                if (!username || !password || !confirmPassword) {
+            
+                if (!email || !password || !confirmPassword) {
                     alert('所有字段都是必填的');
                     return;
+                }
+
+                let registerUserForm = {
+                    email:email,
+                    password:password,
+                    displayName:"",
+                    firstName:"",
+                    lastName:"",
+                    locale:"",
+                    timezone:"",
+                    source:""
                 }
 
                 if (password !== confirmPassword) {
                     alert('密码不一致');
                     return;
                 }
-
                 $.ajax({
-                    url: 'http://localhost:8080/api/register',
+                    url: 'http://localhost:8080/user/register',
                     method: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify({ username, password }),
+                    data: JSON.stringify(registerUserForm),
                     success: function(response) {
-                        if (response.success) {
+                        if (response.data!=null) {
                             alert('注册成功');
-                            window.location.href = '/login.html';
+                            window.location.href = '/dashboard.html';
                         } else {
                             alert('注册失败');
                         }

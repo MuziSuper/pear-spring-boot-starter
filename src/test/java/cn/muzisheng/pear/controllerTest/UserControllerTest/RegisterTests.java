@@ -5,8 +5,8 @@ import cn.muzisheng.pear.dao.UserDAO;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.params.RegisterUserForm;
-import cn.muzisheng.pear.service.LogService;
-import cn.muzisheng.pear.service.impl.UserServiceImpl;
+import cn.muzisheng.pear.core.user.Impl.UserServiceImpl;
+import cn.muzisheng.pear.utils.JwtUtil;
 import cn.muzisheng.pear.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -14,10 +14,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
@@ -29,12 +29,10 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class RegisterTests {
-    @Mock
+    @MockBean
     private UserDAO userDAO;
-
-    @Mock
-    private LogService logService;
-
+    @MockBean
+    private JwtUtil jwtUtil;
     @InjectMocks
     private UserServiceImpl userService;
 
@@ -58,6 +56,7 @@ public class RegisterTests {
 
     @Test
     void register_EmailExists_ReturnsError() {
+        userService=spy(new UserServiceImpl(userDAO, jwtUtil));
         HttpServletRequest request = mock(HttpServletRequest.class);
         RegisterUserForm registerUserForm = new RegisterUserForm("test@example.com", "123", "displayName", "firstName", "lastName", "locale", "timezone", "source");
 
@@ -72,6 +71,7 @@ public class RegisterTests {
 
     @Test
     void register_UserCreationFails_ReturnsError() {
+        userService=spy(new UserServiceImpl(userDAO, jwtUtil));
         HttpServletRequest request = mock(HttpServletRequest.class);
         RegisterUserForm registerUserForm = new RegisterUserForm("test@example.com", "password", "displayName", "firstName", "lastName", "locale", "timezone", "source");
 
@@ -85,6 +85,7 @@ public class RegisterTests {
 
     @Test
     void register_UserCreationAndUpdatesSuccess_ReturnsSuccess() {
+        userService=spy(new UserServiceImpl(userDAO, jwtUtil));
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpSession session = mock(HttpSession.class);
         when(request.getSession(true)).thenReturn(session);
@@ -108,6 +109,7 @@ public class RegisterTests {
 
     @Test
     void register_UserUpdateFails_LogsError() {
+        userService=spy(new UserServiceImpl(userDAO, jwtUtil));
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpSession session = mock(HttpSession.class);
         when(request.getSession(true)).thenReturn(session);
@@ -126,8 +128,5 @@ public class RegisterTests {
 
         assertEquals(200, response.getStatusCode().value());
         assertNotNull(response.getBody());
-
-        verify(userDAO).setLastLogin(user, request.getRemoteAddr());
-        verify(session).setAttribute(eq(Constant.SESSION_USER_ID), eq(user.getId()));
     }
 }

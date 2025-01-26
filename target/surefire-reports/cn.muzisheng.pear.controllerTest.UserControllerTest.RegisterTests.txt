@@ -1,0 +1,51 @@
+-------------------------------------------------------------------------------
+Test set: cn.muzisheng.pear.controllerTest.UserControllerTest.RegisterTests
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 2, Errors: 2, Skipped: 0, Time elapsed: 0.192 s <<< FAILURE! -- in cn.muzisheng.pear.controllerTest.UserControllerTest.RegisterTests
+cn.muzisheng.pear.controllerTest.UserControllerTest.RegisterTests.register_UserUpdateFails_LogsError -- Time elapsed: 0.132 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <200> but was: <503>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at cn.muzisheng.pear.controllerTest.UserControllerTest.RegisterTests.register_UserUpdateFails_LogsError(RegisterTests.java:127)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+cn.muzisheng.pear.controllerTest.UserControllerTest.RegisterTests.register_UserCreationFails_ReturnsError -- Time elapsed: 0.005 s <<< ERROR!
+org.mockito.exceptions.misusing.UnnecessaryStubbingException: 
+
+Unnecessary stubbings detected.
+Clean & maintainable test code requires zero unnecessary code.
+Following stubbings are unnecessary (click to navigate to relevant line of code):
+  1. -> at cn.muzisheng.pear.controllerTest.UserControllerTest.RegisterTests.register_UserCreationFails_ReturnsError(RegisterTests.java:78)
+  2. -> at cn.muzisheng.pear.controllerTest.UserControllerTest.RegisterTests.register_UserCreationFails_ReturnsError(RegisterTests.java:79)
+Please remove unnecessary stubbings or use 'lenient' strictness. More info: javadoc for UnnecessaryStubbingException class.
+	at org.mockito.junit.jupiter.MockitoExtension.afterEach(MockitoExtension.java:197)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+cn.muzisheng.pear.controllerTest.UserControllerTest.RegisterTests.register_UserCreationAndUpdatesSuccess_ReturnsSuccess -- Time elapsed: 0.006 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <200> but was: <503>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at cn.muzisheng.pear.controllerTest.UserControllerTest.RegisterTests.register_UserCreationAndUpdatesSuccess_ReturnsSuccess(RegisterTests.java:102)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+cn.muzisheng.pear.controllerTest.UserControllerTest.RegisterTests.register_EmailExists_ReturnsError -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.NullPointerException
+	at java.base/java.util.Objects.requireNonNull(Objects.java:233)
+	at cn.muzisheng.pear.controllerTest.UserControllerTest.RegisterTests.register_EmailExists_ReturnsError(RegisterTests.java:69)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

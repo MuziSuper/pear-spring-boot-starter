@@ -6,7 +6,7 @@ import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.UserException;
 import cn.muzisheng.pear.properties.CacheProperties;
 import cn.muzisheng.pear.utils.ExpiredCache;
-import cn.muzisheng.pear.service.LogService;
+import cn.muzisheng.pear.core.Logger.LogService;
 import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

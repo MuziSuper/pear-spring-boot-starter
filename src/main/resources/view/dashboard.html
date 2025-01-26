@@ -2,174 +2,211 @@
 <html lang="zh">
 
 <head>
-    <link rel="icon" href="favicon.png" sizes="32x32" type="image/png" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
-    <link href="https://code.jquery.com/ui/1.14.1/jquery-ui.min.js" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <link rel="icon" href="favicon.png" sizes="32x32" type="image/png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link href="https://code.jquery.com/ui/1.14.1/jquery-ui.min.js" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 </head>
 
 <body class="bg-gray-100 font-mono text-lg">
-    <div class="flex h-screen">
-        <!-- 左侧导航 -->
-        <div class="min-w-64 w-64 md:w-64 bg-white shadow-lg">
-            <div class="text-2xl p-4 font-bold text-gray-800 border-b flex items-center">
-                <img src="favicon.png" alt="Logo" class="inline-block w-12 h-12 rounded-full mr-2" />
-                后台管理面板
-            </div>
-            <p class="ml-4 mt-4 text-gray-600">基础部分</p>
-            <ul class="space-y-2">
-                <li>
-                    <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100">
-                        <i class="fa-solid fa-user fa-ms mr-4 ml-2"></i> 用户管理
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100">
-                        <i class="fa-solid fa-user-group fa-ms mr-4 ml-2"></i> 组管理
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100">
-                        <i class="fa-solid fa-gear mr-4 ml-2 fa-ms"></i> 配置管理
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!-- 主题部分 -->
-        <div class="flex-auto p-8">
-        <!-- 模块介绍 -->
-            <div class="text-2xl ml-16 font-bold mb-6">
-                <h1>User</h1>
-                <p class="text-lg mt-2">
-                    &nbsp;
-                    系統中所有用户数据，包括管理员与普通用户，你可以对其进行增加、删除、修改与查询
-                </p>
-            </div>
-            <!-- 搜索 -->
-            <div class="relative ml-16">
-                <span id="search-icon">
-                    <i id="normal-icon" class="absolute top-2 left-2 fa-solid fa-magnifying-glass"
-                        style="color: #bec2cb"></i>
-                    <i id="hover-icon" class="absolute top-2 left-2 fa-solid fa-magnifying-glass"
-                        style="color: #b2b7c3; display: none"></i>
-                </span>
-                <input type="text" maxlength="40"
-                    class="text-sm outline-none border-2 rounded-md w-52 h-8 pl-8 pr-2 border-gray-200 hover:border-gray-300 focus:border-gray-400"
-                    placeholder="Type to search..." />
-            </div>
-            <div class="mt-8 mx-auto bg-white shadow-md rounded-lg p-6" style="width: 1000px">
-
-                <table class=" border-collapse border border-gray-300"  style="width: 100%;">
-                    <thead class="">
-                        <tr class="bg-gray-200">
-                            <th class="border border-gray-300 px-4 py-2">
-                                <input type="checkbox" id="select-all" class="form-checkbox" />
-                            </th>
-                            <th class="w-full flex justify-start items-center pt-2 ml-2">
-                                <div class="text-lg font-semibold mr-48">8 Selected</div>
-                                <div id="delete-btn" class="bg-red-500  px-2 text-white text-center h-7 w-18 rounded hover:bg-red-600">
-                                    Delete
-                                </div>
-                            </th>
-                            <th class="border border-gray-300 text-left py-2"><p class="ml-4">VALUE</p></th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body">
-                        <!-- Rows will be dynamically inserted -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+  <div class="flex h-screen">
+    <!-- 左侧导航 -->
+    <div class="bg-white shadow-lg" style="min-width: 256px">
+      <div class="text-2xl p-4 font-bold text-gray-800 border-b flex items-center">
+        <img src="favicon.png" alt="Logo" class="inline-block w-12 h-12 rounded-full mr-2" />
+        后台管理面板
+      </div>
+      <p class="ml-4 mt-4 text-gray-600">基础部分</p>
+      <ul class="space-y-2">
+        <li>
+          <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100">
+            <i class="fa-solid fa-user fa-ms mr-4 ml-2"></i> 用户管理
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100">
+            <i class="fa-solid fa-user-group fa-ms mr-4 ml-2"></i> 组管理
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100">
+            <i class="fa-solid fa-gear mr-4 ml-2 fa-ms"></i> 配置管理
+          </a>
+        </li>
+      </ul>
     </div>
+    <!-- 主题部分 -->
+    <div class="flex-auto p-8">
+      <!-- 模块介绍 -->
+      <div class="text-2xl ml-16 font-bold mb-6">
+        <h1>User</h1>
+        <p class="text-lg mt-2">
+          &nbsp;
+          系統中所有用户数据，包括管理员与普通用户，你可以对其进行增加、删除、修改与查询
+        </p>
+      </div>
+      <!-- 搜索 -->
+      <div class="relative ml-16">
+        <span id="search-icon">
+          <i id="normal-icon" class="absolute top-2 left-2 fa-solid fa-magnifying-glass" style="color: #bec2cb"></i>
+          <i id="hover-icon" class="absolute top-2 left-2 fa-solid fa-magnifying-glass"
+            style="color: #b2b7c3; display: none"></i>
+        </span>
+        <input type="text" maxlength="40"
+          class="text-sm outline-none border-2 rounded-md w-52 h-8 pl-8 pr-2 border-gray-300 focus:border-gray-400"
+          placeholder="Type to search..." />
+      </div>
+      <div class="mt-8 mx-auto bg-white shadow-md rounded-lg p-6" style="width: 1000px">
+        <table class="border-collapse border border-gray-300" style="width: 100%">
+          <thead class="">
+            <tr class="bg-gray-200">
+              <th class="border border-gray-300 px-4 py-2">
+                <input type="checkbox" id="select-all" class="form-checkbox" />
+              </th>
+              <th class="w-full flex justify-start items-center pt-2 ml-2">
+                <div class="text-lg font-semibold mr-48">8 Selected</div>
+                <div id="delete-btn" class="bg-red-500 px-2 text-white text-center h-7 w-18 rounded hover:bg-red-600">
+                  Delete
+                </div>
+              </th>
+              <th class="border border-gray-300 text-left py-2">
+                <p class="ml-4">VALUE</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Rows will be dynamically inserted -->
+          </tbody>
+        </table>
+      </div>
+      <div id="pagination" class="mt-4 ml-12 flex justify-start items-center">
+        <button id="prev-page" class="text-gray-500 font-bold px-4 py-2 rounded-md hover:text-gray-900" disabled>
+          < </button>
+            <div id="page-numbers" class="text-gray-700">1 / 8 页</div>
+            <button id="next-page" class="text-gray-500 font-bold px-4 py-2 rounded-md hover:text-gray-900">
+              >
+            </button>
+      </div>
+    </div>
+  </div>
 
-    <script>
-        const data = [
-            { key: "SITE_LOGO_URL", value: "/static/img/carrot.svg" },
-            { key: "SITE_FAVICON_URL", value: "/static/img/favicon.png3" },
-            { key: "SITE_SIGNIN_URL", value: "/auth/login" },
-            { key: "SITE_NAME", value: "Carrot" },
-            { key: "SITE_SIGNUP_URL", value: "/auth/register" },
-            { key: "SITE_LOGOUT_URL", value: "/auth/logout" },
-            { key: "SITE_RESET_PASSWORD_URL", value: "/auth/reset_password" },
-            { key: "SITE_LOGIN_NEXT", value: "/" },
-        ];
+  <script>
+    const data = [
+      { key: "SITE_LOGO_URL", value: "/static/img/carrot.svg" },
+      { key: "SITE_FAVICON_URL", value: "/static/img/favicon.png3" },
+      { key: "SITE_SIGNIN_URL", value: "/auth/login" },
+      { key: "SITE_NAME", value: "Carrot" },
+      { key: "SITE_SIGNUP_URL", value: "/auth/register" },
+      { key: "SITE_LOGOUT_URL", value: "/auth/logout" },
+      { key: "SITE_RESET_PASSWORD_URL", value: "/auth/reset_password" },
+      { key: "SITE_LOGIN_NEXT", value: "/" },
+    ];
 
-        // Function to render rows
-        function renderRows() {
-            const tableBody = $("#table-body");
-            tableBody.empty();
-            data.forEach((item, index) => {
-                const row = `
-          <tr class="border-t border-gray-300">
-            <td class="px-4 py-2 text-center">
-              <input type="checkbox" class="row-checkbox form-checkbox">
-            </td>
-            <td class="px-4 py-2">${item.key}</td>
-            <td class="px-4 py-2">${item.value}</td>
-          </tr>
-        `;
-                tableBody.append(row);
-            });
+    $(document).ready(function () {
+      const pageSize = 4; // 每页显示的记录数
+      let currentPage = 1; // 当前页
+      // 模拟后端提供的总记录数（实际上应从后端获取）
+      const totalRecords = 20; // 假设后端返回20条记录
+      const totalPages = Math.ceil(totalRecords / pageSize); // 计算总页数
+      function renderRows() {
+        const tableBody = $("#table-body");
+        tableBody.empty(); // 清空表格内容
+        const startIndex = (currentPage - 1) * pageSize; // 当前页的起始索引
+        const endIndex = startIndex + pageSize; // 当前页的结束索引
+
+        // 仅显示当前页的数据
+        const currentData = data.slice(startIndex, endIndex);
+
+        currentData.forEach((item) => {
+          const row = `
+                <tr class="border-t border-gray-300">
+                    <td class="px-4 py-2 text-center">
+                        <input type="checkbox" class="row-checkbox form-checkbox">
+                    </td>
+                    <td class="px-4 py-2">${item.key}</td>
+                    <td class="px-4 py-2">${item.value}</td>
+                </tr>
+            `;
+          tableBody.append(row);
+        });
+
+        // 更新分页信息
+        $("#page-numbers").text(`${currentPage} / ${totalPages} 页`);
+        $("#prev-page").prop("disabled", currentPage === 1); // 如果是第一页，禁用上一页按钮
+        $("#next-page").prop("disabled", currentPage === totalPages); // 如果是最后一页，禁用下一页按钮
+      }
+      // 上一页按钮点击事件
+      $("#prev-page").click(function () {
+        if (currentPage > 1) {
+          currentPage--; // 当前页减1
+          renderRows(); // 渲染新的数据
+        }
+      });
+
+      // 下一页按钮点击事件
+      $("#next-page").click(function () {
+        if (currentPage < totalPages) {
+          currentPage++; // 当前页加1
+          renderRows(); // 渲染新的数据
+        }
+      });
+      renderRows();
+
+      // Select all checkboxes
+      $("#select-all").on("change", function () {
+        const isChecked = $(this).is(":checked");
+        $(".row-checkbox").prop("checked", isChecked);
+      });
+
+      // Delete selected rows
+      $("#delete-btn").on("click", function () {
+        $(".row-checkbox:checked").each(function () {
+          const rowIndex = $(this).closest("tr").index();
+          data.splice(rowIndex, 1);
+        });
+        renderRows();
+        $("#select-all").prop("checked", false); // Uncheck "select all" after deletion
+      });
+      $("#search-icon").hover(
+        function () {
+          // 隐藏第一个图标，显示第二个图标
+          $("#hover-icon").show();
+        },
+        function () {
+          // 隐藏第一个图标，显示第二个图标
+          $("#hover-icon").hide();
+        }
+      );
+      // 保存按钮逻辑
+      $("#save-button").click(function () {
+        const key = $("#data-key").val();
+        const value = $("#data-value").val();
+
+        if (!key || !value) {
+          alert("请输入键和值！");
+          return;
         }
 
-        $(document).ready(function () {
-            renderRows();
+        console.log("保存数据：", { key, value });
+        alert("保存成功！");
 
-            // Select all checkboxes
-            $("#select-all").on("change", function () {
-                const isChecked = $(this).is(":checked");
-                $(".row-checkbox").prop("checked", isChecked);
-            });
+        // 清空表单
+        $("#data-key").val("");
+        $("#data-value").val("");
+      });
 
-            // Delete selected rows
-            $("#delete-btn").on("click", function () {
-                $(".row-checkbox:checked").each(function () {
-                    const rowIndex = $(this).closest("tr").index();
-                    data.splice(rowIndex, 1);
-                });
-                renderRows();
-                $("#select-all").prop("checked", false); // Uncheck "select all" after deletion
-            });
-            $("#search-icon").hover(
-                function () {
-                    // 隐藏第一个图标，显示第二个图标
-                    $("#hover-icon").show();
-                },
-                function () {
-                    // 隐藏第一个图标，显示第二个图标
-                    $("#hover-icon").hide();
-                }
-            );
-            // 保存按钮逻辑
-            $("#save-button").click(function () {
-                const key = $("#data-key").val();
-                const value = $("#data-value").val();
-
-                if (!key || !value) {
-                    alert("请输入键和值！");
-                    return;
-                }
-
-                console.log("保存数据：", { key, value });
-                alert("保存成功！");
-
-                // 清空表单
-                $("#data-key").val("");
-                $("#data-value").val("");
-            });
-
-            // 取消按钮逻辑
-            $("#cancel-button").click(function () {
-                $("#data-key").val("");
-                $("#data-value").val("");
-                alert("操作已取消！");
-            });
-        });
-    </script>
+      // 取消按钮逻辑
+      $("#cancel-button").click(function () {
+        $("#data-key").val("");
+        $("#data-value").val("");
+        alert("操作已取消！");
+      });
+    });
+  </script>
 </body>
 
 </html>

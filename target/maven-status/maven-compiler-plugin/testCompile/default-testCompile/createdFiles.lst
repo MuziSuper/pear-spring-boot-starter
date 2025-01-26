@@ -12,5 +12,4 @@ cn\muzisheng\pear\serviceTest\ConfigServiceTests$GetBoolEnvTests.class
 cn\muzisheng\pear\controllerTest\UserControllerTest\LoginTests.class
 cn\muzisheng\pear\serviceTest\ConfigServiceTests$GetEnvTests.class
 cn\muzisheng\pear\controllerTest\UserControllerTest\RegisterTests.class
-cn\muzisheng\pear\PearTestApplication.class
 cn\muzisheng\pear\serviceTest\ConfigServiceTests$CheckValueTests.class
