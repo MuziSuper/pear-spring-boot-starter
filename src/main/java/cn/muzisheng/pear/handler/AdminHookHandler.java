@@ -1,11 +1,19 @@
 package cn.muzisheng.pear.handler;
 
-import java.util.Map;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface AdminHookHandler {
-    void BeforeCreateFunc(Class<?> clazz);
-    void BeforeDeleteFunc(Class<?> clazz);
-    void BeforeUpdateFunc(Class<?> clazz, Map<String, Object> map);
-    Object BeforeRenderFunc(Class<?> clazz);
-    Object BeforeQueryRenderFunc(Class<?> clazz);
+    void beforeCreate();
+    void beforeUpdate();
+    void beforeDelete();
+    void beforeRender();
+    void accessCheck();
+    void AdminViewOnSite();
+    void beforeCreate(Object[] args);
+    void beforeUpdate(Object[] args);
+    void beforeDelete(Object[] args);
+    void beforeRender(Object[] args);
+    void accessCheck(Object[] args);
+    void AdminViewOnSite(Object[] args);
 }

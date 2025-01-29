@@ -7,8 +7,6 @@ import lombok.Data;
  **/
 @Data
 public class AdminSelectOption {
-//    Label string `json:"label"`
-//    Value any    `json:"value"`
     /**
      * 键 - 对应客户端input的label
      **/

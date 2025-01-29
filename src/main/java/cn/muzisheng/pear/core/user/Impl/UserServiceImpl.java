@@ -153,7 +153,7 @@ public class UserServiceImpl implements UserService {
      * 获取当前用户信息，并且缓存到上下文中
      **/
     public User currentUser(HttpServletRequest request) {
-        Object objectUser = Context.get(Constant.SESSION_USER_ID);
+        Object objectUser = Context.getSessionScope(Constant.SESSION_USER_ID);
         if (objectUser != null) {
             return (User) objectUser;
         }
@@ -166,7 +166,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return null;
         }
-        Context.set(Constant.SESSION_USER_ID, user);
+        Context.setRequestScope(Constant.SESSION_USER_ID, user);
         return user;
     }
 

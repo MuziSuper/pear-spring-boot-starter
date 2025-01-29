@@ -1,12 +1,17 @@
 package cn.muzisheng.pear.initialize;
 
+import cn.muzisheng.pear.annotation.AccessCheck;
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.dao.UserDAO;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.UserException;
+import cn.muzisheng.pear.model.AdminIcon;
+import cn.muzisheng.pear.model.AdminObject;
+import cn.muzisheng.pear.model.Order;
 import cn.muzisheng.pear.properties.CacheProperties;
 import cn.muzisheng.pear.utils.ExpiredCache;
 import cn.muzisheng.pear.core.Logger.LogService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -99,5 +104,21 @@ public class ApplicationInitialization implements CommandLineRunner {
         }
 
 
+
+    }
+
+    public AdminObject[] getPearAdminObjects(){
+        AdminObject adminObject=new AdminObject();
+        adminObject.setModel(User.class);
+        adminObject.setGroup("Settings");
+        adminObject.setName("User");
+        adminObject.setDesc("Builtin user management system");
+        adminObject.setShows(new String[]{"id","email","displayName","isStaff","isSuperUser","enabled","activated","gmtModified","lastLogin","lastLoginIp","source","locale","timezone"});
+        adminObject.setEdits(new String[]{"email","password","displayName","firstName","lastName","isStaff","isSuperUser","enabled","activated","profile","source","locale","timezone"});
+        adminObject.setFilters(new String[]{"gmtCreated", "gmtModified", "isStaff", "isSuperUser", "enabled", "activated"});
+        adminObject.setOrderables(new String[]{"gmtCreated", "gmtModified", "enabled", "activated"});
+        adminObject.setSearches(new String[]{"email", "displayName"});
+        adminObject.setOrders(new Order[]{new Order("gmtModified", "desc")});
+        adminObject.setIcon(new AdminIcon());
     }
 }

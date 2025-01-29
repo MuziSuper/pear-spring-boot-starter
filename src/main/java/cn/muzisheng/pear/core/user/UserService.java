@@ -24,4 +24,8 @@ public interface UserService {
      * 获取用户信息
      **/
     ResponseEntity<Result<User>> userInfo(HttpServletRequest request, String token);
+    /**
+     * 获取当前用户，并将用户信息存储到session中
+     **/
+    User currentUser(HttpServletRequest request);
 }

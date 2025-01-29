@@ -16,12 +16,14 @@ public class Constant {
     // 响应状态
     public static final int SCALE_EXCEPTION = 502;
     public static final int USER_EXCEPTION = 503;
+    public static final int HOOK_EXCEPTION = 504;
     public static final int ILLEGAL_EXCEPTION = 400;
     public static final int UNAPPROVED_EXCEPTION = 401;
 
     // 响应信息
-    public static final String ILLEGAL_MESSAGE_EXCEPTION = "The user passed in an illegal parameter";
-
+    public static final String ILLEGAL_MESSAGE_EXCEPTION = "The user passed in an illegal parameter.";
+    public static final String HOOK_NOTFOUND_EXCEPTION = "The hook method failed to obtain the result.";
+    public static final String HOOK_UNCHECK_EXCEPTION = "An exception of checking type occurs after the hook method is called, or the calling is unauthorized.";
     // 日期格式
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -75,4 +77,9 @@ public class Constant {
 
     // 默认搜索properties路径
     public static final String APP_DEFAULT_SEARCH_PROPERTIES_PATH="src/main/resources";
+
+    // static
+    public static final String ICON_SVG_ADDRESS="src/main/resources/static/favicon.svg";
+    public static final String ICON_PNG_ADDRESS="src/main/resources/static/favicon.png";
+
 }
