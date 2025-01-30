@@ -42,4 +42,9 @@ public class ExceptionApi {
         ExceptionResponse errorResponse = new ExceptionResponse(Constant.HOOK_EXCEPTION, e.getMessage(), System.currentTimeMillis());
         return new ResponseEntity<>(errorResponse, HttpStatus.GATEWAY_TIMEOUT);
     }
+    @ExceptionHandler(GeneralException.class)
+    public ResponseEntity<ExceptionResponse> handleGeneralException(GeneralException e) {
+        ExceptionResponse errorResponse = new ExceptionResponse(Constant.GENERAL_EXCEPTION, e.getMessage(), System.currentTimeMillis());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_IMPLEMENTED);
+    }
 }

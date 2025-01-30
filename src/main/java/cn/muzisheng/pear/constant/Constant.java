@@ -14,6 +14,7 @@ public class Constant {
     public static final String HELP_ARGUMENTS="arguments";
 
     // 响应状态
+    public static final int GENERAL_EXCEPTION = 501;
     public static final int SCALE_EXCEPTION = 502;
     public static final int USER_EXCEPTION = 503;
     public static final int HOOK_EXCEPTION = 504;
@@ -38,18 +39,6 @@ public class Constant {
     // 缓存
     public static final Long CACHE_EXPIRED=60*10L;
 
-//    const (
-//    ConfigFormatJSON     = "json"
-//    ConfigFormatYAML     = "yaml"
-//    ConfigFormatInt      = "int"
-//    ConfigFormatFloat    = "float"
-//    ConfigFormatBool     = "bool"
-//    ConfigFormatText     = "text"
-//    ConfigFormatSecurity = "security"
-//    ConfigFormatDate     = "date"
-//    ConfigFormatDatetime = "datetime"
-//    ConfigFormatDuration = "duration"
-//            )
     // 配置项数据类型
     public static final String ConfigFormatJSON="json";
     public static final String ConfigFormatYAML="yaml";
@@ -82,4 +71,18 @@ public class Constant {
     public static final String ICON_SVG_ADDRESS="src/main/resources/static/favicon.svg";
     public static final String ICON_PNG_ADDRESS="src/main/resources/static/favicon.png";
 
+    // permission type
+    public static final String PERMISSION_ALL="all";
+    public static final String PERMISSION_CREATE="create";
+    public static final String PERMISSION_READ="read";
+    public static final String PERMISSION_UPDATE="update";
+    public static final String PERMISSION_DELETE="delete";
+
+    // groupRole type
+    public static final String GROUP_ROLE_ADMIN="admin";
+    public static final String GROUP_ROLE_MEMBER="member";
+
+    // group type
+    public static final String GROUP_TYPE_ADMIN="admin";
+    public static final String GROUP_TYPE_APP="app";
 }

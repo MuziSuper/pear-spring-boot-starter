@@ -1,5 +1,6 @@
 package cn.muzisheng.pear.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**

@@ -1,23 +1,25 @@
 package cn.muzisheng.pear.initialize;
 
-import cn.muzisheng.pear.annotation.AccessCheck;
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.dao.UserDAO;
+import cn.muzisheng.pear.entity.Config;
+import cn.muzisheng.pear.entity.GroupMember;
 import cn.muzisheng.pear.entity.User;
+import cn.muzisheng.pear.entity.Group;
+import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.exception.UserException;
-import cn.muzisheng.pear.model.AdminIcon;
-import cn.muzisheng.pear.model.AdminObject;
-import cn.muzisheng.pear.model.Order;
+import cn.muzisheng.pear.model.*;
 import cn.muzisheng.pear.properties.CacheProperties;
 import cn.muzisheng.pear.utils.ExpiredCache;
 import cn.muzisheng.pear.core.Logger.LogService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.cli.*;
+import org.apache.commons.cli.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -103,22 +105,102 @@ public class ApplicationInitialization implements CommandLineRunner {
             System.exit(1);
         }
 
+        AdminObject[] adminObjects=getPearAdminObjects();
 
+    }
+    private AdminObject[] BuildAdminObjects(AdminObject[] adminObjects){
+        for(int i=0;i<adminObjects.length;i++){
 
+        }
+    }
+    private AdminObject Build(AdminObject adminObject) {
+        if(adminObject.getPath().isEmpty()){
+            adminObject.setPath(adminObject.getName().toLowerCase());
+        }
+        if("_".equals(adminObject.getPath())||"".equals(adminObject.getPath())){
+            throw new GeneralException("invalid path");
+        }
+        adminObject.setTableName(adminObject.getName().toLowerCase());
     }
 
     public AdminObject[] getPearAdminObjects(){
-        AdminObject adminObject=new AdminObject();
-        adminObject.setModel(User.class);
-        adminObject.setGroup("Settings");
-        adminObject.setName("User");
-        adminObject.setDesc("Builtin user management system");
-        adminObject.setShows(new String[]{"id","email","displayName","isStaff","isSuperUser","enabled","activated","gmtModified","lastLogin","lastLoginIp","source","locale","timezone"});
-        adminObject.setEdits(new String[]{"email","password","displayName","firstName","lastName","isStaff","isSuperUser","enabled","activated","profile","source","locale","timezone"});
-        adminObject.setFilters(new String[]{"gmtCreated", "gmtModified", "isStaff", "isSuperUser", "enabled", "activated"});
-        adminObject.setOrderables(new String[]{"gmtCreated", "gmtModified", "enabled", "activated"});
-        adminObject.setSearches(new String[]{"email", "displayName"});
-        adminObject.setOrders(new Order[]{new Order("gmtModified", "desc")});
-        adminObject.setIcon(new AdminIcon());
+        List<AdminObject> adminObjects=new ArrayList<>();
+        AdminObject userObject =new AdminObject();
+        userObject.setModel(User.class);
+        userObject.setGroup("Settings");
+        userObject.setName("User");
+        userObject.setDesc("Builtin user management system");
+        userObject.setShows(new String[]{"id","email","displayName","isStaff","isSuperUser","enabled","activated","gmtModified","lastLogin","lastLoginIp","source","locale","timezone"});
+        userObject.setEdits(new String[]{"email","password","displayName","firstName","lastName","isStaff","isSuperUser","enabled","activated","profile","source","locale","timezone"});
+        userObject.setFilters(new String[]{"gmtCreated", "gmtModified", "isStaff", "isSuperUser", "enabled", "activated"});
+        userObject.setOrderables(new String[]{"gmtCreated", "gmtModified", "enabled", "activated"});
+        userObject.setSearches(new String[]{"email", "displayName"});
+        userObject.setOrders(new Order[]{new Order("gmtModified", "desc")});
+
+        AdminIcon userIcon =new AdminIcon();
+        userIcon.setSvg(Constant.ICON_SVG_ADDRESS);
+        userObject.setIcon(userIcon);
+        AdminAttribute IconAttribute =new AdminAttribute();
+        IconAttribute.setWidget("password");
+        HashMap<String, AdminAttribute> map=new HashMap<>();
+        map.put("password", IconAttribute);
+        userObject.setAttributes(map);
+        adminObjects.add(userObject);
+        AdminObject groupObject =new AdminObject();
+        groupObject.setModel(Group.class);
+        groupObject.setGroup("Settings");
+        groupObject.setName("Group");
+        groupObject.setDesc("A group describes a group of users. One user can be part of many groups and one group can have many users");
+        groupObject.setShows(new String[]{"id","name","extra","gmtCreated","gmtModified"});
+        groupObject.setEdits(new String[]{"id","name","extra","gmtModified"});
+        groupObject.setOrderables(new String[]{"gmtModified"});
+        groupObject.setSearches(new String[]{"name"});
+        groupObject.setRequires(new String[]{"name"});
+        AdminIcon groupIcon =new AdminIcon();
+        groupIcon.setSvg("待定");
+        groupObject.setIcon(groupIcon);
+        adminObjects.add(groupObject);
+
+        AdminObject groupMemberObject =new AdminObject();
+        groupMemberObject.setModel(GroupMember.class);
+        groupMemberObject.setGroup("Settings");
+        groupMemberObject.setName("GroupMember");
+        groupMemberObject.setDesc("Group members");
+        groupMemberObject.setShows(new String[]{"id","userId","group","role","gmtCreated"});
+        groupMemberObject.setFilters(new String[]{"group","role","gmtCreated"});
+        groupMemberObject.setOrderables(new String[]{"gmtCreated"});
+        groupMemberObject.setSearches(new String[]{"user","group"});
+        groupMemberObject.setRequires(new String[]{"user","group","role"});
+        AdminIcon groupMemberIcon =new AdminIcon();
+        groupMemberIcon.setSvg("待定");
+        groupMemberObject.setIcon(groupMemberIcon);
+        HashMap<String, AdminAttribute> groupMemberMap=new HashMap<>();
+        AdminAttribute groupMemberAttribute =new AdminAttribute();
+        groupMemberAttribute.setDefaultValue(Constant.GROUP_ROLE_ADMIN);
+        AdminSelectOption[] groupMemberSelectOptions=new AdminSelectOption[]{
+                new AdminSelectOption("admin",Constant.GROUP_ROLE_ADMIN),
+                new AdminSelectOption("member",Constant.GROUP_ROLE_MEMBER)
+        };
+        groupMemberAttribute.setChoices(groupMemberSelectOptions);
+        groupMemberMap.put("role", groupMemberAttribute);
+        groupMemberObject.setAttributes(groupMemberMap);
+        adminObjects.add(groupMemberObject);
+
+        AdminObject configObject =new AdminObject();
+        configObject.setModel(Config.class);
+        configObject.setGroup("Settings");
+        configObject.setName("Config");
+        configObject.setDesc("System config with database backend, You can change it in admin page, and it will take effect immediately without restarting the server");
+        configObject.setShows(new String[]{"key","value","autoload","pub","desc"});
+        configObject.setEdits(new String[]{"key","value","autoload","pub","desc"});
+        configObject.setOrderables(new String[]{"key"});
+        configObject.setSearches(new String[]{"key","desc","value"});
+        configObject.setRequires(new String[]{"key","value"});
+        configObject.setFilters(new String[]{"autoload","pub"});
+        AdminIcon configIcon =new AdminIcon();
+        configIcon.setSvg("待定");
+        configObject.setIcon(configIcon);
+        adminObjects.add(configObject);
+        return adminObjects.toArray(new AdminObject[0]);
     }
 }
