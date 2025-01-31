@@ -1,4 +1,4 @@
-package cn.muzisheng.pear.utils;
+package cn.muzisheng.pear.model;
 
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;

@@ -11,7 +11,7 @@ import cn.muzisheng.pear.properties.TokenProperties;
 import cn.muzisheng.pear.properties.UserProperties;
 import cn.muzisheng.pear.core.user.Impl.UserServiceImpl;
 import cn.muzisheng.pear.utils.JwtUtil;
-import cn.muzisheng.pear.utils.Result;
+import cn.muzisheng.pear.model.Result;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

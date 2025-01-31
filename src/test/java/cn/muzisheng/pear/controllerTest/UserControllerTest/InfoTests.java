@@ -6,7 +6,7 @@
 //import cn.muzisheng.pear.exception.AuthorizationException;
 //import cn.muzisheng.pear.service.impl.UserServiceImpl;
 //import cn.muzisheng.pear.utils.JwtUtil;
-//import cn.muzisheng.pear.utils.Result;
+//import cn.muzisheng.pear.model.Result;
 //import jakarta.servlet.http.HttpServletRequest;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;

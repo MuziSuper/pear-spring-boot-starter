@@ -124,7 +124,7 @@ Consider defining a bean of type 'long' in your configuration.
 11:51:39.783 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 11:51:39.784 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 11:51:39.785 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-11:51:39.823 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public org.springframework.http.ResponseEntity<cn.muzisheng.pear.utils.Result<java.util.Map<java.lang.String, java.lang.Object>>> cn.muzisheng.pear.api.UserApi.register(jakarta.servlet.http.HttpServletRequest,cn.muzisheng.pear.params.RegisterUserForm)]
+11:51:39.823 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public org.springframework.http.ResponseEntity<cn.muzisheng.pear.model.Result<java.util.Map<java.lang.String, java.lang.Object>>> cn.muzisheng.pear.api.UserApi.register(jakarta.servlet.http.HttpServletRequest,cn.muzisheng.pear.params.RegisterUserForm)]
 11:52:43.012 [http-nio-8080-exec-3] INFO  c.m.p.service.impl.UserServiceImpl - register user success, user email: 123
 11:52:43.028 [http-nio-8080-exec-3] INFO  c.m.p.service.impl.UserServiceImpl - login user success, user email: 123
 11:56:32.907 [http-nio-8080-exec-7] ERROR c.m.p.service.impl.UserServiceImpl - failed to create a user: null

@@ -4,7 +4,7 @@ import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.params.LoginForm;
 import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.core.user.UserService;
-import cn.muzisheng.pear.utils.Result;
+import cn.muzisheng.pear.model.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

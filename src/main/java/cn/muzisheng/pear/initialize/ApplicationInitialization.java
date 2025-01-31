@@ -1,6 +1,7 @@
 package cn.muzisheng.pear.initialize;
 
 import cn.muzisheng.pear.constant.Constant;
+import cn.muzisheng.pear.core.config.ConfigService;
 import cn.muzisheng.pear.dao.UserDAO;
 import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.entity.GroupMember;
@@ -10,13 +11,18 @@ import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.exception.UserException;
 import cn.muzisheng.pear.model.*;
 import cn.muzisheng.pear.properties.CacheProperties;
+import cn.muzisheng.pear.utils.CamelToSnakeUtil;
 import cn.muzisheng.pear.utils.ExpiredCache;
 import cn.muzisheng.pear.core.Logger.LogService;
+import cn.muzisheng.pear.utils.PluralUtil;
 import org.apache.commons.cli.*;
 import org.apache.commons.cli.Option;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,15 +32,16 @@ import java.util.List;
 @Component
 public class ApplicationInitialization implements CommandLineRunner {
     private final UserDAO userDAO;
-    private final LogService logService;
-
+    private final ConfigService configService;
+    private final static Logger logService= LoggerFactory.getLogger(ApplicationInitialization.class);
+    public static AdminObject[] adminObjects;
     public static ExpiredCache<String,String> ConfigCache;
     public static ExpiredCache<String,String> EnvCache;
 
     @Autowired
-    public ApplicationInitialization(LogService logService, UserDAO userDAO, CacheProperties cacheProperties) {
+    public ApplicationInitialization(UserDAO userDAO, CacheProperties cacheProperties, ConfigService configService) {
         this.userDAO = userDAO;
-        this.logService=logService;
+        this.configService = configService;
         ConfigCache=new ExpiredCache<String,String>().newExpiredCache(cacheProperties.getSize());
         EnvCache=new ExpiredCache<String,String>().newExpiredCache(cacheProperties.getSize());
     }
@@ -105,24 +112,54 @@ public class ApplicationInitialization implements CommandLineRunner {
             System.exit(1);
         }
 
-        AdminObject[] adminObjects=getPearAdminObjects();
+        configService.checkValue(Constant.KEY_SITE_NAME, "pear", Constant.ConfigFormatText, true, true);
+        adminObjects=getPearAdminObjects();
+        buildAdminObjects(adminObjects);
 
     }
-    private AdminObject[] BuildAdminObjects(AdminObject[] adminObjects){
-        for(int i=0;i<adminObjects.length;i++){
-
+    /**
+     * 处理AdminObject数据
+     **/
+    private void buildAdminObjects(AdminObject[] adminObjects){
+        List<String> existsTableNames=new ArrayList<>();
+        for (AdminObject adminObject : adminObjects) {
+            try {
+                build(adminObject);
+            } catch (GeneralException e) {
+                logService.error(e.getMessage());
+                continue;
+            }
+            if (existsTableNames.contains(adminObject.getTableName())) {
+                logService.warn(adminObject.getTableName() + " is exists");
+                continue;
+            }
+            existsTableNames.add(adminObject.getTableName());
         }
     }
-    private AdminObject Build(AdminObject adminObject) {
+    /**
+     * 处理AdminObject数据
+     **/
+    private void build(AdminObject adminObject) {
         if(adminObject.getPath().isEmpty()){
             adminObject.setPath(adminObject.getName().toLowerCase());
         }
         if("_".equals(adminObject.getPath())||"".equals(adminObject.getPath())){
             throw new GeneralException("invalid path");
         }
-        adminObject.setTableName(adminObject.getName().toLowerCase());
-    }
+        adminObject.setTableName(CamelToSnakeUtil.toSnakeCase(adminObject.getName()));
+        adminObject.setPluralName(PluralUtil.pluralize(adminObject.getName()));
 
+        /**
+         * 此处案例有填充filed字段,暂保留
+         * */
+
+        if(adminObject.getPrimaryKeys().length == 0 &&adminObject.getUniqueKeys().length==0){
+            throw new GeneralException(adminObject.getName()+" not has primaryKey or uniqueKeys");
+        }
+    }
+    /**
+     * 获取pear所有的内置类
+     **/
     public AdminObject[] getPearAdminObjects(){
         List<AdminObject> adminObjects=new ArrayList<>();
         AdminObject userObject =new AdminObject();
@@ -136,7 +173,6 @@ public class ApplicationInitialization implements CommandLineRunner {
         userObject.setOrderables(new String[]{"gmtCreated", "gmtModified", "enabled", "activated"});
         userObject.setSearches(new String[]{"email", "displayName"});
         userObject.setOrders(new Order[]{new Order("gmtModified", "desc")});
-
         AdminIcon userIcon =new AdminIcon();
         userIcon.setSvg(Constant.ICON_SVG_ADDRESS);
         userObject.setIcon(userIcon);
@@ -146,6 +182,7 @@ public class ApplicationInitialization implements CommandLineRunner {
         map.put("password", IconAttribute);
         userObject.setAttributes(map);
         adminObjects.add(userObject);
+
         AdminObject groupObject =new AdminObject();
         groupObject.setModel(Group.class);
         groupObject.setGroup("Settings");

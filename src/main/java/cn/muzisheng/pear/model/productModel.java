@@ -1,4 +1,4 @@
-package cn.muzisheng.pear.entity;
+package cn.muzisheng.pear.model;
 /**
  * 货品模型
  **/

@@ -7,7 +7,7 @@ import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.core.user.Impl.UserServiceImpl;
 import cn.muzisheng.pear.utils.JwtUtil;
-import cn.muzisheng.pear.utils.Result;
+import cn.muzisheng.pear.model.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;

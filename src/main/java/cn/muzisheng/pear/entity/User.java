@@ -68,7 +68,7 @@ public class User implements Serializable {
     @Column(length = 200)
     private String timezone;
     // 用户信息
-    @Column(columnDefinition = "LONGBLOB")
+    @Column(columnDefinition = "LONGTEXT")
     private String profile;
     // 用户认证令牌
     private String token;

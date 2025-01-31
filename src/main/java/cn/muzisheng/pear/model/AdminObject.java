@@ -1,5 +1,6 @@
 package cn.muzisheng.pear.model;
 
+import cn.muzisheng.pear.handler.*;
 import lombok.Data;
 
 import java.util.Map;
@@ -121,5 +122,28 @@ public class AdminObject{
      * 模型内主键字段的映射
      **/
     private Map<String,String> primaryKeyMap;
-
+    /**
+     * 渲染页面方法
+     **/
+    private ViewOnSite AdminViewOnSite;
+    /**
+     * 身份验证方法
+     **/
+    private AccessCheck accessCheck;
+    /**
+     * 预创建钩子方法
+     **/
+    private BeforeCreate beforeCreate;
+    /**
+     * 预更新钩子方法
+     **/
+    private BeforeUpdate beforeUpdate;
+    /**
+     * 预删除钩子方法
+     **/
+    private BeforeDelete beforeDelete;
+    /**
+     * 预渲染钩子方法
+     **/
+    private BeforeRender beforeRender;
 }

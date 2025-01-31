@@ -67,7 +67,7 @@ public class Constant {
     // 默认搜索properties路径
     public static final String APP_DEFAULT_SEARCH_PROPERTIES_PATH="src/main/resources";
 
-    // static
+    // static resources
     public static final String ICON_SVG_ADDRESS="src/main/resources/static/favicon.svg";
     public static final String ICON_PNG_ADDRESS="src/main/resources/static/favicon.png";
 
@@ -85,4 +85,7 @@ public class Constant {
     // group type
     public static final String GROUP_TYPE_ADMIN="admin";
     public static final String GROUP_TYPE_APP="app";
+
+    // site configuration
+    public static final String KEY_SITE_NAME="pear";
 }

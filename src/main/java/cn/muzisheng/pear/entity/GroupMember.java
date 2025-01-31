@@ -1,5 +1,7 @@
 package cn.muzisheng.pear.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -8,10 +10,15 @@ import java.time.LocalDateTime;
  * 组成员
  **/
 @Data
+@Entity
+@TableName("group_member")
 public class GroupMember {
     /**
      * 组成员id
      **/
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 用户id
@@ -20,7 +27,9 @@ public class GroupMember {
     /**
      * 用户
      **/
-    private User user;
+
+    @Column(columnDefinition = "LONGBLOB")
+    private String user;
     /**
      * 组id
      **/
@@ -28,10 +37,12 @@ public class GroupMember {
     /**
      * 组
      **/
-    private Group group;
+    @Column(columnDefinition = "LONGBLOB")
+    private String group;
     /**
      * 角色
      **/
+    @Column(length = 100)
     private String role;
     /**
      * 描述
@@ -40,10 +51,12 @@ public class GroupMember {
     /**
      * 创建时间
      **/
+    @TableField(fill= FieldFill.INSERT)
     private LocalDateTime gmtCreated;
     /**
      * 修改时间
      **/
+    @TableField(fill= FieldFill.INSERT_UPDATE)
     private LocalDateTime gmtModified;
 
 }
