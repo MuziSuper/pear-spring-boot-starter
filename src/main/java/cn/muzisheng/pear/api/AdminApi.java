@@ -5,6 +5,7 @@ import cn.muzisheng.pear.core.admin.AdminService;
 import cn.muzisheng.pear.initialize.ApplicationInitialization;
 import cn.muzisheng.pear.model.AdminObject;
 import cn.muzisheng.pear.model.Response;
+import cn.muzisheng.pear.params.QueryForm;
 import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.model.Result;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,10 +21,10 @@ public class AdminApi {
     @Autowired
     private AdminService adminService;
     @PostMapping("{model}")
-    public ResponseEntity<Result<Map<String, Object>>> query(HttpServletRequest request,@PathVariable("model") String model) {
+    public ResponseEntity<Result<Map<String, Object>>> query(HttpServletRequest request, @PathVariable("model") String model, @RequestBody QueryForm queryForm) {
         for(AdminObject adminObject : ApplicationInitialization.adminObjects){
             if(adminObject.getTableName().equals(model)){
-                return adminService.handleQueryOrGetOne(adminObject);
+                return adminService.handleQueryOrGetOne(request,model,adminObject,queryForm);
             }
         }
         Response<Map<String, Object>> response = new Response<>();
@@ -32,10 +33,10 @@ public class AdminApi {
         return response.value();
     }
     @PutMapping("{model}")
-    public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, @PathVariable("model") String model) {
+    public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody String jsonData) {
         for(AdminObject adminObject : ApplicationInitialization.adminObjects){
             if(adminObject.getTableName().equals(model)){
-                return adminService.handleQueryOrGetOne(adminObject);
+                return adminService.handleQueryOrGetOne();
             }
         }
         Response<Map<String, Object>> response = new Response<>();
@@ -44,7 +45,7 @@ public class AdminApi {
         return response.value();
     }
     @PatchMapping("{model}")
-    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model) {
+    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
         for(AdminObject adminObject : ApplicationInitialization.adminObjects){
             if(adminObject.getTableName().equals(model)){
                 return adminService.handleQueryOrGetOne(adminObject);
@@ -56,7 +57,7 @@ public class AdminApi {
         return response.value();
     }
     @DeleteMapping("{model}")
-    public ResponseEntity<Result<Map<String, Object>>> handleDelete(HttpServletRequest request, @PathVariable("model") String model) {
+    public ResponseEntity<Result<Map<String, Object>>> handleDelete(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
         for(AdminObject adminObject : ApplicationInitialization.adminObjects){
             if(adminObject.getTableName().equals(model)){
                 return adminService.handleQueryOrGetOne(adminObject);
@@ -69,7 +70,7 @@ public class AdminApi {
     }
 
     @PostMapping("{model}/{name}")
-    public ResponseEntity<Result<Map<String, Object>>> adminAction(HttpServletRequest request, @PathVariable("model") String model,@PathVariable("name") String name) {
+    public ResponseEntity<Result<Map<String, Object>>> adminAction(HttpServletRequest request, @PathVariable("model") String model,@PathVariable("name") String name,@RequestParam("filed") String filed,@RequestParam("keys") String jsonDataMap) {
         for(AdminObject adminObject : ApplicationInitialization.adminObjects){
             if(adminObject.getTableName().equals(model)){
                 return adminService.handleQueryOrGetOne(adminObject);

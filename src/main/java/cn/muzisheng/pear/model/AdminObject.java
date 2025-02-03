@@ -125,7 +125,7 @@ public class AdminObject{
     /**
      * 渲染页面方法
      **/
-    private ViewOnSite AdminViewOnSite;
+    private AdminViewOnSite adminViewOnSite;
     /**
      * 身份验证方法
      **/

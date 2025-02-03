@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final static Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserDAO userDAO;
     private final JwtUtil jwtUtil;
+    @Autowired
     public UserServiceImpl(UserDAO userDAO, JwtUtil jwtUtil) {
         this.userDAO=userDAO;
         this.jwtUtil = jwtUtil;
