@@ -23,10 +23,6 @@ public interface ConfigService {
     int getIntEnv(String key);
 
     /**
-     * 获取配置缓存中的所有配置信息
-     **/
-    List<Config> getAllValue();
-    /**
      * 将配置信息存入到数据库的config表中,若发生冲突，则只更新value、format、autoload、public字段
      * @param key 键名
      * @param value 键值

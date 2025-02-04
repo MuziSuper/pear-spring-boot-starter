@@ -14,7 +14,7 @@ public class Constant {
     public static final String HELP_ARGUMENTS="arguments";
 
     // 响应状态
-    public static final int GENERAL_EXCEPTION = 501;
+    public static final int GENERAL_EXCEPTION = 500;
     public static final int SCALE_EXCEPTION = 502;
     public static final int USER_EXCEPTION = 503;
     public static final int HOOK_EXCEPTION = 504;
@@ -88,4 +88,40 @@ public class Constant {
 
     // site configuration
     public static final String KEY_SITE_NAME="pear";
+    // admin param
+    public static final int DEFAULT_QUERY_LIMIT =102400;
+
+    // dataset statement
+//    const (
+//	FilterOpIsNot          = "is not"
+//	FilterOpEqual          = "="
+//	FilterOpNotEqual       = "<>"
+//	FilterOpIn             = "in"
+//	FilterOpNotIn          = "not_in"
+//	FilterOpGreater        = ">"
+//	FilterOpGreaterOrEqual = ">="
+//	FilterOpLess           = "<"
+//	FilterOpLessOrEqual    = "<="
+//	FilterOpLike           = "like"
+//	FilterOpBetween        = "between"
+//)
+//
+//// 排序条件
+//const (
+//	OrderOpDesc = "desc"
+//	OrderOpAsc  = "asc"
+//)
+    public static final String FILTER_OP_IS_NOT = "is not";
+    public static final String FILTER_OP_EQUAL = "=";
+    public static final String FILTER_OP_NOT_EQUAL = "<>";
+    public static final String FILTER_OP_IN = "in";
+    public static final String FILTER_OP_NOT_IN = "not_in";
+    public static final String FILTER_OP_GREATER = ">";
+    public static final String FILTER_OP_GREATER_OR_EQUAL = ">=";
+    public static final String FILTER_OP_LESS = "<";
+    public static final String FILTER_OP_LESS_OR_EQUAL = "<=";
+    public static final String FILTER_OP_LIKE = "like";
+    public static final String FILTER_OP_BETWEEN = "between";
+    public static final String ORDER_OP_DESC = "desc";
+    public static final String ORDER_OP_ASC = "asc";
 }

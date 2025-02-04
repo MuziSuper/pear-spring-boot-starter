@@ -28,7 +28,7 @@ public class ExceptionApi {
     @ExceptionHandler(IllegalException.class)
     public ResponseEntity<ExceptionResponse> handleIllegalException(IllegalException e) {
         ExceptionResponse errorResponse = new ExceptionResponse(Constant.ILLEGAL_EXCEPTION, e.getMessage() == null ? Constant.ILLEGAL_MESSAGE_EXCEPTION : e.getMessage(), System.currentTimeMillis());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AuthorizationException.class)
@@ -45,6 +45,6 @@ public class ExceptionApi {
     @ExceptionHandler(GeneralException.class)
     public ResponseEntity<ExceptionResponse> handleGeneralException(GeneralException e) {
         ExceptionResponse errorResponse = new ExceptionResponse(Constant.GENERAL_EXCEPTION, e.getMessage(), System.currentTimeMillis());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

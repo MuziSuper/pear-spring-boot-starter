@@ -24,7 +24,8 @@ public class AdminApi {
     public ResponseEntity<Result<Map<String, Object>>> query(HttpServletRequest request, @PathVariable("model") String model, @RequestBody QueryForm queryForm) {
         for(AdminObject adminObject : ApplicationInitialization.adminObjects){
             if(adminObject.getTableName().equals(model)){
-                return adminService.handleQueryOrGetOne(request,model,adminObject,queryForm);
+
+                return adminService.handleQueryOrGetOne(request,model,adminObject<>,queryForm);
             }
         }
         Response<Map<String, Object>> response = new Response<>();

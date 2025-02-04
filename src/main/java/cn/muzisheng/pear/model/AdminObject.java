@@ -1,6 +1,7 @@
 package cn.muzisheng.pear.model;
 
 import cn.muzisheng.pear.handler.*;
+import cn.muzisheng.pear.params.Filter;
 import lombok.Data;
 
 import java.util.Map;
@@ -8,11 +9,15 @@ import java.util.Map;
  * 加载客户端模型
  **/
 @Data
-public class AdminObject{
+public class AdminObject<T>{
     /**
      * 模型
      **/
-    private Class<?> model;
+    private Class<T> model;
+    /**
+     * 模型实例
+     **/
+    private T modelElem;
     /**
      * 所属组名，多个相关的表归为一类
      **/
@@ -44,7 +49,7 @@ public class AdminObject{
     /**
      * 可用于过滤的字段
      **/
-    private String[] filters;
+    private Filter[] filters;
     /**
      * 可用于排序的字段
      **/
