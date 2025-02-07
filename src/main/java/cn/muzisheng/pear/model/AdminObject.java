@@ -9,15 +9,15 @@ import java.util.Map;
  * 加载客户端模型
  **/
 @Data
-public class AdminObject<T>{
+public class AdminObject{
     /**
      * 模型
      **/
-    private Class<T> model;
+    private Class<?> model;
     /**
      * 模型实例
      **/
-    private T modelElem;
+    private Object modelElem;
     /**
      * 所属组名，多个相关的表归为一类
      **/

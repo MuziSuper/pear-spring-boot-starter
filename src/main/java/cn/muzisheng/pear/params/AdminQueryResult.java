@@ -1,10 +1,13 @@
 package cn.muzisheng.pear.params;
 
+import lombok.Data;
+
 import java.util.Map;
 
 /**
  * admin查询返回结果
  **/
+@Data
 public class AdminQueryResult {
     // type AdminQueryResult struct {
     //	TotalCount int              `json:"total,omitempty"`

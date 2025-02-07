@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
 
-public interface AdminService<T> {
+public interface AdminService {
 
-    ResponseEntity<Result<Object>> handleQueryOrGetOne(HttpServletRequest request, String model, AdminObject<T> adminObject,QueryForm queryForm);
 
+    ResponseEntity<Result<Object>> handleQueryOrGetOne(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm);
     ResponseEntity<Result<Map<String,Object>>> handleCreate(AdminObject adminObject);
     ResponseEntity<Result<Map<String,Object>>> handleUpdate(AdminObject adminObject);
     ResponseEntity<Result<Map<String,Object>>> handleDelete(AdminObject adminObject);

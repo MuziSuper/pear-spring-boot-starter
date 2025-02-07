@@ -2,6 +2,7 @@ package cn.muzisheng.pear.core.admin.impl;
 
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.core.admin.AdminService;
+import cn.muzisheng.pear.dao.AdminDAO;
 import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.mapper.AdminMapper;
 import cn.muzisheng.pear.model.*;
@@ -9,6 +10,8 @@ import cn.muzisheng.pear.params.AdminQueryResult;
 import cn.muzisheng.pear.params.Filter;
 import cn.muzisheng.pear.params.QueryForm;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.TableInfo;
+import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,18 +23,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class AdminServiceImpl<T> implements AdminService {
+public class AdminServiceImpl implements AdminService {
 
-    private final AdminMapper<T> adminMapper;
+    private final AdminMapper adminMapper;
     private static final Logger LOG = LoggerFactory.getLogger(AdminServiceImpl.class);
 
     @Autowired
-    public AdminServiceImpl(AdminMapper<T> adminMapper) {
+    public AdminServiceImpl(AdminMapper adminMapper) {
         this.adminMapper = adminMapper;
     }
 
     @Override
-    public ResponseEntity<Result<Object>> handleQueryOrGetOne(HttpServletRequest request, String model, AdminObject<T> adminObject, QueryForm queryForm) {
+    public ResponseEntity<Result<Object>> handleQueryOrGetOne(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm) {
+        // 如果请求体中无数据，就获取单个主键排序第一位的数据，
+        // 根据query传参，来获取数据库中存储的某表的数据，
+        // 若自定义了beforeRender就调用， 将实例进行序列化传给客户端
         if (request.getContentLength() <= 0) {
             return handleGetOne(request, model, adminObject, queryForm);
         }
@@ -39,7 +45,7 @@ public class AdminServiceImpl<T> implements AdminService {
         if (queryForm.isForeignMode()) {
             queryForm.setLimit(0);
         }
-        AdminQueryResult result = queryObjects(request, model, adminObject, form);
+        AdminQueryResult result = queryObjects(request, model, adminObject, queryForm);
 
     }
 
@@ -70,9 +76,10 @@ public class AdminServiceImpl<T> implements AdminService {
      * 封装在r AdminQueryResult中
      **/
     private AdminQueryResult queryObjects(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm) {
-        QueryWrapper<T> wrapper = new QueryWrapper<>();
+        AdminQueryResult r = new AdminQueryResult();
+        QueryWrapper<Map<String,Object>> wrapper = new QueryWrapper<>();
         for (Filter filter : adminObject.getFilters()) {
-            getQuery(filter, wrapper);
+            getQueryClause(filter, wrapper);
             if (Constant.FILTER_OP_LIKE.equals(filter.getOp())){
                 if (filter.getValue() instanceof Object[] values) {
                     wrapper.and(w->{
@@ -100,11 +107,43 @@ public class AdminServiceImpl<T> implements AdminService {
                 }
             }
         }
+        Order[] orders;
+        if(queryForm.getOrders().length>0){
+            orders=queryForm.getOrders();
+        }else{
+            orders=adminObject.getOrders();
+        }
+        for(Order order : orders){
+            getSortingClause(order, wrapper);
+        }
+        if(queryForm.getKeyword()!=null&&adminObject.getSearches().length>0){
+            wrapper.and(w->{
+                for(String search : adminObject.getSearches()){
+                    w.like(search, queryForm.getKeyword());
+                }
+            });
+        }
+        r.setPos(queryForm.getPos());
+        r.setLimit(queryForm.getLimit());
+        r.setKeyword(queryForm.getKeyword());
+
     }
+
+    /**
+     * 拼接数据库db的排序子句
+    **/
+    private void getSortingClause(Order order,QueryWrapper<Map<String,Object>> wrapper){
+        if(Constant.ORDER_OP_ASC.equals(order.getOp())){
+            wrapper.orderByAsc(order.getName());
+        }else{
+            wrapper.orderByDesc(order.getName());
+        }
+    }
+
     /**
      * 拼接数据库db的查询子句,Like与Between除外
      **/
-    private QueryWrapper<T> getQuery(Filter filter, QueryWrapper<T> queryWrapper) {
+    private void getQueryClause(Filter filter, QueryWrapper<Map<String,Object>> queryWrapper) {
         switch (filter.getOp()) {
             case Constant.FILTER_OP_IS_NOT:
                 if (filter.getValue() == null) {
@@ -141,18 +180,31 @@ public class AdminServiceImpl<T> implements AdminService {
         }
         return queryWrapper;
     }
+    /**
+     * 根据Class类对象动态获取数据库语柄
+     **/
+    private QueryWrapper<Map<String,Object>> GetQueryStalk(Class<?> entityClass){
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(entityClass);
+        if(tableInfo == null){
+            throw new GeneralException("No information about the corresponding table of the entity class was found.");
+        }
+        String tableName = tableInfo.getTableName();
+
+    }
 
     /**
      * 客户端通过url的参数进行数据查询 (不通过请求体传入参数)
      **/
     private ResponseEntity<Result<Object>> handleGetOne(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm) {
         Response<Object> response = new Response<>();
+        // 根据query值遍历并获取其映射数据库表的主键或外键键值对
         Map<String, Object> queryMap = getPrimaryValues(request, model, adminObject, queryForm);
         if (queryMap.isEmpty()) {
             LOG.error("invalid primary key");
             throw new GeneralException("invalid primary key");
         }
-        Object result = adminMapper.selectByMap(queryMap).getFirst();
+        // 使用预加载，获取对象及其外键链接的数据
+        Object result = adminMapper.selectFirst(adminObject.getTableName(), queryMap);
         if (result == null) {
             LOG.error("Data cannot be found.");
             throw new GeneralException("Data cannot be found.");

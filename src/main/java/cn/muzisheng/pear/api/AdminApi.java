@@ -6,7 +6,6 @@ import cn.muzisheng.pear.initialize.ApplicationInitialization;
 import cn.muzisheng.pear.model.AdminObject;
 import cn.muzisheng.pear.model.Response;
 import cn.muzisheng.pear.params.QueryForm;
-import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.model.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +20,11 @@ public class AdminApi {
     @Autowired
     private AdminService adminService;
     @PostMapping("{model}")
-    public ResponseEntity<Result<Map<String, Object>>> query(HttpServletRequest request, @PathVariable("model") String model, @RequestBody QueryForm queryForm) {
+    public ResponseEntity<Result<Object>> query(HttpServletRequest request, @PathVariable("model") String model, @RequestBody QueryForm queryForm) {
         for(AdminObject adminObject : ApplicationInitialization.adminObjects){
             if(adminObject.getTableName().equals(model)){
-
-                return adminService.handleQueryOrGetOne(request,model,adminObject<>,queryForm);
+                Class<?> T= adminObject.getModel();
+                return adminService.handleQueryOrGetOne(request,model,adminObject,queryForm);
             }
         }
         Response<Map<String, Object>> response = new Response<>();
