@@ -49,7 +49,7 @@ public class AdminObject{
     /**
      * 可用于过滤的字段
      **/
-    private Filter[] filters;
+    private String[] filterables;
     /**
      * 可用于排序的字段
      **/

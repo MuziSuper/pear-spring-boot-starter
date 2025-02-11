@@ -3,6 +3,7 @@ package cn.muzisheng.pear.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
  **/
 @Data
 @Entity
-@TableName("group")
+@TableName("`group`")
 public class Group {
     /**
      * 用户组id
@@ -37,12 +38,13 @@ public class Group {
     /**
      * 用户组权限
      **/
-    @Column(columnDefinition = "LONGBLOB")
-    private String permission;
+//    @Column(columnDefinition = "LONGBLOB")
+    private byte[] permission;
     /**
      * 创建时间
      **/
     @TableField(fill= FieldFill.INSERT)
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime gmtCreated;
     /**
      * 修改时间

@@ -20,65 +20,64 @@ public class AdminApi {
     @Autowired
     private AdminService adminService;
     @PostMapping("{model}")
-    public ResponseEntity<Result<Object>> query(HttpServletRequest request, @PathVariable("model") String model, @RequestBody QueryForm queryForm) {
+    public ResponseEntity<Result<Object>> query(HttpServletRequest request, @PathVariable("model") String model, @RequestBody(required = false) QueryForm queryForm) {
         for(AdminObject adminObject : ApplicationInitialization.adminObjects){
             if(adminObject.getTableName().equals(model)){
-                Class<?> T= adminObject.getModel();
                 return adminService.handleQueryOrGetOne(request,model,adminObject,queryForm);
             }
         }
-        Response<Map<String, Object>> response = new Response<>();
+        Response<Object> response = new Response<>();
         response.setError("Model not found");
         response.setStatus(Constant.GENERAL_EXCEPTION);
         return response.value();
     }
-    @PutMapping("{model}")
-    public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody String jsonData) {
-        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
-            if(adminObject.getTableName().equals(model)){
-                return adminService.handleQueryOrGetOne();
-            }
-        }
-        Response<Map<String, Object>> response = new Response<>();
-        response.setError("Model not found");
-        response.setStatus(Constant.GENERAL_EXCEPTION);
-        return response.value();
-    }
-    @PatchMapping("{model}")
-    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
-        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
-            if(adminObject.getTableName().equals(model)){
-                return adminService.handleQueryOrGetOne(adminObject);
-            }
-        }
-        Response<Map<String, Object>> response = new Response<>();
-        response.setError("Model not found");
-        response.setStatus(Constant.GENERAL_EXCEPTION);
-        return response.value();
-    }
-    @DeleteMapping("{model}")
-    public ResponseEntity<Result<Map<String, Object>>> handleDelete(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
-        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
-            if(adminObject.getTableName().equals(model)){
-                return adminService.handleQueryOrGetOne(adminObject);
-            }
-        }
-        Response<Map<String, Object>> response = new Response<>();
-        response.setError("Model not found");
-        response.setStatus(Constant.GENERAL_EXCEPTION);
-        return response.value();
-    }
-
-    @PostMapping("{model}/{name}")
-    public ResponseEntity<Result<Map<String, Object>>> adminAction(HttpServletRequest request, @PathVariable("model") String model,@PathVariable("name") String name,@RequestParam("filed") String filed,@RequestParam("keys") String jsonDataMap) {
-        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
-            if(adminObject.getTableName().equals(model)){
-                return adminService.handleQueryOrGetOne(adminObject);
-            }
-        }
-        Response<Map<String, Object>> response = new Response<>();
-        response.setError("Model not found");
-        response.setStatus(Constant.GENERAL_EXCEPTION);
-        return response.value();
-    }
+//    @PutMapping("{model}")
+//    public ResponseEntity<Result<Object>> handleCreate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody QueryForm queryForm) {
+//        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
+//            if(adminObject.getTableName().equals(model)){
+//                return adminService.handleQueryOrGetOne(request,model,adminObject,queryForm);
+//            }
+//        }
+//        Response<Object> response = new Response<>();
+//        response.setError("Model not found");
+//        response.setStatus(Constant.GENERAL_EXCEPTION);
+//        return response.value();
+//    }
+//    @PatchMapping("{model}")
+//    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
+//        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
+//            if(adminObject.getTableName().equals(model)){
+//                return adminService.handleQueryOrGetOne(adminObject);
+//            }
+//        }
+//        Response<Map<String, Object>> response = new Response<>();
+//        response.setError("Model not found");
+//        response.setStatus(Constant.GENERAL_EXCEPTION);
+//        return response.value();
+//    }
+//    @DeleteMapping("{model}")
+//    public ResponseEntity<Result<Map<String, Object>>> handleDelete(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
+//        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
+//            if(adminObject.getTableName().equals(model)){
+//                return adminService.handleQueryOrGetOne(adminObject);
+//            }
+//        }
+//        Response<Map<String, Object>> response = new Response<>();
+//        response.setError("Model not found");
+//        response.setStatus(Constant.GENERAL_EXCEPTION);
+//        return response.value();
+//    }
+//
+//    @PostMapping("{model}/{name}")
+//    public ResponseEntity<Result<Map<String, Object>>> adminAction(HttpServletRequest request, @PathVariable("model") String model,@PathVariable("name") String name,@RequestParam("filed") String filed,@RequestParam("keys") String jsonDataMap) {
+//        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
+//            if(adminObject.getTableName().equals(model)){
+//                return adminService.handleQueryOrGetOne(adminObject);
+//            }
+//        }
+//        Response<Map<String, Object>> response = new Response<>();
+//        response.setError("Model not found");
+//        response.setStatus(Constant.GENERAL_EXCEPTION);
+//        return response.value();
+//    }
 }

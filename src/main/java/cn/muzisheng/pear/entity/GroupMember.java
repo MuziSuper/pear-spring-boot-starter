@@ -28,8 +28,8 @@ public class GroupMember {
      * 用户
      **/
 
-    @Column(columnDefinition = "LONGBLOB")
-    private String user;
+//    @Column(columnDefinition = "LONGBLOB")
+    private byte[] user;
     /**
      * 组id
      **/
@@ -37,8 +37,8 @@ public class GroupMember {
     /**
      * 组
      **/
-    @Column(columnDefinition = "LONGBLOB")
-    private String group;
+    @Column(name="`group`")
+    private byte[] group;
     /**
      * 角色
      **/

@@ -1,156 +1,1165 @@
-19:21:50.421 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Starting InfoTests using Java 21.0.2 with PID 27976 (started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-19:21:50.423 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - No active profile set, falling back to 1 default profile: "default"
-19:21:51.387 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-19:21:51.409 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 JPA repository interfaces.
-19:21:53.636 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
-19:21:53.690 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-19:21:53.856 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-19:21:53.903 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-19:21:54.343 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@30ed2a26
-19:21:54.345 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-19:21:55.229 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-19:21:55.309 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-19:21:56.738 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-19:21:57.052 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Started InfoTests in 7.015 seconds (process running for 7.92)
-19:21:57.197 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-19:21:57.198 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-19:21:57.203 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
-19:21:57.313 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
-19:21:57.342 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-19:21:57.343 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-19:21:57.343 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-19:21:57.347 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
-19:21:57.357 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-19:21:57.357 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-19:21:57.358 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-19:21:57.359 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
-19:21:57.371 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-19:21:57.371 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-19:21:57.372 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-19:21:57.376 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
-19:21:57.393 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-19:21:57.396 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-19:21:57.417 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-22:27:44.192 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Starting InfoTests using Java 21.0.2 with PID 33148 (started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-22:27:44.194 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - No active profile set, falling back to 1 default profile: "default"
-22:27:44.898 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-22:27:44.920 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 JPA repository interfaces.
-22:27:47.344 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
-22:27:47.408 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-22:27:47.555 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-22:27:47.608 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-22:27:48.041 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5308e79d
-22:27:48.044 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-22:27:48.954 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-22:27:49.034 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-22:27:50.592 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-22:27:50.943 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Started InfoTests in 7.13 seconds (process running for 8.029)
-22:27:51.085 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:27:51.086 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:27:51.089 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-22:27:51.262 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'with_token' for method parameter type String is not present]
-22:27:51.292 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:27:51.292 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:27:51.292 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-22:27:51.296 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'with_token' for method parameter type String is not present]
-22:27:51.306 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:27:51.308 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:27:51.309 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-22:27:51.311 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'with_token' for method parameter type String is not present]
-22:27:51.322 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:27:51.323 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:27:51.324 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-22:27:51.326 [main] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'with_token' for method parameter type String is not present]
-22:27:51.342 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-22:27:51.345 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-22:27:51.364 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-22:30:17.047 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Starting InfoTests using Java 21.0.2 with PID 28680 (started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-22:30:17.048 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - No active profile set, falling back to 1 default profile: "default"
-22:30:17.703 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-22:30:17.724 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 JPA repository interfaces.
-22:30:19.890 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
-22:30:19.934 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-22:30:20.088 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-22:30:20.131 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-22:30:20.479 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7577589
-22:30:20.481 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-22:30:21.335 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-22:30:21.387 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-22:30:22.932 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-22:30:23.272 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Started InfoTests in 6.58 seconds (process running for 7.378)
-22:30:23.409 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:30:23.409 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:30:23.413 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
-22:30:23.603 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:30:23.603 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:30:23.604 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-22:30:23.625 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:30:23.626 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:30:23.627 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-22:30:23.644 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:30:23.645 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:30:23.647 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-22:30:23.674 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-22:30:23.678 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-22:30:23.691 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-22:50:49.892 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Starting InfoTests using Java 21.0.2 with PID 31508 (started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-22:50:49.894 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - No active profile set, falling back to 1 default profile: "default"
-22:50:50.549 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-22:50:50.572 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 JPA repository interfaces.
-22:50:52.756 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
-22:50:52.819 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-22:50:52.976 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-22:50:53.025 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-22:50:53.379 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2431050d
-22:50:53.381 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-22:50:54.227 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-22:50:54.275 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-22:50:55.720 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-22:50:56.045 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Started InfoTests in 6.55 seconds (process running for 7.406)
-22:50:56.182 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:50:56.182 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:50:56.185 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-22:50:56.309 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:50:56.310 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:50:56.311 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-22:50:56.328 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:50:56.328 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:50:56.329 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-22:50:56.339 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:50:56.339 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:50:56.340 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-22:50:56.361 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-22:50:56.365 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-22:50:56.381 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-22:51:01.673 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Starting InfoTests using Java 21.0.2 with PID 33248 (started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-22:51:01.675 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - No active profile set, falling back to 1 default profile: "default"
-22:51:02.430 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-22:51:02.451 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 JPA repository interfaces.
-22:51:04.665 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
-22:51:04.716 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-22:51:04.851 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-22:51:04.890 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-22:51:05.212 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@78829412
-22:51:05.215 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-22:51:06.036 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-22:51:06.091 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-22:51:07.740 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-22:51:08.090 [main] INFO  c.m.p.c.UserControllerTest.InfoTests - Started InfoTests in 6.822 seconds (process running for 8.057)
-22:51:08.251 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-22:51:08.251 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:51:08.254 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-22:53:27.100 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m21s770ms630µs800ns).
-22:56:08.782 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m41s682ms669µs700ns).
-23:00:27.732 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m18s949ms291µs400ns).
-23:00:37.992 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-23:00:37.993 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-23:00:37.994 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-23:00:41.565 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-23:00:41.566 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-23:00:41.567 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-23:00:44.485 [main] INFO  o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-23:00:44.485 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-23:00:44.487 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-23:00:47.448 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-23:00:47.450 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-23:00:47.463 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+13:40:17.606 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 20552 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+13:40:17.608 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+13:40:19.495 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:40:19.521 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 0 JPA repository interfaces.
+13:40:20.246 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+13:40:20.259 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+13:40:20.263 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+13:40:20.264 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+13:40:20.318 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:40:20.319 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2672 ms
+13:40:20.434 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+13:40:20.587 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@c97721b
+13:40:20.588 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+13:40:20.744 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+13:40:20.779 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+13:40:21.090 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+13:40:22.036 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+13:40:22.087 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+13:40:22.949 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+13:40:22.965 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+13:40:22.975 [main] INFO  cn.muzisheng.pear.Application - Started Application in 5.904 seconds (process running for 7.135)
+13:40:23.084 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:40:23.084 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:40:23.084 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:40:23.084 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:41:48.522 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+13:41:48.524 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+13:41:48.537 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+13:41:53.423 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 26964 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+13:41:53.425 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+13:41:54.030 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:41:54.057 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 20 ms. Found 0 JPA repository interfaces.
+13:41:54.683 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+13:41:54.695 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+13:41:54.701 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+13:41:54.701 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+13:41:54.755 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:41:54.755 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1301 ms
+13:41:54.873 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+13:41:55.062 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1860a7a1
+13:41:55.065 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+13:41:55.264 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+13:41:55.305 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+13:41:55.624 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+13:41:56.707 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+13:41:56.764 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+13:41:57.784 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+13:41:57.807 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+13:41:57.819 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.767 seconds (process running for 5.257)
+13:41:57.932 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:41:57.932 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:41:57.933 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:41:57.933 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:42:40.271 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+13:42:40.273 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+13:42:40.281 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+13:42:42.424 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 18536 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+13:42:42.425 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+13:42:43.036 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:42:43.065 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 20 ms. Found 0 JPA repository interfaces.
+13:42:43.895 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+13:42:43.914 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+13:42:43.921 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+13:42:43.922 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+13:42:43.994 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:42:43.995 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1537 ms
+13:42:44.120 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+13:42:44.282 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@37314843
+13:42:44.284 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+13:42:44.472 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+13:42:44.521 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+13:42:44.901 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+13:42:46.078 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+13:42:46.194 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+13:42:47.074 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+13:42:47.092 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+13:42:47.102 [main] INFO  cn.muzisheng.pear.Application - Started Application in 5.06 seconds (process running for 5.686)
+13:42:47.225 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:42:47.225 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:42:47.226 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:42:47.226 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:47:27.373 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+13:47:27.374 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+13:47:27.382 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+13:47:31.504 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 7860 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+13:47:31.506 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+13:47:32.094 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:47:32.137 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30 ms. Found 0 JPA repository interfaces.
+13:47:32.952 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+13:47:32.970 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+13:47:32.975 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+13:47:32.976 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+13:47:33.062 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:47:33.063 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1525 ms
+13:47:33.217 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+13:47:33.337 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5d14e99e
+13:47:33.346 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+13:47:33.488 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+13:47:33.514 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+13:47:33.806 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+13:47:35.009 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+13:47:35.111 [main] WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "create table `Product` (`id` varchar(255) not null, `enabled` bit, `gmtCreated` `TIMESTAMPS`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255), `name` varchar(200), primary key (`id`)) engine=InnoDB" via JDBC [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMPS`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255' at line 1]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table `Product` (`id` varchar(255) not null, `enabled` bit, `gmtCreated` `TIMESTAMPS`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255), `name` varchar(200), primary key (`id`)) engine=InnoDB" via JDBC [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMPS`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255' at line 1]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:583)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:523)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.createTable(AbstractSchemaMigrator.java:323)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:80)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:240)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:119)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:280)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at cn.muzisheng.pear.Application.main(Application.java:9)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMPS`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:763)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 37 common frames omitted
+13:47:35.117 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+13:47:36.075 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+13:47:36.099 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+13:47:36.109 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.979 seconds (process running for 5.463)
+13:47:36.245 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:47:36.246 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:47:36.246 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:47:36.246 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:47:55.745 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+13:47:55.747 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+13:47:55.755 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+13:48:00.545 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 32380 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+13:48:00.546 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+13:48:01.207 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:48:01.248 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 0 JPA repository interfaces.
+13:48:01.986 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+13:48:01.995 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+13:48:01.998 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+13:48:01.998 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+13:48:02.072 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:48:02.072 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1496 ms
+13:48:02.205 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+13:48:02.345 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@37314843
+13:48:02.347 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+13:48:02.494 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+13:48:02.522 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+13:48:02.805 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+13:48:03.810 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+13:48:03.903 [main] WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "create table `Product` (`id` varchar(255) not null, `enabled` bit, `gmtCreated` `TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255), `name` varchar(200), primary key (`id`)) engine=InnoDB" via JDBC [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255)' at line 1]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table `Product` (`id` varchar(255) not null, `enabled` bit, `gmtCreated` `TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255), `name` varchar(200), primary key (`id`)) engine=InnoDB" via JDBC [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255)' at line 1]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:583)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:523)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.createTable(AbstractSchemaMigrator.java:323)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:80)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:240)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:119)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:280)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at cn.muzisheng.pear.Application.main(Application.java:9)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255)' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:763)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 37 common frames omitted
+13:48:03.906 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+13:48:04.717 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+13:48:04.748 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+13:48:04.758 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.596 seconds (process running for 5.087)
+13:48:04.857 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:48:04.857 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:48:04.857 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:48:04.859 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:51:01.952 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+13:51:01.956 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+13:51:01.975 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+13:51:05.733 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 34724 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+13:51:05.735 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+13:51:06.488 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:51:06.517 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 18 ms. Found 0 JPA repository interfaces.
+13:51:07.212 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+13:51:07.227 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+13:51:07.230 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+13:51:07.230 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+13:51:07.313 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:51:07.313 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1548 ms
+13:51:07.457 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+13:51:07.596 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@37314843
+13:51:07.598 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+13:51:07.768 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+13:51:07.802 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+13:51:08.117 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+13:51:09.247 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+13:51:09.351 [main] WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "create table `Product` (`id` varchar(255) not null, `enabled` bit, `gmtCreated` `TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255), `name` varchar(200), primary key (`id`)) engine=InnoDB" via JDBC [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255)' at line 1]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table `Product` (`id` varchar(255) not null, `enabled` bit, `gmtCreated` `TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255), `name` varchar(200), primary key (`id`)) engine=InnoDB" via JDBC [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255)' at line 1]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:583)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:523)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.createTable(AbstractSchemaMigrator.java:323)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:80)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:240)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:119)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:280)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at cn.muzisheng.pear.Application.main(Application.java:9)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255)' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:763)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 37 common frames omitted
+13:51:09.358 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+13:51:10.307 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+13:51:10.334 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+13:51:10.351 [main] INFO  cn.muzisheng.pear.Application - Started Application in 5.006 seconds (process running for 5.494)
+13:51:10.518 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:51:10.518 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:51:10.518 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:51:10.518 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:53:26.129 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+13:53:26.132 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+13:53:26.147 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+13:53:29.765 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 8288 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+13:53:29.766 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+13:53:30.461 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:53:30.497 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 25 ms. Found 0 JPA repository interfaces.
+13:53:31.290 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+13:53:31.300 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+13:53:31.305 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+13:53:31.305 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+13:53:31.358 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:53:31.360 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1562 ms
+13:53:31.465 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+13:53:31.595 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@37314843
+13:53:31.596 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+13:53:31.766 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+13:53:31.796 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+13:53:32.163 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+13:53:33.231 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+13:53:33.297 [main] WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "create table `Product` (`id` varchar(255) not null, `enabled` bit, `gmtCreated` `TIMESTAMP DEFAULT CURRENT_TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255), `name` varchar(200), primary key (`id`)) engine=InnoDB" via JDBC [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMP DEFAULT CURRENT_TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigi' at line 1]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table `Product` (`id` varchar(255) not null, `enabled` bit, `gmtCreated` `TIMESTAMP DEFAULT CURRENT_TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255), `name` varchar(200), primary key (`id`)) engine=InnoDB" via JDBC [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMP DEFAULT CURRENT_TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigi' at line 1]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:583)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:523)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.createTable(AbstractSchemaMigrator.java:323)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:80)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:240)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:119)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:280)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at cn.muzisheng.pear.Application.main(Application.java:9)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMP DEFAULT CURRENT_TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigi' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:763)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 37 common frames omitted
+13:53:33.301 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+13:53:34.380 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+13:53:34.399 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+13:53:34.410 [main] INFO  cn.muzisheng.pear.Application - Started Application in 5.024 seconds (process running for 5.523)
+13:53:34.524 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:53:34.524 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:53:34.524 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:53:34.524 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:55:45.348 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+13:55:45.351 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+13:55:45.366 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+13:55:49.653 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 7520 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+13:55:49.655 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+13:55:50.228 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+13:55:50.257 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 19 ms. Found 0 JPA repository interfaces.
+13:55:50.937 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+13:55:50.952 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+13:55:50.957 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+13:55:50.959 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+13:55:51.040 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+13:55:51.041 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1354 ms
+13:55:51.150 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+13:55:51.299 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@37314843
+13:55:51.306 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+13:55:51.440 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+13:55:51.469 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+13:55:51.788 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+13:55:52.851 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+13:55:52.927 [main] WARN  o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "create table `Product` (`id` varchar(255) not null, `enabled` bit, `gmtCreated` `TIMESTAMP DEFAULT CURRENT_TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255), `name` varchar(200), primary key (`id`)) engine=InnoDB" via JDBC [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMP DEFAULT CURRENT_TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigi' at line 1]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table `Product` (`id` varchar(255) not null, `enabled` bit, `gmtCreated` `TIMESTAMP DEFAULT CURRENT_TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigint, `model` varbinary(255), `name` varchar(200), primary key (`id`)) engine=InnoDB" via JDBC [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMP DEFAULT CURRENT_TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigi' at line 1]
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:583)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:523)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.createTable(AbstractSchemaMigrator.java:323)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:80)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:240)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:119)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:280)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at cn.muzisheng.pear.Application.main(Application.java:9)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TIMESTAMP DEFAULT CURRENT_TIMESTAMP`, `gmtModified` datetime(6), `groupId` bigi' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:763)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	... 37 common frames omitted
+13:55:52.932 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+13:55:53.872 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+13:55:53.890 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+13:55:53.901 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.629 seconds (process running for 5.137)
+13:55:53.999 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:55:54.000 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:55:54.000 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:55:54.000 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:00:36.974 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+14:00:36.976 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+14:00:36.985 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+14:00:40.612 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 31908 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+14:00:40.613 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+14:00:41.230 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:00:41.274 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30 ms. Found 0 JPA repository interfaces.
+14:00:42.001 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+14:00:42.012 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+14:00:42.015 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:00:42.015 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+14:00:42.069 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:00:42.069 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1428 ms
+14:00:42.209 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:00:42.330 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@37314843
+14:00:42.331 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:00:42.465 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+14:00:42.499 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+14:00:42.834 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+14:00:43.860 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+14:00:43.956 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:00:44.799 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+14:00:44.816 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+14:00:44.826 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.582 seconds (process running for 5.063)
+14:00:44.960 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:00:44.961 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:00:44.961 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:00:44.961 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:27:30.643 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+14:27:30.645 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+14:27:30.654 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+14:27:34.393 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 29860 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+14:27:34.394 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+14:27:34.960 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:27:34.982 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 JPA repository interfaces.
+14:27:35.624 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+14:27:35.633 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+14:27:35.636 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:27:35.636 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+14:27:35.682 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:27:35.683 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1259 ms
+14:27:35.840 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:27:35.977 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@69f080ad
+14:27:35.979 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:27:36.119 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+14:27:36.149 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+14:27:36.391 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+14:27:37.352 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+14:27:37.414 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:27:38.397 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+14:27:38.417 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+14:27:38.427 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.412 seconds (process running for 4.91)
+14:27:38.557 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:27:38.558 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:27:38.558 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:27:38.558 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:28:44.342 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+14:28:44.346 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+14:28:44.362 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+14:28:46.388 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 30960 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+14:28:46.390 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+14:28:47.061 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:28:47.109 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 37 ms. Found 0 JPA repository interfaces.
+14:28:47.874 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+14:28:47.893 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+14:28:47.901 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:28:47.902 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+14:28:47.984 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:28:47.985 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1562 ms
+14:28:48.110 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:28:48.240 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1860a7a1
+14:28:48.242 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:28:48.402 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+14:28:48.441 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+14:28:48.753 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+14:28:49.913 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+14:28:50.005 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:28:50.921 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+14:28:50.941 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+14:28:50.956 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.945 seconds (process running for 5.445)
+14:28:51.083 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:28:51.084 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:28:51.084 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:28:51.084 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:34:35.506 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+14:34:35.512 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+14:34:35.542 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+14:34:37.553 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 28884 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+14:34:37.555 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+14:34:38.136 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:34:38.182 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32 ms. Found 0 JPA repository interfaces.
+14:34:38.996 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+14:34:39.006 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+14:34:39.010 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:34:39.010 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+14:34:39.056 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:34:39.057 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1474 ms
+14:34:39.207 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:34:39.386 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@74e497ae
+14:34:39.392 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:34:39.548 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+14:34:39.589 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+14:34:39.897 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+14:34:41.013 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+14:34:41.168 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:34:42.157 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+14:34:42.174 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+14:34:42.187 [main] INFO  cn.muzisheng.pear.Application - Started Application in 5.005 seconds (process running for 5.508)
+14:34:42.300 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:34:42.300 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:34:42.300 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:34:42.300 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:39:56.847 [http-nio-8000-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:39:56.847 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+14:39:56.848 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+14:39:56.970 [http-nio-8000-exec-1] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT ,`user`.`id``user`.`email``user`.`displayName``user`.`isStaff``user`.`isSuperUser``user`.`enabled``user`.`activated``user`.`gmtModified``user`.`lastLogin``user`.`lastLoginIp``user`.`source``user`.`locale``user`.`timezone` FROM `user` WHERE (`user`.gmtCreated `gmtCreated` > ? '2025-02-03T16:00:00.000Z') AND ( OR `user`.`email` LIKE '%1%'`user`.`displayName` LIKE '%1%') ORDER BY `user`.`gmtCreated` desc LIMIT 2
+14:39:57.076 [http-nio-8000-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLException: No value specified for parameter 1
+### The error may exist in cn/muzisheng/pear/mapper/AdminMapper.java (best guess)
+### The error may involve cn.muzisheng.pear.mapper.AdminMapper.query-Inline
+### The error occurred while setting parameters
+### SQL: SELECT ,`user`.`id``user`.`email``user`.`displayName``user`.`isStaff``user`.`isSuperUser``user`.`enabled``user`.`activated``user`.`gmtModified``user`.`lastLogin``user`.`lastLoginIp``user`.`source``user`.`locale``user`.`timezone` FROM `user` WHERE (`user`.gmtCreated `gmtCreated` > ? '2025-02-03T16:00:00.000Z') AND ( OR `user`.`email` LIKE '%1%'`user`.`displayName` LIKE '%1%') ORDER BY `user`.`gmtCreated` desc LIMIT 2
+### Cause: java.sql.SQLException: No value specified for parameter 1
+; bad SQL grammar []] with root cause
+java.sql.SQLException: No value specified for parameter 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:379)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58)
+	at jdk.proxy3/jdk.proxy3.$Proxy132.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:80)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:65)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:336)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:158)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:110)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:90)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:154)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:142)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
+	at jdk.proxy2/jdk.proxy2.$Proxy117.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:194)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.executeForMany(MybatisMapperMethod.java:164)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:77)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:152)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
+	at jdk.proxy2/jdk.proxy2.$Proxy119.query(Unknown Source)
+	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.queryObjects(AdminServiceImpl.java:167)
+	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleQueryOrGetOne(AdminServiceImpl.java:52)
+	at cn.muzisheng.pear.api.AdminApi.query(AdminApi.java:26)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+14:46:32.360 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+14:46:32.363 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+14:46:32.370 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+14:46:36.877 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 14104 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+14:46:36.878 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+14:46:37.436 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:46:37.460 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 0 JPA repository interfaces.
+14:46:38.080 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+14:46:38.096 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+14:46:38.103 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:46:38.105 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+14:46:38.194 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:46:38.195 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1288 ms
+14:46:38.317 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:46:38.466 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@69f080ad
+14:46:38.468 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:46:38.602 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+14:46:38.631 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+14:46:38.880 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+14:46:39.773 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+14:46:39.813 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:46:40.644 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+14:46:40.665 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+14:46:40.677 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.179 seconds (process running for 4.749)
+14:46:40.800 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:46:40.800 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:46:40.800 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:46:40.800 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:46:44.365 [http-nio-8000-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:46:44.365 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+14:46:44.368 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+14:46:44.492 [http-nio-8000-exec-1] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.gmtCreated `gmtCreated` > ? '2025-02-03T16:00:00.000Z') AND (`user`.`email` LIKE '%1%' OR `user`.`displayName` LIKE '%1%') ORDER BY `user`.`gmtCreated` desc LIMIT 2
+14:46:44.579 [http-nio-8000-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLException: No value specified for parameter 1
+### The error may exist in cn/muzisheng/pear/mapper/AdminMapper.java (best guess)
+### The error may involve cn.muzisheng.pear.mapper.AdminMapper.query-Inline
+### The error occurred while setting parameters
+### SQL: SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.gmtCreated `gmtCreated` > ? '2025-02-03T16:00:00.000Z') AND (`user`.`email` LIKE '%1%' OR `user`.`displayName` LIKE '%1%') ORDER BY `user`.`gmtCreated` desc LIMIT 2
+### Cause: java.sql.SQLException: No value specified for parameter 1
+; bad SQL grammar []] with root cause
+java.sql.SQLException: No value specified for parameter 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:379)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58)
+	at jdk.proxy3/jdk.proxy3.$Proxy132.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:80)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:65)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:336)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:158)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:110)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:90)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:154)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:142)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
+	at jdk.proxy2/jdk.proxy2.$Proxy117.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:194)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.executeForMany(MybatisMapperMethod.java:164)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:77)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:152)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
+	at jdk.proxy2/jdk.proxy2.$Proxy119.query(Unknown Source)
+	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.queryObjects(AdminServiceImpl.java:167)
+	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleQueryOrGetOne(AdminServiceImpl.java:52)
+	at cn.muzisheng.pear.api.AdminApi.query(AdminApi.java:26)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+14:49:02.530 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+14:49:02.533 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+14:49:02.541 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+14:49:10.965 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 8024 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+14:49:10.968 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+14:49:11.635 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:49:11.661 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 0 JPA repository interfaces.
+14:49:12.351 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+14:49:12.361 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+14:49:12.364 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:49:12.365 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+14:49:12.415 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:49:12.415 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1412 ms
+14:49:12.532 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:49:12.681 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@227a933d
+14:49:12.683 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:49:12.834 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+14:49:12.871 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+14:49:13.181 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+14:49:14.211 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+14:49:14.259 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:49:15.137 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+14:49:15.160 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+14:49:15.171 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.745 seconds (process running for 5.843)
+14:49:15.309 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:49:15.309 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:49:15.309 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:49:15.310 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:49:17.153 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:49:17.154 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+14:49:17.155 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+14:52:40.073 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m30s96ms838µs200ns).
+14:54:05.316 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=53s310ms316µs500ns).
+14:54:05.354 [http-nio-8000-exec-2] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.gmtCreated `gmtCreated` > ? '2025-02-03T16:00:00.000Z') AND (`user`.`email` LIKE '%1%' OR `user`.`displayName` LIKE '%1%') ORDER BY `user`.`gmtCreated` desc LIMIT 2
+14:54:05.836 [http-nio-8000-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.context.request.async.AsyncRequestNotUsableException: ServletOutputStream failed to flush: java.nio.channels.ClosedChannelException]
+14:54:05.840 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+14:54:05.841 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+14:54:05.848 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+14:54:10.487 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 33768 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+14:54:10.488 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+14:54:11.133 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:54:11.158 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 0 JPA repository interfaces.
+14:54:11.896 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+14:54:11.912 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+14:54:11.917 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:54:11.917 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+14:54:11.973 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:54:11.974 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1445 ms
+14:54:12.086 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:54:12.247 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4cecc15a
+14:54:12.249 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:54:12.395 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+14:54:12.435 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+14:54:12.717 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+14:54:13.719 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+14:54:13.765 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:54:14.653 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+14:54:14.672 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+14:54:14.682 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.634 seconds (process running for 5.261)
+14:54:14.789 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:54:14.789 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:54:14.790 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:54:14.790 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:54:18.478 [http-nio-8000-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:54:18.478 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+14:54:18.480 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+14:54:18.626 [http-nio-8000-exec-1] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`gmtCreated` >  '2025-02-03T16:00:00.000Z') AND (`user`.`email` LIKE '%1%' OR `user`.`displayName` LIKE '%1%') ORDER BY `user`.`gmtCreated` desc LIMIT 2
+14:55:30.243 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+14:55:30.245 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+14:55:30.254 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+14:55:32.541 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 28108 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+14:55:32.543 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+14:55:33.185 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:55:33.213 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 18 ms. Found 0 JPA repository interfaces.
+14:55:34.011 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+14:55:34.029 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+14:55:34.035 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+14:55:34.035 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+14:55:34.096 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+14:55:34.097 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1518 ms
+14:55:34.234 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:55:34.428 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@45dde6ac
+14:55:34.430 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:55:34.593 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+14:55:34.624 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+14:55:35.016 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+14:55:36.142 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+14:55:36.206 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:55:37.252 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+14:55:37.269 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+14:55:37.281 [main] INFO  cn.muzisheng.pear.Application - Started Application in 5.183 seconds (process running for 5.885)
+14:55:37.404 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:55:37.404 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:55:37.404 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:55:37.404 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:55:55.119 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+14:55:55.119 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+14:55:55.120 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+14:55:55.257 [http-nio-8000-exec-2] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`gmtCreated` >  '2025-02-03T16:00:00.000Z') AND () ORDER BY `user`.`gmtCreated` desc LIMIT 2
+14:55:55.388 [http-nio-8000-exec-2] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') ORDER BY `user`.`gmtCreated` desc LIMIT 2' at line 1
+### The error may exist in cn/muzisheng/pear/mapper/AdminMapper.java (best guess)
+### The error may involve cn.muzisheng.pear.mapper.AdminMapper.query-Inline
+### The error occurred while setting parameters
+### SQL: SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`gmtCreated` >  '2025-02-03T16:00:00.000Z') AND () ORDER BY `user`.`gmtCreated` desc LIMIT 2
+### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') ORDER BY `user`.`gmtCreated` desc LIMIT 2' at line 1
+; bad SQL grammar []] with root cause
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') ORDER BY `user`.`gmtCreated` desc LIMIT 2' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58)
+	at jdk.proxy3/jdk.proxy3.$Proxy132.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:80)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:65)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:336)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:158)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:110)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:90)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:154)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:142)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
+	at jdk.proxy2/jdk.proxy2.$Proxy117.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:194)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.executeForMany(MybatisMapperMethod.java:164)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:77)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:152)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
+	at jdk.proxy2/jdk.proxy2.$Proxy119.query(Unknown Source)
+	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.queryObjects(AdminServiceImpl.java:167)
+	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleQueryOrGetOne(AdminServiceImpl.java:52)
+	at cn.muzisheng.pear.api.AdminApi.query(AdminApi.java:26)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+15:31:43.205 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+15:31:43.208 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+15:31:43.210 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+15:31:47.668 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 32528 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+15:31:47.669 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+15:31:48.322 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+15:31:48.359 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 25 ms. Found 0 JPA repository interfaces.
+15:31:49.170 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+15:31:49.182 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+15:31:49.185 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+15:31:49.185 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+15:31:49.238 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+15:31:49.238 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1537 ms
+15:31:49.369 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+15:31:49.526 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@d969452
+15:31:49.528 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+15:31:49.706 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+15:31:49.745 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+15:31:50.035 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+15:31:51.007 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+15:31:51.051 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+15:31:52.090 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+15:31:52.117 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+15:31:52.134 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.92 seconds (process running for 5.594)
+15:31:52.243 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+15:31:52.243 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+15:31:52.254 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+15:31:52.254 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+15:33:13.281 [http-nio-8000-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+15:33:13.281 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+15:33:13.284 [http-nio-8000-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+15:33:13.441 [http-nio-8000-exec-2] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`gmtCreated` >  '2025-02-03T16:00:00.000Z') ORDER BY `user`.`gmtCreated` desc LIMIT 2
+15:38:08.850 [http-nio-8000-exec-5] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`gmtCreated` >  '2025-02-03T16:00:00.000Z') ORDER BY `user`.`gmtCreated` desc LIMIT 2
+15:38:18.911 [http-nio-8000-exec-6] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`gmtCreated` >  '2020-02-03T16:00:00.000Z') ORDER BY `user`.`gmtCreated` desc LIMIT 2
+15:42:28.862 [http-nio-8000-exec-9] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`gmtCreated` >  '2020-02-03T16:00:00.000Z') ORDER BY `user`.`gmtCreated` desc 
+16:35:17.773 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+16:35:17.782 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+16:35:17.787 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+16:35:23.936 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 27820 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+16:35:23.938 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+16:35:24.644 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+16:35:24.672 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 18 ms. Found 0 JPA repository interfaces.
+16:35:25.489 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+16:35:25.500 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+16:35:25.504 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+16:35:25.504 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+16:35:25.555 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+16:35:25.556 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1584 ms
+16:35:25.692 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+16:35:25.873 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@dd737ea
+16:35:25.875 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+16:35:26.082 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+16:35:26.128 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+16:35:26.456 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+16:35:27.493 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+16:35:27.545 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+16:35:28.591 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+16:35:28.608 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+16:35:28.620 [main] INFO  cn.muzisheng.pear.Application - Started Application in 5.153 seconds (process running for 5.891)
+16:35:28.742 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+16:35:28.742 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+16:35:28.742 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+16:35:28.743 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+16:35:34.250 [http-nio-8000-exec-5] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+16:35:34.251 [http-nio-8000-exec-5] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+16:35:34.254 [http-nio-8000-exec-5] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+16:38:58.767 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+16:38:58.770 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+16:38:58.783 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+16:39:03.110 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 980 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+16:39:03.112 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+16:39:03.818 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+16:39:03.847 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 20 ms. Found 0 JPA repository interfaces.
+16:39:04.662 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
+16:39:04.673 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+16:39:04.677 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+16:39:04.677 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.30]
+16:39:04.727 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+16:39:04.729 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1582 ms
+16:39:04.850 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+16:39:05.037 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4cecc15a
+16:39:05.040 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+16:39:05.250 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+16:39:05.302 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+16:39:05.714 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+16:39:06.746 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+16:39:06.800 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+16:39:07.748 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
+16:39:07.765 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
+16:39:07.776 [main] INFO  cn.muzisheng.pear.Application - Started Application in 5.14 seconds (process running for 5.812)
+16:39:07.886 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+16:39:07.886 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+16:39:07.886 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+16:39:07.886 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+16:39:12.679 [http-nio-8000-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+16:39:12.679 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+16:39:12.680 [http-nio-8000-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+16:39:12.813 [http-nio-8000-exec-1] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.gmtCreated BETWEEN '2020-02-03T16:00:00.000Z' AND '2025-02-03T16:00:00.000Z') ORDER BY `user`.`gmtCreated` desc 
+16:39:25.365 [http-nio-8000-exec-4] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.gmtCreated BETWEEN '2024-02-03T16:00:00.000Z' AND '2025-02-03T16:00:00.000Z') ORDER BY `user`.`gmtCreated` desc 
+16:53:43.756 [http-nio-8000-exec-6] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.gmtCreated BETWEEN '2024-02-03T16:00:00.000Z' AND '2025-02-03T16:00:00.000Z') ORDER BY `user`.`gmtCreated` desc 
+19:14:32.044 [http-nio-8000-exec-5] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content-Type 'application/x-www-form-urlencoded;charset=UTF-8' is not supported]
+19:16:55.700 [http-nio-8000-exec-10] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content-Type 'application/x-www-form-urlencoded;charset=UTF-8' is not supported]
+21:51:44.849 [http-nio-8000-exec-4] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:52:30.984 [http-nio-8000-exec-8] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:52:33.926 [http-nio-8000-exec-6] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:53:16.304 [http-nio-8000-exec-5] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:53:17.539 [http-nio-8000-exec-9] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:53:29.525 [http-nio-8000-exec-2] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:53:30.077 [http-nio-8000-exec-1] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:53:31.817 [http-nio-8000-exec-4] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:53:32.016 [http-nio-8000-exec-3] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:53:32.204 [http-nio-8000-exec-8] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:53:32.367 [http-nio-8000-exec-6] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:53:44.785 [http-nio-8000-exec-5] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:53:47.175 [http-nio-8000-exec-9] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:54:13.092 [http-nio-8000-exec-2] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:54:45.031 [http-nio-8000-exec-4] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:54:47.716 [http-nio-8000-exec-3] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:54:50.495 [http-nio-8000-exec-6] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:55:01.927 [http-nio-8000-exec-5] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:55:04.429 [http-nio-8000-exec-9] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:55:14.554 [http-nio-8000-exec-2] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:56:04.623 [http-nio-8000-exec-4] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:56:10.608 [http-nio-8000-exec-8] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:56:30.624 [http-nio-8000-exec-7] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:56:33.025 [http-nio-8000-exec-5] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:56:48.530 [http-nio-8000-exec-10] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:56:54.613 [http-nio-8000-exec-1] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:57:22.095 [http-nio-8000-exec-3] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:58:06.905 [http-nio-8000-exec-6] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:58:20.716 [http-nio-8000-exec-5] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:58:26.247 [http-nio-8000-exec-10] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+21:58:33.722 [http-nio-8000-exec-1] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:15:46.674 [http-nio-8000-exec-8] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:15:48.685 [http-nio-8000-exec-6] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:15:55.934 [http-nio-8000-exec-5] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:15:58.516 [http-nio-8000-exec-9] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:16:01.467 [http-nio-8000-exec-2] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:16:04.454 [http-nio-8000-exec-1] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:16:08.780 [http-nio-8000-exec-3] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:16:11.414 [http-nio-8000-exec-8] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:16:14.707 [http-nio-8000-exec-7] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:16:17.872 [http-nio-8000-exec-5] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:16:20.846 [http-nio-8000-exec-10] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:16:27.400 [http-nio-8000-exec-1] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:16:30.643 [http-nio-8000-exec-4] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:16:34.115 [http-nio-8000-exec-8] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:17:08.280 [http-nio-8000-exec-7] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:17:16.839 [http-nio-8000-exec-9] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:17:19.292 [http-nio-8000-exec-10] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:17:22.357 [http-nio-8000-exec-1] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:17:42.433 [http-nio-8000-exec-3] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:24:08.358 [http-nio-8000-exec-7] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:28:19.506 [http-nio-8000-exec-10] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:31:01.475 [http-nio-8000-exec-4] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:35:44.942 [http-nio-8000-exec-6] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:35:49.069 [http-nio-8000-exec-7] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc 
+22:53:08.771 [http-nio-8000-exec-10] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc LIMIT 10
+23:00:14.526 [http-nio-8000-exec-4] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc LIMIT 10
+23:00:57.827 [http-nio-8000-exec-8] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc LIMIT 10
+23:11:18.705 [http-nio-8000-exec-5] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc LIMIT 10
+23:13:16.797 [http-nio-8000-exec-2] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc LIMIT 10
+23:13:17.546 [http-nio-8000-exec-1] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc LIMIT 10
+23:13:36.059 [http-nio-8000-exec-3] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc LIMIT 10
+23:13:37.538 [http-nio-8000-exec-8] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc LIMIT 10
+23:19:06.268 [http-nio-8000-exec-5] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc LIMIT 10
+23:19:07.576 [http-nio-8000-exec-9] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc LIMIT 10
+23:19:20.795 [http-nio-8000-exec-2] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc LIMIT 10
+23:19:40.178 [http-nio-8000-exec-4] INFO  cn.muzisheng.pear.dao.AdminDAO - SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`email` LIKE '%%' OR `user`.`displayName` LIKE '%%') ORDER BY `user`.`gmtModified` desc LIMIT 10
+23:20:39.323 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+23:20:39.351 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+23:20:39.358 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

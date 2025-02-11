@@ -1,6 +1,7 @@
 package cn.muzisheng.pear.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.persistence.*;
@@ -18,10 +19,11 @@ public class Config {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @TableId(type = IdType.AUTO)
     private Long id;
-    @Column(name="`key`",length = 128)
+    @Column(length = 128)
+    @TableField("`key`")
     private String key;
-    @Column(name="`desc`",length = 200)
-    private String desc;
+    @Column(name="`description`",length = 200)
+    private String description;
     private boolean autoload;
     private boolean pub;
     @Column(length = 20)

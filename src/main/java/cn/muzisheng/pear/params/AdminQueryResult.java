@@ -2,6 +2,7 @@ package cn.muzisheng.pear.params;
 
 import lombok.Data;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,7 +37,7 @@ public class AdminQueryResult {
     /**
      * 所有数据的键值对集合
      **/
-    private Map<String, Object> items;
+    private List<Map<String, Object>> items;
     /**
      * 所有数据列表
      **/

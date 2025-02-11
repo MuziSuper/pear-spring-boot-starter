@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@TableName("user")
+@TableName("`user`")
 public class User implements Serializable {
     // 主键
     @Id
@@ -68,7 +68,7 @@ public class User implements Serializable {
     @Column(length = 200)
     private String timezone;
     // 用户信息
-    @Column(columnDefinition = "LONGTEXT")
+//    @Column(columnDefinition = "TEXT")
     private String profile;
     // 用户认证令牌
     private String token;

@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.ibatis.type.JdbcType;
+import org.hibernate.annotations.Type;
 
 import java.time.LocalDateTime;
 
@@ -36,12 +38,12 @@ public class Product {
     /**
      * 货品模型
      **/
-    @Column(columnDefinition = "LONGBLOB")
-    private String model;
+//    @Column(columnDefinition = "LONGBLOB")
+    private byte[] model;
     /**
      * 创建时间
      **/
-    @TableField(fill= FieldFill.INSERT)
+    @TableField(fill= FieldFill.INSERT,jdbcType = JdbcType.TIMESTAMP)
     private LocalDateTime gmtCreated;
     /**
      * 修改时间

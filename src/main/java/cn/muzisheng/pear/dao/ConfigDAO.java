@@ -25,7 +25,7 @@ public class ConfigDAO {
         // 查询数据是否存在
         Config existingConfig = configMapper.selectOne(queryWrapper.eq("`key`", config.getKey()));
         if (existingConfig != null) {
-            config.setDesc(existingConfig.getDesc());
+            config.setDescription(existingConfig.getDescription());
             config.setPub(existingConfig.isPub());
             config.setId(existingConfig.getId());
             // 数据存在，更新数据

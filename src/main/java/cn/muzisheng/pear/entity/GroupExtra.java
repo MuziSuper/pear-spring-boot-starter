@@ -32,11 +32,11 @@ public class GroupExtra {
     /**
      * 键
      **/
-    @Column(length = 128)
+    @Column(name="`key`",length = 128)
     private String key;
     /**
      * 值
      **/
-    @Column(columnDefinition = "LONGTEXT")
+//    @Column(columnDefinition = "TEXT")
     private String value;
 }

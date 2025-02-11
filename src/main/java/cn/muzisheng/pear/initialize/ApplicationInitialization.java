@@ -140,7 +140,7 @@ public class ApplicationInitialization implements CommandLineRunner {
      * 处理AdminObject数据
      **/
     private void build(AdminObject adminObject) {
-        if(adminObject.getPath().isEmpty()){
+        if("".equals(adminObject.getPath())||adminObject.getPath()==null){
             adminObject.setPath(adminObject.getName().toLowerCase());
         }
         if("_".equals(adminObject.getPath())||"".equals(adminObject.getPath())){
@@ -153,7 +153,7 @@ public class ApplicationInitialization implements CommandLineRunner {
          * 此处案例有填充filed字段,暂保留
          * */
 
-        if(adminObject.getPrimaryKeys().length == 0 &&adminObject.getUniqueKeys().length==0){
+        if((adminObject.getPrimaryKeys() == null||adminObject.getPrimaryKeys().length==0 )&&(adminObject.getUniqueKeys()==null||adminObject.getUniqueKeys().length==0)){
             throw new GeneralException(adminObject.getName()+" not has primaryKey or uniqueKeys");
         }
     }
@@ -169,7 +169,7 @@ public class ApplicationInitialization implements CommandLineRunner {
         userObject.setDesc("Builtin user management system");
         userObject.setShows(new String[]{"id","email","displayName","isStaff","isSuperUser","enabled","activated","gmtModified","lastLogin","lastLoginIp","source","locale","timezone"});
         userObject.setEdits(new String[]{"email","password","displayName","firstName","lastName","isStaff","isSuperUser","enabled","activated","profile","source","locale","timezone"});
-        userObject.setFilters(new String[]{"gmtCreated", "gmtModified", "isStaff", "isSuperUser", "enabled", "activated"});
+        userObject.setFilterables(new String[]{"gmtCreated", "gmtModified", "isStaff", "isSuperUser", "enabled", "activated"});
         userObject.setOrderables(new String[]{"gmtCreated", "gmtModified", "enabled", "activated"});
         userObject.setSearches(new String[]{"email", "displayName"});
         userObject.setOrders(new Order[]{new Order("gmtModified", "desc")});
@@ -204,7 +204,7 @@ public class ApplicationInitialization implements CommandLineRunner {
         groupMemberObject.setName("GroupMember");
         groupMemberObject.setDesc("Group members");
         groupMemberObject.setShows(new String[]{"id","userId","group","role","gmtCreated"});
-        groupMemberObject.setFilters(new String[]{"group","role","gmtCreated"});
+        groupMemberObject.setFilterables(new String[]{"group","role","gmtCreated"});
         groupMemberObject.setOrderables(new String[]{"gmtCreated"});
         groupMemberObject.setSearches(new String[]{"user","group"});
         groupMemberObject.setRequires(new String[]{"user","group","role"});
@@ -233,7 +233,7 @@ public class ApplicationInitialization implements CommandLineRunner {
         configObject.setOrderables(new String[]{"key"});
         configObject.setSearches(new String[]{"key","desc","value"});
         configObject.setRequires(new String[]{"key","value"});
-        configObject.setFilters(new String[]{"autoload","pub"});
+        configObject.setFilterables(new String[]{"autoload","pub"});
         AdminIcon configIcon =new AdminIcon();
         configIcon.setSvg("待定");
         configObject.setIcon(configIcon);

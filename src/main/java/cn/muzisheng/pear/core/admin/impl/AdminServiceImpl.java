@@ -19,7 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -35,18 +38,21 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ResponseEntity<Result<Object>> handleQueryOrGetOne(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm) {
+        Response<Object> response = new Response<>();
         // 如果请求体中无数据，就获取单个主键排序第一位的数据，
         // 根据query传参，来获取数据库中存储的某表的数据，
         // 若自定义了beforeRender就调用， 将实例进行序列化传给客户端
         if (request.getContentLength() <= 0) {
             return handleGetOne(request, model, adminObject, queryForm);
         }
+        // 处理请求体中的数据
         queryForm.defaultPrepareQuery();
         if (queryForm.isForeignMode()) {
             queryForm.setLimit(0);
         }
         AdminQueryResult result = queryObjects(request, model, adminObject, queryForm);
-
+        response.setData(result);
+        return response.value();
     }
 
 
@@ -77,120 +83,111 @@ public class AdminServiceImpl implements AdminService {
      **/
     private AdminQueryResult queryObjects(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm) {
         AdminQueryResult r = new AdminQueryResult();
-        QueryWrapper<Map<String,Object>> wrapper = new QueryWrapper<>();
-        for (Filter filter : adminObject.getFilters()) {
-            getQueryClause(filter, wrapper);
-            if (Constant.FILTER_OP_LIKE.equals(filter.getOp())){
-                if (filter.getValue() instanceof Object[] values) {
-                    wrapper.and(w->{
-                        for(Object value : values){
-                            if (value instanceof String) {
-                                w.like(filter.getName(), value);
-                            } else {
-                                // 处理 value 不是 String 的情况
-                                throw new GeneralException("Expected a String value for like operation but got " + value.getClass().getName());
+        if (queryForm.isForeignMode()) {
+            queryForm.setLimit(0);
+        }
+        String whereClause = "";
+        for (Filter filter : queryForm.getFilters()) {
+            String queryClause = filter.getQueryClause();
+            if (queryClause != null) {
+                // 如果是like操作，则构造LIKE语句whereClause，先不带WHERE,下文还有限定字筛选
+                if (Constant.FILTER_OP_LIKE.equals(filter.getOp())) {
+                    if (filter.getValue() instanceof Object[] values) {
+                        List<String> conditions = new ArrayList<>();
+                        for (Object value : values) {
+                            if (value instanceof String strValue) {
+                                // 转义双引号，并构造 LIKE 语句
+                                String escapedValue = strValue.replace("\"", "\\\"");
+                                String condition = String.format("`%s`.`%s` LIKE '%%%s%%'", adminObject.getTableName(), filter.getName(), escapedValue);
+                                conditions.add(condition);
                             }
                         }
-                    });
-                }else{
-                    wrapper.like(filter.getName(), filter.getValue());
-                }
-            } else if (Constant.FILTER_OP_BETWEEN.equals(filter.getOp())) {
-                if (filter.getValue() instanceof Object[] values) {
-                    if(values.length == 2){
-                        wrapper.between(filter.getName(), values[0], values[1]);
-                    }else{
-                        throw new GeneralException("Expected an Object[] value with length 2 for between operation but got " + values.length);
+                        if (!conditions.isEmpty()) {
+                            // 因为多个筛选条件则拼接OR语句
+                            whereClause = String.join(" OR ", conditions);
+                        }
+                    } else {
+                        Object value = filter.getValue();
+                        if (value instanceof String strValue) {
+                            String escapedValue = strValue.replace("\"", "\\\"");
+                            whereClause = String.format("`%s`.`%s` LIKE '%%%s%%'", adminObject.getTableName(), filter.getName(), escapedValue);
+                        }
+                    }
+                // 如果是between操作，则构造BETWEEN语句,也不带WHERE
+                } else if (Constant.FILTER_OP_BETWEEN.equals(filter.getOp())) {
+                    if (filter.getValue() instanceof List values) {
+                        if (values.size() == 2) {
+                            // `user`.name BETWEEN 'John' AND 'Doe'
+                            if((values.get(0) instanceof Integer && values.get(1) instanceof Integer)||(values.get(0) instanceof Float && values.get(1) instanceof Float)) {
+                                whereClause = String.format("`%s`.%s %s %s AND %s", adminObject.getTableName(), filter.getName(), queryClause, values.get(0), values.get(1));
+                            }else{
+                                whereClause = String.format("`%s`.%s %s '%s' AND '%s'", adminObject.getTableName(), filter.getName(), queryClause, values.get(0), values.get(1));
+                            }
+                        } else {
+                            throw new GeneralException("Expected an Object[] value with length 2 for between operation but got " + values.size());
+                        }
+                    } else {
+                        throw new GeneralException("Expected an Object[] value for between operation but got " + filter.getValue().getClass().getName());
                     }
                 }else{
-                    throw new GeneralException("Expected an Object[] value for between operation but got " + filter.getValue().getClass().getName());
+                    whereClause = String.format("`%s`.%s'%s'", adminObject.getTableName(),queryClause, filter.getValue());
                 }
             }
         }
+        // 排序子句，不加ORDER BY
         Order[] orders;
-        if(queryForm.getOrders().length>0){
-            orders=queryForm.getOrders();
-        }else{
-            orders=adminObject.getOrders();
+        StringBuilder orderClause = new StringBuilder();
+        if (queryForm.getOrders().length > 0) {
+            orders = queryForm.getOrders();
+        } else {
+            orders = adminObject.getOrders();
         }
-        for(Order order : orders){
-            getSortingClause(order, wrapper);
+        for (Order order : orders) {
+            if(!orderClause.isEmpty()){
+                orderClause.append(",");
+            }
+            orderClause.append(String.format("`%s`.`%s` %s", adminObject.getTableName(), order.getName(), order.getOp()));
         }
-        if(queryForm.getKeyword()!=null&&adminObject.getSearches().length>0){
-            wrapper.and(w->{
-                for(String search : adminObject.getSearches()){
-                    w.like(search, queryForm.getKeyword());
+
+        StringBuilder whereClauseBuilder = new StringBuilder();
+        if (queryForm.getKeyword() != null) {
+            for(String searchField : adminObject.getSearches()){
+                if(!whereClauseBuilder.isEmpty()){
+                    whereClauseBuilder.append(" OR ");
                 }
-            });
+                whereClauseBuilder.append(String.format("`%s`.`%s` LIKE '%%%s%%'", adminObject.getTableName(), searchField, queryForm.getKeyword()));
+            }
+        }
+        StringBuilder showClause = new StringBuilder();
+        if(adminObject.getShows()!=null) {
+            for (String viewField : adminObject.getShows()) {
+                if (!showClause.isEmpty()) {
+                    showClause.append(" ,");
+                }
+                showClause.append(String.format("`%s`.`%s`", adminObject.getTableName(), viewField));
+            }
+        }else{
+            showClause.append("*");
+        }
+        List<Map<String, Object>> result =adminMapper.query(adminObject.getTableName(), showClause.toString(),whereClause, orderClause.toString(),whereClauseBuilder.toString(), queryForm.getLimit());
+        if(adminObject.getBeforeRender()!=null){
+            try {
+                Object res = adminObject.getBeforeRender().execute(request, result);
+                if(res instanceof List){
+                    result = (List<Map<String, Object>>) res;
+                }
+            }catch (Exception e){
+                LOG.warn("BeforeRender error: {}", e.getMessage());
+            }
         }
         r.setPos(queryForm.getPos());
         r.setLimit(queryForm.getLimit());
         r.setKeyword(queryForm.getKeyword());
-
+        r.setItems(result);
+        r.setTotalCount(result.size());
+        return r;
     }
 
-    /**
-     * 拼接数据库db的排序子句
-    **/
-    private void getSortingClause(Order order,QueryWrapper<Map<String,Object>> wrapper){
-        if(Constant.ORDER_OP_ASC.equals(order.getOp())){
-            wrapper.orderByAsc(order.getName());
-        }else{
-            wrapper.orderByDesc(order.getName());
-        }
-    }
-
-    /**
-     * 拼接数据库db的查询子句,Like与Between除外
-     **/
-    private void getQueryClause(Filter filter, QueryWrapper<Map<String,Object>> queryWrapper) {
-        switch (filter.getOp()) {
-            case Constant.FILTER_OP_IS_NOT:
-                if (filter.getValue() == null) {
-                    queryWrapper.isNull(filter.getName());
-                } else {
-                    queryWrapper.ne(filter.getName(), filter.getValue());
-                }
-            case Constant.FILTER_OP_EQUAL:
-                queryWrapper.eq(filter.getName(), filter.getValue());
-                break;
-            case Constant.FILTER_OP_NOT_EQUAL:
-                queryWrapper.ne(filter.getName(), filter.getValue());
-                break;
-            case Constant.FILTER_OP_IN:
-                queryWrapper.in(filter.getName(), filter.getValue());
-                break;
-            case Constant.FILTER_OP_NOT_IN:
-                queryWrapper.notIn(filter.getName(), filter.getValue());
-                break;
-            case Constant.FILTER_OP_GREATER:
-                queryWrapper.gt(filter.getName(), filter.getValue());
-                break;
-            case Constant.FILTER_OP_GREATER_OR_EQUAL:
-                queryWrapper.ge(filter.getName(), filter.getValue());
-                break;
-            case Constant.FILTER_OP_LESS:
-                queryWrapper.lt(filter.getName(), filter.getValue());
-                break;
-            case Constant.FILTER_OP_LESS_OR_EQUAL:
-                queryWrapper.le(filter.getName(), filter.getValue());
-                break;
-            default:
-                break;
-        }
-        return queryWrapper;
-    }
-    /**
-     * 根据Class类对象动态获取数据库语柄
-     **/
-    private QueryWrapper<Map<String,Object>> GetQueryStalk(Class<?> entityClass){
-        TableInfo tableInfo = TableInfoHelper.getTableInfo(entityClass);
-        if(tableInfo == null){
-            throw new GeneralException("No information about the corresponding table of the entity class was found.");
-        }
-        String tableName = tableInfo.getTableName();
-
-    }
 
     /**
      * 客户端通过url的参数进行数据查询 (不通过请求体传入参数)
@@ -220,16 +217,8 @@ public class AdminServiceImpl implements AdminService {
             if (res != null) {
                 result = res;
             }
-//            Class<?> type =result.getClass();
-//            if(res != null) {
-//                if (type.isInstance(res)) {
-//                    result = (T) res;
-//                } else {
-//                    // 处理类型不匹配的情况
-//                    throw new GeneralException("res cannot be cast to " + type.getName());
-//                }
-//            }
         }
+        // 序列化对象，将result转为map[string]any
         Map<String, Object> data = marshalOne(request, adminObject, result);
         response.setData(data);
         return response.value();
@@ -271,20 +260,24 @@ public class AdminServiceImpl implements AdminService {
     private Map<String, Object> getPrimaryValues(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm) {
         Map<String, Object> queryMap = new HashMap<>();
         boolean keysExist = false;
-        for (String field : adminObject.getPrimaryKeys()) {
-            String param = request.getParameter(field);
-            if (!param.isEmpty()) {
-                queryMap.put(field, param);
-                keysExist = true;
+        if(adminObject.getPrimaryKeys()!=null){
+            for (String field : adminObject.getPrimaryKeys()) {
+                String param = request.getParameter(field);
+                if (!param.isEmpty()) {
+                    queryMap.put(field, param);
+                    keysExist = true;
+                }
             }
         }
         if (keysExist) {
             return queryMap;
         }
-        for (String field : adminObject.getUniqueKeys()) {
-            String param = request.getParameter(field);
-            if (!param.isEmpty()) {
-                queryMap.put(field, param);
+        if(adminObject.getUniqueKeys()!=null){
+            for (String field : adminObject.getUniqueKeys()) {
+                String param = request.getParameter(field);
+                if (!param.isEmpty()) {
+                    queryMap.put(field, param);
+                }
             }
         }
         return queryMap;
