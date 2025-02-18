@@ -1,0 +1,356 @@
+13:40:23.084 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:40:23.084 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:40:23.084 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:40:23.084 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:41:57.932 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:41:57.932 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:41:57.933 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:41:57.933 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:42:47.225 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:42:47.225 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:42:47.226 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:42:47.226 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:47:36.245 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:47:36.246 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:47:36.246 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:47:36.246 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:48:04.857 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:48:04.857 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:48:04.857 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:48:04.859 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:51:10.518 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:51:10.518 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:51:10.518 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:51:10.518 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:53:34.524 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:53:34.524 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:53:34.524 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:53:34.524 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+13:55:53.999 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+13:55:54.000 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+13:55:54.000 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+13:55:54.000 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:00:44.960 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:00:44.961 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:00:44.961 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:00:44.961 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:27:38.557 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:27:38.558 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:27:38.558 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:27:38.558 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:28:51.083 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:28:51.084 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:28:51.084 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:28:51.084 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:34:42.300 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:34:42.300 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:34:42.300 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:34:42.300 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:39:57.076 [http-nio-8000-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLException: No value specified for parameter 1
+### The error may exist in cn/muzisheng/pear/mapper/AdminMapper.java (best guess)
+### The error may involve cn.muzisheng.pear.mapper.AdminMapper.query-Inline
+### The error occurred while setting parameters
+### SQL: SELECT ,`user`.`id``user`.`email``user`.`displayName``user`.`isStaff``user`.`isSuperUser``user`.`enabled``user`.`activated``user`.`gmtModified``user`.`lastLogin``user`.`lastLoginIp``user`.`source``user`.`locale``user`.`timezone` FROM `user` WHERE (`user`.gmtCreated `gmtCreated` > ? '2025-02-03T16:00:00.000Z') AND ( OR `user`.`email` LIKE '%1%'`user`.`displayName` LIKE '%1%') ORDER BY `user`.`gmtCreated` desc LIMIT 2
+### Cause: java.sql.SQLException: No value specified for parameter 1
+; bad SQL grammar []] with root cause
+java.sql.SQLException: No value specified for parameter 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:379)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58)
+	at jdk.proxy3/jdk.proxy3.$Proxy132.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:80)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:65)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:336)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:158)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:110)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:90)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:154)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:142)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
+	at jdk.proxy2/jdk.proxy2.$Proxy117.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:194)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.executeForMany(MybatisMapperMethod.java:164)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:77)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:152)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
+	at jdk.proxy2/jdk.proxy2.$Proxy119.query(Unknown Source)
+	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.queryObjects(AdminServiceImpl.java:167)
+	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleQueryOrGetOne(AdminServiceImpl.java:52)
+	at cn.muzisheng.pear.api.AdminApi.query(AdminApi.java:26)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+14:46:40.800 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:46:40.800 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:46:40.800 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:46:40.800 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:46:44.579 [http-nio-8000-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLException: No value specified for parameter 1
+### The error may exist in cn/muzisheng/pear/mapper/AdminMapper.java (best guess)
+### The error may involve cn.muzisheng.pear.mapper.AdminMapper.query-Inline
+### The error occurred while setting parameters
+### SQL: SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.gmtCreated `gmtCreated` > ? '2025-02-03T16:00:00.000Z') AND (`user`.`email` LIKE '%1%' OR `user`.`displayName` LIKE '%1%') ORDER BY `user`.`gmtCreated` desc LIMIT 2
+### Cause: java.sql.SQLException: No value specified for parameter 1
+; bad SQL grammar []] with root cause
+java.sql.SQLException: No value specified for parameter 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:379)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58)
+	at jdk.proxy3/jdk.proxy3.$Proxy132.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:80)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:65)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:336)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:158)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:110)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:90)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:154)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:142)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
+	at jdk.proxy2/jdk.proxy2.$Proxy117.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:194)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.executeForMany(MybatisMapperMethod.java:164)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:77)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:152)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
+	at jdk.proxy2/jdk.proxy2.$Proxy119.query(Unknown Source)
+	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.queryObjects(AdminServiceImpl.java:167)
+	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleQueryOrGetOne(AdminServiceImpl.java:52)
+	at cn.muzisheng.pear.api.AdminApi.query(AdminApi.java:26)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+14:49:15.309 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:49:15.309 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:49:15.309 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:49:15.310 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:54:14.789 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:54:14.789 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:54:14.790 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:54:14.790 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:55:37.404 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+14:55:37.404 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+14:55:37.404 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+14:55:37.404 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+14:55:55.388 [http-nio-8000-exec-2] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') ORDER BY `user`.`gmtCreated` desc LIMIT 2' at line 1
+### The error may exist in cn/muzisheng/pear/mapper/AdminMapper.java (best guess)
+### The error may involve cn.muzisheng.pear.mapper.AdminMapper.query-Inline
+### The error occurred while setting parameters
+### SQL: SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`gmtCreated` >  '2025-02-03T16:00:00.000Z') AND () ORDER BY `user`.`gmtCreated` desc LIMIT 2
+### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') ORDER BY `user`.`gmtCreated` desc LIMIT 2' at line 1
+; bad SQL grammar []] with root cause
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') ORDER BY `user`.`gmtCreated` desc LIMIT 2' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58)
+	at jdk.proxy3/jdk.proxy3.$Proxy132.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:80)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:65)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:336)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:158)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:110)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:90)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:154)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:142)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
+	at jdk.proxy2/jdk.proxy2.$Proxy117.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:194)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.executeForMany(MybatisMapperMethod.java:164)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:77)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:152)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
+	at jdk.proxy2/jdk.proxy2.$Proxy119.query(Unknown Source)
+	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.queryObjects(AdminServiceImpl.java:167)
+	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleQueryOrGetOne(AdminServiceImpl.java:52)
+	at cn.muzisheng.pear.api.AdminApi.query(AdminApi.java:26)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+15:31:52.243 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+15:31:52.243 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+15:31:52.254 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+15:31:52.254 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+16:35:28.742 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+16:35:28.742 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+16:35:28.742 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+16:35:28.743 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
+16:39:07.886 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
+16:39:07.886 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
+16:39:07.886 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
+16:39:07.886 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
