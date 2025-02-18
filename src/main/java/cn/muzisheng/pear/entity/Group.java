@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
  **/
 @Data
 @Entity
+@Embeddable
 @TableName("`group`")
 public class Group {
     /**

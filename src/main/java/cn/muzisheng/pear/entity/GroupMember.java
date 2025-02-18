@@ -27,9 +27,8 @@ public class GroupMember {
     /**
      * 用户
      **/
-
-//    @Column(columnDefinition = "LONGBLOB")
-    private byte[] user;
+    @Embedded
+    private User user;
     /**
      * 组id
      **/
@@ -38,7 +37,8 @@ public class GroupMember {
      * 组
      **/
     @Column(name="`group`")
-    private byte[] group;
+    @Embedded
+    private Group group;
     /**
      * 角色
      **/
@@ -52,11 +52,13 @@ public class GroupMember {
      * 创建时间
      **/
     @TableField(fill= FieldFill.INSERT)
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime gmtCreated;
     /**
      * 修改时间
      **/
     @TableField(fill= FieldFill.INSERT_UPDATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime gmtModified;
 
 }

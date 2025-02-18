@@ -9,44 +9,13 @@
   <link href="https://code.jquery.com/ui/1.14.1/jquery-ui.min.js" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="styles.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script src="http.js"></script>
-  <style>
-    /* 自定义样式 */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th {
-      background-color: #4a5568; /* 更深的灰色 */
-      color: white;
-      padding: 12px;
-      text-align: left;
-      border-bottom: 2px solid #e2e8f0;
-    }
-
-    td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    tr:hover {
-      background-color: #f7fafc; /* 悬停效果 */
-    }
-
-    .table-container {
-      overflow-x: auto;
-      background-color: white;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      border-radius: 0.5rem;
-      padding: 1rem;
-    }
-  </style>
+  <script src="scripts.js"></script>
 </head>
 
-<body class="bg-gray-100 font-mono text-lg">
+<body class="bg-gray-100">
   <div class="flex h-screen">
     <!-- 左侧导航 -->
     <div class="bg-white shadow-lg" style="min-width: 256px">
@@ -96,169 +65,20 @@
       </div>
       <div class="mt-8 mx-auto table-container" style="width: 1000px">
         <table>
-          <thead>
-            <tr>
-              <th class="border border-gray-300 px-4 py-2">
-                <input type="checkbox" id="select-all" class="form-checkbox" />
-              </th>
-              <th class="w-full flex justify-start items-center pt-2 ml-2">
-                <div class="text-lg font-semibold mr-48">8 Selected</div>
-                <div id="delete-btn" class="bg-red-500 px-2 text-white text-center h-7 w-18 rounded hover:bg-red-600">
-                  Delete
-                </div>
-              </th>
-              <th class="border border-gray-300 text-left py-2">
-                <p class="ml-4">VALUE</p>
-              </th>
-            </tr>
+          <thead id="table-head">
           </thead>
           <tbody id="table-body">
-            <!-- Rows will be dynamically inserted -->
           </tbody>
         </table>
       </div>
       <div id="pagination" class="mt-4 ml-12 flex justify-start items-center">
-        <button id="prev-page" class="text-gray-500 font-bold px-4 py-2 rounded-md hover:text-gray-900" disabled>
-          <</button>
+        <button id="prev-page" class="text-gray-500 font-bold px-4 py-2 rounded-md hover:text-gray-900" disabled><</button>
             <div id="page-numbers" class="text-gray-700">1 / 8 页</div>
             <button id="next-page" class="text-gray-500 font-bold px-4 py-2 rounded-md hover:text-gray-900">>
             </button>
       </div>
     </div>
   </div>
-  
-  <script>
-    const queryForm = {
-      pos: 0,
-      limit: 10, // 每页显示的记录数
-      keyword: "",
-      filters: [],
-      orders: [],
-      foreignMode: false,
-      viewFields: [],
-      searchFields: []
-    };
-
-    $(document).ready(function () {
-      let data = [];
-      const pageSize = queryForm.limit; // 每页显示的记录数
-      let currentPage = 1; // 当前页
-      // 模拟后端提供的总记录数（实际上应从后端获取）
-      let totalRecords; // 假设后端返回20条记录
-      let totalPages; // 计算总页数
-
-      function fetchDataAndRender() {
-        postData('http://localhost:8000/admin/user', queryForm, function (response) {
-          // 请求成功时的回调函数
-          console.log('请求成功:', response);
-          // 假设响应数据中有一个data字段包含实际的数据
-          queryResult = response.data;
-          data = queryResult.items;
-          totalRecords = queryResult.totalCount;
-          totalPages = Math.ceil(totalRecords / pageSize);
-          // 渲染表格
-          renderRows(data);
-        }, function (jqXHR, textStatus, errorThrown) {
-          // 请求失败时的回调函数
-          console.error('请求失败:', textStatus, errorThrown);
-          alert('请求失败，请稍后再试。');
-        });
-      }
-
-      function renderRows(data) {
-        const tableBody = $("#table-body");
-        tableBody.empty(); // 清空表格内容
-        const startIndex = (currentPage - 1) * pageSize; // 当前页的起始索引
-        const endIndex = startIndex + pageSize; // 当前页的结束索引
-
-        // 仅显示当前页的数据
-        const currentData = data.slice(startIndex, endIndex);
-
-        currentData.forEach((item) => {
-          let row = `<tr class="border-t border-gray-300"><td class="px-4 py-2 text-center"><input type="checkbox" class="row-checkbox form-checkbox"></td>`;
-          for (const key in item) {
-            if (item.hasOwnProperty(key)) {
-              row += `<td class="px-4 py-2">${item[key]}</td>`;
-            }
-          }
-          row += `</tr>`;
-          tableBody.append(row);
-        });
-
-        // 更新分页信息
-        $("#page-numbers").text(`${currentPage} / ${totalPages} 页`);
-        $("#prev-page").prop("disabled", currentPage === 1); // 如果是第一页，禁用上一页按钮
-        $("#next-page").prop("disabled", currentPage === totalPages); // 如果是最后一页，禁用下一页按钮
-      }
-
-      // 上一页按钮点击事件
-      $("#prev-page").click(function () {
-        if (currentPage > 1) {
-          currentPage--; // 当前页减1
-          renderRows(data);
-        }
-      });
-
-      // 下一页按钮点击事件
-      $("#next-page").click(function () {
-        if (currentPage < totalPages) {
-          currentPage++; // 当前页加1
-          renderRows(data);
-        }
-      });
-      fetchDataAndRender();
-
-      // Select all checkboxes
-      $("#select-all").on("change", function () {
-        const isChecked = $(this).is(":checked");
-        $(".row-checkbox").prop("checked", isChecked);
-      });
-
-      // Delete selected rows
-      $("#delete-btn").on("click", function () {
-        $(".row-checkbox:checked").each(function () {
-          const rowIndex = $(this).closest("tr").index();
-          data.splice(rowIndex, 1);
-        });
-        fetchDataAndRender();
-        $("#select-all").prop("checked", false); // Uncheck "select all" after deletion
-      });
-      $("#search-icon").hover(
-        function () {
-          // 隐藏第一个图标，显示第二个图标
-          $("#hover-icon").show();
-        },
-        function () {
-          // 隐藏第一个图标，显示第二个图标
-          $("#hover-icon").hide();
-        }
-      );
-      // 保存按钮逻辑
-      $("#save-button").click(function () {
-        const key = $("#data-key").val();
-        const value = $("#data-value").val();
-
-        if (!key || !value) {
-          alert("请输入键和值！");
-          return;
-        }
-
-        console.log("保存数据：", { key, value });
-        alert("保存成功！");
-
-        // 清空表单
-        $("#data-key").val("");
-        $("#data-value").val("");
-      });
-
-      // 取消按钮逻辑
-      $("#cancel-button").click(function () {
-        $("#data-key").val("");
-        $("#data-value").val("");
-        alert("操作已取消！");
-      });
-    });
-  </script>
 </body>
 
 </html>

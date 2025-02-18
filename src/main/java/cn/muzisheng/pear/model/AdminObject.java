@@ -1,9 +1,9 @@
 package cn.muzisheng.pear.model;
 
 import cn.muzisheng.pear.handler.*;
-import cn.muzisheng.pear.params.Filter;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Map;
 /**
  * 加载客户端模型
@@ -37,39 +37,39 @@ public class AdminObject{
     /**
      * 可展示在前端的字段列表
      **/
-    private String[] shows;
+    private List<String> shows;
     /**
      * 所有字段默认排序方式的列表
      **/
-    private Order[] Orders;
+    private List<Order> Orders;
     /**
      * 可编辑的字段列表
      **/
-    private String[] edits;
+    private List<String> edits;
     /**
      * 可用于过滤的字段
      **/
-    private String[] filterables;
+    private List<String> filterables;
     /**
      * 可用于排序的字段
      **/
-    private String[] Orderables;
+    private List<String> Orderables;
     /**
      * 可用于搜索的字段
      **/
-    private String[] searches;
+    private List<String> searches;
     /**
      * 必须存在的字段
      **/
-    private String[] requires;
+    private List<String> requires;
     /**
      * 主键字段列表
      **/
-    private String[] primaryKeys;
+    private List<String> primaryKeys;
     /**
      * 唯一键字段列表
      **/
-    private String[] uniqueKeys;
+    private List<String> uniqueKeys;
     /**
      * 复数名称
      **/
@@ -77,7 +77,7 @@ public class AdminObject{
     /**
      * 此表所有字段的详细配置
      **/
-    private AdminField[] fields;
+    private List<AdminField> fields;
     /**
      * 编辑此表的前端路由
      **/
@@ -89,11 +89,11 @@ public class AdminObject{
     /**
      * 脚本文件对象
      **/
-    private AdminScript[] AdminScripts;
+    private List<AdminScript> AdminScripts;
     /**
      * 需要在前端下载的样式文件源地址列表
      **/
-    private String[] styles;
+    private List<String> styles;
     /**
      * 权限设置,不同的操作权限的有无
      **/

@@ -32,9 +32,9 @@ public class AdminField {
      **/
     private String type;
     /**
-     * 定义此字段的标签
+     * 定义此字段的注解
      **/
-    private String tag;
+    private String[] annotation;
     /**
      * 定义此字段的额外属性
      **/
@@ -55,4 +55,8 @@ public class AdminField {
      * 此字段存在则证明为外键，描述了外键的信息
      **/
     private AdminForeign foreign;
+    /**
+     * 字段是否数据库自动生成
+     **/
+    private Boolean isAutoId;
 }

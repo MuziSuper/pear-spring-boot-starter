@@ -1,5 +1,8 @@
 package cn.muzisheng.pear.utils;
 
+/**
+ * 转驼峰式命名
+ **/
 public class CamelToSnakeUtil {
     public static String toSnakeCase(String camelCase) {
         if (camelCase == null || camelCase.isEmpty()) {

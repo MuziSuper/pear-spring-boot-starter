@@ -31,18 +31,18 @@ public class AdminApi {
         response.setStatus(Constant.GENERAL_EXCEPTION);
         return response.value();
     }
-//    @PutMapping("{model}")
-//    public ResponseEntity<Result<Object>> handleCreate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody QueryForm queryForm) {
-//        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
-//            if(adminObject.getTableName().equals(model)){
-//                return adminService.handleQueryOrGetOne(request,model,adminObject,queryForm);
-//            }
-//        }
-//        Response<Object> response = new Response<>();
-//        response.setError("Model not found");
-//        response.setStatus(Constant.GENERAL_EXCEPTION);
-//        return response.value();
-//    }
+    @PutMapping("{model}")
+    public ResponseEntity<Result<Object>> handleCreate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody Map<String, Object> data) {
+        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
+            if(adminObject.getTableName().equals(model)){
+                return adminService.handleCreate(request,model,adminObject,data);
+            }
+        }
+        Response<Object> response = new Response<>();
+        response.setError("Model not found");
+        response.setStatus(Constant.GENERAL_EXCEPTION);
+        return response.value();
+    }
 //    @PatchMapping("{model}")
 //    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
 //        for(AdminObject adminObject : ApplicationInitialization.adminObjects){

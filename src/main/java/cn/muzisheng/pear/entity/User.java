@@ -13,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Embeddable
 @TableName("`user`")
 public class User implements Serializable {
     // 主键

@@ -4,6 +4,8 @@ import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.model.Order;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * 查询表单
  **/
@@ -24,11 +26,11 @@ public class QueryForm {
     /**
      * 过滤条件列表
      **/
-    private Filter[] filters;
+    private List<Filter> filters;
     /**
      * 排序条件列表
      **/
-    private Order[] orders;
+    private List<Order> orders;
     /**
      * 是否关联查询
      **/
@@ -36,11 +38,11 @@ public class QueryForm {
     /**
      * 指定查询显示的字段
      **/
-    private String[] viewFields;
+    private List<String> viewFields;
     /**
      * 指定搜索的字段
      **/
-    private String[] searchFields;
+    private List<String> searchFields;
     /**
      * 处理请求体中的数据
      **/
