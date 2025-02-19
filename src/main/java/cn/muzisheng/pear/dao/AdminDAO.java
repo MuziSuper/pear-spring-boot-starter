@@ -1,6 +1,7 @@
 package cn.muzisheng.pear.dao;
 
 import cn.muzisheng.pear.exception.GeneralException;
+import cn.muzisheng.pear.exception.SqlStatementException;
 import cn.muzisheng.pear.mapper.AdminMapper;
 import cn.muzisheng.pear.model.Order;
 import org.slf4j.Logger;
@@ -62,6 +63,36 @@ public class AdminDAO {
             builder.append("LIMIT ").append(limit);
         }
         LOG.info(builder.toString());
+        return builder.toString();
+    }
+    public String create(String tableName,Object object) {
+        StringBuilder builder=new StringBuilder();
+        if(tableName.isEmpty()){
+            throw new GeneralException("The table name cannot be left blank.");
+        }
+        builder.append("INSERT INTO `").append(tableName).append("` ");
+        StringBuilder values = new StringBuilder();
+        StringBuilder keys = new StringBuilder();
+        if(object instanceof Map map) {
+            int index=0;
+            keys.append("(");
+            values.append("(");
+            for (Map.Entry<String, Object> entry : ((Map<String,Object>)map).entrySet()) {
+                if(index++>0){
+                    values.append(", ");
+                    keys.append(", ");
+                }
+                values.append("'").append(entry.getValue()).append("'");
+                keys.append("'").append(entry.getKey()).append("'");
+            }
+            keys.append(")");
+            values.append(") ");
+            builder.append(keys);
+            builder.append(" VALUES ");
+            builder.append(values).append(";");
+        }else{
+            throw new SqlStatementException("The object is not a map.");
+        }
         return builder.toString();
     }
 }

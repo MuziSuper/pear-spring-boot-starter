@@ -18,26 +18,26 @@ public class GroupMember {
      **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 用户id
      **/
-    private Long userId;
+//    private Long userId;
     /**
      * 用户
      **/
-    @Embedded
+    @ManyToOne
+    @JoinColumn(name = "userId")
     private User user;
     /**
      * 组id
      **/
-    private Long groupId;
+//    private Long groupId;
     /**
      * 组
      **/
-    @Column(name="`group`")
-    @Embedded
+    @ManyToOne
+    @JoinColumn(name = "groupId")
     private Group group;
     /**
      * 角色

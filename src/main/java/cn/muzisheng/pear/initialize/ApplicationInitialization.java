@@ -192,7 +192,7 @@ public class ApplicationInitialization implements CommandLineRunner {
                 adminField.setType(field.getType().getSimpleName());
             }
             // adminField存入label
-            if(adminField.getLabel().isEmpty()){
+            if(adminField.getLabel()==null){
                 adminField.setLabel(adminField.getName().replaceAll("_", " "));
             }
             // adminField存入isArray
@@ -252,7 +252,7 @@ public class ApplicationInitialization implements CommandLineRunner {
                                 }
                             }
                         }
-                        if(!adminObject.getPrimaryKeyMap().isEmpty()){
+                        if(adminObject.getPrimaryKeyMap()!=null){
                             adminObject.getPrimaryKeyMap().put(keyName,adminField.getName());
                         }
 
@@ -270,11 +270,13 @@ public class ApplicationInitialization implements CommandLineRunner {
                 if(generatedValue!=null){
                     adminField.setIsAutoId(true);
                 }
-                adminObject.getAttributes().forEach((key,value)->{
-                    if(key.equals(field.getName())){
-                        adminField.setAttribute(value);
-                    }
-                });
+                if(adminField.getAttribute()!=null) {
+                    adminObject.getAttributes().forEach((key, value) -> {
+                        if (key.equals(field.getName())) {
+                            adminField.setAttribute(value);
+                        }
+                    });
+                }
             }
             if(isForeignID) {
                 list.add(adminField);

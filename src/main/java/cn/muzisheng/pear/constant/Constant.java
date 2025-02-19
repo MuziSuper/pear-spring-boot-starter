@@ -18,6 +18,7 @@ public class Constant {
     public static final int SCALE_EXCEPTION = 502;
     public static final int USER_EXCEPTION = 503;
     public static final int HOOK_EXCEPTION = 504;
+    public static final int SQL_EXCEPTION = 505;
     public static final int ILLEGAL_EXCEPTION = 400;
     public static final int UNAPPROVED_EXCEPTION = 401;
 

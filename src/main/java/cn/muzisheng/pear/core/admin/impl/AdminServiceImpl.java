@@ -4,6 +4,7 @@ import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.core.admin.AdminService;
 import cn.muzisheng.pear.dao.AdminDAO;
 import cn.muzisheng.pear.exception.GeneralException;
+import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.mapper.AdminMapper;
 import cn.muzisheng.pear.model.*;
 import cn.muzisheng.pear.params.AdminQueryResult;
@@ -14,6 +15,7 @@ import com.alibaba.fastjson2.JSONException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
+import com.mysql.cj.log.Log;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,18 +65,45 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, String model, AdminObject adminObject, Map<String, Object> data) {
+        Response<Map<String, Object>> response = new Response<>();
         Map<String, Object> params = getPrimaryValues(request, adminObject);
-        Object object = unmarshalFrom(adminObject, data, params);
+        if(params.isEmpty()&&data==null){
+            throw new IllegalException("Both the query parameter and the request body are null.");
+        }
+        Map<String,Object> res = unmarshalFrom(adminObject, data, params);
+
+        if(adminObject.getBeforeCreate()!=null){
+            try {
+                res=(Map)adminObject.getBeforeCreate().execute(request,res);
+            } catch (Exception e) {
+                LOG.error("beforeCreate error", e);
+                throw new GeneralException("beforeCreate error");
+            }
+        }
+        if(adminMapper.create(model,res)<1){
+            LOG.error("create error. ");
+        }
+        if(adminObject.getBeforeRender()!=null){
+            try {
+                res=(Map)adminObject.getBeforeRender().execute(request,res);
+            } catch (Exception e) {
+                LOG.error("beforeRender error", e);
+                throw new GeneralException("beforeRender error");
+            }
+        }
+        response.setData(res);
+        return response.value();
     }
 
     /**
-     * 添加主键值到请求体中,并将请求体数据经过处理后，存入elemObj中，返回elemObj的反射泛型
+     * 添加主键值到请求体中,并将请求体数据经过处理后返回
      *
      * @param adminObject 通用类对象
      * @param body        请求体
      * @param params      query中参数集合
+     * @return 处理后的请求体
      **/
-    public Object unmarshalFrom(AdminObject adminObject, Map<String, Object> body, Map<String, Object> params) {
+    public Map<String, Object> unmarshalFrom(AdminObject adminObject, Map<String, Object> body, Map<String, Object> params) {
         Map<String, Boolean> editable = new HashMap<>();
         // 获取可编辑字段
         if (adminObject.getEdits() != null) {
@@ -83,11 +112,7 @@ public class AdminServiceImpl implements AdminService {
             }
         }
         // 删除不可编辑字段
-        for (String field : body.keySet()) {
-            if (!editable.containsKey(field)) {
-                body.remove(field);
-            }
-        }
+        body.keySet().removeIf(field -> !editable.containsKey(field));
         // 添加body中没有的query参数
         for (String field : params.keySet()) {
             if (!body.containsKey(field)) {
@@ -124,13 +149,13 @@ public class AdminServiceImpl implements AdminService {
         }
         try {
             if (targetClass.equals(Integer.class)) {
-                formatAsInt(val);
+                val=formatAsInt(val);
             } else if (targetClass.equals(Long.class)) {
-                formatAsLong(val);
+                val=formatAsLong(val);
             } else if (targetClass.equals(Double.class)) {
-                formatAsDouble(val);
+                val=formatAsDouble(val);
             } else if (targetClass.equals(Float.class)) {
-                formatAsFloat(val);
+                val=formatAsFloat(val);
             } else if (targetClass.equals(Boolean.class)) {
                 String valString = (String) val;
                 if (valString.equalsIgnoreCase("true") || valString.equalsIgnoreCase("on") || valString.equalsIgnoreCase("yes") || valString.equals("1")) {
@@ -149,7 +174,7 @@ public class AdminServiceImpl implements AdminService {
                 val = dateFormat.parse((String) val);
             } else {
                 try {
-                    JSON.parseObject((String) val, targetClass);
+                    val=JSON.parseObject((String) val, targetClass);
                 } catch (JSONException e) {
                     val = null;
                 }
@@ -161,9 +186,9 @@ public class AdminServiceImpl implements AdminService {
         return val;
     }
 
-    private void formatAsFloat(Object val) {
+    private Object formatAsFloat(Object val) {
         if (val instanceof Float) {
-            return;
+            return val;
         } else if (val instanceof Double) {
             val = ((Double) val).floatValue();
         } else if (val instanceof Integer) {
@@ -173,17 +198,18 @@ public class AdminServiceImpl implements AdminService {
         } else if (val instanceof String) {
             if (val.equals("")) {
                 val = 0;
-                return;
+                return val;
             }
             val = Float.parseFloat((String) val);
         } else {
             val = 0;
         }
+        return val;
     }
 
-    private void formatAsDouble(Object val) {
+    private Object formatAsDouble(Object val) {
         if (val instanceof Double) {
-            return;
+            return val;
         } else if (val instanceof Float) {
             val = ((Float) val).doubleValue();
         } else if (val instanceof Integer) {
@@ -193,17 +219,18 @@ public class AdminServiceImpl implements AdminService {
         } else if (val instanceof String) {
             if (val.equals("")) {
                 val = 0;
-                return;
+                return val;
             }
             val = Double.parseDouble((String) val);
         } else {
             val = 0;
         }
+        return val;
     }
 
-    private void formatAsLong(Object val) {
+    private Object formatAsLong(Object val) {
         if (val instanceof Long) {
-            return;
+            return val;
         } else if (val instanceof Double) {
             val = ((Double) val).longValue();
         } else if (val instanceof Float) {
@@ -213,17 +240,18 @@ public class AdminServiceImpl implements AdminService {
         } else if (val instanceof String) {
             if (val.equals("")) {
                 val = 0;
-                return;
+                return val;
             }
             val = Long.parseLong((String) val);
         } else {
             val = 0;
         }
+        return val;
     }
 
-    private void formatAsInt(Object val) {
+    private Object formatAsInt(Object val) {
         if (val instanceof Integer) {
-            return;
+            return val;
         } else if (val instanceof Double) {
             val = ((Double) val).intValue();
         } else if (val instanceof Float) {
@@ -233,12 +261,13 @@ public class AdminServiceImpl implements AdminService {
         } else if (val instanceof String) {
             if (val.equals("")) {
                 val = 0;
-                return;
+                return val;
             }
             val = Integer.parseInt((String) val);
         } else {
             val = 0;
         }
+        return val;
     }
 
     @Override
@@ -317,7 +346,7 @@ public class AdminServiceImpl implements AdminService {
         // 排序子句，不加ORDER BY
         List<Order> orders;
         StringBuilder orderClause = new StringBuilder();
-        if (!queryForm.getOrders().isEmpty()) {
+        if (queryForm.getOrders()!=null) {
             orders = queryForm.getOrders();
         } else {
             orders = adminObject.getOrders();

@@ -32,13 +32,13 @@ public class AdminApi {
         return response.value();
     }
     @PutMapping("{model}")
-    public ResponseEntity<Result<Object>> handleCreate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody Map<String, Object> data) {
+    public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody(required = false)Map<String, Object> data) {
         for(AdminObject adminObject : ApplicationInitialization.adminObjects){
             if(adminObject.getTableName().equals(model)){
                 return adminService.handleCreate(request,model,adminObject,data);
             }
         }
-        Response<Object> response = new Response<>();
+        Response<Map<String,Object>> response = new Response<>();
         response.setError("Model not found");
         response.setStatus(Constant.GENERAL_EXCEPTION);
         return response.value();

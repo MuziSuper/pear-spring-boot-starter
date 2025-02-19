@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 public class Config {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @TableId(type = IdType.AUTO)
     private Long id;
     @Column(length = 128)
     @TableField("`key`")

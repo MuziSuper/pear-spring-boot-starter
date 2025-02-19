@@ -13,13 +13,11 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Embeddable
 @TableName("`user`")
 public class User implements Serializable {
     // 主键
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @TableId(type = IdType.AUTO)
     private Long id;
     // 创建时间
     @TableField(fill= FieldFill.INSERT)

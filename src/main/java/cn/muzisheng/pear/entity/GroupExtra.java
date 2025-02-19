@@ -18,17 +18,16 @@ public class GroupExtra {
      **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 组对象类型
      **/
     @Column(length = 128)
-    private String objectType;
+    private String groupType;
     /**
      * groupId
      **/
-    private Long objectId;
+    private Long groupId;
     /**
      * 键
      **/
@@ -37,6 +36,5 @@ public class GroupExtra {
     /**
      * 值
      **/
-//    @Column(columnDefinition = "TEXT")
     private String value;
 }

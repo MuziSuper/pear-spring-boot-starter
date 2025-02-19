@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
  **/
 @Data
 @Entity
-@Embeddable
 @TableName("`group`")
 public class Group {
     /**
@@ -20,7 +19,6 @@ public class Group {
      **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 用户组名称
