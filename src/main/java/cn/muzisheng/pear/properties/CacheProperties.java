@@ -14,5 +14,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties("app.cache")
 public class CacheProperties {
-    private long size=Constant.CACHE_EXPIRED;
+    private long expire=Constant.CACHE_EXPIRED;
 }

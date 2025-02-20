@@ -5,11 +5,12 @@ import lombok.Data;
 
 import java.util.List;
 import java.util.Map;
+
 /**
  * 加载客户端模型
  **/
 @Data
-public class AdminObject{
+public class AdminObject {
     /**
      * 模型
      **/
@@ -109,24 +110,19 @@ public class AdminObject{
     /**
      * 用于描述数据库表字段的详细属性配置
      **/
-    private Map<String,AdminAttribute> Attributes;
+    private Map<String, AdminAttribute> Attributes;
     /**
      * 数据库表内实际名称
      **/
     private String tableName;
-//    /**
-//     * 数据库表关联模型类型的反射类型
-//     **/
-//    modelElem reflect.Type `json:"-"`
-
     /**
      * 执行某些数据库操作时需要忽略的字段
      **/
-    private Map<String,Boolean> ignores;
+    private Map<String, Boolean> ignores;
     /**
      * 模型内主键字段的映射
      **/
-    private Map<String,String> primaryKeyMap;
+    private Map<String, String> primaryKeyMap;
     /**
      * 渲染页面方法
      **/

@@ -1085,3 +1085,6 @@ java.lang.IllegalArgumentException: Both the query parameter and the request bod
 22:01:13.110 [http-nio-8000-exec-4] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 22:01:13.110 [http-nio-8000-exec-4] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 22:01:13.112 [http-nio-8000-exec-4] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+22:16:51.157 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+22:16:51.159 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+22:16:51.170 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

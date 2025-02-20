@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Configuration
 @ConfigurationProperties(prefix = "app.token")
 public class TokenProperties {
-    private String tokenSalt=Constant.TOKEN_DEFAULT_SECRET_SALT;
-    private String tokenHead=Constant.TOKEN_DEFAULT_SECRET_PREFIX;
-    private Long tokenExpire=Constant.TOKEN_DEFAULT_EXPIRE_DAY;
+    private String salt=Constant.TOKEN_DEFAULT_SECRET_SALT;
+    private String head=Constant.TOKEN_DEFAULT_SECRET_PREFIX;
+    private Long expire=Constant.TOKEN_DEFAULT_EXPIRE_DAY;
 }

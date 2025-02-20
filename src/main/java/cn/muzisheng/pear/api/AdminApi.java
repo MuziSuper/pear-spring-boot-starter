@@ -2,6 +2,7 @@ package cn.muzisheng.pear.api;
 
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.core.admin.AdminService;
+import cn.muzisheng.pear.initialize.AdminContainer;
 import cn.muzisheng.pear.initialize.ApplicationInitialization;
 import cn.muzisheng.pear.model.AdminObject;
 import cn.muzisheng.pear.model.Response;
@@ -21,7 +22,7 @@ public class AdminApi {
     private AdminService adminService;
     @PostMapping("{model}")
     public ResponseEntity<Result<Object>> query(HttpServletRequest request, @PathVariable("model") String model, @RequestBody(required = false) QueryForm queryForm) {
-        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
+        for(AdminObject adminObject : AdminContainer.adminObjects){
             if(adminObject.getTableName().equals(model)){
                 return adminService.handleQueryOrGetOne(request,model,adminObject,queryForm);
             }
@@ -33,7 +34,7 @@ public class AdminApi {
     }
     @PutMapping("{model}")
     public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody(required = false)Map<String, Object> data) {
-        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
+        for(AdminObject adminObject : AdminContainer.adminObjects){
             if(adminObject.getTableName().equals(model)){
                 return adminService.handleCreate(request,model,adminObject,data);
             }

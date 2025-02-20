@@ -80,16 +80,16 @@ public class Constant {
     public static final String PERMISSION_DELETE="delete";
 
     // groupRole type
-    public static final String GROUP_ROLE_ADMIN="admin";
+    public static final String GROUP_ROLE_ADMIN="Admin";
     public static final String GROUP_ROLE_MEMBER="member";
 
     // group type
-    public static final String GROUP_TYPE_ADMIN="admin";
+    public static final String GROUP_TYPE_ADMIN="Admin";
     public static final String GROUP_TYPE_APP="app";
 
     // site configuration
     public static final String KEY_SITE_NAME="pear";
-    // admin param
+    // Admin param
     public static final int DEFAULT_QUERY_LIMIT =102400;
 
     // dataset statement
