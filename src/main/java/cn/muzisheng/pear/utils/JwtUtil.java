@@ -29,7 +29,7 @@ public class JwtUtil {
         return Constant.TOKEN_DEFAULT_SECRET_PREFIX +Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
-                .signWith(SignatureAlgorithm.HS512, tokenProperties.getTokenSalt())
+                .signWith(SignatureAlgorithm.HS512, tokenProperties.getSalt())
                 .compact();
     }
 
@@ -75,7 +75,7 @@ public class JwtUtil {
         Claims claims;
         try {
             claims=Jwts.parser()
-                    .setSigningKey(tokenProperties.getTokenSalt())
+                    .setSigningKey(tokenProperties.getSalt())
                     .parseClaimsJws(delTokenPrefix(token))
                     .getBody();
         }catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException | SignatureException e){
@@ -92,7 +92,7 @@ public class JwtUtil {
         return Constant.TOKEN_DEFAULT_SECRET_PREFIX +Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
-                .signWith(SignatureAlgorithm.HS512, tokenProperties.getTokenSalt())
+                .signWith(SignatureAlgorithm.HS512, tokenProperties.getSalt())
                 .compact();
     }
 
@@ -101,6 +101,6 @@ public class JwtUtil {
      * 生成token的过期时间
      */
     private Date generateExpirationDate() {
-        return new Date(System.currentTimeMillis() + tokenProperties.getTokenExpire());
+        return new Date(System.currentTimeMillis() + tokenProperties.getExpire());
     }
 }

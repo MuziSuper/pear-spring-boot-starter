@@ -1,7 +1,6 @@
 package cn.muzisheng.pear.initialize;
 
 import cn.muzisheng.pear.constant.Constant;
-import cn.muzisheng.pear.core.Logger.LogService;
 import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.entity.Group;
 import cn.muzisheng.pear.entity.GroupMember;
@@ -16,6 +15,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Transient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,12 +32,9 @@ import java.util.List;
 
 @Component
 public class AdminContainer {
-    private final LogService logService;
+    private final Logger logService= LoggerFactory.getLogger(AdminContainer.class);
     public static List<AdminObject> adminObjects;
-    @Autowired
-    public AdminContainer(LogService logService){
-        this.logService=logService;
-    }
+
     @PostConstruct
     public void buildAdminObjects() {
         adminObjects=getPearAdminObjects();

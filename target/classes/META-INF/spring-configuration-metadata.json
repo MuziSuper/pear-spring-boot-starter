@@ -23,7 +23,7 @@
   ],
   "properties": [
     {
-      "name": "app.cache.size",
+      "name": "app.cache.expire",
       "type": "java.lang.Long",
       "sourceType": "cn.muzisheng.pear.properties.CacheProperties"
     },
@@ -63,17 +63,17 @@
       "sourceType": "cn.muzisheng.pear.properties.LogProperties"
     },
     {
-      "name": "app.token.token-expire",
+      "name": "app.token.expire",
       "type": "java.lang.Long",
       "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
     },
     {
-      "name": "app.token.token-head",
+      "name": "app.token.head",
       "type": "java.lang.String",
       "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
     },
     {
-      "name": "app.token.token-salt",
+      "name": "app.token.salt",
       "type": "java.lang.String",
       "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
     },

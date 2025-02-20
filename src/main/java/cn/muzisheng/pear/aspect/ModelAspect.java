@@ -1,6 +1,5 @@
 package cn.muzisheng.pear.aspect;
 
-import cn.muzisheng.pear.core.Logger.LogService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,8 +10,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class ModelAspect {
-    @Autowired
-    private LogService logger;
+
     @Pointcut("@annotation(cn.muzisheng.pear.annotation.BackgroundApi)")
     public void modelPoint() {
     }
