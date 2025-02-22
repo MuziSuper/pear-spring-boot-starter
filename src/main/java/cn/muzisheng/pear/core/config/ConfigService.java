@@ -2,8 +2,6 @@ package cn.muzisheng.pear.core.config;
 
 import cn.muzisheng.pear.entity.Config;
 
-import java.util.List;
-
 
 public interface ConfigService {
     /**

@@ -2,7 +2,6 @@ package cn.muzisheng.pear.aspect;
 
 import cn.muzisheng.pear.annotation.*;
 import cn.muzisheng.pear.constant.Constant;
-import cn.muzisheng.pear.exception.HookException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

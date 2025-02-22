@@ -1,5 +1,5 @@
-22:58:23.879 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 13924 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-22:58:23.883 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+22:58:23.879 [main] INFO  cn.muzisheng.pear.TestApplication - Starting TestApplication using Java 21.0.2 with PID 13924 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+22:58:23.883 [main] INFO  cn.muzisheng.pear.TestApplication - No active profile set, falling back to 1 default profile: "default"
 22:58:26.105 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 22:58:26.129 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 0 JPA repository interfaces.
 22:58:26.817 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
@@ -54,7 +54,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group (id bigint not null auto_increment, extra varchar(255), gmt_created dateti' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -103,7 +103,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar(128), object_id bigint, object_type varchar(128), value LONGTEXT, primar' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -152,7 +152,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group LONGBLOB, group_id bigint, role varchar(100), user LONGBLOB, user_id bigin' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -163,7 +163,7 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
 	... 37 common frames omitted
 22:58:28.956 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-22:58:28.973 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'adminApi': Unsatisfied dependency expressed through field 'adminService': Error creating bean with name 'adminServiceImpl' defined in file [D:\LocalGit\pear-spring-boot-starter\target\classes\cn\muzisheng\pear\core\admin\impl\AdminServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'cn.muzisheng.pear.mapper.AdminMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+22:58:28.973 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'adminApi': Unsatisfied dependency expressed through field 'adminService': Error creating bean with name 'adminServiceImpl' defined in file [D:\LocalGit\pear-spring-boot-starter\target\classes\cn\muzisheng\pear\core\admin\impl\AdminServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'mapper.cn.muzisheng.pear.test.AdminMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
 22:58:28.973 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 22:58:28.979 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 22:58:28.987 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
@@ -176,7 +176,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in cn.muzisheng.pear.core.admin.impl.AdminServiceImpl required a bean of type 'cn.muzisheng.pear.mapper.AdminMapper' that could not be found.
+Parameter 0 of constructor in impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl required a bean of type 'mapper.cn.muzisheng.pear.test.AdminMapper' that could not be found.
 
 The injection point has the following annotations:
 	- @org.springframework.beans.factory.annotation.Autowired(required=true)
@@ -184,10 +184,10 @@ The injection point has the following annotations:
 
 Action:
 
-Consider defining a bean of type 'cn.muzisheng.pear.mapper.AdminMapper' in your configuration.
+Consider defining a bean of type 'mapper.cn.muzisheng.pear.test.AdminMapper' in your configuration.
 
-23:01:55.403 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 42516 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-23:01:55.405 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+23:01:55.403 [main] INFO  cn.muzisheng.pear.TestApplication - Starting TestApplication using Java 21.0.2 with PID 42516 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+23:01:55.405 [main] INFO  cn.muzisheng.pear.TestApplication - No active profile set, falling back to 1 default profile: "default"
 23:01:56.127 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 23:01:56.157 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 21 ms. Found 0 JPA repository interfaces.
 23:01:56.850 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
@@ -242,7 +242,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group (id bigint not null auto_increment, extra varchar(255), gmt_created dateti' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -291,7 +291,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar(128), object_id bigint, object_type varchar(128), value LONGTEXT, primar' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -340,7 +340,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group LONGBLOB, group_id bigint, role varchar(100), user LONGBLOB, user_id bigin' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -370,8 +370,8 @@ Action:
 
 Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
 
-23:03:27.824 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 33120 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-23:03:27.825 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+23:03:27.824 [main] INFO  cn.muzisheng.pear.TestApplication - Starting TestApplication using Java 21.0.2 with PID 33120 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+23:03:27.825 [main] INFO  cn.muzisheng.pear.TestApplication - No active profile set, falling back to 1 default profile: "default"
 23:03:28.385 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 23:03:28.411 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 18 ms. Found 0 JPA repository interfaces.
 23:03:29.139 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
@@ -426,7 +426,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group (id bigint not null auto_increment, extra varchar(255), gmt_created dateti' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -475,7 +475,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar(128), object_id bigint, object_type varchar(128), value LONGTEXT, primar' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -524,7 +524,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group LONGBLOB, group_id bigint, role varchar(100), user LONGBLOB, user_id bigin' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -537,8 +537,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:03:31.273 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
 23:03:32.174 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
 23:03:32.191 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
-23:03:32.203 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.773 seconds (process running for 5.288)
-23:03:32.436 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:03:32.203 [main] INFO  cn.muzisheng.pear.TestApplication - Started TestApplication in 4.773 seconds (process running for 5.288)
+23:03:32.436 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -568,9 +568,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -590,7 +590,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -619,8 +619,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:03:32.446 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 23:03:32.448 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 23:03:32.457 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-23:04:18.402 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 21544 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-23:04:18.404 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+23:04:18.402 [main] INFO  cn.muzisheng.pear.TestApplication - Starting TestApplication using Java 21.0.2 with PID 21544 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+23:04:18.404 [main] INFO  cn.muzisheng.pear.TestApplication - No active profile set, falling back to 1 default profile: "default"
 23:04:19.025 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 23:04:19.058 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 22 ms. Found 0 JPA repository interfaces.
 23:04:19.913 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
@@ -675,7 +675,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group (id bigint not null auto_increment, extra varchar(255), gmt_created dateti' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -724,7 +724,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar(128), object_id bigint, object_type varchar(128), value LONGTEXT, primar' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -737,8 +737,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:04:22.141 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
 23:04:23.115 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
 23:04:23.157 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
-23:04:23.167 [main] INFO  cn.muzisheng.pear.Application - Started Application in 5.173 seconds (process running for 5.667)
-23:04:23.396 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:04:23.167 [main] INFO  cn.muzisheng.pear.TestApplication - Started TestApplication in 5.173 seconds (process running for 5.667)
+23:04:23.396 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -768,9 +768,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -790,7 +790,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -819,8 +819,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:04:23.406 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 23:04:23.408 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 23:04:23.416 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-23:08:03.527 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 35980 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-23:08:03.529 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+23:08:03.527 [main] INFO  cn.muzisheng.pear.TestApplication - Starting TestApplication using Java 21.0.2 with PID 35980 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+23:08:03.529 [main] INFO  cn.muzisheng.pear.TestApplication - No active profile set, falling back to 1 default profile: "default"
 23:08:04.082 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 23:08:04.108 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 0 JPA repository interfaces.
 23:08:04.874 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
@@ -875,7 +875,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group (id bigint not null auto_increment, extra varchar(255), gmt_created dateti' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -888,8 +888,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:08:07.155 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
 23:08:08.063 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
 23:08:08.080 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
-23:08:08.088 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.962 seconds (process running for 5.494)
-23:08:08.286 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:08:08.088 [main] INFO  cn.muzisheng.pear.TestApplication - Started TestApplication in 4.962 seconds (process running for 5.494)
+23:08:08.286 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -919,9 +919,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -941,7 +941,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -970,8 +970,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:08:08.297 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 23:08:08.298 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 23:08:08.306 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-23:12:06.210 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 38324 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-23:12:06.211 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+23:12:06.210 [main] INFO  cn.muzisheng.pear.TestApplication - Starting TestApplication using Java 21.0.2 with PID 38324 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+23:12:06.211 [main] INFO  cn.muzisheng.pear.TestApplication - No active profile set, falling back to 1 default profile: "default"
 23:12:06.800 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 23:12:06.834 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 24 ms. Found 0 JPA repository interfaces.
 23:12:07.555 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
@@ -1026,7 +1026,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group (id bigint not null auto_increment, extra varchar(255), gmt_created dateti' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1039,8 +1039,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:12:09.738 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
 23:12:10.609 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
 23:12:10.626 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
-23:12:10.638 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.839 seconds (process running for 5.383)
-23:12:10.857 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:12:10.638 [main] INFO  cn.muzisheng.pear.TestApplication - Started TestApplication in 4.839 seconds (process running for 5.383)
+23:12:10.857 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -1070,9 +1070,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -1092,7 +1092,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1121,8 +1121,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:12:10.875 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 23:12:10.877 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 23:12:10.895 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-23:14:42.160 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 42200 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-23:14:42.162 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+23:14:42.160 [main] INFO  cn.muzisheng.pear.TestApplication - Starting TestApplication using Java 21.0.2 with PID 42200 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+23:14:42.162 [main] INFO  cn.muzisheng.pear.TestApplication - No active profile set, falling back to 1 default profile: "default"
 23:14:42.767 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 23:14:42.789 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 JPA repository interfaces.
 23:14:43.506 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
@@ -1177,7 +1177,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group (id bigint not null auto_increment, extra varchar(255), gmt_created dateti' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1190,8 +1190,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:14:45.569 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
 23:14:46.436 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
 23:14:46.467 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
-23:14:46.480 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.747 seconds (process running for 5.261)
-23:14:46.708 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:14:46.480 [main] INFO  cn.muzisheng.pear.TestApplication - Started TestApplication in 4.747 seconds (process running for 5.261)
+23:14:46.708 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -1221,9 +1221,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -1243,7 +1243,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1272,8 +1272,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:14:46.719 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 23:14:46.721 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 23:14:46.734 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-23:15:51.059 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 42832 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-23:15:51.061 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+23:15:51.059 [main] INFO  cn.muzisheng.pear.TestApplication - Starting TestApplication using Java 21.0.2 with PID 42832 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+23:15:51.061 [main] INFO  cn.muzisheng.pear.TestApplication - No active profile set, falling back to 1 default profile: "default"
 23:15:51.751 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 23:15:51.795 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32 ms. Found 0 JPA repository interfaces.
 23:15:52.424 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
@@ -1328,7 +1328,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`LONGBLOB`, `type` varchar(24), primary key (`id`)) engine=InnoDB' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1377,7 +1377,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`LONGTEXT`, primary key (`id`)) engine=InnoDB' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1426,7 +1426,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`LONGBLOB`, `groupId` bigint, `role` varchar(100), `user` `LONGBLOB`, `userId` b' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1475,7 +1475,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`LONGBLOB`' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1524,7 +1524,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`LONGTEXT`' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1537,8 +1537,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:15:54.605 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
 23:15:55.483 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
 23:15:55.505 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
-23:15:55.520 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.848 seconds (process running for 5.333)
-23:15:55.759 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:15:55.520 [main] INFO  cn.muzisheng.pear.TestApplication - Started TestApplication in 4.848 seconds (process running for 5.333)
+23:15:55.759 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -1568,9 +1568,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -1590,7 +1590,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1619,8 +1619,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:15:55.769 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 23:15:55.770 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 23:15:55.779 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-23:26:18.990 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 35160 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-23:26:18.992 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+23:26:18.990 [main] INFO  cn.muzisheng.pear.TestApplication - Starting TestApplication using Java 21.0.2 with PID 35160 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+23:26:18.992 [main] INFO  cn.muzisheng.pear.TestApplication - No active profile set, falling back to 1 default profile: "default"
 23:26:19.755 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 23:26:19.782 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 20 ms. Found 0 JPA repository interfaces.
 23:26:20.731 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
@@ -1675,7 +1675,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "c
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TEXT`, primary key (`id`)) engine=InnoDB' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1724,7 +1724,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "a
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`TEXT`' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1737,8 +1737,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:26:23.123 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
 23:26:24.144 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
 23:26:24.160 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
-23:26:24.171 [main] INFO  cn.muzisheng.pear.Application - Started Application in 5.555 seconds (process running for 6.042)
-23:26:24.371 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:26:24.171 [main] INFO  cn.muzisheng.pear.TestApplication - Started TestApplication in 5.555 seconds (process running for 6.042)
+23:26:24.371 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -1768,9 +1768,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -1790,7 +1790,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1819,8 +1819,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:26:24.381 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 23:26:24.382 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 23:26:24.401 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-23:27:36.810 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 34900 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-23:27:36.812 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+23:27:36.810 [main] INFO  cn.muzisheng.pear.TestApplication - Starting TestApplication using Java 21.0.2 with PID 34900 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+23:27:36.812 [main] INFO  cn.muzisheng.pear.TestApplication - No active profile set, falling back to 1 default profile: "default"
 23:27:37.602 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 23:27:37.648 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32 ms. Found 0 JPA repository interfaces.
 23:27:38.548 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
@@ -1839,8 +1839,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:27:40.971 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
 23:27:41.884 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
 23:27:41.901 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
-23:27:41.911 [main] INFO  cn.muzisheng.pear.Application - Started Application in 5.473 seconds (process running for 5.972)
-23:27:42.135 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:27:41.911 [main] INFO  cn.muzisheng.pear.TestApplication - Started TestApplication in 5.473 seconds (process running for 5.972)
+23:27:42.135 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -1870,9 +1870,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -1892,7 +1892,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -1921,8 +1921,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:27:42.145 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 23:27:42.147 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 23:27:42.154 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-23:28:44.585 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 42964 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-23:28:44.587 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+23:28:44.585 [main] INFO  cn.muzisheng.pear.TestApplication - Starting TestApplication using Java 21.0.2 with PID 42964 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+23:28:44.587 [main] INFO  cn.muzisheng.pear.TestApplication - No active profile set, falling back to 1 default profile: "default"
 23:28:45.170 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 23:28:45.205 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 25 ms. Found 0 JPA repository interfaces.
 23:28:45.894 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
@@ -1941,8 +1941,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:28:47.810 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
 23:28:48.708 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
 23:28:48.728 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
-23:28:48.745 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.565 seconds (process running for 5.072)
-23:28:48.959 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:28:48.745 [main] INFO  cn.muzisheng.pear.TestApplication - Started TestApplication in 4.565 seconds (process running for 5.072)
+23:28:48.959 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -1972,9 +1972,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -1994,7 +1994,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -2023,8 +2023,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:28:48.969 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 23:28:48.971 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 23:28:48.976 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-23:32:34.554 [main] INFO  cn.muzisheng.pear.Application - Starting Application using Java 21.0.2 with PID 18864 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
-23:32:34.556 [main] INFO  cn.muzisheng.pear.Application - No active profile set, falling back to 1 default profile: "default"
+23:32:34.554 [main] INFO  cn.muzisheng.pear.TestApplication - Starting TestApplication using Java 21.0.2 with PID 18864 (D:\LocalGit\pear-spring-boot-starter\target\classes started by 11595 in D:\LocalGit\pear-spring-boot-starter)
+23:32:34.556 [main] INFO  cn.muzisheng.pear.TestApplication - No active profile set, falling back to 1 default profile: "default"
 23:32:35.141 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 23:32:35.186 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 32 ms. Found 0 JPA repository interfaces.
 23:32:35.923 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8000 (http)
@@ -2043,8 +2043,8 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 23:32:37.833 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
 23:32:38.645 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8000"]
 23:32:38.662 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8000 (http) with context path '/'
-23:32:38.671 [main] INFO  cn.muzisheng.pear.Application - Started Application in 4.565 seconds (process running for 5.173)
-23:32:38.880 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:32:38.671 [main] INFO  cn.muzisheng.pear.TestApplication - Started TestApplication in 4.565 seconds (process running for 5.173)
+23:32:38.880 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -2074,9 +2074,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -2096,7 +2096,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)

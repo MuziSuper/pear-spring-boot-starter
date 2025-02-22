@@ -1,6 +1,6 @@
-15:36:33.456 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: Property 'id' of 'cn.muzisheng.pear.entity.GroupMember.group' is annotated '@GeneratedValue' but is not part of an identifier
-15:36:33.491 [main] ERROR o.s.boot.SpringApplication - Application run failed
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Property 'id' of 'cn.muzisheng.pear.entity.GroupMember.group' is annotated '@GeneratedValue' but is not part of an identifier
+15:36:33.456 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: Property 'id' of 'entity.cn.muzisheng.pear.test.GroupMember.group' is annotated '@GeneratedValue' but is not part of an identifier
+15:36:33.491 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Property 'id' of 'entity.cn.muzisheng.pear.test.GroupMember.group' is annotated '@GeneratedValue' but is not part of an identifier
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
@@ -16,8 +16,8 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
-Caused by: org.hibernate.AnnotationException: Property 'id' of 'cn.muzisheng.pear.entity.GroupMember.group' is annotated '@GeneratedValue' but is not part of an identifier
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
+Caused by: org.hibernate.AnnotationException: Property 'id' of 'entity.cn.muzisheng.pear.test.GroupMember.group' is annotated '@GeneratedValue' but is not part of an identifier
 	at org.hibernate.boot.model.internal.EmbeddableBinder.fillEmbeddable(EmbeddableBinder.java:397)
 	at org.hibernate.boot.model.internal.EmbeddableBinder.fillEmbeddable(EmbeddableBinder.java:288)
 	at org.hibernate.boot.model.internal.EmbeddableBinder.bindEmbeddable(EmbeddableBinder.java:189)
@@ -43,9 +43,9 @@ Caused by: org.hibernate.AnnotationException: Property 'id' of 'cn.muzisheng.pea
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
 	... 15 common frames omitted
-20:19:12.277 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: Property 'id' of 'cn.muzisheng.pear.entity.GroupMember.group' is annotated '@GeneratedValue' but is not part of an identifier
-20:19:12.314 [main] ERROR o.s.boot.SpringApplication - Application run failed
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Property 'id' of 'cn.muzisheng.pear.entity.GroupMember.group' is annotated '@GeneratedValue' but is not part of an identifier
+20:19:12.277 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: Property 'id' of 'entity.cn.muzisheng.pear.test.GroupMember.group' is annotated '@GeneratedValue' but is not part of an identifier
+20:19:12.314 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Property 'id' of 'entity.cn.muzisheng.pear.test.GroupMember.group' is annotated '@GeneratedValue' but is not part of an identifier
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
@@ -61,8 +61,8 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
-Caused by: org.hibernate.AnnotationException: Property 'id' of 'cn.muzisheng.pear.entity.GroupMember.group' is annotated '@GeneratedValue' but is not part of an identifier
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
+Caused by: org.hibernate.AnnotationException: Property 'id' of 'entity.cn.muzisheng.pear.test.GroupMember.group' is annotated '@GeneratedValue' but is not part of an identifier
 	at org.hibernate.boot.model.internal.EmbeddableBinder.fillEmbeddable(EmbeddableBinder.java:397)
 	at org.hibernate.boot.model.internal.EmbeddableBinder.fillEmbeddable(EmbeddableBinder.java:288)
 	at org.hibernate.boot.model.internal.EmbeddableBinder.bindEmbeddable(EmbeddableBinder.java:189)
@@ -88,9 +88,9 @@ Caused by: org.hibernate.AnnotationException: Property 'id' of 'cn.muzisheng.pea
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
 	... 15 common frames omitted
-20:45:02.525 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'cn.muzisheng.pear.entity.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
-20:45:02.564 [main] ERROR o.s.boot.SpringApplication - Application run failed
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'cn.muzisheng.pear.entity.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+20:45:02.525 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'entity.cn.muzisheng.pear.test.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+20:45:02.564 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'entity.cn.muzisheng.pear.test.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
@@ -106,15 +106,15 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
-Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'cn.muzisheng.pear.entity.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'entity.cn.muzisheng.pear.test.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
 	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
 	... 15 common frames omitted
-Caused by: org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'cn.muzisheng.pear.entity.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+Caused by: org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'entity.cn.muzisheng.pear.test.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
 	at org.hibernate.mapping.Value.checkColumnDuplication(Value.java:196)
 	at org.hibernate.mapping.MappingHelper.checkPropertyColumnDuplication(MappingHelper.java:251)
 	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:939)
@@ -128,9 +128,9 @@ Caused by: org.hibernate.MappingException: Column 'groupId' is duplicated in map
 	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
 	... 19 common frames omitted
-20:45:22.889 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'cn.muzisheng.pear.entity.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
-20:45:22.925 [main] ERROR o.s.boot.SpringApplication - Application run failed
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'cn.muzisheng.pear.entity.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+20:45:22.889 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'entity.cn.muzisheng.pear.test.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+20:45:22.925 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'entity.cn.muzisheng.pear.test.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
@@ -146,15 +146,15 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
-Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'cn.muzisheng.pear.entity.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'entity.cn.muzisheng.pear.test.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
 	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
 	... 15 common frames omitted
-Caused by: org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'cn.muzisheng.pear.entity.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+Caused by: org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'entity.cn.muzisheng.pear.test.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
 	at org.hibernate.mapping.Value.checkColumnDuplication(Value.java:196)
 	at org.hibernate.mapping.MappingHelper.checkPropertyColumnDuplication(MappingHelper.java:251)
 	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:939)
@@ -168,9 +168,9 @@ Caused by: org.hibernate.MappingException: Column 'groupId' is duplicated in map
 	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
 	... 19 common frames omitted
-20:58:08.462 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'cn.muzisheng.pear.entity.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
-20:58:08.506 [main] ERROR o.s.boot.SpringApplication - Application run failed
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'cn.muzisheng.pear.entity.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+20:58:08.462 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'entity.cn.muzisheng.pear.test.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+20:58:08.506 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'entity.cn.muzisheng.pear.test.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
@@ -186,15 +186,15 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
-Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'cn.muzisheng.pear.entity.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'entity.cn.muzisheng.pear.test.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
 	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
 	... 15 common frames omitted
-Caused by: org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'cn.muzisheng.pear.entity.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+Caused by: org.hibernate.MappingException: Column 'groupId' is duplicated in mapping for entity 'entity.cn.muzisheng.pear.test.GroupMember' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
 	at org.hibernate.mapping.Value.checkColumnDuplication(Value.java:196)
 	at org.hibernate.mapping.MappingHelper.checkPropertyColumnDuplication(MappingHelper.java:251)
 	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:939)
@@ -208,12 +208,12 @@ Caused by: org.hibernate.MappingException: Column 'groupId' is duplicated in map
 	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
 	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
 	... 19 common frames omitted
-21:02:57.639 [main] ERROR o.s.boot.SpringApplication - Application run failed
-java.lang.NullPointerException: Cannot invoke "String.isEmpty()" because the return value of "cn.muzisheng.pear.model.AdminField.getLabel()" is null
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.parseFields(ApplicationInitialization.java:195)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.build(ApplicationInitialization.java:163)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.buildAdminObjects(ApplicationInitialization.java:135)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:125)
+21:02:57.639 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
+java.lang.NullPointerException: Cannot invoke "String.isEmpty()" because the return value of "model.cn.muzisheng.pear.test.AdminField.getLabel()" is null
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.parseFields(ApplicationInitialization.java:195)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.build(ApplicationInitialization.java:163)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.buildAdminObjects(ApplicationInitialization.java:135)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:125)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -233,14 +233,14 @@ java.lang.NullPointerException: Cannot invoke "String.isEmpty()" because the ret
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 21:06:17.477 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
-21:06:17.492 [main] ERROR o.s.boot.SpringApplication - Application run failed
-java.lang.NullPointerException: Cannot invoke "java.util.Map.forEach(java.util.function.BiConsumer)" because the return value of "cn.muzisheng.pear.model.AdminObject.getAttributes()" is null
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.parseFields(ApplicationInitialization.java:273)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.build(ApplicationInitialization.java:163)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.buildAdminObjects(ApplicationInitialization.java:135)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:125)
+21:06:17.492 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
+java.lang.NullPointerException: Cannot invoke "java.util.Map.forEach(java.util.function.BiConsumer)" because the return value of "model.cn.muzisheng.pear.test.AdminObject.getAttributes()" is null
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.parseFields(ApplicationInitialization.java:273)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.build(ApplicationInitialization.java:163)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.buildAdminObjects(ApplicationInitialization.java:135)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:125)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -260,7 +260,7 @@ java.lang.NullPointerException: Cannot invoke "java.util.Map.forEach(java.util.f
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 21:06:47.856 [main] ERROR c.m.p.i.ApplicationInitialization - User not has primaryKey or uniqueKeys
 21:06:47.857 [main] ERROR c.m.p.i.ApplicationInitialization - Group not has primaryKey or uniqueKeys
 21:06:47.857 [main] ERROR c.m.p.i.ApplicationInitialization - GroupMember not has primaryKey or uniqueKeys
@@ -281,9 +281,9 @@ java.lang.NullPointerException: Cannot invoke "java.util.Map.forEach(java.util.f
 java.util.ConcurrentModificationException: null
 	at java.base/java.util.LinkedHashMap$LinkedHashIterator.nextNode(LinkedHashMap.java:1023)
 	at java.base/java.util.LinkedHashMap$LinkedKeyIterator.next(LinkedHashMap.java:1046)
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.unmarshalFrom(AdminServiceImpl.java:111)
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleCreate(AdminServiceImpl.java:69)
-	at cn.muzisheng.pear.api.AdminApi.handleCreate(AdminApi.java:38)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.unmarshalFrom(AdminServiceImpl.java:111)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.handleCreate(AdminServiceImpl.java:69)
+	at api.cn.muzisheng.pear.test.AdminApi.handleCreate(AdminApi.java:38)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
@@ -344,9 +344,9 @@ java.util.ConcurrentModificationException: null
 java.util.ConcurrentModificationException: null
 	at java.base/java.util.LinkedHashMap$LinkedHashIterator.nextNode(LinkedHashMap.java:1023)
 	at java.base/java.util.LinkedHashMap$LinkedKeyIterator.next(LinkedHashMap.java:1046)
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.unmarshalFrom(AdminServiceImpl.java:111)
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleCreate(AdminServiceImpl.java:69)
-	at cn.muzisheng.pear.api.AdminApi.handleCreate(AdminApi.java:38)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.unmarshalFrom(AdminServiceImpl.java:111)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.handleCreate(AdminServiceImpl.java:69)
+	at api.cn.muzisheng.pear.test.AdminApi.handleCreate(AdminApi.java:38)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
@@ -405,9 +405,9 @@ java.util.ConcurrentModificationException: null
 21:28:05.665 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
 21:28:29.454 [http-nio-8000-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.Map.keySet()" because "body" is null] with root cause
 java.lang.NullPointerException: Cannot invoke "java.util.Map.keySet()" because "body" is null
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.unmarshalFrom(AdminServiceImpl.java:111)
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleCreate(AdminServiceImpl.java:69)
-	at cn.muzisheng.pear.api.AdminApi.handleCreate(AdminApi.java:38)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.unmarshalFrom(AdminServiceImpl.java:111)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.handleCreate(AdminServiceImpl.java:69)
+	at api.cn.muzisheng.pear.test.AdminApi.handleCreate(AdminApi.java:38)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
@@ -466,9 +466,9 @@ java.lang.NullPointerException: Cannot invoke "java.util.Map.keySet()" because "
 21:46:29.618 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
 21:49:00.964 [http-nio-8000-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.Map.keySet()" because "body" is null] with root cause
 java.lang.NullPointerException: Cannot invoke "java.util.Map.keySet()" because "body" is null
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.unmarshalFrom(AdminServiceImpl.java:111)
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleCreate(AdminServiceImpl.java:69)
-	at cn.muzisheng.pear.api.AdminApi.handleCreate(AdminApi.java:38)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.unmarshalFrom(AdminServiceImpl.java:111)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.handleCreate(AdminServiceImpl.java:69)
+	at api.cn.muzisheng.pear.test.AdminApi.handleCreate(AdminApi.java:38)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
@@ -527,8 +527,8 @@ java.lang.NullPointerException: Cannot invoke "java.util.Map.keySet()" because "
 21:59:02.056 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
 21:59:02.208 [http-nio-8000-exec-3] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "java.util.Map.isEmpty()" because "data" is null] with root cause
 java.lang.NullPointerException: Cannot invoke "java.util.Map.isEmpty()" because "data" is null
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleCreate(AdminServiceImpl.java:69)
-	at cn.muzisheng.pear.api.AdminApi.handleCreate(AdminApi.java:38)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.handleCreate(AdminServiceImpl.java:69)
+	at api.cn.muzisheng.pear.test.AdminApi.handleCreate(AdminApi.java:38)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
@@ -587,8 +587,8 @@ java.lang.NullPointerException: Cannot invoke "java.util.Map.isEmpty()" because 
 21:59:33.683 [main] ERROR c.m.p.i.ApplicationInitialization - Config not has primaryKey or uniqueKeys
 22:00:07.263 [http-nio-8000-exec-3] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalArgumentException: Both the query parameter and the request body are null.] with root cause
 java.lang.IllegalArgumentException: Both the query parameter and the request body are null.
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleCreate(AdminServiceImpl.java:70)
-	at cn.muzisheng.pear.api.AdminApi.handleCreate(AdminApi.java:38)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.handleCreate(AdminServiceImpl.java:70)
+	at api.cn.muzisheng.pear.test.AdminApi.handleCreate(AdminApi.java:38)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)

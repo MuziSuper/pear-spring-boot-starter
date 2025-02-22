@@ -1,8 +1,7 @@
 package cn.muzisheng.pear.core.admin.impl;
 
-import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.core.admin.AdminService;
-import cn.muzisheng.pear.dao.AdminDAO;
+import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.mapper.AdminMapper;
@@ -12,10 +11,6 @@ import cn.muzisheng.pear.params.Filter;
 import cn.muzisheng.pear.params.QueryForm;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONException;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.TableInfo;
-import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
-import com.mysql.cj.log.Log;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
-import java.sql.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

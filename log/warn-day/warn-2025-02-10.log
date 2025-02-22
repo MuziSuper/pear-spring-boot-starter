@@ -40,7 +40,7 @@ org.hibernate.exception.SQLGrammarException: unable to obtain isolated JDBC conn
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'pear'
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -102,7 +102,7 @@ org.hibernate.exception.SQLGrammarException: unable to obtain isolated JDBC conn
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'pear'
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)

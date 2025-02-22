@@ -40,7 +40,7 @@ org.hibernate.exception.JDBCConnectionException: unable to obtain isolated JDBC 
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLNonTransientConnectionException: Public Key Retrieval is not allowed
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:111)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)

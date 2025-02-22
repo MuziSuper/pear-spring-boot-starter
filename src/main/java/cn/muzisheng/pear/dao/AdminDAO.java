@@ -2,8 +2,6 @@ package cn.muzisheng.pear.dao;
 
 import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.exception.SqlStatementException;
-import cn.muzisheng.pear.mapper.AdminMapper;
-import cn.muzisheng.pear.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

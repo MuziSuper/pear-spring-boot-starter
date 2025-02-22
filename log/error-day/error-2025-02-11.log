@@ -49,7 +49,7 @@
 14:39:57.076 [http-nio-8000-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLException: No value specified for parameter 1
 ### The error may exist in cn/muzisheng/pear/mapper/AdminMapper.java (best guess)
-### The error may involve cn.muzisheng.pear.mapper.AdminMapper.query-Inline
+### The error may involve mapper.cn.muzisheng.pear.test.AdminMapper.query-Inline
 ### The error occurred while setting parameters
 ### SQL: SELECT ,`user`.`id``user`.`email``user`.`displayName``user`.`isStaff``user`.`isSuperUser``user`.`enabled``user`.`activated``user`.`gmtModified``user`.`lastLogin``user`.`lastLoginIp``user`.`source``user`.`locale``user`.`timezone` FROM `user` WHERE (`user`.gmtCreated `gmtCreated` > ? '2025-02-03T16:00:00.000Z') AND ( OR `user`.`email` LIKE '%1%'`user`.`displayName` LIKE '%1%') ORDER BY `user`.`gmtCreated` desc LIMIT 2
 ### Cause: java.sql.SQLException: No value specified for parameter 1
@@ -84,9 +84,9 @@ java.sql.SQLException: No value specified for parameter 1
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:152)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy119.query(Unknown Source)
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.queryObjects(AdminServiceImpl.java:167)
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleQueryOrGetOne(AdminServiceImpl.java:52)
-	at cn.muzisheng.pear.api.AdminApi.query(AdminApi.java:26)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.queryObjects(AdminServiceImpl.java:167)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.handleQueryOrGetOne(AdminServiceImpl.java:52)
+	at api.cn.muzisheng.pear.test.AdminApi.query(AdminApi.java:26)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
@@ -146,7 +146,7 @@ java.sql.SQLException: No value specified for parameter 1
 14:46:44.579 [http-nio-8000-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLException: No value specified for parameter 1
 ### The error may exist in cn/muzisheng/pear/mapper/AdminMapper.java (best guess)
-### The error may involve cn.muzisheng.pear.mapper.AdminMapper.query-Inline
+### The error may involve mapper.cn.muzisheng.pear.test.AdminMapper.query-Inline
 ### The error occurred while setting parameters
 ### SQL: SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.gmtCreated `gmtCreated` > ? '2025-02-03T16:00:00.000Z') AND (`user`.`email` LIKE '%1%' OR `user`.`displayName` LIKE '%1%') ORDER BY `user`.`gmtCreated` desc LIMIT 2
 ### Cause: java.sql.SQLException: No value specified for parameter 1
@@ -181,9 +181,9 @@ java.sql.SQLException: No value specified for parameter 1
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:152)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy119.query(Unknown Source)
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.queryObjects(AdminServiceImpl.java:167)
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleQueryOrGetOne(AdminServiceImpl.java:52)
-	at cn.muzisheng.pear.api.AdminApi.query(AdminApi.java:26)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.queryObjects(AdminServiceImpl.java:167)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.handleQueryOrGetOne(AdminServiceImpl.java:52)
+	at api.cn.muzisheng.pear.test.AdminApi.query(AdminApi.java:26)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
@@ -251,7 +251,7 @@ java.sql.SQLException: No value specified for parameter 1
 14:55:55.388 [http-nio-8000-exec-2] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') ORDER BY `user`.`gmtCreated` desc LIMIT 2' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/AdminMapper.java (best guess)
-### The error may involve cn.muzisheng.pear.mapper.AdminMapper.query-Inline
+### The error may involve mapper.cn.muzisheng.pear.test.AdminMapper.query-Inline
 ### The error occurred while setting parameters
 ### SQL: SELECT `user`.`id` ,`user`.`email` ,`user`.`displayName` ,`user`.`isStaff` ,`user`.`isSuperUser` ,`user`.`enabled` ,`user`.`activated` ,`user`.`gmtModified` ,`user`.`lastLogin` ,`user`.`lastLoginIp` ,`user`.`source` ,`user`.`locale` ,`user`.`timezone` FROM `user` WHERE (`user`.`gmtCreated` >  '2025-02-03T16:00:00.000Z') AND () ORDER BY `user`.`gmtCreated` desc LIMIT 2
 ### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') ORDER BY `user`.`gmtCreated` desc LIMIT 2' at line 1
@@ -287,9 +287,9 @@ java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check th
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:152)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy119.query(Unknown Source)
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.queryObjects(AdminServiceImpl.java:167)
-	at cn.muzisheng.pear.core.admin.impl.AdminServiceImpl.handleQueryOrGetOne(AdminServiceImpl.java:52)
-	at cn.muzisheng.pear.api.AdminApi.query(AdminApi.java:26)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.queryObjects(AdminServiceImpl.java:167)
+	at impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl.handleQueryOrGetOne(AdminServiceImpl.java:52)
+	at api.cn.muzisheng.pear.test.AdminApi.query(AdminApi.java:26)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)

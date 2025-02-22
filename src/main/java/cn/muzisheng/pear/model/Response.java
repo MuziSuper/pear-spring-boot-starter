@@ -1,6 +1,5 @@
 package cn.muzisheng.pear.model;
 
-import cn.muzisheng.pear.model.Result;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpHeaders;

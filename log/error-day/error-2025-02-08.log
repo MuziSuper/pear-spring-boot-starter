@@ -6,7 +6,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in cn.muzisheng.pear.core.admin.impl.AdminServiceImpl required a bean of type 'cn.muzisheng.pear.mapper.AdminMapper' that could not be found.
+Parameter 0 of constructor in impl.admin.core.cn.muzisheng.pear.test.AdminServiceImpl required a bean of type 'mapper.cn.muzisheng.pear.test.AdminMapper' that could not be found.
 
 The injection point has the following annotations:
 	- @org.springframework.beans.factory.annotation.Autowired(required=true)
@@ -14,7 +14,7 @@ The injection point has the following annotations:
 
 Action:
 
-Consider defining a bean of type 'cn.muzisheng.pear.mapper.AdminMapper' in your configuration.
+Consider defining a bean of type 'mapper.cn.muzisheng.pear.test.AdminMapper' in your configuration.
 
 23:01:59.984 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
 
@@ -30,7 +30,7 @@ Action:
 
 Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
 
-23:03:32.436 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:03:32.436 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -60,9 +60,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -82,7 +82,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -108,7 +108,7 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
 	... 40 common frames omitted
-23:04:23.396 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:04:23.396 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -138,9 +138,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -160,7 +160,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -186,7 +186,7 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
 	... 40 common frames omitted
-23:08:08.286 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:08:08.286 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -216,9 +216,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -238,7 +238,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -264,7 +264,7 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
 	... 40 common frames omitted
-23:12:10.857 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:12:10.857 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -294,9 +294,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -316,7 +316,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -342,7 +342,7 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
 	... 40 common frames omitted
-23:14:46.708 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:14:46.708 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -372,9 +372,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -394,7 +394,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -420,7 +420,7 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
 	... 40 common frames omitted
-23:15:55.759 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:15:55.759 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -450,9 +450,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -472,7 +472,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -498,7 +498,7 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
 	... 40 common frames omitted
-23:26:24.371 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:26:24.371 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -528,9 +528,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -550,7 +550,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -576,7 +576,7 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
 	... 40 common frames omitted
-23:27:42.135 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:27:42.135 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -606,9 +606,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -628,7 +628,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -654,7 +654,7 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
 	... 40 common frames omitted
-23:28:48.959 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:28:48.959 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -684,9 +684,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -706,7 +706,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -732,7 +732,7 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:333)
 	... 40 common frames omitted
-23:32:38.880 [main] ERROR o.s.boot.SpringApplication - Application run failed
+23:32:38.880 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
 org.springframework.jdbc.BadSqlGrammarException: 
 ### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 ### The error may exist in cn/muzisheng/pear/mapper/ConfigMapper.java (best guess)
@@ -762,9 +762,9 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$DefaultMethodInvoker.invoke(MybatisMapperProxy.java:166)
 	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
 	at jdk.proxy2/jdk.proxy2.$Proxy121.selectOne(Unknown Source)
-	at cn.muzisheng.pear.dao.ConfigDAO.createConfig(ConfigDAO.java:44)
-	at cn.muzisheng.pear.core.config.impl.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
-	at cn.muzisheng.pear.initialize.ApplicationInitialization.run(ApplicationInitialization.java:115)
+	at dao.cn.muzisheng.pear.test.ConfigDAO.createConfig(ConfigDAO.java:44)
+	at impl.config.core.cn.muzisheng.pear.test.ConfigServiceImpl.checkValue(ConfigServiceImpl.java:165)
+	at initialize.cn.muzisheng.pear.test.ApplicationInitialization.run(ApplicationInitialization.java:115)
 	at org.springframework.boot.SpringApplication.lambda$callRunner$5(SpringApplication.java:790)
 	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83)
 	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60)
@@ -784,7 +784,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:342)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
-	at cn.muzisheng.pear.Application.main(Application.java:9)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key,desc,autoload,pub,format,value  FROM config      WHERE  (`key` = 'PEAR')' at line 1
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)

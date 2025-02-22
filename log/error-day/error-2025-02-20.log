@@ -1,0 +1,69 @@
+22:17:16.336 [main] ERROR o.s.boot.SpringApplication - TestApplication run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'adminContainer': Invocation of init method failed
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:222)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:422)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1798)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at cn.muzisheng.pear.TestApplication.main(TestApplication.java:9)
+Caused by: java.lang.NullPointerException: Cannot invoke "org.slf4j.Logger.error(String)" because "this.LOG" is null
+	at cn.muzisheng.pear.core.Logger.impl.LogServiceImpl.error(LogServiceImpl.java:21)
+	at initialize.cn.muzisheng.pear.test.AdminContainer.buildAdminObjects(AdminContainer.java:54)
+	at initialize.cn.muzisheng.pear.test.AdminContainer.buildAdminObjects(AdminContainer.java:43)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:401)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:219)
+	... 18 common frames omitted
+22:19:25.758 [main] ERROR c.m.pear.initialize.AdminContainer - User not has primaryKey or uniqueKeys
+22:19:25.758 [main] ERROR c.m.pear.initialize.AdminContainer - Group not has primaryKey or uniqueKeys
+22:19:25.759 [main] ERROR c.m.pear.initialize.AdminContainer - GroupMember not has primaryKey or uniqueKeys
+22:19:25.759 [main] ERROR c.m.pear.initialize.AdminContainer - Config not has primaryKey or uniqueKeys
+22:20:26.635 [main] ERROR c.m.pear.initialize.AdminContainer - User not has primaryKey or uniqueKeys
+22:20:26.636 [main] ERROR c.m.pear.initialize.AdminContainer - Group not has primaryKey or uniqueKeys
+22:20:26.636 [main] ERROR c.m.pear.initialize.AdminContainer - GroupMember not has primaryKey or uniqueKeys
+22:20:26.636 [main] ERROR c.m.pear.initialize.AdminContainer - Config not has primaryKey or uniqueKeys
+22:20:56.057 [main] ERROR c.m.pear.initialize.AdminContainer - User not has primaryKey or uniqueKeys
+22:20:56.057 [main] ERROR c.m.pear.initialize.AdminContainer - Group not has primaryKey or uniqueKeys
+22:20:56.057 [main] ERROR c.m.pear.initialize.AdminContainer - GroupMember not has primaryKey or uniqueKeys
+22:20:56.058 [main] ERROR c.m.pear.initialize.AdminContainer - Config not has primaryKey or uniqueKeys
+22:21:24.142 [main] ERROR c.m.pear.initialize.AdminContainer - User not has primaryKey or uniqueKeys
+22:21:24.143 [main] ERROR c.m.pear.initialize.AdminContainer - Group not has primaryKey or uniqueKeys
+22:21:24.143 [main] ERROR c.m.pear.initialize.AdminContainer - GroupMember not has primaryKey or uniqueKeys
+22:21:24.143 [main] ERROR c.m.pear.initialize.AdminContainer - Config not has primaryKey or uniqueKeys
+22:23:51.723 [main] ERROR c.m.pear.initialize.AdminContainer - User not has primaryKey or uniqueKeys
+22:23:51.723 [main] ERROR c.m.pear.initialize.AdminContainer - Group not has primaryKey or uniqueKeys
+22:23:51.723 [main] ERROR c.m.pear.initialize.AdminContainer - GroupMember not has primaryKey or uniqueKeys
+22:23:51.723 [main] ERROR c.m.pear.initialize.AdminContainer - Config not has primaryKey or uniqueKeys
+22:25:10.767 [main] ERROR c.m.pear.initialize.AdminContainer - User not has primaryKey or uniqueKeys
+22:25:10.767 [main] ERROR c.m.pear.initialize.AdminContainer - Group not has primaryKey or uniqueKeys
+22:25:10.768 [main] ERROR c.m.pear.initialize.AdminContainer - GroupMember not has primaryKey or uniqueKeys
+22:25:10.769 [main] ERROR c.m.pear.initialize.AdminContainer - Config not has primaryKey or uniqueKeys
+22:25:13.287 [main] ERROR c.m.pear.initialize.AdminContainer - User not has primaryKey or uniqueKeys
+22:25:13.288 [main] ERROR c.m.pear.initialize.AdminContainer - Group not has primaryKey or uniqueKeys
+22:25:13.289 [main] ERROR c.m.pear.initialize.AdminContainer - GroupMember not has primaryKey or uniqueKeys
+22:25:13.289 [main] ERROR c.m.pear.initialize.AdminContainer - Config not has primaryKey or uniqueKeys
+22:25:13.751 [main] ERROR c.m.p.core.user.Impl.UserServiceImpl - update user fields fail, user email: test@example.com
+22:25:13.780 [main] ERROR c.m.p.core.user.Impl.UserServiceImpl - failed to create a user: test@example.com
+22:25:14.418 [main] ERROR c.m.pear.initialize.AdminContainer - User not has primaryKey or uniqueKeys
+22:25:14.419 [main] ERROR c.m.pear.initialize.AdminContainer - Group not has primaryKey or uniqueKeys
+22:25:14.419 [main] ERROR c.m.pear.initialize.AdminContainer - GroupMember not has primaryKey or uniqueKeys
+22:25:14.420 [main] ERROR c.m.pear.initialize.AdminContainer - Config not has primaryKey or uniqueKeys
+22:25:15.755 [main] ERROR c.m.pear.initialize.AdminContainer - User not has primaryKey or uniqueKeys
+22:25:15.756 [main] ERROR c.m.pear.initialize.AdminContainer - Group not has primaryKey or uniqueKeys
+22:25:15.757 [main] ERROR c.m.pear.initialize.AdminContainer - GroupMember not has primaryKey or uniqueKeys
+22:25:15.757 [main] ERROR c.m.pear.initialize.AdminContainer - Config not has primaryKey or uniqueKeys

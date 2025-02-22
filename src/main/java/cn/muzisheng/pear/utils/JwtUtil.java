@@ -4,11 +4,7 @@ import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.exception.AuthorizationException;
 import cn.muzisheng.pear.properties.TokenProperties;
 import io.jsonwebtoken.*;
-import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;

@@ -1,8 +1,7 @@
 package cn.muzisheng.pear.core.admin;
 
-import cn.muzisheng.pear.model.AdminObject;
 import cn.muzisheng.pear.model.Result;
-import cn.muzisheng.pear.params.AdminQueryResult;
+import cn.muzisheng.pear.model.AdminObject;
 import cn.muzisheng.pear.params.QueryForm;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;

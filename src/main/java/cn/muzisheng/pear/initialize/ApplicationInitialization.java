@@ -1,24 +1,12 @@
 package cn.muzisheng.pear.initialize;
 
-import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.core.config.ConfigService;
 import cn.muzisheng.pear.dao.UserDAO;
-import cn.muzisheng.pear.entity.Config;
-import cn.muzisheng.pear.entity.GroupMember;
-import cn.muzisheng.pear.entity.User;
-import cn.muzisheng.pear.entity.Group;
-import cn.muzisheng.pear.exception.GeneralException;
-import cn.muzisheng.pear.exception.UserException;
-import cn.muzisheng.pear.handler.*;
-import cn.muzisheng.pear.model.*;
 import cn.muzisheng.pear.properties.CacheProperties;
-import cn.muzisheng.pear.utils.CamelToSnakeUtil;
+import cn.muzisheng.pear.constant.Constant;
+import cn.muzisheng.pear.entity.User;
+import cn.muzisheng.pear.exception.UserException;
 import cn.muzisheng.pear.utils.ExpiredCache;
-import cn.muzisheng.pear.utils.PluralUtil;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
 import org.apache.commons.cli.*;
 import org.apache.commons.cli.Option;
 import org.slf4j.Logger;
@@ -26,12 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.core.annotation.Order;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+
 import java.util.*;
 
 

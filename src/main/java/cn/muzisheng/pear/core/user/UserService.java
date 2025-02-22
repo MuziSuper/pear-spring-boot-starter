@@ -1,9 +1,9 @@
 package cn.muzisheng.pear.core.user;
 
+import cn.muzisheng.pear.model.Result;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.params.LoginForm;
 import cn.muzisheng.pear.params.RegisterUserForm;
-import cn.muzisheng.pear.model.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 

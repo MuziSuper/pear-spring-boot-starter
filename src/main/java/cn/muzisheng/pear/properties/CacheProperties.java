@@ -1,7 +1,6 @@
 package cn.muzisheng.pear.properties;
 
 import cn.muzisheng.pear.constant.Constant;
-import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

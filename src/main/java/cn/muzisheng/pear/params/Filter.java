@@ -1,7 +1,6 @@
 package cn.muzisheng.pear.params;
 
 import cn.muzisheng.pear.constant.Constant;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.Data;
 
 /**

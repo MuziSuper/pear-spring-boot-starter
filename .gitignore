@@ -1,6 +1,7 @@
 HELP.md
 pear-spring-boot-starter/target/
 !.mvn/wrapper/maven-wrapper.jar
+src/main/resources/test.properties
 
 ### STS ###
 .apt_generated
