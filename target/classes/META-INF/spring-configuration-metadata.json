@@ -6,6 +6,11 @@
       "sourceType": "cn.muzisheng.pear.properties.CacheProperties"
     },
     {
+      "name": "app.env",
+      "type": "cn.muzisheng.pear.properties.ConfigProperties",
+      "sourceType": "cn.muzisheng.pear.properties.ConfigProperties"
+    },
+    {
       "name": "app.log",
       "type": "cn.muzisheng.pear.properties.LogProperties",
       "sourceType": "cn.muzisheng.pear.properties.LogProperties"
@@ -26,6 +31,11 @@
       "name": "app.cache.expire",
       "type": "java.lang.Long",
       "sourceType": "cn.muzisheng.pear.properties.CacheProperties"
+    },
+    {
+      "name": "app.env.auth-prefix",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.ConfigProperties"
     },
     {
       "name": "app.log.error-catalogue-address",

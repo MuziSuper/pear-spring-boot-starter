@@ -15,4 +15,8 @@ public class AdminForeign {
      * 当前表外键字段数据库中的名称
      **/
     private String fieldName;
+    /**
+     * 外键路径
+     **/
+    private String path;
 }

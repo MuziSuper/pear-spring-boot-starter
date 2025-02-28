@@ -56,6 +56,7 @@ public class HookAspect {
                 List<Object> actualArgs = new ArrayList<>();
                 // 通过方法对象获取其类对象，并通过注解的value钩子方法名获取其方法对象
                 Method hookmethod = methodTarget.getClass().getMethod(beforeCreate.value());
+
                 // 若注解args所需参数不为空
                 if (beforeCreate.args().length != 0) {
                     // 获取带参的钩子方法对象

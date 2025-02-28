@@ -27,12 +27,14 @@ cn\muzisheng\pear\params\RegisterUserForm.class
 cn\muzisheng\pear\model\AdminField.class
 cn\muzisheng\pear\model\Option.class
 cn\muzisheng\pear\entity\GroupMember.class
+cn\muzisheng\pear\initialize\AdminFactory.class
 cn\muzisheng\pear\handler\AdminViewOnSite.class
 cn\muzisheng\pear\entity\Group.class
 cn\muzisheng\pear\utils\UUIDUtils.class
 cn\muzisheng\pear\handler\BeforeDelete.class
 cn\muzisheng\pear\model\AdminIcon.class
 cn\muzisheng\pear\params\AdminQueryResult.class
+cn\muzisheng\pear\properties\ConfigProperties.class
 cn\muzisheng\pear\exception\UserException.class
 cn\muzisheng\pear\params\QueryForm.class
 cn\muzisheng\pear\core\config\ConfigService.class

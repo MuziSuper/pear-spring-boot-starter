@@ -44,6 +44,7 @@ D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\handler\Bef
 D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\handler\BeforeRender.java
 D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\handler\BeforeUpdate.java
 D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\initialize\AdminContainer.java
+D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\initialize\AdminFactory.java
 D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\initialize\ApplicationInitialization.java
 D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\mapper\AdminMapper.java
 D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\mapper\ConfigMapper.java
@@ -73,6 +74,7 @@ D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\params\LogL
 D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\params\QueryForm.java
 D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\params\RegisterUserForm.java
 D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\properties\CacheProperties.java
+D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\properties\ConfigProperties.java
 D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\properties\LogProperties.java
 D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\properties\TokenProperties.java
 D:\LocalGit\pear-spring-boot-starter\src\main\java\cn\muzisheng\pear\properties\UserProperties.java

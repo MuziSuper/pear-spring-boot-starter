@@ -101,6 +101,18 @@ public class ApplicationInitialization implements CommandLineRunner {
         }
 
         configService.checkValue(Constant.KEY_SITE_NAME, "pear", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.ICON_SVG_ADDRESS, "../static/favicon.svg", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.ICON_SVG_ADDRESS, "../static/favicon.png", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_SIGNIN_URL, "/auth/login", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_SIGNUP_URL, "/auth/register", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_LOGOUT_URL, "/auth/logout", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_RESET_PASSWORD_URL, "/auth/reset_password", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_SIGNIN_API, "/auth/login", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_SIGNUP_API, "/auth/register", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_RESET_PASSWORD_DONE_API, "/auth/reset_password_done", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_CHANGE_EMAIL_DONE_API, "/auth/change_email_done", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_LOGIN_NEXT, "/", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_USER_ID_TYPE, "email", Constant.ConfigFormatText, true, true);
     }
 
 }

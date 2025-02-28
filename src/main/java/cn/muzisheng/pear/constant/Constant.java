@@ -69,8 +69,20 @@ public class Constant {
     public static final String APP_DEFAULT_SEARCH_PROPERTIES_PATH="src/main/resources";
 
     // static resources
-    public static final String ICON_SVG_ADDRESS="src/main/resources/static/favicon.svg";
-    public static final String ICON_PNG_ADDRESS="src/main/resources/static/favicon.png";
+    public static final String ICON_SVG_ADDRESS="ICON_SVG_ADDRESS";
+    public static final String ICON_PNG_ADDRESS="ICON_PNG_ADDRESS";
+    public static final String KEY_SITE_NAME="KEY_SITE_NAME";
+    public static final String KEY_SITE_SIGNIN_URL= "KEY_SITE_SIGNIN_URL";
+    public static final String KEY_SITE_SIGNUP_URL= "KEY_SITE_SIGNUP_URL";
+    public static final String KEY_SITE_LOGOUT_URL= "KEY_SITE_LOGOUT_URL";
+    public static final String KEY_SITE_RESET_PASSWORD_URL= "KEY_SITE_RESET_PASSWORD_URL";
+    public static final String KEY_SITE_SIGNIN_API= "KEY_SITE_SIGNIN_API";
+    public static final String KEY_SITE_SIGNUP_API= "KEY_SITE_SIGNUP_API";
+    public static final String KEY_SITE_RESET_PASSWORD_DONE_API= "KEY_SITE_RESET_PASSWORD_DONE_API";
+    public static final String KEY_SITE_CHANGE_EMAIL_DONE_API= "KEY_SITE_CHANGE_EMAIL_DONE_API";
+    public static final String KEY_SITE_LOGIN_NEXT= "KEY_SITE_LOGIN_NEXT";
+    public static final String KEY_SITE_USER_ID_TYPE= "KEY_SITE_USER_ID_TYPE";
+
 
     // permission type
     public static final String PERMISSION_ALL="all";
@@ -87,8 +99,6 @@ public class Constant {
     public static final String GROUP_TYPE_ADMIN="Admin";
     public static final String GROUP_TYPE_APP="app";
 
-    // site configuration
-    public static final String KEY_SITE_NAME="pear";
     // Admin param
     public static final int DEFAULT_QUERY_LIMIT =102400;
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/element-plus@2.0.0-beta.24/dist/index.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/element-plus@2.0.0-beta.24/dist/index.full.js"></script>
+</head>
+<body class="bg-gray-100 h-screen flex justify-center items-center">
+
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+        <h2 class="text-2xl font-bold text-center mb-6">设置</h2>
+
+        <button id="logout" class="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600">注销</button>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#logout').click(function() {
+                $.ajax({
+                    url: 'http://localhost:8080/api/logout',
+                    method: 'POST',
+                    success: function() {
+                        alert('注销成功');
+                        window.location.href = '/login.html';
+                    },
+                    error: function() {
+                        alert('注销失败');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
