@@ -48,9 +48,6 @@ public class AdminServiceImpl implements AdminService {
         }
         // 处理请求体中的数据
         queryForm.defaultPrepareQuery();
-        if (queryForm.isForeignMode()) {
-            queryForm.setLimit(0);
-        }
         AdminQueryResult result = queryObjects(request, model, adminObject, queryForm);
         response.setData(result);
         return response.value();
@@ -118,7 +115,7 @@ public class AdminServiceImpl implements AdminService {
             if (val == null) {
                 continue;
             }
-            Class<?> targetClass = adminField.getClass();
+            Class<?> targetClass = adminField.getType().getClass();
                 if (adminField.getForeign() != null) {
                     for (Map.Entry<String, Object> entry1 : body.entrySet()) {
                         if (entry1.getValue() instanceof Map bodyFiledMap) {
@@ -339,7 +336,7 @@ public class AdminServiceImpl implements AdminService {
         // 排序子句，不加ORDER BY
         List<Order> orders;
         StringBuilder orderClause = new StringBuilder();
-        if (queryForm.getOrders()!=null) {
+        if (queryForm.getOrders()!=null|| queryForm.getOrders().get(0) !=null) {
             orders = queryForm.getOrders();
         } else {
             orders = adminObject.getOrders();
@@ -465,7 +462,7 @@ public class AdminServiceImpl implements AdminService {
         if (adminObject.getPrimaryKeys() != null) {
             for (String field : adminObject.getPrimaryKeys()) {
                 String param = request.getParameter(field);
-                if (!param.isEmpty()) {
+                if (param!=null) {
                     queryMap.put(field, param);
                     keysExist = true;
                 }
@@ -477,7 +474,7 @@ public class AdminServiceImpl implements AdminService {
         if (adminObject.getUniqueKeys() != null) {
             for (String field : adminObject.getUniqueKeys()) {
                 String param = request.getParameter(field);
-                if (!param.isEmpty()) {
+                if (param!=null) {
                     queryMap.put(field, param);
                 }
             }

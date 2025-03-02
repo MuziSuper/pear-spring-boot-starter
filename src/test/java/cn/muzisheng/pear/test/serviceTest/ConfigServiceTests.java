@@ -1,7 +1,7 @@
 package cn.muzisheng.pear.test.serviceTest;
 
 import cn.muzisheng.pear.constant.Constant;
-import cn.muzisheng.pear.dao.ConfigDAO;
+import cn.muzisheng.pear.mapper.dao.ConfigDAO;
 import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.initialize.ApplicationInitialization;
 import cn.muzisheng.pear.core.config.impl.ConfigServiceImpl;
@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import java.io.File;
 import java.io.FileWriter;

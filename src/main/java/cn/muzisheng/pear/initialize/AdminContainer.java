@@ -11,6 +11,7 @@ import cn.muzisheng.pear.model.*;
 import cn.muzisheng.pear.properties.ConfigProperties;
 import cn.muzisheng.pear.utils.CamelToSnakeUtil;
 import cn.muzisheng.pear.utils.PluralUtil;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -36,8 +37,8 @@ public class AdminContainer {
     public static List<AdminObject> adminObjects = new ArrayList<>();
 //    @PostConstruct
 //    public void buildAdminObjects() {
-//        adminObjects=getPearAdminObjects();
-//        buildAdminObjects(adminObjects);
+//        List<AdminObject> ao=getPearAdminObjects();
+//        buildAdminObjects(ao);
 //    }
 
     /**

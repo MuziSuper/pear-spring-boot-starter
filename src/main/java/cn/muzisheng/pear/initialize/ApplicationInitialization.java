@@ -1,7 +1,7 @@
 package cn.muzisheng.pear.initialize;
 
 import cn.muzisheng.pear.core.config.ConfigService;
-import cn.muzisheng.pear.dao.UserDAO;
+import cn.muzisheng.pear.mapper.dao.UserDAO;
 import cn.muzisheng.pear.properties.CacheProperties;
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.entity.User;

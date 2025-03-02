@@ -1,3 +1,5 @@
+const baseUrl = window.location.origin;
+
 const queryForm = {
     pos: 0,
     limit: 0,
@@ -16,7 +18,7 @@ const queryForm = {
     let totalPages;
     fetchDataAndRender();
     function fetchDataAndRender() {
-      postData('http://localhost:8000/admin/user', queryForm, function (response) {
+      postData(`${baseUrl}/admin/user`, queryForm, function (response) {
         console.log('请求成功:', response);
         data = response.data;
         totalPages = Math.ceil(data.totalCount / pageSize);

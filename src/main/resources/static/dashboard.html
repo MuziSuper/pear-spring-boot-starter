@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <link rel="icon" href="/favicon.png" sizes="32x32" type="image/png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link href="https://code.jquery.com/ui/1.14.1/jquery-ui.min.js" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="/styles.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="/http.js"></script>
+  <script src="/scripts.js"></script>
+</head>
+
+<body class="bg-gray-100">
+  <div class="flex h-screen">
+    <!-- 左侧导航 -->
+    <div class="bg-white shadow-lg" style="min-width: 256px">
+      <div class="text-2xl p-4 font-bold text-gray-800 border-b flex items-center">
+        <img src="favicon.png" alt="Logo" class="inline-block w-12 h-12 rounded-full mr-2" />
+        后台管理面板
+      </div>
+      <p class="ml-4 mt-4 text-gray-600">基础部分</p>
+      <ul class="space-y-2">
+        <li>
+          <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100">
+            <i class="fa-solid fa-user fa-ms mr-4 ml-2"></i> 用户管理
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100">
+            <i class="fa-solid fa-user-group fa-ms mr-4 ml-2"></i> 组管理
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100">
+            <i class="fa-solid fa-gear mr-4 ml-2 fa-ms"></i> 配置管理
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- 主题部分 -->
+    <div class="flex-auto p-8">
+      <!-- 模块介绍 -->
+      <div class="text-2xl ml-16 font-bold mb-6">
+        <h1>User</h1>
+        <p class="text-lg mt-2">
+          &nbsp;
+          系统中所有用户数据，包括管理员与普通用户，你可以对其进行增加、删除、修改与查询
+        </p>
+      </div>
+      <!-- 搜索和筛选部分 -->
+      <div class="relative ml-16 flex items-center space-x-4">
+        <!-- 搜索框 -->
+        <div class="relative">
+          <span id="search-icon">
+            <i id="normal-icon" class="absolute top-2 left-2 fa-solid fa-magnifying-glass" style="color: #bec2cb"></i>
+            <i id="hover-icon" class="absolute top-2 left-2 fa-solid fa-magnifying-glass"
+              style="color: #b2b7c3; display: none"></i>
+          </span>
+          <input type="text" id="search-input" maxlength="40"
+            class="text-sm outline-none border-2 rounded-md w-52 h-8 pl-8 pr-2 border-gray-300 focus:border-gray-400"
+            placeholder="Type to search..." />
+        </div>
+        
+        <!-- 筛选下拉框 -->
+        <div class="relative">
+          <select id="filter-field" class="text-sm outline-none border-2 rounded-md h-8 px-2 border-gray-300 focus:border-gray-400">
+            <option value="">选择筛选字段</option>
+          </select>
+          <input type="text" id="filter-value" class="text-sm outline-none border-2 rounded-md h-8 px-2 border-gray-300 focus:border-gray-400 ml-2" placeholder="筛选值" />
+          <button id="apply-filter" class="bg-blue-500 text-white px-4 h-8 rounded-md hover:bg-blue-600 ml-2">应用筛选</button>
+        </div>
+      </div>
+      
+      <!-- 表格部分 -->
+      <div class="mt-8 mx-auto bg-white rounded-lg shadow-lg overflow-hidden" style="width: 1000px">
+        <table class="w-full">
+          <thead id="table-head" class="bg-gray-50">
+          </thead>
+          <tbody id="table-body">
+          </tbody>
+        </table>
+      </div>
+      <div id="pagination" class="mt-4 ml-12 flex justify-start items-center">
+        <button id="prev-page" class="text-gray-500 font-bold px-4 py-2 rounded-md hover:text-gray-900" disabled><</button>
+            <div id="page-numbers" class="text-gray-700">1 / 8 页</div>
+            <button id="next-page" class="text-gray-500 font-bold px-4 py-2 rounded-md hover:text-gray-900">>
+            </button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

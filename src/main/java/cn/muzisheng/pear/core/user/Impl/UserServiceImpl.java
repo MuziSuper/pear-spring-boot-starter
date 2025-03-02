@@ -3,7 +3,7 @@ package cn.muzisheng.pear.core.user.Impl;
 import cn.muzisheng.pear.core.user.UserService;
 import cn.muzisheng.pear.model.Result;
 import cn.muzisheng.pear.constant.Constant;
-import cn.muzisheng.pear.dao.UserDAO;
+import cn.muzisheng.pear.mapper.dao.UserDAO;
 import cn.muzisheng.pear.exception.AuthorizationException;
 import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.entity.User;

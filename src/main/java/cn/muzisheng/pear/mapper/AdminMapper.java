@@ -1,10 +1,9 @@
 package cn.muzisheng.pear.mapper;
 
-import cn.muzisheng.pear.dao.AdminDAO;
+import cn.muzisheng.pear.mapper.dao.AdminDAO;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;

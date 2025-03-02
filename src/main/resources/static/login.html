@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <link rel="icon" href="favicon.png" sizes="32x32" type="image/png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link href="https://cdn.jsdelivr.net/npm/element-plus@2.0.0-beta.24/dist/index.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+</head>
+<body class="bg-gray-100 h-screen w-screen flex flex-col justify-start items-center columu">
+    <img src="favicon.png" class="w-32 h-32 mt-32 mb-8 opacity-85">
+    <div class="clear-left bg-white p-8 rounded-lg shadow-lg w-96">
+        <h2 class="text-2xl font-bold text-center mb-6">用户登录</h2>
+
+        <form id="login-form">
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700">邮箱</label>
+                <input type="text" id="email" class="el-input__inner w-full p-2 border rounded" placeholder="请输入邮箱">
+            </div>
+
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700">密码</label>
+                <input type="password" id="password" class="el-input__inner w-full p-2 border rounded" placeholder="请输入密码">
+            </div>
+
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">登录</button>
+        </form>
+    </div>
+
+    <script>
+        const baseUrl = window.location.origin;
+
+        $(document).ready(function() {
+            $('#login-form').submit(function(event) {
+                event.preventDefault();
+                const email = $('#email').val();
+                const password = $('#password').val();
+                const loginForm={
+                    email:email,
+                    password:password,
+                    timezone:Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    remember:false,
+                    authToken:''
+                }
+                if (!email || !password) {
+                    alert('用户名和密码不能为空');
+                    return;
+                }
+                
+                $.ajax({
+                    url: `${baseUrl}}/user/login`,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: loginForm,
+                    success: function(response) {
+                        if (response.success) {
+                            window.location.href = '/dashboard.html';
+                        } else {
+                            alert('登录失败');
+                        }
+                    },
+                    error: function() {
+                        alert('请求失败');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

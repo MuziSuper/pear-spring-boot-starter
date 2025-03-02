@@ -2,7 +2,7 @@ package cn.muzisheng.pear.test.controllerTest.UserControllerTest;
 
 
 import cn.muzisheng.pear.constant.Constant;
-import cn.muzisheng.pear.dao.UserDAO;
+import cn.muzisheng.pear.mapper.dao.UserDAO;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.AuthorizationException;
 import cn.muzisheng.pear.exception.IllegalException;
@@ -21,7 +21,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 
