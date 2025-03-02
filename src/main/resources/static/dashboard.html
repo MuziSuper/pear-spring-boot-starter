@@ -53,6 +53,11 @@
       </div>
       <!-- 搜索和筛选部分 -->
       <div class="relative ml-16 flex items-center space-x-4">
+        <!-- 删除按钮 -->
+        <button id="delete-btn" class="bg-red-500 text-white px-4 h-8 rounded-md hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed">
+          <i class="fa-solid fa-trash-alt mr-1"></i>删除
+        </button>
+        
         <!-- 搜索框 -->
         <div class="relative">
           <span id="search-icon">
@@ -77,6 +82,7 @@
       
       <!-- 表格部分 -->
       <div class="mt-8 mx-auto bg-white rounded-lg shadow-lg overflow-hidden" style="width: 1000px">
+        
         <table class="w-full">
           <thead id="table-head" class="bg-gray-50">
           </thead>

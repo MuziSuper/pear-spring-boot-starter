@@ -4,16 +4,73 @@ body {
     height: 100vh;
     font-family: 'Arial', sans-serif;
     background-color: #f7fafc;
+}         
+.header-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-right: 32px;
 }
 
+.field-text {
+  white-space: nowrap;
+}
+
+/* 排序箭头样式 */
+.sort-arrow {
+  position: absolute;
+  right: 8px;
+  font-size: 16px;
+  line-height: 1;
+  opacity: 0.3;
+  transition: all 0.2s ease;
+  user-select: none;
+  margin-right: 4px;
+}
+
+/* 向上箭头 */
+.sort-arrow.up {
+  transform: rotate(-90deg);
+}
+
+/* 向下箭头 */
+.sort-arrow.down {
+  transform: rotate(90deg);
+}
+
+/* 激活状态 */
+.sort-arrow.active {
+  opacity: 1;
+}
+
+/* 鼠标悬停效果 */
+th:hover .sort-arrow {
+  opacity: 0.7;
+}
+
+/* 固定表头 */
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #4a5568;
+}
+
+/* 确保表头文字不会换行 */
+.header-cell span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .table-container {
     overflow-x: auto;
+    overflow-y: auto;
+    max-height: 600px;
     background-color: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    border-radius: 0.5rem;
+    border-radius: 6px;
     padding: 1rem;
-    min-height: 400px;
-    overflow-y: auto;
 }
 tbody {
     min-height: 320px; 
@@ -21,6 +78,7 @@ tbody {
 }
 table {
     width: 100%;
+    min-width: 100%;  /* 确保表格至少和容器一样宽 */
     border-collapse: collapse;
 }
 
@@ -118,3 +176,71 @@ th {
   tr:hover {
     background-color: #f7fafc;
   }
+
+/* 移除旧的排序图标样式 */
+.sort-icons,
+.sort-up,
+.sort-down,
+.sort-icon {
+  display: none;
+}
+
+/* 修改表格容器样式 */
+.mt-8.mx-auto.bg-white {
+  max-height: 600px;
+  overflow: auto;  /* 同时启用水平和垂直滚动 */
+  border-radius: 6px;
+}
+
+/* 设置滚动条样式 */
+.mt-8.mx-auto.bg-white::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;  /* 添加水平滚动条高度 */
+  display: block;  /* 确保滚动条显示 */
+}
+
+.mt-8.mx-auto.bg-white::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.mt-8.mx-auto.bg-white::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.mt-8.mx-auto.bg-white::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* 确保表格内容可以水平滚动 */
+table {
+  width: 100%;
+  min-width: 1000px;  /* 设置最小宽度确保可以滚动 */
+  border-collapse: collapse;
+}
+
+/* 固定表头 */
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #4a5568;
+}
+
+/* 删除按钮样式 */
+#delete-btn {
+  transition: all 0.2s ease;
+}
+
+#delete-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 复选框样式优化 */
+.form-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}

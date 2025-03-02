@@ -345,7 +345,7 @@ public class AdminServiceImpl implements AdminService {
             if (!orderClause.isEmpty()) {
                 orderClause.append(",");
             }
-            orderClause.append(String.format("`%s`.`%s` %s", adminObject.getTableName(), order.getName(), order.getOp()));
+            orderClause.append(String.format("`%s`.`%s` %s", adminObject.getTableName(), order.getName(), order.getOp().toUpperCase()));
         }
 
         StringBuilder whereClauseBuilder = new StringBuilder();

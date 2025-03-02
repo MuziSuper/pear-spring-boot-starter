@@ -1,6 +1,8 @@
 # pear可视化后台管理系统(SNAPSHOOT)
 
-
+## 页面展示
+![img.png](src/main/resources/static/login.png)
+![img.png](src/main/resources/static/dashboard.png)
 
 ## 介绍
 
