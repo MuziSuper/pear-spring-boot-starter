@@ -35,11 +35,11 @@ import java.util.List;
 public class AdminContainer {
     private static final Logger logService = LoggerFactory.getLogger(AdminContainer.class);
     public static List<AdminObject> adminObjects = new ArrayList<>();
-    @PostConstruct
-    public void buildAdminObjects() {
-        List<AdminObject> ao=getPearAdminObjects();
-        buildAdminObjects(ao);
-    }
+//    @PostConstruct
+//    public void buildAdminObjects() {
+//        List<AdminObject> ao=getPearAdminObjects();
+//        buildAdminObjects(ao);
+//    }
 
     /**
      * 处理AdminObject数据

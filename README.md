@@ -1,14 +1,114 @@
-# pear可视化后台管理系统(SNAPSHOOT)
+# pear可视化后台管理系统
+<div align="center">
+    <p>
+        <a href="README.md">中文</a> | <a href="README_EN.md">English</a>
+    </p>
+    <img src="favicon.svg" alt="Pear Logo" width="200" height="200">
+    <p>🚀 Pear是一个java中间件，便于后端人员的开发，内置可视化后台管理界面，可以对数据进行增删改查，并且提供了钩子方法，可以让开发者在数据处理的前后进行一些通用的操作，例如数据加密或去敏等，还提供独立的日志系统与缓存系统，用于日志归档与缓存热点数据，更多功能还在开发中！
+</p>
+    <p>🛠️ 集成框架 | 🎉 高通用性 | 🖋️ 低操作性 | 🔑 高扩展性</p>
+    <p>
+        <a href="https://spring.io/projects/spring-boot">
+            <img src="https://img.shields.io/badge/Spring%20Boot-3.3.x-brightgreen.svg" alt="Spring Boot">
+        </a>
+        <a href="https://www.oracle.com/java/">
+            <img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="JDK">
+        </a>
+        <a href="https://www.mysql.com/">
+            <img src="https://img.shields.io/badge/MySQL-8.0+-blue.svg" alt="MySQL">
+        </a>
+        <a href="https://mybatis.org/">
+            <img src="https://img.shields.io/badge/MyBatis-3.5.x-yellow.svg" alt="MyBatis">
+        </a>
+        <a href="https://maven.apache.org/">
+            <img src="https://img.shields.io/badge/Maven-3.9+-purple.svg" alt="Maven">
+        </a>
+    </p>
+    <p>
+        <a href="https://github.com/heathcetide/hibiscus/stargazers">
+            <img src="https://img.shields.io/github/stars/MuziSuper/pear-spring-boot-starter?style=flat-square" alt="GitHub stars">
+        </a>
+        <a href="https://github.com/heathcetide/hibiscus/network">
+            <img src="https://img.shields.io/github/forks/MuziSuper/pear-spring-boot-starter?style=flat-square" alt="GitHub forks">
+        </a>
+        <a href="https://github.com/heathcetide/hibiscus/issues">
+            <img src="https://img.shields.io/github/issues/MuziSuper/pear-spring-boot-starter?style=flat-square" alt="GitHub issues">
+        </a>
+    </p>
+</div>
+
+## maven依赖
+```xml
+<!-- maven dependency of pear -->
+<dependency>
+    <groupId>cn.muzisheng.pear</groupId>
+    <artifactId>pear-spring-boot-starter</artifactId>
+    <version>1.1.5</version>
+</dependency>
+```
 
 ## 页面展示
 ![img.png](src/main/resources/static/login.png)
 ![img.png](src/main/resources/static/dashboard.png)
 
-## 介绍
-
-​	Pear是一个java中间件，便于后端人员的开发，具有内置的可视化后台管理界面；
-
-
+# 使用教程
+ 在个人项目中，实现CommandLineRunner接口在项目启动前对自定义的模型进行信息填充，并传入AdminContainer容器；
+```java
+@Component
+public class Initialized implements CommandLineRunner {
+    @Override
+    public void run(String... args) {
+        // 获取pear内置模型的AdminObject容器列表
+        ArrayList<AdminObject> adminObjects = AdminFactory.getAdminContainer();
+        // 将自定义的Cat模型信息填充到AdminObject容器中
+        AdminObject adminObject = new AdminObject();
+        adminObject.setModel(Cat.class);
+        adminObject.setName("cat");
+        adminObject.setDesc("cat is an animal");
+        adminObject.setPath("/cat");
+        adminObject.setShows(new ArrayList<>(List.of(new String[]{"id", "name", "age"})));
+        adminObject.setOrders(new ArrayList<>(List.of(new Order[]{new Order("id", "desc")})));
+        adminObject.setBeforeCreate((request,admin) -> {
+            if(admin instanceof Cat cat){
+                if (request.getParameter("name")!=null){
+                    cat.setName(request.getParameter("name"));
+                }
+                return cat;
+            }
+            return admin;
+        });
+        // 添加到AdminObject容器列表中
+        adminObjects.add(adminObject);
+        // 交给AdminContainer构建增删改查接口
+        AdminContainer.buildAdminObjects(adminObjects);
+    }
+}
+```
+## 配置项
+```properties
+# 用户密码盐值
+app.user.password.salt=salt
+# Token加密盐值
+app.token.salt=salt
+# Token前缀
+app.token.head=Bearer 
+# Token生存周期
+app.token.expire=7*24*60*60*1000
+# 日志等级
+app.log.level=LOG
+# 日志输出样式
+app.log.stdout-pattern=%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %-17black(%thread) %-82green(%logger{70}-%line) %highlight(%msg){black} %highlight(%ex){red} \n
+# 日志归档输入样式
+app.log.file-pattern=%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+# 所有等级日志归档目录名
+app.log.file=log
+# 各等级日志归档目录名
+app.log.log-catalogue-address=log/log-day
+app.log.warn-catalogue-address=log/log-day
+app.log.error-catalogue-address=log/log-day
+# 缓存过期时间
+app.cathe.expire=24*60*60*1000
+```
 
 ## 梗概
 
@@ -22,12 +122,6 @@
 
 
 
-## 代码托管平台
-
-[gitHub: Lonely-LiXinghao/pear](https://github.com/Lonely-LiXinghao/pear)
-
-
-
 ## 各系统任务分析
 
 
@@ -38,15 +132,7 @@
 
 1. 实现用户的登陆与注册功能，并且可以通过Token或本地会话直接登录；
 2. 产生Token，解析token，对token的过期判断 (仿照carrot)；
-4. 提供一个接口用于获取当前登录的用户数据；
-
-#### 配置项
-
-1. `app.user.password.salt`=用户密码加密；
-2. `app.token.salt`=Token加密；
-3. `app.token.head`=Token前缀；
-4. `app.token.expire`=Token生存周期；
-
+3. 提供一个接口用于获取当前登录的用户数据；
 
 
 ### 日志系统 
@@ -56,19 +142,7 @@
 1. 日志输出样式的优化；
 2. 不同级别日志的归档记录；
 
-#### 配置项
 
-1. `app.log.level`=日志等级；
-
-2. `app.log.stdout-pattern`=日志输出样式；
-
-3. `app.log.file-pattern`=日志归档输出样式；
-
-4. `app.log.file`=日志归档目录名；
-
-5. `app.log.{log,warn,error}-catalogue-address`=不同等级日志归档文件名；
-
-   
 
 ### 缓存系统 
 
@@ -79,11 +153,6 @@
 3. 提供添加缓存的add方法，已存在此键名则覆盖；
 4. 提供判断缓存是否存在此键的contains方法；
 5. 提供删除此键缓存的remove方法，不存在此键则不操作；
-
-#### 配置项
-
-1. `app.cathe.expire`=缓存过期时间；
-
 
 
 ### 核心通用系统 
