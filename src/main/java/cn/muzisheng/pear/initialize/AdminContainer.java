@@ -34,13 +34,13 @@ import java.util.List;
 @Component
 public class AdminContainer {
     private static final Logger logService = LoggerFactory.getLogger(AdminContainer.class);
-    public static List<AdminObject> adminObjects = new ArrayList<>();
-//    @PostConstruct
-//    public void buildAdminObjects() {
-//        List<AdminObject> ao=getPearAdminObjects();
-//        buildAdminObjects(ao);
-//    }
-
+    public static final List<AdminObject> adminObjects = new ArrayList<>();
+    public static List<AdminObject> getAllAdminObjects() {
+        return adminObjects;
+    }
+    public static void addAdminObject(AdminObject adminObject) {
+        adminObjects.add(adminObject);
+    }
     /**
      * 处理AdminObject数据
      **/
@@ -82,7 +82,7 @@ public class AdminContainer {
         }
         adminObject.setTableName(CamelToSnakeUtil.toSnakeCase(adminObject.getName()));
         adminObject.setPluralName(PluralUtil.pluralize(adminObject.getName()));
-        adminObject.setPrimaryKeyMap(new HashMap<String, String>());
+        adminObject.setPrimaryKeyMap(new HashMap<>());
         /*
           此处案例有填充filed字段,暂保留
          */

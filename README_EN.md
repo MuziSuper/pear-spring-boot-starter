@@ -58,9 +58,9 @@ In a personal project, implement the CommandLineRunner interface to fill in the 
 public class Initialized implements CommandLineRunner {
     @Override
     public void run(String... args) {
-        // Obtain the list of AdminObject containers for the built-in model of pear
+        // Obtain the list of PearObject containers for the built-in model of pear
         ArrayList<AdminObject> adminObjects = AdminFactory.getAdminContainer();
-        // Populate the custom Cat model information into the AdminObject container
+        // Populate the custom Cat model information into the PearObject container
         AdminObject adminObject = new AdminObject();
         adminObject.setModel(Cat.class);
         adminObject.setName("cat");
@@ -77,7 +77,7 @@ public class Initialized implements CommandLineRunner {
             }
             return admin;
         });
-        // Add to the list of AdminObject containers
+        // Add to the list of PearObject containers
         adminObjects.add(adminObject);
         // Assign it to AdminContainer to build the add, delete, modify, and query APIs
         AdminContainer.buildAdminObjects(adminObjects);

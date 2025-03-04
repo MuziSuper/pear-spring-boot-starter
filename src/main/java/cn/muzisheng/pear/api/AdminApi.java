@@ -45,7 +45,7 @@ public class AdminApi {
     }
 //    @PatchMapping("{model}")
 //    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
-//        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
+//        for(PearObject adminObject : ApplicationInitialization.adminObjects){
 //            if(adminObject.getTableName().equals(model)){
 //                return adminService.handleQueryOrGetOne(adminObject);
 //            }
@@ -57,7 +57,7 @@ public class AdminApi {
 //    }
 //    @DeleteMapping("{model}")
 //    public ResponseEntity<Result<Map<String, Object>>> handleDelete(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
-//        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
+//        for(PearObject adminObject : ApplicationInitialization.adminObjects){
 //            if(adminObject.getTableName().equals(model)){
 //                return adminService.handleQueryOrGetOne(adminObject);
 //            }
@@ -70,7 +70,7 @@ public class AdminApi {
 //
 //    @PostMapping("{model}/{name}")
 //    public ResponseEntity<Result<Map<String, Object>>> adminAction(HttpServletRequest request, @PathVariable("model") String model,@PathVariable("name") String name,@RequestParam("filed") String filed,@RequestParam("keys") String jsonDataMap) {
-//        for(AdminObject adminObject : ApplicationInitialization.adminObjects){
+//        for(PearObject adminObject : ApplicationInitialization.adminObjects){
 //            if(adminObject.getTableName().equals(model)){
 //                return adminService.handleQueryOrGetOne(adminObject);
 //            }
