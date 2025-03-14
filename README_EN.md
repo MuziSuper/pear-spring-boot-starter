@@ -52,34 +52,112 @@
 ![img.png](src/main/resources/static/dashboard.png)
 
 # Use the tutorial
-In a personal project, implement the CommandLineRunner interface to fill in the information of the customized model before the project starts, and pass it to the AdminContainer container.
+## Model Definition - Use of annotations
+### @PearObject
+`@PearObject` Annotations are annotated on a class and are used to define meta information for the data model.
+
+Attribute：
+
+`TableName`：The name of the database table, which is an empty string by default.
+
+`group`：Model grouping, default is an empty string.
+
+`desc`：The description of the model is an empty string by default.
+
+`path`：The access path of the model, which is an empty string by default.
+
+`editPage`：Edit the address of the page, which is an empty string by default.
+
+`listPage`：The address of the display page is an empty string by default.
+
+`pluralName`：The plural form of the model, which defaults to an empty string.
+
+`iconUrl`：The URL address of the model icon, which defaults to an empty string.
+
+`isInvisible`：Whether to hide this model, defaults to false
+
+### @PearField
+`@PearField` Annotations are used to label the fields of the class and are used to define the meta information of the fields.
+
+Attribute：
+
+isShow：Whether or not to display this field on the page, defaults to false.
+
+isEdit：Whether the field can be edited, defaults to false.
+
+isFilterable：Whether this field can be filtered, defaults to false.
+
+isOrderable：Whether the field can be sorted, defaults to false.
+
+isSearchable：Whether the field is searchable or not, defaults to false.
+
+isRequire：Whether this field is required or not, defaults to false.
+
+isPrimaryKey：Whether this field is the primary key or not, the default value is false.
+
+isUniqueKey：Whether the field is a unique key or not, defaults to false.
+
+placeholder：The default value of the field, which defaults to an empty string.
+
+label：The display name of the field, which is an empty string by default.
+### Use Cases
+```java
+@Entity
+@TableName("cat")
+@Data
+@Component
+@PearObject(desc = "Cat is an animal.",pluralName = "cats")
+public class Cat {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PearField(isPrimaryKey = true,isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private Long id;
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private String name;
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private Integer age;
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private String color;
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private String breed;
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private String image;
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private String description;
+    @Column(name = "`createdAt`")
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private LocalDateTime createdAt;
+}
+```
+
+## Model Complementation and Its Construction -- Use of BuilderFactory
+In the project, an initialization class is created by implementing the `CommandLineRunner` interface. The `run` method is overridden to first obtain the list of `AdminObjects`, then fill in additional information through `AdminObject.BuilderFactory(Class clazz)`, such as hook functions or default field sorting rules, etc.; finally, the `AdminContainer.buildAdminObjects(adminObjects)` method is used to build all `AdminObject` instances for deploying CRUD interfaces.
 ```java
 @Component
 public class Initialized implements CommandLineRunner {
     @Override
     public void run(String... args) {
-        // Obtain the list of PearObject containers for the built-in model of pear
-        ArrayList<AdminObject> adminObjects = AdminFactory.getAdminContainer();
-        // Populate the custom Cat model information into the PearObject container
-        AdminObject adminObject = new AdminObject();
-        adminObject.setModel(Cat.class);
-        adminObject.setName("cat");
-        adminObject.setDesc("cat is an animal");
-        adminObject.setPath("/cat");
-        adminObject.setShows(new ArrayList<>(List.of(new String[]{"id", "name", "age"})));
-        adminObject.setOrders(new ArrayList<>(List.of(new Order[]{new Order("id", "desc")})));
-        adminObject.setBeforeCreate((request,admin) -> {
-            if(admin instanceof Cat cat){
-                if (request.getParameter("name")!=null){
+        // Obtain the list of AdminObject containers for the built-in model of pear
+        List<AdminObject> adminObjects = AdminContainer.getAllAdminObjects();
+
+        // Create theBuilderFactory for the Cat model
+        AdminObject.BuilderFactory catBuilder = new AdminObject.BuilderFactory(Cat.class);
+
+        // Set the callback function before deletion
+        catBuilder.setBeforeDelete((request, admin) -> {
+            if (admin instanceof Cat cat) {
+                if (request.getParameter("name") != null) {
                     cat.setName(request.getParameter("name"));
                 }
                 return cat;
             }
             return admin;
         });
-        // Add to the list of PearObject containers
-        adminObjects.add(adminObject);
-        // Assign it to AdminContainer to build the add, delete, modify, and query APIs
+
+        // Set the collation
+        catBuilder.setOrder(new Order("name", Constant.ORDER_OP_ASC));
+
+        // Build the AdminObject and add it to the container
         AdminContainer.buildAdminObjects(adminObjects);
     }
 }

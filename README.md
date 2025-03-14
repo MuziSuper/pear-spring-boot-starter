@@ -52,34 +52,112 @@
 ![img.png](src/main/resources/static/dashboard.png)
 
 # 使用教程
- 在个人项目中，实现CommandLineRunner接口在项目启动前对自定义的模型进行信息填充，并传入AdminContainer容器；
+## 模型定义 --注解的使用
+### @PearObject
+`@PearObject` 注解用于标注在类上，用于定义数据模型的元信息。
+
+属性：
+
+`TableName`：数据库表名，默认为空字符串。
+
+`group`：模型分组，默认为空字符串。
+
+`desc`：模型的描述信息，默认为空字符串。
+
+`path`：模型的访问路径，默认为空字符串。
+
+`editPage`：编辑页面的地址，默认为空字符串。
+
+`listPage`：展示页面的地址，默认为空字符串。
+
+`pluralName`：模型的复数形式，默认为空字符串。
+
+`iconUrl`：模型图标的 URL 地址，默认为空字符串。
+
+`isInvisible`：是否隐藏此模型，默认为 false
+### @PearField
+`@PearField` 注解用于标注在类的字段上，用于定义字段的元信息。
+
+属性：
+
+isShow：是否在页面上显示该字段，默认为 false。
+
+isEdit：是否可编辑该字段，默认为 false。
+
+isFilterable：是否可过滤该字段，默认为 false。
+
+isOrderable：是否可排序该字段，默认为 false。
+
+isSearchable：是否可搜索该字段，默认为 false。
+
+isRequire：该字段是否为必填项，默认为 false。
+
+isPrimaryKey：该字段是否为主键，默认为 false。
+
+isUniqueKey：该字段是否为唯一键，默认为 false。
+
+placeholder：字段的默认值，默认为空字符串。
+
+label：字段的显示名称，默认为空字符串。
+### 使用案例
+```java
+@Entity
+@TableName("cat")
+@Data
+@Component
+@PearObject(desc = "Cat is an animal.",pluralName = "cats")
+public class Cat {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PearField(isPrimaryKey = true,isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private Long id;
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private String name;
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private Integer age;
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private String color;
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private String breed;
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private String image;
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private String description;
+    @Column(name = "`createdAt`")
+    @PearField(isShow = true,isEdit = true,isRequire = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    private LocalDateTime createdAt;
+}
+```
+
+## 模型补充及其构建 --BuilderFactory的使用
+在项目中通过实现`CommandLineRunner`接口创建初始化类，重写run方法，先获取AdminObjects列表，再通过`AdminObject.BuilderFactory(Class clazz)`填充附加信息
+，例如钩子函数或字段默认排序规则等;最后使用`AdminContainer.buildAdminObjects(adminObjects)`方法构建所有AdminObject部署CRUD接口;
 ```java
 @Component
 public class Initialized implements CommandLineRunner {
     @Override
     public void run(String... args) {
         // 获取pear内置模型的AdminObject容器列表
-        ArrayList<AdminObject> adminObjects = AdminFactory.getAdminContainer();
-        // 将自定义的Cat模型信息填充到AdminObject容器中
-        AdminObject adminObject = new AdminObject();
-        adminObject.setModel(Cat.class);
-        adminObject.setName("cat");
-        adminObject.setDesc("cat is an animal");
-        adminObject.setPath("/cat");
-        adminObject.setShows(new ArrayList<>(List.of(new String[]{"id", "name", "age"})));
-        adminObject.setOrders(new ArrayList<>(List.of(new Order[]{new Order("id", "desc")})));
-        adminObject.setBeforeCreate((request,admin) -> {
-            if(admin instanceof Cat cat){
-                if (request.getParameter("name")!=null){
+        List<AdminObject> adminObjects = AdminContainer.getAllAdminObjects();
+
+        // 创建Cat模型的BuilderFactory
+        AdminObject.BuilderFactory catBuilder = new AdminObject.BuilderFactory(Cat.class);
+
+        // 设置删除前的回调函数
+        catBuilder.setBeforeDelete((request, admin) -> {
+            if (admin instanceof Cat cat) {
+                if (request.getParameter("name") != null) {
                     cat.setName(request.getParameter("name"));
                 }
                 return cat;
             }
             return admin;
         });
-        // 添加到AdminObject容器列表中
-        adminObjects.add(adminObject);
-        // 交给AdminContainer构建增删改查接口
+
+        // 设置排序规则
+        catBuilder.setOrder(new Order("name", Constant.ORDER_OP_ASC));
+
+        // 构建AdminObject并添加到容器中
         AdminContainer.buildAdminObjects(adminObjects);
     }
 }
@@ -166,16 +244,6 @@ app.cathe.expire=24*60*60*1000
 #### `AdminObject`模型详解
 
 ```java
-package cn.muzisheng.pear.model;
-
-import cn.muzisheng.pear.handler.*;
-import cn.muzisheng.pear.test.handler.*;
-import cn.muzisheng.pear.test.model.*;
-import lombok.Data;
-
-import java.util.List;
-import java.util.Map;
-
 /**
  * 加载客户端模型
  **/
