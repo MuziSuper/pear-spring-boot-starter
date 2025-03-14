@@ -66,7 +66,7 @@ public class Constant {
     public static final String LOG_DEFAULT_ERROR_CATALOGUE_PATH="log/error-day";
 
     // 默认搜索properties路径
-    public static final String APP_DEFAULT_SEARCH_PROPERTIES_PATH="src/main/resources";
+    public static final String APP_DEFAULT_SEARCH_PROPERTIES_PATH="src/Application/resources";
 
     // static resources
     public static final String ICON_SVG_ADDRESS="ICON_SVG_ADDRESS";

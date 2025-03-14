@@ -1,8 +1,14 @@
 package cn.muzisheng.pear.model;
 
+import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.handler.*;
+import cn.muzisheng.pear.initialize.AdminContainer;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +16,8 @@ import java.util.Map;
  * 加载客户端模型
  **/
 @Data
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdminObject {
     /**
      * 模型
@@ -147,4 +155,88 @@ public class AdminObject {
      * 预渲染钩子方法
      **/
     private BeforeRender beforeRender;
+
+    @Override
+    public String toString() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL); // 忽略空值
+        try {
+            return objectMapper.writeValueAsString(this);
+        } catch (Exception e) {
+            return super.toString();
+        }
+    }
+
+    public static class BuilderFactory {
+        private final AdminObject adminObject;
+        public BuilderFactory(Class<?> clazz) {
+            AdminObject adminObject= AdminContainer.getAllAdminObjects().stream().filter(object -> object.getModel() == clazz).findFirst().orElse(null);
+            if(adminObject == null){
+                throw new GeneralException("AdminObject of"+clazz.getName()+"is null.");
+            }
+            this.adminObject=adminObject;
+        }
+        public BuilderFactory setOrders(List<Order> orders){
+            adminObject.setOrders(orders);
+            return this;
+        }
+
+        public BuilderFactory setOrder(Order order){
+            if(adminObject.getOrders()==null){
+                adminObject.setOrders(new ArrayList<>());
+            }
+            adminObject.getOrders().add(order);
+            return this;
+        }
+        public BuilderFactory setStyles(List<String> styles){
+            adminObject.setStyles(styles);
+            return this;
+        }
+        public BuilderFactory setAdminScripts(List<AdminScript> AdminScripts){
+            adminObject.setAdminScripts(AdminScripts);
+            return this;
+        }
+        public BuilderFactory setAdminScript(AdminScript AdminScript){
+            if(adminObject.getAdminScripts()==null){
+                adminObject.setAdminScripts(new ArrayList<>());
+            }
+            adminObject.getAdminScripts().add(AdminScript);
+            return this;
+        }
+        public BuilderFactory setPermissions(Map<String, Boolean> permissions){
+            adminObject.setPermissions(permissions);
+            return this;
+        }
+        public BuilderFactory setAttributes(Map<String, AdminAttribute> Attributes){
+            adminObject.setAttributes(Attributes);
+            return this;
+        }
+        public BuilderFactory setAccessCheck(AccessCheck accessCheck){
+            adminObject.setAccessCheck(accessCheck);
+            return this;
+        }
+        public BuilderFactory setBeforeCreate(BeforeCreate beforeCreate){
+            adminObject.setBeforeCreate(beforeCreate);
+            return this;
+        }
+        public BuilderFactory setBeforeUpdate(BeforeUpdate beforeUpdate){
+            adminObject.setBeforeUpdate(beforeUpdate);
+            return this;
+        }
+        public BuilderFactory setBeforeDelete(BeforeDelete beforeDelete){
+            adminObject.setBeforeDelete(beforeDelete);
+            return this;
+        }
+        public BuilderFactory setBeforeRender(BeforeRender beforeRender){
+            adminObject.setBeforeRender(beforeRender);
+            return this;
+        }
+        public BuilderFactory setAdminViewOnSite(AdminViewOnSite adminViewOnSite){
+            adminObject.setAdminViewOnSite(adminViewOnSite);
+            return this;
+        }
+        public AdminObject build(){
+            return adminObject;
+        }
+    }
 }

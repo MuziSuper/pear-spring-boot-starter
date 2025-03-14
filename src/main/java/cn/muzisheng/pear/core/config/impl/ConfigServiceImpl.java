@@ -187,7 +187,7 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     /**
-     * 搜索/src/main/resources目录下所有properties文件,遍历配置项，将遍历到的配置项加载到缓存中，直到查找到对应key键的配置项，停止遍历。
+     * 搜索/src/Application/resources目录下所有properties文件,遍历配置项，将遍历到的配置项加载到缓存中，直到查找到对应key键的配置项，停止遍历。
      **/
     public String searchAllEnv(String key) {
         HashMap<String, String> map = new HashMap<>();

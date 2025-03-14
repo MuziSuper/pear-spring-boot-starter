@@ -11,13 +11,45 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Order(1)
 public @interface PearField {
+    /**
+     * 是否显示
+     **/
     boolean isShow() default false;
+    /**
+     * 是否可修改
+     **/
     boolean isEdit() default false;
+    /**
+     * 是否可过滤
+     **/
     boolean isFilterable() default false;
+    /**
+     * 是否可排序
+     **/
     boolean isOrderable() default false;
+    /**
+     * 是否可查询
+     **/
     boolean isSearchable() default false;
+    /**
+     * 是否需要
+     **/
     boolean isRequire() default false;
+    /**
+     * 是否为主键
+     **/
     boolean isPrimaryKey() default false;
+    /**
+     * 是否为唯一键
+     **/
     boolean isUniqueKey() default false;
+    /**
+     * 客户端默认值
+     **/
+    String placeholder() default "";
+    /**
+     * 客户端显示名称
+     **/
+    String label() default "";
 
 }

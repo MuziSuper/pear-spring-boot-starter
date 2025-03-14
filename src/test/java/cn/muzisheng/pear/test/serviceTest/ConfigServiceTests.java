@@ -48,7 +48,7 @@ public class ConfigServiceTests {
     @AfterEach
     public void tearDown() {
         try {
-            File propertiesFile = new File("src/main/resources/test.properties");
+            File propertiesFile = new File("src/Application/resources/test.properties");
             if (propertiesFile.exists()) {
                 propertiesFile.delete();
             }
@@ -70,7 +70,7 @@ public class ConfigServiceTests {
         @Test
         @Transactional
         public void getEnv_Correct_ReturnsEnvValue() throws IOException {
-            File propertiesFile = new File("src/main/resources/test.properties");
+            File propertiesFile = new File("src/Application/resources/test.properties");
             try (FileWriter writer = new FileWriter(propertiesFile)) {
                 writer.write("key=fileValue");
             }
@@ -82,7 +82,7 @@ public class ConfigServiceTests {
         @Test
         @Transactional
         public void getEnv_Error_ReturnsEnvValue() throws IOException {
-            File propertiesFile = new File("src/main/resources/test.properties");
+            File propertiesFile = new File("src/Application/resources/test.properties");
             try (FileWriter writer = new FileWriter(propertiesFile)) {
                 writer.write("""
                         key1 == value1
@@ -121,7 +121,7 @@ public class ConfigServiceTests {
         @Transactional
         @Test
         public void getBoolEnv_Normal() throws Exception{
-            File propertiesFile = new File("src/main/resources/test.properties");
+            File propertiesFile = new File("src/Application/resources/test.properties");
             try (FileWriter writer = new FileWriter(propertiesFile)) {
                 writer.write("boolKey=true");
             }
@@ -132,7 +132,7 @@ public class ConfigServiceTests {
         @Transactional
         @Test
         public void getBoolEnv_Error() throws Exception{
-            File propertiesFile = new File("src/main/resources/test.properties");
+            File propertiesFile = new File("src/Application/resources/test.properties");
             try (FileWriter writer = new FileWriter(propertiesFile)) {
                 writer.write("boolKey=tre");
             }
@@ -147,7 +147,7 @@ public class ConfigServiceTests {
     class GetIntegerEnvTests {
         @Test
         public void getBoolEnv_Normal() throws Exception{
-            File propertiesFile = new File("src/main/resources/test.properties");
+            File propertiesFile = new File("src/Application/resources/test.properties");
             try (FileWriter writer = new FileWriter(propertiesFile)) {
                 writer.write("boolKey=true");
             }
@@ -157,7 +157,7 @@ public class ConfigServiceTests {
         }
         @Test
         public void getBoolEnv_Error() throws Exception{
-            File propertiesFile = new File("src/main/resources/test.properties");
+            File propertiesFile = new File("src/Application/resources/test.properties");
             try (FileWriter writer = new FileWriter(propertiesFile)) {
                 writer.write("boolKey=tre");
             }

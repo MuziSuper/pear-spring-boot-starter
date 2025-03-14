@@ -7,20 +7,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExpiredCache<K,V> {
-    private ConcurrentHashMap<K, ExpiredCacheValue<V>> cache;
+    private LinkedHashMap<K, ExpiredCacheValue<V>> cache;
     private long expired;
     /**
      * 创建一个缓存容器
      * @param expireTime 缓存过期时间
      **/
     public ExpiredCache<K,V> newExpiredCache(long expireTime){
-        ConcurrentHashMap<K, ExpiredCacheValue<V>> cache = new ConcurrentHashMap<>();
+        LinkedHashMap<K, ExpiredCacheValue<V>> cache = new LinkedHashMap<>(10,0.75f,true);
         return new ExpiredCache<>(cache, expireTime);
     }
 

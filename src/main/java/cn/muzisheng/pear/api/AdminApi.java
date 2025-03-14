@@ -21,7 +21,7 @@ public class AdminApi {
     private AdminService adminService;
     @PostMapping("{model}")
     public ResponseEntity<Result<Object>> query(HttpServletRequest request, @PathVariable("model") String model, @RequestBody(required = false) QueryForm queryForm) {
-        for(AdminObject adminObject : AdminContainer.adminObjects){
+        for(AdminObject adminObject : AdminContainer.getAllAdminObjects()){
             if(adminObject.getTableName().equals(model)){
                 return adminService.handleQueryOrGetOne(request,model,adminObject,queryForm);
             }
@@ -33,7 +33,7 @@ public class AdminApi {
     }
     @PutMapping("{model}")
     public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody(required = false)Map<String, Object> data) {
-        for(AdminObject adminObject : AdminContainer.adminObjects){
+        for(AdminObject adminObject : AdminContainer.getAllAdminObjects()){
             if(adminObject.getTableName().equals(model)){
                 return adminService.handleCreate(request,model,adminObject,data);
             }

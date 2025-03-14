@@ -26,48 +26,47 @@ import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class AdminContainer {
     private static final Logger logService = LoggerFactory.getLogger(AdminContainer.class);
-    public static final List<AdminObject> adminObjects = new ArrayList<>();
+    private static final List<AdminObject> adminObjects = new ArrayList<>();
+
     public static List<AdminObject> getAllAdminObjects() {
         return adminObjects;
     }
+
     public static void addAdminObject(AdminObject adminObject) {
         adminObjects.add(adminObject);
     }
+
     /**
      * 处理AdminObject数据
      **/
     public static void buildAdminObjects(List<AdminObject> objects) {
         List<String> existsTableNames = new ArrayList<>();
         for (AdminObject adminObject : objects) {
-            try {
-                build(adminObject);
-            } catch (GeneralException e) {
-                logService.error(e.getMessage());
-                continue;
-            }
             if (existsTableNames.contains(adminObject.getTableName())) {
                 logService.warn(adminObject.getTableName() + " is exists");
                 continue;
             }
             existsTableNames.add(adminObject.getTableName());
-            if (adminObject.getFields() != null) {
-                for (AdminField adminField : adminObject.getFields()) {
-                    if (adminField.getForeign() == null) {
-                        continue;
-                    }
-                    adminField.getForeign().setPath("/admin" + adminObject.getPath());
-                }
+            try {
+                build(adminObject);
+            } catch (GeneralException e) {
+                logService.error(e.getMessage());
             }
-            adminObjects.add(adminObject);
         }
+    }
+
+    public static boolean existsAdminObject(AdminObject adminObject) {
+        for (AdminObject adminObject1 : adminObjects) {
+            if (adminObject1.getName().equals(adminObject.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -80,9 +79,9 @@ public class AdminContainer {
         if ("_".equals(adminObject.getPath()) || "".equals(adminObject.getPath())) {
             throw new GeneralException("invalid path");
         }
-        adminObject.setTableName(CamelToSnakeUtil.toSnakeCase(adminObject.getName()));
-        adminObject.setPluralName(PluralUtil.pluralize(adminObject.getName()));
-        adminObject.setPrimaryKeyMap(new HashMap<>());
+        if (adminObject.getPluralName() == null || adminObject.getPluralName().isEmpty()) {
+            adminObject.setPluralName(PluralUtil.pluralize(adminObject.getName()));
+        }
         /*
           此处案例有填充filed字段,暂保留
          */
@@ -117,7 +116,12 @@ public class AdminContainer {
                 continue;
             }
             // adminField存入name
-            adminField.setName(CamelToSnakeUtil.toSnakeCase(field.getName()));
+            if (field.isAnnotationPresent(Column.class)) {
+                Column column = field.getAnnotation(Column.class);
+                adminField.setName(column.name().replaceAll("`", ""));
+            } else {
+                adminField.setName(field.getName());
+            }
             // adminField存入type
             if (field.getType() == Date.class || field.getType() == LocalDate.class || field.getType() == LocalDateTime.class || field.getType() == LocalTime.class) {
                 adminField.setType("timestamp");
@@ -141,7 +145,7 @@ public class AdminContainer {
                     annotationList.add(annotation.annotationType().getSimpleName());
                 }
                 adminField.setAnnotation(annotationList.toArray(String[]::new));
-                // adminField存入label
+                // adminField存入NotColumn
                 Transient ignore = field.getAnnotation(Transient.class);
                 if (ignore != null) {
                     adminField.setNotColumn(true);
@@ -181,8 +185,10 @@ public class AdminContainer {
                                     // 外键不放入adminField中
                                     isForeignID = true;
                                     // 忽略外键
+                                    if (adminObject.getIgnores() == null) {
+                                        adminObject.setIgnores(new HashMap<>());
+                                    }
                                     adminObject.getIgnores().put(field.getName(), true);
-
                                     AdminForeign adminForeign = new AdminForeign();
                                     adminForeign.setFieldName(CamelToSnakeUtil.toSnakeCase(foreignField.getName()));
                                     adminForeign.setField(foreignField.getName());
@@ -196,19 +202,25 @@ public class AdminContainer {
                         if (adminObject.getPrimaryKeyMap() == null) {
                             adminObject.setPrimaryKeyMap(new HashMap<>());
                         }
-                        adminObject.getPrimaryKeyMap().put(keyName, adminField.getName());
+                        if (!adminObject.getPrimaryKeyMap().containsKey(keyName)) {
+                            adminObject.getPrimaryKeyMap().put(keyName, adminField.getName());
+                        }
                     }
                     // adminField将主键存入primary
                     if (field.getAnnotation(Id.class) != null) {
                         if (adminObject.getPrimaryKeys() == null) {
                             adminObject.setPrimaryKeys(new ArrayList<>());
                         }
-                        adminObject.getPrimaryKeys().add(keyName);
+                        if (!adminObject.getPrimaryKeys().contains(keyName)) {
+                            adminObject.getPrimaryKeys().add(keyName);
+                        }
                     } else {
                         if (adminObject.getUniqueKeys() == null) {
                             adminObject.setUniqueKeys(new ArrayList<>());
                         }
-                        adminObject.getUniqueKeys().add(keyName);
+                        if (!adminObject.getPrimaryKeys().contains(keyName)) {
+                            adminObject.getUniqueKeys().add(keyName);
+                        }
                     }
 
                 }
@@ -226,89 +238,5 @@ public class AdminContainer {
             }
         }
         adminObject.setFields(list);
-    }
-
-    /**
-     * 获取pear所有的内置类
-     **/
-    public static ArrayList<AdminObject> getPearAdminObjects() {
-        ArrayList<AdminObject> adminObjects = new ArrayList<>();
-        AdminObject userObject = new AdminObject();
-        userObject.setModel(User.class);
-        userObject.setGroup("Settings");
-        userObject.setName("User");
-        userObject.setDesc("Builtin user management system");
-        userObject.setShows(new ArrayList<>(List.of("id", "email", "displayName", "isStaff", "isSuperUser", "enabled", "activated", "gmtModified", "lastLogin", "lastLoginIp", "source", "locale", "timezone")));
-        userObject.setEdits(new ArrayList<>(List.of("email", "password", "displayName", "firstName", "lastName", "isStaff", "isSuperUser", "enabled", "activated", "profile", "source", "locale", "timezone")));
-        userObject.setFilterables(new ArrayList<>(List.of("gmtCreated", "gmtModified", "isStaff", "isSuperUser", "enabled", "activated")));
-        userObject.setOrderables(new ArrayList<>(List.of("gmtCreated", "gmtModified", "enabled", "activated")));
-        userObject.setSearches(new ArrayList<>(List.of("email", "displayName")));
-        userObject.setOrders(new ArrayList<>(List.of(new Order("gmtModified", "desc"))));
-        AdminIcon userIcon = new AdminIcon();
-        userIcon.setSvg(Constant.ICON_SVG_ADDRESS);
-        userObject.setIcon(userIcon);
-        AdminAttribute IconAttribute = new AdminAttribute();
-        IconAttribute.setWidget("password");
-        HashMap<String, AdminAttribute> map = new HashMap<>();
-        map.put("password", IconAttribute);
-        userObject.setAttributes(map);
-        adminObjects.add(userObject);
-
-        AdminObject groupObject = new AdminObject();
-        groupObject.setModel(Group.class);
-        groupObject.setGroup("Settings");
-        groupObject.setName("Group");
-        groupObject.setDesc("A group describes a group of users. One user can be part of many groups and one group can have many users");
-        groupObject.setShows(new ArrayList<>(List.of("id", "name", "extra", "gmtCreated", "gmtModified")));
-        groupObject.setEdits(new ArrayList<>(List.of("id", "name", "extra", "gmtModified")));
-        groupObject.setOrderables(new ArrayList<>(List.of("gmtModified")));
-        groupObject.setSearches(new ArrayList<>(List.of("name")));
-        groupObject.setRequires(new ArrayList<>(List.of("name")));
-        AdminIcon groupIcon = new AdminIcon();
-        groupIcon.setSvg("待定");
-        groupObject.setIcon(groupIcon);
-        adminObjects.add(groupObject);
-
-        AdminObject groupMemberObject = new AdminObject();
-        groupMemberObject.setModel(GroupMember.class);
-        groupMemberObject.setGroup("Settings");
-        groupMemberObject.setName("GroupMember");
-        groupMemberObject.setDesc("Group members");
-        groupMemberObject.setShows(new ArrayList<>(List.of("id", "userId", "group", "role", "gmtCreated")));
-        groupMemberObject.setFilterables(new ArrayList<>(List.of("group", "role", "gmtCreated")));
-        groupMemberObject.setOrderables(new ArrayList<>(List.of("gmtCreated")));
-        groupMemberObject.setSearches(new ArrayList<>(List.of("user", "group")));
-        groupMemberObject.setRequires(new ArrayList<>(List.of("user", "group", "role")));
-        AdminIcon groupMemberIcon = new AdminIcon();
-        groupMemberIcon.setSvg("待定");
-        groupMemberObject.setIcon(groupMemberIcon);
-        HashMap<String, AdminAttribute> groupMemberMap = new HashMap<>();
-        AdminAttribute groupMemberAttribute = new AdminAttribute();
-        groupMemberAttribute.setDefaultValue(Constant.GROUP_ROLE_ADMIN);
-        AdminSelectOption[] groupMemberSelectOptions = new AdminSelectOption[]{
-                new AdminSelectOption("Admin", Constant.GROUP_ROLE_ADMIN),
-                new AdminSelectOption("member", Constant.GROUP_ROLE_MEMBER)
-        };
-        groupMemberAttribute.setChoices(groupMemberSelectOptions);
-        groupMemberMap.put("role", groupMemberAttribute);
-        groupMemberObject.setAttributes(groupMemberMap);
-        adminObjects.add(groupMemberObject);
-
-        AdminObject configObject = new AdminObject();
-        configObject.setModel(Config.class);
-        configObject.setGroup("Settings");
-        configObject.setName("Config");
-        configObject.setDesc("System config with database backend, You can change it in Admin page, and it will take effect immediately without restarting the server");
-        configObject.setShows(new ArrayList<>(List.of("key", "value", "autoload", "pub", "desc")));
-        configObject.setEdits(new ArrayList<>(List.of("key", "value", "autoload", "pub", "desc")));
-        configObject.setOrderables(new ArrayList<>(List.of("key")));
-        configObject.setSearches(new ArrayList<>(List.of("key", "desc", "value")));
-        configObject.setRequires(new ArrayList<>(List.of("key", "value")));
-        configObject.setFilterables(new ArrayList<>(List.of("autoload", "pub")));
-        AdminIcon configIcon = new AdminIcon();
-        configIcon.setSvg("待定");
-        configObject.setIcon(configIcon);
-        adminObjects.add(configObject);
-        return adminObjects;
     }
 }
