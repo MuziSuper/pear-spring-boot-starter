@@ -1,5 +1,6 @@
 package cn.muzisheng.pear.model;
 
+import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.handler.*;
 import cn.muzisheng.pear.initialize.AdminContainer;
@@ -155,7 +156,18 @@ public class AdminObject {
      * 预渲染钩子方法
      **/
     private BeforeRender beforeRender;
-
+    public void buildPermissions(User user){
+        if(user.isSuperUser()){
+            this.permissions.put("create",true);
+            this.permissions.put("update",true);
+            this.permissions.put("delete",true);
+            this.permissions.put("action",true);
+        }
+        this.permissions.put("create",true);
+        this.permissions.put("update",true);
+        this.permissions.put("delete",true);
+        this.permissions.put("action",true);
+    }
     @Override
     public String toString() {
         ObjectMapper objectMapper = new ObjectMapper();

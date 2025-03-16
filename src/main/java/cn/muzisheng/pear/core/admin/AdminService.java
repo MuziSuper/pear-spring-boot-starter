@@ -16,4 +16,5 @@ public interface AdminService {
     ResponseEntity<Result<Map<String,Object>>> handleUpdate(AdminObject adminObject);
     ResponseEntity<Result<Map<String,Object>>> handleDelete(AdminObject adminObject);
     ResponseEntity<Result<Map<String,Object>>> handleAction(AdminObject adminObject);
+    ResponseEntity<Result<Map<String,Object>>> registerAdmins(HttpServletRequest request);
 }

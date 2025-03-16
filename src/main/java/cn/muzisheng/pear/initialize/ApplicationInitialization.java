@@ -7,6 +7,7 @@ import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.UserException;
 import cn.muzisheng.pear.utils.ExpiredCache;
+import cn.muzisheng.pear.utils.ExpiredCacheFactory;
 import org.apache.commons.cli.*;
 import org.apache.commons.cli.Option;
 import org.slf4j.Logger;
@@ -32,8 +33,8 @@ public class ApplicationInitialization implements CommandLineRunner {
     public ApplicationInitialization(UserDAO userDAO, CacheProperties cacheProperties, ConfigService configService) {
         this.userDAO = userDAO;
         this.configService = configService;
-        ConfigCache=new ExpiredCache<String,String>().newExpiredCache(cacheProperties.getExpire());
-        EnvCache=new ExpiredCache<String,String>().newExpiredCache(cacheProperties.getExpire());
+        ConfigCache= ExpiredCacheFactory.newExpiredCacheFactory(cacheProperties.getCapacity(),cacheProperties.getExpire());
+        EnvCache=ExpiredCacheFactory.newExpiredCacheFactory(cacheProperties.getCapacity(),cacheProperties.getExpire());
     }
 
     @Override

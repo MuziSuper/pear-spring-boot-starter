@@ -43,6 +43,12 @@ public class AdminApi {
         response.setStatus(Constant.GENERAL_EXCEPTION);
         return response.value();
     }
+    @PostMapping("/admin/admin.json")
+    public ResponseEntity<Result<Map<String, Object>>> RegisterAdmins(HttpServletRequest request){
+        Response<Map<String,Object>> response = new Response<>();
+        adminService.registerAdmins(request);
+        return response.value();
+    }
 //    @PatchMapping("{model}")
 //    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
 //        for(PearObject adminObject : ApplicationInitialization.adminObjects){

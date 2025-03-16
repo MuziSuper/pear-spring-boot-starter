@@ -38,6 +38,11 @@ public class ExceptionApi {
         ExceptionResponse errorResponse = new ExceptionResponse(Constant.UNAPPROVED_EXCEPTION, e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ExceptionResponse> handleForbiddenException(ForbiddenException e) {
+        ExceptionResponse errorResponse = new ExceptionResponse(Constant.FORBIDDEN_EXCEPTION, e.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
 
     @ExceptionHandler(HookException.class)
     public ResponseEntity<ExceptionResponse> handleHookException(HookException e) {

@@ -7,6 +7,7 @@ import cn.muzisheng.pear.initialize.ApplicationInitialization;
 import cn.muzisheng.pear.core.config.impl.ConfigServiceImpl;
 import cn.muzisheng.pear.test.TestApplication;
 import cn.muzisheng.pear.utils.ExpiredCache;
+import cn.muzisheng.pear.utils.ExpiredCacheFactory;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,8 +43,8 @@ public class ConfigServiceTests {
 
     @BeforeEach
     public void setUp() {
-        ApplicationInitialization.EnvCache=new ExpiredCache<String,String>().newExpiredCache(Constant.CACHE_EXPIRED);
-        ApplicationInitialization.ConfigCache = new ExpiredCache<String,String>().newExpiredCache(Constant.CACHE_EXPIRED);
+        ApplicationInitialization.EnvCache= ExpiredCacheFactory.newExpiredCacheFactory(Constant.CACHE_CAPACITY,Constant.CACHE_EXPIRED);
+        ApplicationInitialization.ConfigCache = ExpiredCacheFactory.newExpiredCacheFactory(Constant.CACHE_CAPACITY,Constant.CACHE_EXPIRED);
     }
     @AfterEach
     public void tearDown() {

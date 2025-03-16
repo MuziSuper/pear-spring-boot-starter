@@ -9,21 +9,10 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
-
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class ExpiredCache<K,V> {
-    private LinkedHashMap<K, ExpiredCacheValue<V>> cache;
-    private long expired;
-    /**
-     * 创建一个缓存容器
-     * @param expireTime 缓存过期时间
-     **/
-    public ExpiredCache<K,V> newExpiredCache(long expireTime){
-        LinkedHashMap<K, ExpiredCacheValue<V>> cache = new LinkedHashMap<>(10,0.75f,true);
-        return new ExpiredCache<>(cache, expireTime);
-    }
+    private final LinkedHashMap<K, ExpiredCacheValue<V>> cache;
+    private final long expired;
 
     /**
      * 获取缓存中保存的值，未命中则返回null，若过期则删除并返回null

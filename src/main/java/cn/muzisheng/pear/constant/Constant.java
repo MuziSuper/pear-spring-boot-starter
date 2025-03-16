@@ -21,6 +21,7 @@ public class Constant {
     public static final int SQL_EXCEPTION = 505;
     public static final int ILLEGAL_EXCEPTION = 400;
     public static final int UNAPPROVED_EXCEPTION = 401;
+    public static final int FORBIDDEN_EXCEPTION = 403;
 
     // 响应信息
     public static final String ILLEGAL_MESSAGE_EXCEPTION = "The user passed in an illegal parameter.";
@@ -39,6 +40,7 @@ public class Constant {
 
     // 缓存
     public static final Long CACHE_EXPIRED=60*10L;
+    public static final int CACHE_CAPACITY=10;
 
     // 配置项数据类型
     public static final String ConfigFormatJSON="json";
@@ -71,6 +73,16 @@ public class Constant {
     // static resources
     public static final String ICON_SVG_ADDRESS="ICON_SVG_ADDRESS";
     public static final String ICON_PNG_ADDRESS="ICON_PNG_ADDRESS";
+    public static final String KEY_SITE_URL="KEY_SITE_URL";
+    public static final String KEY_ADMIN_DASHBOARD="KEY_ADMIN_DASHBOARD";
+    public static final String KEY_SITE_GA="KEY_SITE_GA";
+    public static final String KEY_SITE_TERMS_URL="KEY_SITE_TERMS_URL";
+    public static final String KEY_SITE_PRIVACY_URL="KEY_SITE_PRIVACY_URL";
+    public static final String KEY_SITE_FAVICON_URL="KEY_SITE_FAVICON_URL";
+    public static final String KEY_SITE_LOGO_URL="KEY_SITE_LOGO_URL";
+    public static final String KEY_SITE_DESCRIPTION="KEY_SITE_DESCRIPTION";
+    public static final String KEY_SITE_KEYWORDS="KEY_SITE_KEYWORDS";
+    public static final String KEY_SITE_ADMIN="KEY_SITE_ADMIN";
     public static final String KEY_SITE_NAME="KEY_SITE_NAME";
     public static final String KEY_SITE_SIGNIN_URL= "KEY_SITE_SIGNIN_URL";
     public static final String KEY_SITE_SIGNUP_URL= "KEY_SITE_SIGNUP_URL";

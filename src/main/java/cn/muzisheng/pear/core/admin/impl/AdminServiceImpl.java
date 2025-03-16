@@ -2,8 +2,15 @@ package cn.muzisheng.pear.core.admin.impl;
 
 import cn.muzisheng.pear.core.admin.AdminService;
 import cn.muzisheng.pear.constant.Constant;
+import cn.muzisheng.pear.core.config.ConfigService;
+import cn.muzisheng.pear.core.user.UserService;
+import cn.muzisheng.pear.entity.User;
+import cn.muzisheng.pear.exception.AuthorizationException;
+import cn.muzisheng.pear.exception.ForbiddenException;
 import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.exception.IllegalException;
+import cn.muzisheng.pear.handler.BuildContext;
+import cn.muzisheng.pear.initialize.AdminContainer;
 import cn.muzisheng.pear.mapper.AdminMapper;
 import cn.muzisheng.pear.model.*;
 import cn.muzisheng.pear.params.AdminQueryResult;
@@ -15,8 +22,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -30,11 +39,15 @@ import java.util.*;
 public class AdminServiceImpl implements AdminService {
 
     private final AdminMapper adminMapper;
+    private final UserService userService;
+    private final ConfigService configService;
     private static final Logger LOG = LoggerFactory.getLogger(AdminServiceImpl.class);
 
     @Autowired
-    public AdminServiceImpl(AdminMapper adminMapper) {
+    public AdminServiceImpl(AdminMapper adminMapper, UserService userService, ConfigService configService) {
+        this.configService = configService;
         this.adminMapper = adminMapper;
+        this.userService = userService;
     }
 
     @Override
@@ -275,6 +288,86 @@ public class AdminServiceImpl implements AdminService {
         return null;
     }
 
+    @Override
+    public ResponseEntity<Result<Map<String, Object>>> registerAdmins(HttpServletRequest request) {
+        Response<Map<String,Object>> response = new Response<>();
+        withAdminAuth(request);
+        Map<String,Object> map = handleAdminJson(request,AdminContainer.getAllAdminObjects(),(req, data)->{
+            data.put("dashboard",configService.getValue(Constant.KEY_ADMIN_DASHBOARD));
+            return data;
+        });
+        response.setData(map);
+        return response.value();
+    }
+    private Map<String,Object> handleAdminJson(HttpServletRequest request, List<AdminObject> AdminObjects, BuildContext buildContext){
+        Map<String,Object> res=new HashMap<>();
+        List<AdminObject> viewObjects=new ArrayList<AdminObject>();
+        for(AdminObject adminObject:AdminObjects){
+            if(adminObject.getAccessCheck()!=null){
+                try{
+                    adminObject.getAccessCheck().execute(request, adminObject);
+                }catch (Exception e){
+                    LOG.error(e.getMessage());
+                }
+            }
+            adminObject.buildPermissions(userService.currentUser(request));
+            viewObjects.add(adminObject);
+        }
+        Map<String, Object> siteCtx=getRenderPageContext(request);
+        if(buildContext!=null){
+            siteCtx=buildContext.execute(request,siteCtx);
+        }
+        res.put("objects",viewObjects);
+        res.put("user",userService.currentUser(request));
+        res.put("site",siteCtx);
+        return res;
+    }
+    public Map<String,Object> getRenderPageContext(HttpServletRequest request){
+        configService.loadAutoLoads();
+        String loginNext=request.getParameter("next");
+        if(loginNext == null|| loginNext.isEmpty()){
+            loginNext = configService.getValue(Constant.KEY_SITE_LOGIN_NEXT);
+        }
+        HashMap<String,Object> res=new HashMap<>();
+        res.put("loginNext",loginNext);
+        HashMap<String,Object> site=new HashMap<>();
+        site.put("Url", configService.getValue(Constant.KEY_SITE_URL));
+        site.put("Name", configService.getValue(Constant.KEY_SITE_NAME));
+        site.put("Admin", configService.getValue(Constant.KEY_SITE_ADMIN));
+        site.put("Keywords", configService.getValue(Constant.KEY_SITE_KEYWORDS));
+        site.put("Description", configService.getValue(Constant.KEY_SITE_DESCRIPTION));
+        site.put("GA", configService.getValue(Constant.KEY_SITE_GA));
+        site.put("LogoUrl", configService.getValue(Constant.KEY_SITE_LOGO_URL));
+        site.put("FaviconUrl", configService.getValue(Constant.KEY_SITE_FAVICON_URL));
+        site.put("TermsUrl", configService.getValue(Constant.KEY_SITE_TERMS_URL));
+        site.put("PrivacyUrl", configService.getValue(Constant.KEY_SITE_PRIVACY_URL));
+        site.put("SigninUrl", configService.getValue(Constant.KEY_SITE_SIGNIN_URL));
+        site.put("SignupUrl", configService.getValue(Constant.KEY_SITE_SIGNUP_URL));
+        site.put("LogoutUrl", configService.getValue(Constant.KEY_SITE_LOGOUT_URL));
+        site.put("ResetPasswordUrl", configService.getValue(Constant.KEY_SITE_RESET_PASSWORD_URL));
+        site.put("SigninApi", configService.getValue(Constant.KEY_SITE_SIGNIN_API));
+        site.put("SignupApi", configService.getValue(Constant.KEY_SITE_SIGNUP_API));
+        site.put("ResetPasswordDoneApi", configService.getValue(Constant.KEY_SITE_RESET_PASSWORD_DONE_API));
+        site.put("ChangeEmailDoneApi", configService.getValue(Constant.KEY_SITE_CHANGE_EMAIL_DONE_API));
+        site.put("UserIdType", configService.getValue(Constant.KEY_SITE_USER_ID_TYPE));
+        res.put("site",site);
+        return res;
+    }
+    private void withAdminAuth(HttpServletRequest request){
+        Map<String, Object> map=new HashMap<>();
+        Response<Map<String, Object>> response = new Response<>();
+        User user=userService.currentUser(request);
+        if(user==null){
+            String signUrl=configService.getValue(Constant.KEY_SITE_SIGNIN_URL);
+            if(signUrl==null){
+                throw new AuthorizationException("unauthorized");
+            }else{
+                throw new AuthorizationException("unauthorized;signUrl="+Constant.UNAPPROVED_EXCEPTION);
+            }
+        }else if(!user.isStaff() && !user.isSuperUser()) {
+            throw new ForbiddenException("forbidden");
+        }
+    }
     /**
      * 拼接数据库db的查询子句,筛选子句，排序子句，获取查询总数，
      * 携带外键连接的表其所有数据，将多条总数据放入映射集合与列表中，
