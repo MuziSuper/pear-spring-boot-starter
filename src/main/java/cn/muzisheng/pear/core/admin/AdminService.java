@@ -4,6 +4,7 @@ import cn.muzisheng.pear.model.Result;
 import cn.muzisheng.pear.model.AdminObject;
 import cn.muzisheng.pear.params.QueryForm;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
@@ -16,5 +17,7 @@ public interface AdminService {
     ResponseEntity<Result<Map<String,Object>>> handleUpdate(AdminObject adminObject);
     ResponseEntity<Result<Map<String,Object>>> handleDelete(AdminObject adminObject);
     ResponseEntity<Result<Map<String,Object>>> handleAction(AdminObject adminObject);
-    ResponseEntity<Result<Map<String,Object>>> registerAdmins(HttpServletRequest request);
+    ResponseEntity<Result<Map<String,Object>>> adminJson(HttpServletRequest request);
+    ResponseEntity<Result<Map<String, Object>>> adminFilepath(HttpServletRequest request);
+
 }

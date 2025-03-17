@@ -9,9 +9,10 @@ import cn.muzisheng.pear.model.Response;
 import cn.muzisheng.pear.params.QueryForm;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.core.io.Resource;
 import java.util.Map;
 
 @RestController
@@ -43,11 +44,13 @@ public class AdminApi {
         response.setStatus(Constant.GENERAL_EXCEPTION);
         return response.value();
     }
-    @PostMapping("/admin/admin.json")
-    public ResponseEntity<Result<Map<String, Object>>> RegisterAdmins(HttpServletRequest request){
-        Response<Map<String,Object>> response = new Response<>();
-        adminService.registerAdmins(request);
-        return response.value();
+    @PostMapping("/json")
+    public ResponseEntity<Result<Map<String, Object>>> AdminJson(HttpServletRequest request){
+        return adminService.adminJson(request);
+    }
+    @GetMapping("/")
+    public ResponseEntity<Result<Map<String, Object>>> AdminFilepath(HttpServletRequest request){
+        return adminService.adminFilepath(request);
     }
 //    @PatchMapping("{model}")
 //    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {

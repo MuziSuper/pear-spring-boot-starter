@@ -22,11 +22,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.UrlResource;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.net.MalformedURLException;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,13 +48,15 @@ public class AdminServiceImpl implements AdminService {
     private final AdminMapper adminMapper;
     private final UserService userService;
     private final ConfigService configService;
+    private final ResourcePatternResolver resourceLoader;
     private static final Logger LOG = LoggerFactory.getLogger(AdminServiceImpl.class);
 
     @Autowired
-    public AdminServiceImpl(AdminMapper adminMapper, UserService userService, ConfigService configService) {
+    public AdminServiceImpl(AdminMapper adminMapper, UserService userService, ConfigService configService,ResourcePatternResolver resourceLoader) {
         this.configService = configService;
         this.adminMapper = adminMapper;
         this.userService = userService;
+        this.resourceLoader = resourceLoader;
     }
 
     @Override
@@ -289,7 +298,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ResponseEntity<Result<Map<String, Object>>> registerAdmins(HttpServletRequest request) {
+    public ResponseEntity<Result<Map<String, Object>>> adminJson(HttpServletRequest request) {
         Response<Map<String,Object>> response = new Response<>();
         withAdminAuth(request);
         Map<String,Object> map = handleAdminJson(request,AdminContainer.getAllAdminObjects(),(req, data)->{
@@ -299,15 +308,45 @@ public class AdminServiceImpl implements AdminService {
         response.setData(map);
         return response.value();
     }
+
+    @Override
+    public ResponseEntity<Result<Map<String, Object>>> adminFilepath(HttpServletRequest request) {
+        withAdminAuth(request);
+        List<String> cssFiles=new ArrayList<>();
+        List<String> jsFiles=new ArrayList<>();
+        try {
+            Resource[] resources = resourceLoader.getResources("classpath:static/**/*");
+            for(Resource resource:resources){
+                if(resource.getFilename().endsWith(".css")){
+                    cssFiles.add(resource.getFilename());
+                }
+                if(resource.getFilename().endsWith(".js")){
+                    jsFiles.add(resource.getFilename());
+                }
+            }
+        }catch (Exception e){
+            LOG.error(e.getMessage());
+            throw new GeneralException();
+        }
+        Response<Map<String,Object>> response = new Response<>();
+        Map<String,Object> map=new HashMap<>();
+        map.put("Scripts",jsFiles);
+        map.put("Styles",cssFiles);
+        map.put("Dashboard",configService.getValue(Constant.KEY_ADMIN_DASHBOARD));
+        map.put("Objects", AdminContainer.getAllAdminObjects());
+        response.setData(map);
+        return response.value();
+    }
     private Map<String,Object> handleAdminJson(HttpServletRequest request, List<AdminObject> AdminObjects, BuildContext buildContext){
         Map<String,Object> res=new HashMap<>();
-        List<AdminObject> viewObjects=new ArrayList<AdminObject>();
+        List<AdminObject> viewObjects=new ArrayList<>();
         for(AdminObject adminObject:AdminObjects){
             if(adminObject.getAccessCheck()!=null){
                 try{
                     adminObject.getAccessCheck().execute(request, adminObject);
                 }catch (Exception e){
                     LOG.error(e.getMessage());
+                    continue;
                 }
             }
             adminObject.buildPermissions(userService.currentUser(request));
@@ -315,7 +354,7 @@ public class AdminServiceImpl implements AdminService {
         }
         Map<String, Object> siteCtx=getRenderPageContext(request);
         if(buildContext!=null){
-            siteCtx=buildContext.execute(request,siteCtx);
+            buildContext.execute(request,siteCtx);
         }
         res.put("objects",viewObjects);
         res.put("user",userService.currentUser(request));
@@ -353,9 +392,10 @@ public class AdminServiceImpl implements AdminService {
         res.put("site",site);
         return res;
     }
+    /**
+     * 验证用户是否登录，未登录则抛出异常
+     **/
     private void withAdminAuth(HttpServletRequest request){
-        Map<String, Object> map=new HashMap<>();
-        Response<Map<String, Object>> response = new Response<>();
         User user=userService.currentUser(request);
         if(user==null){
             String signUrl=configService.getValue(Constant.KEY_SITE_SIGNIN_URL);
