@@ -43,14 +43,16 @@
 <dependency>
     <groupId>cn.muzisheng.pear</groupId>
     <artifactId>pear-spring-boot-starter</artifactId>
-    <version>1.1.12</version>
+    <version>1.1.13</version>
 </dependency>
 ```
 
 ## 页面展示
-默认路径：http://localhost:8080/login
+默认路径：http://localhost:8080/auth/login
 ![img.png](src/main/resources/static/login.png)
-默认路径：http://localhost:8080/dashboard
+默认路径：http://localhost:8080/auth/register
+![img.png](src/main/resources/static/register.png)
+默认路径：http://localhost:8080/auth/dashboard
 ![img.png](src/main/resources/static/dashboard.png)
 
 # 使用教程

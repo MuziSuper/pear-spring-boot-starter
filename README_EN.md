@@ -43,12 +43,16 @@
 <dependency>
     <groupId>cn.muzisheng.pear</groupId>
     <artifactId>pear-spring-boot-starter</artifactId>
-    <version>1.1.5</version>
+    <version>1.1.13</version>
 </dependency>
 ```
 
 ## Page display
+Default path：http://localhost:8080/auth/login
 ![img.png](src/main/resources/static/login.png)
+Default path：http://localhost:8080/auth/register
+![img.png](src/main/resources/static/register.png)
+Default path：http://localhost:8080/auth/dashboard
 ![img.png](src/main/resources/static/dashboard.png)
 
 # Use the tutorial
