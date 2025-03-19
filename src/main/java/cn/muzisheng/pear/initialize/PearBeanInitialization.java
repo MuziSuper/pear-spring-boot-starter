@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * 在bean被加载后通过PearObject与PearField注解填充AdminObject对象
+ **/
 @Component
 public class PearBeanInitialization implements BeanPostProcessor {
     @Override
@@ -36,7 +39,7 @@ public class PearBeanInitialization implements BeanPostProcessor {
             }else{
                 object.setPluralName(pearObjectAnnotation.pluralName());
             }
-            object.setTableName(pearObjectAnnotation.TableName().replaceAll("`",""));
+            object.setTableName(pearObjectAnnotation.TableName().replaceAll("`","").toLowerCase());
             if(clazz.isAnnotationPresent(TableName.class)){
                 TableName tablename=clazz.getAnnotation(TableName.class);
                 object.setTableName(tablename.value().replaceAll("`",""));
@@ -44,7 +47,7 @@ public class PearBeanInitialization implements BeanPostProcessor {
                 Entity entity =clazz.getAnnotation(Entity.class);
                 object.setTableName(entity.name().replaceAll("`",""));
             }else{
-                object.setTableName(bean.getClass().getSimpleName().toLowerCase().replaceAll("`",""));
+                object.setTableName(bean.getClass().getSimpleName().toLowerCase().replaceAll("`","").toLowerCase());
             }
             List<String> shows=new ArrayList<>();
             List<String> edits=new ArrayList<>();

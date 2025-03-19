@@ -24,9 +24,13 @@ public class AdminField {
      **/
     private Boolean required;
     /**
-     * 定义此字段在数据库中的名称
+     * 定义此字段在模型中的名称
      **/
     private String name;
+    /**
+     * 定义此字段在数据库中的名称
+     **/
+    private String fieldName;
     /**
      * 定义此字段的数据类型
      **/

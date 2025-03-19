@@ -30,12 +30,12 @@ public class User{
     @PearField(isPrimaryKey = true,isRequire = true,isShow = true)
     private Long id;
     // 创建时间
-    @TableField(fill= FieldFill.INSERT)
+    @TableField(fill= FieldFill.INSERT,value ="gmtCreated")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isOrderable = true)
     private LocalDateTime gmtCreated;
 
     // 更新时间
-    @TableField(fill= FieldFill.INSERT_UPDATE)
+    @TableField(fill= FieldFill.INSERT_UPDATE,value ="gmtModified")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true,isOrderable = true)
     private LocalDateTime gmtModified;
     // 邮箱
@@ -52,20 +52,25 @@ public class User{
     private String phone;
     // 英文姓
     @Column(length = 128)
+    @TableField(value = "firstName")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
     private String firstName;
     // 英文名
     @Column(length = 128)
+    @TableField(value = "lastName")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
     private String lastName;
     // 用户显示名
     @Column(length = 128)
+    @TableField(value = "displayName")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
     private String displayName;
     // 是否为管理员身份
+    @TableField(value = "isSuperUser")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
     private boolean isSuperUser;
     // 是否为员工
+    @TableField(value = "isStaff")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
     private boolean isStaff;
     // 状态是否正常
@@ -75,10 +80,12 @@ public class User{
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
     private boolean activated;
     // 最后一次登陆时间
+    @TableField(fill= FieldFill.UPDATE,value ="lastLogin")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
     private LocalDateTime lastLogin;
     // 最后一次登陆ip
     @Column(length = 128)
+    @TableField(value = "lastLoginIp")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
     private String lastLoginIp;
     // 用户来源渠道

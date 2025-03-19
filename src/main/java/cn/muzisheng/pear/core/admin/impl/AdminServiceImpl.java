@@ -402,7 +402,7 @@ public class AdminServiceImpl implements AdminService {
             if(signUrl==null){
                 throw new AuthorizationException("unauthorized");
             }else{
-                throw new AuthorizationException("unauthorized;signUrl="+Constant.UNAPPROVED_EXCEPTION);
+                throw new AuthorizationException("unauthorized;signUrl="+signUrl);
             }
         }else if(!user.isStaff() && !user.isSuperUser()) {
             throw new ForbiddenException("forbidden");

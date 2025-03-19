@@ -155,21 +155,28 @@ public class UserServiceImpl implements UserService {
      * 获取当前用户信息，并且缓存到上下文中
      **/
     public User currentUser(HttpServletRequest request) {
-        Object objectUser = Context.getSessionScope(Constant.SESSION_USER_ID);
+        Object objectUser = Context.getRequestScope(request,Constant.SESSION_USER_ID);
         if (objectUser != null) {
-            return (User) objectUser;
+            if(objectUser instanceof User){
+                return (User) objectUser;
+            }
         }
-        HttpSession session = request.getSession(true);
-        Object userId = session.getAttribute(Constant.SESSION_USER_ID);
+        Object userId = Context.getSessionScope(request,Constant.SESSION_USER_ID);
         if (userId == null) {
             return null;
         }
-        User user = userDAO.getUserById((long) userId);
-        if (user == null) {
-            return null;
+        User user = null;
+        if(userId instanceof Long){
+            user = userDAO.getUserById((long) userId);
+            if (user == null) {
+                return null;
+            }
         }
-        Context.setRequestScope(Constant.SESSION_USER_ID, user);
-        return user;
+        if(user!=null){
+            Context.setRequestScope(request,Constant.SESSION_USER_ID, user);
+            return user;
+        }
+        return null;
     }
 
     /**
@@ -177,8 +184,7 @@ public class UserServiceImpl implements UserService {
      **/
     private void login(HttpServletRequest request, User user) {
         userDAO.setLastLogin(user, request.getRemoteAddr());
-        HttpSession session = request.getSession(true);
-        session.setAttribute(Constant.SESSION_USER_ID, user.getId());
+        Context.setSessionScope(request,Constant.SESSION_USER_ID, user.getId());
         /*
          * 触发用户登陆事件，发布消息，
          * 后期消息系统进行补充

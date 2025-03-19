@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class AdminObject {
      **/
     private String group;
     /**
-     * 对象名称
+     * 模型名称
      **/
     private String name;
     /**
@@ -121,7 +122,7 @@ public class AdminObject {
      **/
     private Map<String, AdminAttribute> Attributes;
     /**
-     * 数据库表内实际名称
+     * 数据库表名称
      **/
     private String tableName;
     /**
@@ -157,6 +158,9 @@ public class AdminObject {
      **/
     private BeforeRender beforeRender;
     public void buildPermissions(User user){
+        if(this.permissions==null){
+            this.permissions=new HashMap<>();
+        }
         if(user.isSuperUser()){
             this.permissions.put("create",true);
             this.permissions.put("update",true);

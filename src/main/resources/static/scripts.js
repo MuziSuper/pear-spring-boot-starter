@@ -12,11 +12,42 @@ const queryForm = {
 
 $(document).ready(function () {
     let data = {};
+    let map={};
     const pageSize = 5;
     let currentPage = 1;
     let totalPages;
     let currentSortField = '';
     let currentSortOrder = 'asc';
+// 从cookie中获取token
+const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+      
+if (!token) {
+  // 如果没有token，重定向到登录页面
+  window.location.href = '/login.html';
+  return;
+}
+
+// 调用/admin/json接口获取数据
+$.ajax({
+  url: '/admin/json',
+  method: 'POST',
+  success: function(response) {
+    if (response) {
+      // 将数据存储到map中
+      map=response;
+      console.log('管理员数据已加载到map中:', map);
+    } else {
+      console.error('获取管理员数据失败');
+    }
+  },
+  error: function(xhr, status, error) {
+    console.error('请求失败:', error);
+    console.error('状态:', status);
+    console.error('响应:', xhr.responseText);
+  }
+});
+
+
 
     function initFilterFields(fields) {
         const filterSelect = $('#filter-field');

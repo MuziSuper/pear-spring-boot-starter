@@ -1,5 +1,6 @@
 package cn.muzisheng.pear.initialize;
 
+import cn.muzisheng.pear.annotation.PearField;
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.entity.Group;
@@ -106,6 +107,19 @@ public class AdminContainer {
         for (Field field : model.getDeclaredFields()) {
             boolean isForeignID = false;
             AdminField adminField = new AdminField();
+            if(field.isAnnotationPresent(PearField.class)){
+                PearField pearField = field.getAnnotation(PearField.class);
+                // pearField填充label字段
+                adminField.setLabel(pearField.label());
+                // pearField填充placeholder字段
+                adminField.setPlaceholder(pearField.placeholder());
+                // pearField填充name字段
+                adminField.setFieldName(CamelToSnakeUtil.toSnakeCase(field.getName()));
+            }
+            // 若pearField没有属性label则默认
+            if (adminField.getLabel() == null|| adminField.getLabel().isEmpty()) {
+                adminField.setLabel(field.getName().replaceAll("_", " "));
+            }
 
             /*
              * 若为模型对象，则递归，这部分还没做，先测试非对象
@@ -127,10 +141,6 @@ public class AdminContainer {
                 adminField.setType("timestamp");
             } else {
                 adminField.setType(field.getType().getSimpleName());
-            }
-            // adminField存入label
-            if (adminField.getLabel() == null) {
-                adminField.setLabel(adminField.getName().replaceAll("_", " "));
             }
             // adminField存入isArray
             if (field.getType().isArray()) {
