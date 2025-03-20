@@ -34,13 +34,13 @@ public class Group {
      * 用户组名称
      **/
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
-    @Column(name="`name`",length = 200)
+    @Column(length = 200)
     private String name;
     /**
      * 用户组类型
      **/
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
-    @Column(name="`type`",length = 24)
+    @Column(length = 24)
     private String type;
     /**
      * 用户组附加信息
@@ -55,14 +55,14 @@ public class Group {
     /**
      * 创建时间
      **/
-    @TableField(fill= FieldFill.INSERT)
+    @TableField(fill= FieldFill.INSERT,value = "gmtCreated")
     @Temporal(TemporalType.TIMESTAMP)
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true,isOrderable = true)
     private LocalDateTime gmtCreated;
     /**
      * 修改时间
      **/
-    @TableField(fill= FieldFill.INSERT_UPDATE)
+    @TableField(fill= FieldFill.INSERT_UPDATE,value = "gmtModified")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true,isOrderable = true)
     private LocalDateTime gmtModified;
 }

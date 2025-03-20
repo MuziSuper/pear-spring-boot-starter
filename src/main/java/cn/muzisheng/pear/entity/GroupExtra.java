@@ -3,6 +3,7 @@ package cn.muzisheng.pear.entity;
 import cn.muzisheng.pear.annotation.PearField;
 import cn.muzisheng.pear.annotation.PearObject;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.persistence.*;
@@ -15,11 +16,12 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 @Entity
-@TableName("group_extra")
+@TableName("groupextra")
 @PearObject(
         desc = "Additional information of the user group.",
         path = "/groupExtra",
-        pluralName = "groupExtras"
+        pluralName = "groupExtras",
+        group = "group"
 )
 public class GroupExtra {
     /**
@@ -33,17 +35,19 @@ public class GroupExtra {
      * 组对象类型
      **/
     @Column(length = 128)
+    @TableId(value="groupType")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true,isOrderable = true)
     private String groupType;
     /**
      * groupId
      **/
+    @TableField(value="groupId")
     @PearField(isUniqueKey = true,isRequire = true,isShow = true,isSearchable = true,isEdit = true,isOrderable = true)
     private Long groupId;
     /**
      * 键
      **/
-    @Column(name="`key`",length = 128)
+    @Column(length = 128)
     @PearField(isRequire = true,isShow = true,isSearchable = true,isOrderable = true)
     private String key;
     /**

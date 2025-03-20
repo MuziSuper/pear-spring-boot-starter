@@ -41,6 +41,7 @@ public class Product {
     /**
      * 用户组id
      **/
+    @TableField(value ="groupId")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true,isUniqueKey = true)
     private Long groupId;
     /**
@@ -56,13 +57,13 @@ public class Product {
     /**
      * 创建时间
      **/
-    @TableField(fill= FieldFill.INSERT,jdbcType = JdbcType.TIMESTAMP)
+    @TableField(fill= FieldFill.INSERT,jdbcType = JdbcType.TIMESTAMP,value = "gmtCreated")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isOrderable = true)
     private LocalDateTime gmtCreated;
     /**
      * 修改时间
      **/
     @PearField(isRequire = true,isShow = true,isSearchable = true,isOrderable = true)
-    @TableField(fill= FieldFill.INSERT_UPDATE)
+    @TableField(fill= FieldFill.INSERT_UPDATE,value = "gmtModified")
     private LocalDateTime gmtModified;
 }

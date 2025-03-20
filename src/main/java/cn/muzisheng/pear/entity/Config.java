@@ -21,7 +21,8 @@ import org.springframework.stereotype.Component;
 @PearObject(
         desc = "A configuration center for the pear system to configure static data for transfer to clients",
         path = "/config",
-        pluralName = "Configs"
+        pluralName = "Configs",
+        group = "config"
 )
 public class Config {
     @Id
@@ -29,11 +30,11 @@ public class Config {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 128)
-    @TableField("`key`")
+    @TableField(value = "`key`")
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
     private String key;
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
-    @Column(name="`description`",length = 200)
+    @Column(length = 200)
     private String description;
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
     private boolean autoload;
@@ -43,6 +44,5 @@ public class Config {
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
     private String format;
     @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
-    @Column(name = "`value`")
     private String value;
 }

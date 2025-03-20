@@ -428,6 +428,9 @@ public class AdminServiceImpl implements AdminService {
                         List<String> conditions = new ArrayList<>();
                         for (Object value : values) {
                             if (value instanceof String strValue) {
+                                if (strValue.isEmpty()) {
+                                    continue;
+                                }
                                 // 转义双引号，并构造 LIKE 语句
                                 String escapedValue = strValue.replace("\"", "\\\"");
                                 String condition = String.format("`%s`.`%s` LIKE '%%%s%%'", adminObject.getTableName(), filter.getName(), escapedValue);
@@ -441,6 +444,9 @@ public class AdminServiceImpl implements AdminService {
                     } else {
                         Object value = filter.getValue();
                         if (value instanceof String strValue) {
+                            if (strValue.isEmpty()) {
+                                continue;
+                            }
                             String escapedValue = strValue.replace("\"", "\\\"");
                             whereClause = String.format("`%s`.`%s` LIKE '%%%s%%'", adminObject.getTableName(), filter.getName(), escapedValue);
                         }

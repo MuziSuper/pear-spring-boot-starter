@@ -15,11 +15,13 @@ import java.time.LocalDateTime;
 @Data
 @Component
 @Entity
-@TableName("group_member")
+@TableName("groupmember")
 @PearObject(
         desc = "Group member information, including member permissions.",
         path = "/groupMember",
-        pluralName = "groupMembers"
+        pluralName = "groupMembers",
+        group = "group"
+
 )
 public class GroupMember {
     /**
@@ -32,24 +34,24 @@ public class GroupMember {
     /**
      * 用户id
      **/
-//    private Long userId;
+    @TableField(value = "userId")
+    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    private Long userId;
     /**
      * 用户
      **/
-    @ManyToOne
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true,isUniqueKey = true)
-    @JoinColumn(name = "userId")
+    @Transient
     private User user;
     /**
      * 组id
      **/
-//    private Long groupId;
+    @TableField(value = "groupId")
+    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    private Long groupId;
     /**
      * 组
      **/
-    @ManyToOne
-    @JoinColumn(name = "groupId")
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true,isUniqueKey = true)
+    @Transient
     private Group group;
     /**
      * 角色
@@ -66,13 +68,13 @@ public class GroupMember {
      * 创建时间
      **/
     @PearField(isRequire = true,isShow = true,isSearchable = true,isOrderable = true)
-    @TableField(fill= FieldFill.INSERT)
+    @TableField(fill= FieldFill.INSERT,value = "gmtCreated")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime gmtCreated;
     /**
      * 修改时间
      **/
-    @TableField(fill= FieldFill.INSERT_UPDATE)
+    @TableField(fill= FieldFill.INSERT_UPDATE,value = "gmtModified")
     @Temporal(TemporalType.TIMESTAMP)
     @PearField(isRequire = true,isShow = true,isSearchable = true,isOrderable = true)
     private LocalDateTime gmtModified;

@@ -116,6 +116,7 @@ public class ApplicationInitialization implements CommandLineRunner {
         configService.checkValue(Constant.KEY_SITE_CHANGE_EMAIL_DONE_API, "/auth/change_email_done", Constant.ConfigFormatText, true, true);
         configService.checkValue(Constant.KEY_SITE_LOGIN_NEXT, "/", Constant.ConfigFormatText, true, true);
         configService.checkValue(Constant.KEY_SITE_USER_ID_TYPE, "email", Constant.ConfigFormatText, true, true);
+
 //        AdminContainer.buildAdminObjects(AdminContainer.getAllAdminObjects());
     }
 
