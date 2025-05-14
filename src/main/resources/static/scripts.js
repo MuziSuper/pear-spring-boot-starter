@@ -21,7 +21,7 @@ const queryForm = {
 $(document).ready(function () {
     let data = {};
     let map = {};
-    const pageSize = 5;
+    const pageSize = 10;
     let currentPage = 1;
     let totalPages;
     let currentSortField = '';
