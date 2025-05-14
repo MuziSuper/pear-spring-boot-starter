@@ -167,10 +167,10 @@ public class AdminObject {
             this.permissions.put("delete",true);
             this.permissions.put("action",true);
         }
-        this.permissions.put("create",true);
-        this.permissions.put("update",true);
-        this.permissions.put("delete",true);
-        this.permissions.put("action",true);
+        this.permissions.put("create",false);
+        this.permissions.put("update",false);
+        this.permissions.put("delete",false);
+        this.permissions.put("action",false);
     }
     @Override
     public String toString() {

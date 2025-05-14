@@ -35,6 +35,15 @@
         const baseUrl = window.location.origin;
 
         $(document).ready(function() {
+            // 从URL参数中获取email并填充到表单
+            const urlParams = new URLSearchParams(window.location.search);
+            const emailParam = urlParams.get('email');
+            if (emailParam) {
+                $('#email').val(emailParam);
+                // 自动聚焦到密码输入框
+                $('#password').focus();
+            }
+            
             $('#login-form').submit(function(event) {
                 event.preventDefault();
                 const email = $('#email').val();

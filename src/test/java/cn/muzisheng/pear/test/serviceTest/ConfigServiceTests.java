@@ -1,12 +1,11 @@
 package cn.muzisheng.pear.test.serviceTest;
 
 import cn.muzisheng.pear.constant.Constant;
+import cn.muzisheng.pear.initialize.PearApplicationInitialization;
 import cn.muzisheng.pear.mapper.dao.ConfigDAO;
 import cn.muzisheng.pear.entity.Config;
-import cn.muzisheng.pear.initialize.ApplicationInitialization;
 import cn.muzisheng.pear.core.config.impl.ConfigServiceImpl;
 import cn.muzisheng.pear.test.TestApplication;
-import cn.muzisheng.pear.utils.ExpiredCache;
 import cn.muzisheng.pear.utils.ExpiredCacheFactory;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
@@ -43,8 +42,8 @@ public class ConfigServiceTests {
 
     @BeforeEach
     public void setUp() {
-        ApplicationInitialization.EnvCache= ExpiredCacheFactory.newExpiredCacheFactory(Constant.CACHE_CAPACITY,Constant.CACHE_EXPIRED);
-        ApplicationInitialization.ConfigCache = ExpiredCacheFactory.newExpiredCacheFactory(Constant.CACHE_CAPACITY,Constant.CACHE_EXPIRED);
+        PearApplicationInitialization.EnvCache= ExpiredCacheFactory.newExpiredCacheFactory(Constant.CACHE_CAPACITY,Constant.CACHE_EXPIRED);
+        PearApplicationInitialization.ConfigCache = ExpiredCacheFactory.newExpiredCacheFactory(Constant.CACHE_CAPACITY,Constant.CACHE_EXPIRED);
     }
     @AfterEach
     public void tearDown() {
@@ -63,7 +62,7 @@ public class ConfigServiceTests {
         @Test
         @Transactional
         public void getEnv_CacheHit_ReturnsCachedValue() {
-            ApplicationInitialization.EnvCache.add("key", "cachedValue");
+            PearApplicationInitialization.EnvCache.add("key", "cachedValue");
             String result = configService.getEnv("key");
             assertEquals("cachedValue", result);
         }
@@ -77,7 +76,7 @@ public class ConfigServiceTests {
             }
             String result = configService.getEnv("key");
             assertEquals("fileValue", result);
-            assertEquals("fileValue", ApplicationInitialization.EnvCache.get("key"));
+            assertEquals("fileValue", PearApplicationInitialization.EnvCache.get("key"));
         }
 
         @Test
@@ -98,21 +97,21 @@ public class ConfigServiceTests {
                         """);
             }
             assertEquals("= value1", configService.getEnv("key1"));
-            assertEquals("= value1", ApplicationInitialization.EnvCache.get("key1"));
+            assertEquals("= value1", PearApplicationInitialization.EnvCache.get("key1"));
             assertEquals("= value2", configService.getEnv("key2"));
-            assertEquals("= value2", ApplicationInitialization.EnvCache.get("key2"));
+            assertEquals("= value2", PearApplicationInitialization.EnvCache.get("key2"));
             assertEquals("=value3", configService.getEnv("key3"));
-            assertEquals("=value3", ApplicationInitialization.EnvCache.get("key3"));
+            assertEquals("=value3", PearApplicationInitialization.EnvCache.get("key3"));
             assertNull(configService.getEnv("key4"));
-            assertNull(ApplicationInitialization.EnvCache.get("key4"));
+            assertNull(PearApplicationInitialization.EnvCache.get("key4"));
             assertNull(configService.getEnv("key5"));
-            assertNull(ApplicationInitialization.EnvCache.get("key5"));
+            assertNull(PearApplicationInitialization.EnvCache.get("key5"));
             assertNull(configService.getEnv("key6"));
-            assertNull(ApplicationInitialization.EnvCache.get("key6"));
+            assertNull(PearApplicationInitialization.EnvCache.get("key6"));
             assertEquals("value7=", configService.getEnv("key7"));
-            assertEquals("value7=", ApplicationInitialization.EnvCache.get("key7"));
+            assertEquals("value7=", PearApplicationInitialization.EnvCache.get("key7"));
             assertNull(configService.getEnv("key8"));
-            assertNull(ApplicationInitialization.EnvCache.get("key8"));
+            assertNull(PearApplicationInitialization.EnvCache.get("key8"));
         }
     }
     @Nested
@@ -128,7 +127,7 @@ public class ConfigServiceTests {
             }
             boolean flag = configService.getBoolEnv("boolKey");
             assertTrue(flag);
-            assertEquals("true", ApplicationInitialization.EnvCache.get("boolKey"));
+            assertEquals("true", PearApplicationInitialization.EnvCache.get("boolKey"));
         }
         @Transactional
         @Test
@@ -139,7 +138,7 @@ public class ConfigServiceTests {
             }
             boolean flag = configService.getBoolEnv("boolKey");
             assertFalse(flag);
-            assertEquals("tre", ApplicationInitialization.EnvCache.get("boolKey"));
+            assertEquals("tre", PearApplicationInitialization.EnvCache.get("boolKey"));
         }
     }
     @Nested
@@ -154,7 +153,7 @@ public class ConfigServiceTests {
             }
             boolean flag = configService.getBoolEnv("boolKey");
             assertTrue(flag);
-            assertEquals("true", ApplicationInitialization.EnvCache.get("boolKey"));
+            assertEquals("true", PearApplicationInitialization.EnvCache.get("boolKey"));
         }
         @Test
         public void getBoolEnv_Error() throws Exception{
@@ -164,7 +163,7 @@ public class ConfigServiceTests {
             }
             boolean flag = configService.getBoolEnv("boolKey");
             assertFalse(flag);
-            assertEquals("tre", ApplicationInitialization.EnvCache.get("boolKey"));
+            assertEquals("tre", PearApplicationInitialization.EnvCache.get("boolKey"));
         }
     }
     @Nested
@@ -203,7 +202,7 @@ public class ConfigServiceTests {
         @Test
         public void getValue_Normal_ConfigCache_Get_Value() throws Exception{
             configService=spy(new ConfigServiceImpl(environment, configDAO));
-            ApplicationInitialization.ConfigCache.add("key","value");
+            PearApplicationInitialization.ConfigCache.add("key","value");
             assertEquals("value", configService.getValue("key"));
         }
         @Test
@@ -215,7 +214,7 @@ public class ConfigServiceTests {
             config.setValue("value");
             when(configDAO.get("key")).thenReturn(config);
             assertEquals("value", configService.getValue("key"));
-            assertEquals("value", ApplicationInitialization.ConfigCache.get("key"));
+            assertEquals("value", PearApplicationInitialization.ConfigCache.get("key"));
         }
     }
     @Nested
@@ -304,7 +303,7 @@ public class ConfigServiceTests {
             configList.add(config);
             when(configDAO.getConfigsWithTrueAutoload()).thenReturn(configList);
             configService.loadAutoLoads();
-            assertEquals("value", ApplicationInitialization.ConfigCache.get("key"));
+            assertEquals("value", PearApplicationInitialization.ConfigCache.get("key"));
         }
         @Test
         public void loadAutoLoads_Error_Null() throws Exception{
@@ -318,7 +317,7 @@ public class ConfigServiceTests {
             configList.add(config);
             when(configDAO.getConfigsWithTrueAutoload()).thenReturn(configList);
             configService.loadAutoLoads();
-            assertEquals("value",ApplicationInitialization.ConfigCache.get("key"));
+            assertEquals("value", PearApplicationInitialization.ConfigCache.get("key"));
         }
     }
     @Nested
@@ -367,7 +366,7 @@ public class ConfigServiceTests {
             when(configDAO.getConfigsWithTruePub()).thenReturn(configList);
             Config[] res= configService.loadPublicConfigs();
             assertTrue(List.of(res).contains(config));
-            assertTrue(ApplicationInitialization.ConfigCache.contains("key"));
+            assertTrue(PearApplicationInitialization.ConfigCache.contains("key"));
         }
     }
 }

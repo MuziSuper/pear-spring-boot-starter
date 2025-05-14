@@ -43,13 +43,14 @@ public class UserServiceImpl implements UserService {
             throw new IllegalException();
         }
         if (userDAO.isExistsByEmail(registerUserForm.getEmail())) {
+            LOG.error("email has exists: {}", registerUserForm.getEmail());
             result.setError("Email has exists");
             result.setStatus(Constant.USER_EXCEPTION);
             return result.value();
         }
         User user = userDAO.createUser(registerUserForm.getEmail(), registerUserForm.getPassword());
         if (user == null) {
-            LOG.error("failed to create a user: " + registerUserForm.getEmail());
+            LOG.error("failed to create a user: {}", registerUserForm.getEmail());
             result.setStatus(Constant.USER_EXCEPTION);
             return result.value();
         }
@@ -63,14 +64,14 @@ public class UserServiceImpl implements UserService {
         user.setLastLoginIp(request.getRemoteAddr());
 
         if (!userDAO.updateUserById(user)) {
-            LOG.error("update user fields fail, user email: " + registerUserForm.getEmail());
+            LOG.error("update user fields fail, user email: {}", registerUserForm.getEmail());
         }
 
         /*
          * 触发用户注册事件，发布消息，
          * 后期消息系统进行补充
          */
-        LOG.info("register user success, user email: " + registerUserForm.getEmail());
+        LOG.info("register user success, user email: {}", registerUserForm.getEmail());
 
         Map<String, Object> req = new HashMap<>();
         req.put("email", user.getEmail());

@@ -337,10 +337,14 @@ public class AdminServiceImpl implements AdminService {
         response.setData(map);
         return response.value();
     }
+    /**
+     * 获取站点信息与pear数据集
+     **/
     private Map<String,Object> handleAdminJson(HttpServletRequest request, List<AdminObject> AdminObjects, BuildContext buildContext){
         Map<String,Object> res=new HashMap<>();
         List<AdminObject> viewObjects=new ArrayList<>();
         for(AdminObject adminObject:AdminObjects){
+            // adminObject逐个进行钩子权限检查（用户级）,目前未约定返回结果，只根据抛出的异常判断是否通过检查
             if(adminObject.getAccessCheck()!=null){
                 try{
                     adminObject.getAccessCheck().execute(request, adminObject);
@@ -352,7 +356,9 @@ public class AdminServiceImpl implements AdminService {
             adminObject.buildPermissions(userService.currentUser(request));
             viewObjects.add(adminObject);
         }
+        // 获取渲染页面的所有站点信息
         Map<String, Object> siteCtx=getRenderPageContext(request);
+        //
         if(buildContext!=null){
             buildContext.execute(request,siteCtx);
         }
@@ -361,6 +367,9 @@ public class AdminServiceImpl implements AdminService {
         res.put("site",siteCtx);
         return res;
     }
+    /**
+     * 获取渲染页面的所有站点信息
+     **/
     public Map<String,Object> getRenderPageContext(HttpServletRequest request){
         configService.loadAutoLoads();
         String loginNext=request.getParameter("next");

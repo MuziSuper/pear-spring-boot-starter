@@ -29,31 +29,55 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
+/**
+ * 容器类，用于存储管理所有adminObject
+ **/
 @Component
 public class AdminContainer {
     private static final Logger logService = LoggerFactory.getLogger(AdminContainer.class);
     private static final List<AdminObject> adminObjects = new ArrayList<>();
+    private static final Map<String, AdminObject> adminObjectMap = new HashMap<>();
 
+    /**
+     * 获取所有adminObject
+     **/
     public static List<AdminObject> getAllAdminObjects() {
         return adminObjects;
     }
 
+    /**
+     * 添加adminObject
+     **/
     public static void addAdminObject(AdminObject adminObject) {
+        if (adminObjectMap.containsKey(adminObject.getTableName())) {
+            logService.warn("The database table named \"" + adminObject.getTableName() + "\" already exists.");
+        }
         adminObjects.add(adminObject);
+        // tableName为唯一,覆盖掉原先的表名重复的adminObject
+        adminObjectMap.put(adminObject.getTableName(), adminObject);
+    }
+
+    public static AdminObject getAdminObject(String tableName) {
+        if (adminObjectMap.containsKey(tableName)) {
+            return adminObjectMap.get(tableName);
+        }
+        return null;
     }
 
     /**
-     * 处理AdminObject数据
+     * 判断是否存在此adminObject
+     **/
+    public static boolean existsAdminObject(String tableName) {
+        return adminObjectMap.containsKey(tableName);
+    }
+
+    /**
+     * 构建入口
      **/
     public static void buildAdminObjects(List<AdminObject> objects) {
-        List<String> existsTableNames = new ArrayList<>();
         for (AdminObject adminObject : objects) {
-            if (existsTableNames.contains(adminObject.getTableName())) {
-                logService.warn(adminObject.getTableName() + " is exists");
-                continue;
-            }
-            existsTableNames.add(adminObject.getTableName());
             try {
+                // 处理AdminObject数据
                 build(adminObject);
             } catch (GeneralException e) {
                 logService.error(e.getMessage());
@@ -61,33 +85,13 @@ public class AdminContainer {
         }
     }
 
-    public static boolean existsAdminObject(AdminObject adminObject) {
-        for (AdminObject adminObject1 : adminObjects) {
-            if (adminObject1.getName().equals(adminObject.getName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * 处理AdminObject数据
      **/
     private static void build(AdminObject adminObject) {
-        if ("".equals(adminObject.getPath()) || adminObject.getPath() == null) {
-            adminObject.setPath(adminObject.getName().toLowerCase());
-        }
-        if ("_".equals(adminObject.getPath()) || "".equals(adminObject.getPath())) {
-            throw new GeneralException("invalid path");
-        }
-        if (adminObject.getPluralName() == null || adminObject.getPluralName().isEmpty()) {
-            adminObject.setPluralName(PluralUtil.pluralize(adminObject.getName()));
-        }
-        /*
-          此处案例有填充filed字段,暂保留
-         */
+        // 解析字段，将所有字段经过判断处理后存入AdminObject的fields字段中
         parseFields(adminObject, adminObject.getModel());
-
+        // 主键与唯一键不能为空
         if ((adminObject.getPrimaryKeys() == null || adminObject.getPrimaryKeys().isEmpty()) && (adminObject.getUniqueKeys() == null || adminObject.getUniqueKeys().isEmpty())) {
             throw new GeneralException(adminObject.getName() + " not has primaryKey or uniqueKeys");
         }
@@ -99,7 +103,7 @@ public class AdminContainer {
      * @param adminObject 通用类对象
      * @param model       实体类的Class对象
      **/
-    public static void parseFields(AdminObject adminObject, Class<?> model) {
+    private static void parseFields(AdminObject adminObject, Class<?> model) {
         // 此adminObject的AminField集合
         List<AdminField> list = new ArrayList<>();
 
@@ -107,7 +111,7 @@ public class AdminContainer {
         for (Field field : model.getDeclaredFields()) {
             boolean isForeignID = false;
             AdminField adminField = new AdminField();
-            if(field.isAnnotationPresent(PearField.class)){
+            if (field.isAnnotationPresent(PearField.class)) {
                 PearField pearField = field.getAnnotation(PearField.class);
                 // pearField填充label字段
                 adminField.setLabel(pearField.label());
@@ -117,12 +121,12 @@ public class AdminContainer {
                 adminField.setFieldName(CamelToSnakeUtil.toSnakeCase(field.getName()));
             }
             // 若pearField没有属性label则默认
-            if (adminField.getLabel() == null|| adminField.getLabel().isEmpty()) {
+            if (adminField.getLabel() == null || adminField.getLabel().isEmpty()) {
                 adminField.setLabel(field.getName().replaceAll("_", " "));
             }
 
             /*
-             * 若为模型对象，则递归，这部分还没做，先测试非对象
+             * 若为实体类对象，则递归，这部分还没做，先非对象
              */
 
             // 忽略钩子方法

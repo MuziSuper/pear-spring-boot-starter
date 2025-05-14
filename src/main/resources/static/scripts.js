@@ -1,3 +1,13 @@
+// 检查用户是否已登录
+function checkLogin() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/auth/login';
+        return false;
+    }
+    return true;
+}
+
 const queryForm = {
     pos: 0,
     keyword: "",
@@ -46,8 +56,48 @@ $(document).ready(function () {
             console.error('请求失败:', error);
             console.error('状态:', status);
             console.error('响应:', xhr.responseText);
+            alert('用户未登录自动跳转到登录页面...');
+            checkLogin();
         }
     });
+
+    // 重置QueryForm为初始状态
+    function resetQueryForm() {
+        // 重置queryForm对象
+        queryForm.pos = 0;
+        queryForm.keyword = "";
+        queryForm.filters = [];
+        queryForm.orders = [];
+        queryForm.foreignMode = false;
+        queryForm.viewFields = [];
+        queryForm.searchFields = [];
+
+        // 重置UI元素
+        $('#search-input').val('');
+        $('#filter-field').val('');
+        $('#filter-op').val('=');
+        $('#filter-value').val('');
+        $('#filter-value-start').val('');
+        $('#filter-value-end').val('');
+        $('#filter-value-between').hide();
+        $('#filter-value').show();
+
+        // 重置分页
+        currentPage = 1;
+        $("#page-numbers").text('1 / 1 页');
+        $("#prev-page").prop("disabled", true);
+        $("#next-page").prop("disabled", true);
+
+        // 重置排序
+        currentSortField = '';
+        currentSortOrder = 'asc';
+        $('th').find('.sort-arrow').removeClass('up down active').addClass('down');
+
+        // 重置复选框
+        $('#select-all').prop('checked', false);
+        $('.row-checkbox').prop('checked', false);
+        updateDeleteButtonState();
+    }
 
     // 初始化侧边栏菜单
     function initSidebarMenu() {
@@ -83,6 +133,16 @@ $(document).ready(function () {
                 const model = $(this).data('model');
                 const desc = $(this).data('desc');
                 const filterables = $(this).data('filterables') || [];
+
+                // 如果点击的是当前模型，不做任何操作
+                if (model === currentModel) {
+                    return;
+                }
+
+                // 重置QueryForm
+                resetQueryForm();
+                
+                // 更新当前模型
                 currentModel = model;
                 
                 // 更新标题和描述
@@ -95,15 +155,6 @@ $(document).ready(function () {
                 
                 // 更新筛选字段
                 initFilterFields(filterables);
-                
-                // 重置筛选条件
-                $('#filter-field').val('');
-                $('#filter-op').val('=');
-                $('#filter-value').val('');
-                $('#filter-value-start').val('');
-                $('#filter-value-end').val('');
-                $('#filter-value-between').hide();
-                $('#filter-value').show();
                 
                 // 加载数据
                 fetchDataAndRender();
@@ -199,19 +250,26 @@ $(document).ready(function () {
         // 动态生成表头
         const firstItem = data.items[0];
         let headerRow = `<tr>
-            <th class="border-b px-4 py-2 text-center">
-                <input type="checkbox" id="select-all" class="form-checkbox h-4 w-4" />
+            <th class="border-b px-4 py-2 text-center" style="width: 50px;">
+                <div class="flex items-center justify-center">
+                    <input type="checkbox" id="select-all" class="form-checkbox h-4 w-4" />
+                </div>
             </th>`;
 
         // 添加表头和排序图标
         for (const key in firstItem) {
             if (firstItem.hasOwnProperty(key)) {
                 const isCurrentSort = currentSortField === key;
+                const sortClass = isCurrentSort ? (currentSortOrder === 'asc' ? 'up active' : 'down active') : 'down';
                 headerRow += `
-                    <th class="border-b px-4 py-2 cursor-pointer select-none" data-field="${key}">
-                        <div class="header-cell">
-                            <span class="field-text">${key}</span>
-                            <span class="sort-arrow ${isCurrentSort ? (currentSortOrder === 'asc' ? 'up active' : 'down active') : 'down'}">&gt;</span>
+                    <th class="border-b px-4 py-2 cursor-pointer select-none" data-field="${key}" style="min-width: 160px;">
+                        <div class="flex items-center justify-between overflow-x-auto whitespace-nowrap">
+                            <div class="flex-1 text-center">${key}</div>
+                            <div class="sort-arrow ${sortClass} flex items-center justify-center ml-2" style="width: 20px; height: 20px; min-width: 20px;">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M7 10l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
                         </div>
                     </th>`;
             }
@@ -225,10 +283,21 @@ $(document).ready(function () {
         const currentData = data.items.slice(startIndex, endIndex);
 
         currentData.forEach((item) => {
-            let row = `<tr class="border-t border-gray-300"><td class="px-4 py-2 text-center"><input type="checkbox" class="row-checkbox form-checkbox"></td>`;
+            let row = `<tr class="border-t border-gray-300">
+                <td class="px-4 py-2 text-center" style="width: 50px;">
+                    <div class="flex items-center justify-center">
+                        <input type="checkbox" class="row-checkbox form-checkbox">
+                    </div>
+                </td>`;
+            
             for (const key in item) {
                 if (item.hasOwnProperty(key)) {
-                    row += `<td class="px-4 py-2">${item[key]}</td>`;
+                    row += `
+                        <td class="px-4 py-2" style="width: 200px;">
+                            <div class="overflow-x-auto whitespace-nowrap">
+                                ${item[key]}
+                            </div>
+                        </td>`;
                 }
             }
             row += `</tr>`;
