@@ -35,7 +35,7 @@ public class AdminApi {
         }
         Response<Object> response = new Response<>();
         response.setError("Model not found");
-        response.setStatus(Constant.GENERAL_EXCEPTION);
+        response.setStatus(Constant.ILLEGAL_EXCEPTION);
         return response.value();
     }
 
@@ -47,14 +47,12 @@ public class AdminApi {
      **/
     @PutMapping("{model}")
     public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody(required = false) Map<String, Object> data) {
-        for (AdminObject adminObject : AdminContainer.getAllAdminObjects()) {
-            if (adminObject.getName().equalsIgnoreCase(model)) {
-                return adminService.handleCreate(request, model, adminObject, data);
-            }
+        if(AdminContainer.existsAdminObject(model)) {
+            return adminService.handleCreate(request, model, AdminContainer.getAdminObject(model), data);
         }
         Response<Map<String, Object>> response = new Response<>();
         response.setError("Model not found");
-        response.setStatus(Constant.GENERAL_EXCEPTION);
+        response.setStatus(Constant.ILLEGAL_EXCEPTION);
         return response.value();
     }
     /**
@@ -71,10 +69,8 @@ public class AdminApi {
     }
 //    @PatchMapping("{model}")
 //    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
-//        for(PearObject adminObject : PearApplicationInitialization.adminObjects){
-//            if(adminObject.getTableName().equals(model)){
-//                return adminService.handleQueryOrGetOne(adminObject);
-//            }
+//        if(AdminContainer.existsAdminObject(model)) {
+//            return adminService.handleQueryOrGetOne(adminObject);
 //        }
 //        Response<Map<String, Object>> response = new Response<>();
 //        response.setError("Model not found");

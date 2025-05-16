@@ -12,11 +12,15 @@ public class AdminForeign {
      **/
     private String field;
     /**
+     * 当前表外键字段对应的类属性名
+     **/
+    private String foreignField;
+    /**
      * 当前表外键字段数据库中的名称
      **/
     private String fieldName;
     /**
-     * 外键路径
+     * 外键的admin路径名
      **/
     private String path;
 }

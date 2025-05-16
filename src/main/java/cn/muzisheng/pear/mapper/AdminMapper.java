@@ -15,6 +15,6 @@ public interface AdminMapper {
     @SelectProvider(type = AdminDAO.class, method = "query")
     List<Map<String, Object>> query(String tableName,String showClause, String whereClause, String orderClause, String extraLikeClause,int limit);
     @InsertProvider(type = AdminDAO.class, method = "create")
-    int create(String tableName,Object object);
+    int create(String tableName,Map<String,Object> map);
 
 }

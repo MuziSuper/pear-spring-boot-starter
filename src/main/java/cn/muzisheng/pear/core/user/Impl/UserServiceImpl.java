@@ -153,19 +153,22 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 获取当前用户信息，并且缓存到上下文中
+     * 获取当前用户信息，并且缓存到上下文中，返回null则当前为无用户状态
      **/
     public User currentUser(HttpServletRequest request) {
+        // 从当前请求会话中获取用户信息，如果存在则直接返回
         Object objectUser = Context.getRequestScope(request,Constant.SESSION_USER_ID);
         if (objectUser != null) {
             if(objectUser instanceof User){
                 return (User) objectUser;
             }
         }
+        // 从当前网页会话中获取用户id，如果不存在，则返回null
         Object userId = Context.getSessionScope(request,Constant.SESSION_USER_ID);
         if (userId == null) {
             return null;
         }
+        // 从数据库中获取用户信息
         User user = null;
         if(userId instanceof Long){
             user = userDAO.getUserById((long) userId);
@@ -173,6 +176,7 @@ public class UserServiceImpl implements UserService {
                 return null;
             }
         }
+        // 将用户信息存入上下文，并返回
         if(user!=null){
             Context.setRequestScope(request,Constant.SESSION_USER_ID, user);
             return user;
@@ -181,7 +185,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 刷新用户最新登陆ip, 将用户id存入session中
+     * 刷新用户最新登陆ip, 将用户id存入网站会话中
      **/
     private void login(HttpServletRequest request, User user) {
         userDAO.setLastLogin(user, request.getRemoteAddr());

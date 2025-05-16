@@ -1,5 +1,6 @@
 package cn.muzisheng.pear.core.admin.impl;
 
+import cn.muzisheng.pear.annotation.Verification;
 import cn.muzisheng.pear.core.admin.AdminService;
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.core.config.ConfigService;
@@ -32,6 +33,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.lang.model.element.NestingKind;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.text.DateFormat;
@@ -52,13 +54,14 @@ public class AdminServiceImpl implements AdminService {
     private static final Logger LOG = LoggerFactory.getLogger(AdminServiceImpl.class);
 
     @Autowired
-    public AdminServiceImpl(AdminMapper adminMapper, UserService userService, ConfigService configService,ResourcePatternResolver resourceLoader) {
+    public AdminServiceImpl(AdminMapper adminMapper, UserService userService, ConfigService configService, ResourcePatternResolver resourceLoader) {
         this.configService = configService;
         this.adminMapper = adminMapper;
         this.userService = userService;
         this.resourceLoader = resourceLoader;
     }
 
+//    @Verification(UserVerify = true)
     @Override
     public ResponseEntity<Result<Object>> handleQueryOrGetOne(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm) {
         Response<Object> response = new Response<>();
@@ -75,29 +78,35 @@ public class AdminServiceImpl implements AdminService {
         return response.value();
     }
 
+    /**
+     * 处理请求体或请求头中的数据，并返回结果
+     **/
+//    @Verification(UserVerify = true)
     @Override
     public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, String model, AdminObject adminObject, Map<String, Object> data) {
         Response<Map<String, Object>> response = new Response<>();
+        // 根据query值遍历并获取其映射数据库表的主键或外键键值对
         Map<String, Object> params = getPrimaryValues(request, adminObject);
-        if(params.isEmpty()&&data==null){
+        if (params.isEmpty() && data == null) {
             throw new IllegalException("Both the query parameter and the request body are null.");
         }
-        Map<String,Object> res = unmarshalFrom(adminObject, data, params);
+        // 获取整合好的数据
+        Map<String, Object> res = unmarshalFrom(adminObject, data, params);
 
-        if(adminObject.getBeforeCreate()!=null){
+        if (adminObject.getBeforeCreate() != null) {
             try {
-                res=(Map)adminObject.getBeforeCreate().execute(request,res);
+                adminObject.getBeforeCreate().execute(request, adminObject,res);
             } catch (Exception e) {
                 LOG.error("beforeCreate error", e);
-                throw new GeneralException("beforeCreate error");
+                throw new GeneralException("beforeCreate error: "+ e.getMessage());
             }
         }
-        if(adminMapper.create(model,res)<1){
+        if (adminMapper.create(model, res) < 1) {
             LOG.error("create error. ");
         }
-        if(adminObject.getBeforeRender()!=null){
+        if (adminObject.getBeforeRender() != null) {
             try {
-                res=(Map)adminObject.getBeforeRender().execute(request,res);
+                adminObject.getBeforeRender().execute(request,adminObject, res);
             } catch (Exception e) {
                 LOG.error("beforeRender error", e);
                 throw new GeneralException("beforeRender error");
@@ -106,6 +115,7 @@ public class AdminServiceImpl implements AdminService {
         response.setData(res);
         return response.value();
     }
+
 
     /**
      * 添加主键值到请求体中,并将请求体数据经过处理后返回
@@ -123,34 +133,38 @@ public class AdminServiceImpl implements AdminService {
                 editable.put(edit, true);
             }
         }
-        // 删除不可编辑字段
+        // 删除请求体中不可编辑字段
         body.keySet().removeIf(field -> !editable.containsKey(field));
-        // 添加body中没有的query参数
+        // 添加body中没有的query参数，整合数据到body中
         for (String field : params.keySet()) {
             if (!body.containsKey(field)) {
                 body.put(field, params.get(field));
             }
         }
-        // 将body中的值转换为目标类型
+        // 将body中的键值转换为目标类型
         for (AdminField adminField : adminObject.getFields()) {
+            // 获取body中的此字段数据
             Object val = body.get(adminField.getName());
+            // 不存在则跳过
             if (val == null) {
                 continue;
             }
+            // 获取目标类型
             Class<?> targetClass = adminField.getType().getClass();
-                if (adminField.getForeign() != null) {
-                    for (Map.Entry<String, Object> entry1 : body.entrySet()) {
-                        if (entry1.getValue() instanceof Map bodyFiledMap) {
-                            for (Map.Entry entry2 : ((Map<String, Object>) bodyFiledMap).entrySet()) {
-                                if (entry2.getKey().equals("value")) {
-                                    val = entry2.getValue();
-                                }
-                            }
+            // 如果某一数据为Map,则尝试获取其value的键值
+            if (val instanceof Map<?, ?> valMap) {
+                for (Map.Entry<?, ?> entry2 : valMap.entrySet()) {
+                    if (entry2.getKey() instanceof String) {
+                        if (entry2.getKey().equals("value")) {
+                            val = entry2.getValue();
                         }
+                    } else {
+                        LOG.warn("The parameter type passed in is Map, but the data of the value key is not obtained or the data types do not match.");
                     }
                 }
+            }
 
-            body.put(adminField.getName(),convertValue(targetClass, val));
+            body.put(adminField.getName(), convertValue(targetClass, val));
         }
         return body;
     }
@@ -161,13 +175,13 @@ public class AdminServiceImpl implements AdminService {
         }
         try {
             if (targetClass.equals(Integer.class)) {
-                val=formatAsInt(val);
+                val = formatAsInt(val);
             } else if (targetClass.equals(Long.class)) {
-                val=formatAsLong(val);
+                val = formatAsLong(val);
             } else if (targetClass.equals(Double.class)) {
-                val=formatAsDouble(val);
+                val = formatAsDouble(val);
             } else if (targetClass.equals(Float.class)) {
-                val=formatAsFloat(val);
+                val = formatAsFloat(val);
             } else if (targetClass.equals(Boolean.class)) {
                 String valString = (String) val;
                 if (valString.equalsIgnoreCase("true") || valString.equalsIgnoreCase("on") || valString.equalsIgnoreCase("yes") || valString.equals("1")) {
@@ -186,7 +200,7 @@ public class AdminServiceImpl implements AdminService {
                 val = dateFormat.parse((String) val);
             } else {
                 try {
-                    val=JSON.parseObject((String) val, targetClass);
+                    val = JSON.parseObject((String) val, targetClass);
                 } catch (JSONException e) {
                     val = null;
                 }
@@ -297,58 +311,59 @@ public class AdminServiceImpl implements AdminService {
         return null;
     }
 
+    @Verification
     @Override
     public ResponseEntity<Result<Map<String, Object>>> adminJson(HttpServletRequest request) {
-        Response<Map<String,Object>> response = new Response<>();
-        withAdminAuth(request);
-        Map<String,Object> map = handleAdminJson(request,AdminContainer.getAllAdminObjects(),(req, data)->{
-            data.put("dashboard",configService.getValue(Constant.KEY_ADMIN_DASHBOARD));
+        Response<Map<String, Object>> response = new Response<>();
+        Map<String, Object> map = handleAdminJson(request, AdminContainer.getAllAdminObjects(), (req, data) -> {
+            data.put("dashboard", configService.getValue(Constant.KEY_ADMIN_DASHBOARD));
             return data;
         });
         response.setData(map);
         return response.value();
     }
 
+    @Verification
     @Override
     public ResponseEntity<Result<Map<String, Object>>> adminFilepath(HttpServletRequest request) {
-        withAdminAuth(request);
-        List<String> cssFiles=new ArrayList<>();
-        List<String> jsFiles=new ArrayList<>();
+        List<String> cssFiles = new ArrayList<>();
+        List<String> jsFiles = new ArrayList<>();
         try {
             Resource[] resources = resourceLoader.getResources("classpath:static/**/*");
-            for(Resource resource:resources){
-                if(resource.getFilename().endsWith(".css")){
+            for (Resource resource : resources) {
+                if (resource.getFilename().endsWith(".css")) {
                     cssFiles.add(resource.getFilename());
                 }
-                if(resource.getFilename().endsWith(".js")){
+                if (resource.getFilename().endsWith(".js")) {
                     jsFiles.add(resource.getFilename());
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             LOG.error(e.getMessage());
             throw new GeneralException();
         }
-        Response<Map<String,Object>> response = new Response<>();
-        Map<String,Object> map=new HashMap<>();
-        map.put("Scripts",jsFiles);
-        map.put("Styles",cssFiles);
-        map.put("Dashboard",configService.getValue(Constant.KEY_ADMIN_DASHBOARD));
+        Response<Map<String, Object>> response = new Response<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("Scripts", jsFiles);
+        map.put("Styles", cssFiles);
+        map.put("Dashboard", configService.getValue(Constant.KEY_ADMIN_DASHBOARD));
         map.put("Objects", AdminContainer.getAllAdminObjects());
         response.setData(map);
         return response.value();
     }
+
     /**
      * 获取站点信息与pear数据集
      **/
-    private Map<String,Object> handleAdminJson(HttpServletRequest request, List<AdminObject> AdminObjects, BuildContext buildContext){
-        Map<String,Object> res=new HashMap<>();
-        List<AdminObject> viewObjects=new ArrayList<>();
-        for(AdminObject adminObject:AdminObjects){
+    private Map<String, Object> handleAdminJson(HttpServletRequest request, List<AdminObject> AdminObjects, BuildContext buildContext) {
+        Map<String, Object> res = new HashMap<>();
+        List<AdminObject> viewObjects = new ArrayList<>();
+        for (AdminObject adminObject : AdminObjects) {
             // adminObject逐个进行钩子权限检查（用户级）,目前未约定返回结果，只根据抛出的异常判断是否通过检查
-            if(adminObject.getAccessCheck()!=null){
-                try{
+            if (adminObject.getAccessCheck() != null) {
+                try {
                     adminObject.getAccessCheck().execute(request, adminObject);
-                }catch (Exception e){
+                } catch (Exception e) {
                     LOG.error(e.getMessage());
                     continue;
                 }
@@ -357,28 +372,29 @@ public class AdminServiceImpl implements AdminService {
             viewObjects.add(adminObject);
         }
         // 获取渲染页面的所有站点信息
-        Map<String, Object> siteCtx=getRenderPageContext(request);
+        Map<String, Object> siteCtx = getRenderPageContext(request);
         //
-        if(buildContext!=null){
-            buildContext.execute(request,siteCtx);
+        if (buildContext != null) {
+            buildContext.execute(request, siteCtx);
         }
-        res.put("objects",viewObjects);
-        res.put("user",userService.currentUser(request));
-        res.put("site",siteCtx);
+        res.put("objects", viewObjects);
+        res.put("user", userService.currentUser(request));
+        res.put("site", siteCtx);
         return res;
     }
+
     /**
      * 获取渲染页面的所有站点信息
      **/
-    public Map<String,Object> getRenderPageContext(HttpServletRequest request){
+    public Map<String, Object> getRenderPageContext(HttpServletRequest request) {
         configService.loadAutoLoads();
-        String loginNext=request.getParameter("next");
-        if(loginNext == null|| loginNext.isEmpty()){
+        String loginNext = request.getParameter("next");
+        if (loginNext == null || loginNext.isEmpty()) {
             loginNext = configService.getValue(Constant.KEY_SITE_LOGIN_NEXT);
         }
-        HashMap<String,Object> res=new HashMap<>();
-        res.put("loginNext",loginNext);
-        HashMap<String,Object> site=new HashMap<>();
+        HashMap<String, Object> res = new HashMap<>();
+        res.put("loginNext", loginNext);
+        HashMap<String, Object> site = new HashMap<>();
         site.put("Url", configService.getValue(Constant.KEY_SITE_URL));
         site.put("Name", configService.getValue(Constant.KEY_SITE_NAME));
         site.put("Admin", configService.getValue(Constant.KEY_SITE_ADMIN));
@@ -398,25 +414,10 @@ public class AdminServiceImpl implements AdminService {
         site.put("ResetPasswordDoneApi", configService.getValue(Constant.KEY_SITE_RESET_PASSWORD_DONE_API));
         site.put("ChangeEmailDoneApi", configService.getValue(Constant.KEY_SITE_CHANGE_EMAIL_DONE_API));
         site.put("UserIdType", configService.getValue(Constant.KEY_SITE_USER_ID_TYPE));
-        res.put("site",site);
+        res.put("site", site);
         return res;
     }
-    /**
-     * 验证用户是否登录，未登录则抛出异常
-     **/
-    private void withAdminAuth(HttpServletRequest request){
-        User user=userService.currentUser(request);
-        if(user==null){
-            String signUrl=configService.getValue(Constant.KEY_SITE_SIGNIN_URL);
-            if(signUrl==null){
-                throw new AuthorizationException("unauthorized");
-            }else{
-                throw new AuthorizationException("unauthorized;signUrl="+signUrl);
-            }
-        }else if(!user.isStaff() && !user.isSuperUser()) {
-            throw new ForbiddenException("forbidden");
-        }
-    }
+
     /**
      * 拼接数据库db的查询子句,筛选子句，排序子句，获取查询总数，
      * 携带外键连接的表其所有数据，将多条总数据放入映射集合与列表中，
@@ -462,7 +463,7 @@ public class AdminServiceImpl implements AdminService {
                     }
                     // 如果是between操作，则构造BETWEEN语句,也不带WHERE
                 } else if (Constant.FILTER_OP_BETWEEN.equals(filter.getOp())) {
-                    if (filter.getValue() instanceof List values) {
+                    if (filter.getValue() instanceof List<?> values) {
                         if (values.size() == 2) {
                             // `user`.name BETWEEN 'John' AND 'Doe'
                             if ((values.get(0) instanceof Integer && values.get(1) instanceof Integer) || (values.get(0) instanceof Float && values.get(1) instanceof Float)) {
@@ -484,7 +485,7 @@ public class AdminServiceImpl implements AdminService {
         // 排序子句，不加ORDER BY
         List<Order> orders;
         StringBuilder orderClause = new StringBuilder();
-        if (queryForm.getOrders()!=null|| queryForm.getOrders().get(0) !=null) {
+        if (queryForm.getOrders() != null && queryForm.getOrders().get(0) != null) {
             orders = queryForm.getOrders();
         } else {
             orders = adminObject.getOrders();
@@ -519,12 +520,11 @@ public class AdminServiceImpl implements AdminService {
         List<Map<String, Object>> result = adminMapper.query(adminObject.getTableName(), showClause.toString(), whereClause, orderClause.toString(), whereClauseBuilder.toString(), queryForm.getLimit());
         if (adminObject.getBeforeRender() != null) {
             try {
-                Object res = adminObject.getBeforeRender().execute(request, result);
-                if (res instanceof List) {
-                    result = (List<Map<String, Object>>) res;
-                }
+                adminObject.getBeforeRender().execute(request, adminObject,result);
             } catch (Exception e) {
                 LOG.warn("BeforeRender error: {}", e.getMessage());
+                throw new GeneralException("BeforeRender error: "+ e.getMessage());
+
             }
         }
         r.setPos(queryForm.getPos());
@@ -545,7 +545,7 @@ public class AdminServiceImpl implements AdminService {
         Map<String, Object> queryMap = getPrimaryValues(request, adminObject);
         if (queryMap.isEmpty()) {
             LOG.error("invalid primary key");
-            throw new GeneralException("invalid primary key");
+            throw new IllegalException("invalid primary key");
         }
         // 使用预加载，获取对象及其外键链接的数据
         Object result = adminMapper.selectFirst(adminObject.getTableName(), queryMap);
@@ -554,15 +554,11 @@ public class AdminServiceImpl implements AdminService {
             throw new GeneralException("Data cannot be found.");
         }
         if (adminObject.getBeforeRender() != null) {
-            Object res;
             try {
-                res = adminObject.getBeforeRender().execute(request, result);
+                adminObject.getBeforeRender().execute(request, adminObject, result);
             } catch (Exception e) {
-                LOG.error("BeforeRender error");
-                throw new GeneralException("BeforeRender error");
-            }
-            if (res != null) {
-                result = res;
+                LOG.warn("BeforeRender error: {}", e.getMessage());
+                throw new GeneralException("BeforeRender error: "+ e.getMessage());
             }
         }
         // 序列化对象，将result转为map[string]any
@@ -593,7 +589,7 @@ public class AdminServiceImpl implements AdminService {
         }
         if (adminObject.getAdminViewOnSite() != null) {
             try {
-                data.put("_adminExtra", adminObject.getAdminViewOnSite().execute(request, result));
+                data.put("_adminExtra", adminObject.getAdminViewOnSite().execute(request,adminObject, result));
             } catch (Exception e) {
                 LOG.error("AdminViewOnSite error");
             }
@@ -610,7 +606,7 @@ public class AdminServiceImpl implements AdminService {
         if (adminObject.getPrimaryKeys() != null) {
             for (String field : adminObject.getPrimaryKeys()) {
                 String param = request.getParameter(field);
-                if (param!=null) {
+                if (param != null) {
                     queryMap.put(field, param);
                     keysExist = true;
                 }
@@ -622,7 +618,7 @@ public class AdminServiceImpl implements AdminService {
         if (adminObject.getUniqueKeys() != null) {
             for (String field : adminObject.getUniqueKeys()) {
                 String param = request.getParameter(field);
-                if (param!=null) {
+                if (param != null) {
                     queryMap.put(field, param);
                 }
             }

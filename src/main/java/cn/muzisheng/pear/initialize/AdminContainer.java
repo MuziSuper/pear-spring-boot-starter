@@ -1,25 +1,16 @@
 package cn.muzisheng.pear.initialize;
 
 import cn.muzisheng.pear.annotation.PearField;
-import cn.muzisheng.pear.constant.Constant;
-import cn.muzisheng.pear.entity.Config;
-import cn.muzisheng.pear.entity.Group;
-import cn.muzisheng.pear.entity.GroupMember;
-import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.handler.*;
 import cn.muzisheng.pear.model.*;
-import cn.muzisheng.pear.properties.ConfigProperties;
 import cn.muzisheng.pear.utils.CamelToSnakeUtil;
-import cn.muzisheng.pear.utils.PluralUtil;
-import jakarta.annotation.PostConstruct;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Transient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
@@ -34,7 +25,7 @@ import java.util.*;
  **/
 @Component
 public class AdminContainer {
-    private static final Logger logService = LoggerFactory.getLogger(AdminContainer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AdminContainer.class);
     private static final List<AdminObject> adminObjects = new ArrayList<>();
     private static final Map<String, AdminObject> adminObjectMap = new HashMap<>();
 
@@ -46,17 +37,22 @@ public class AdminContainer {
     }
 
     /**
-     * 添加adminObject
+     * 添加adminObject的tableName字段进入adminObjectMap
      **/
     public static void addAdminObject(AdminObject adminObject) {
         if (adminObjectMap.containsKey(adminObject.getTableName())) {
-            logService.warn("The database table named \"" + adminObject.getTableName() + "\" already exists.");
+            LOG.warn("The database table named \"" + adminObject.getTableName() + "\" already exists.");
         }
         adminObjects.add(adminObject);
         // tableName为唯一,覆盖掉原先的表名重复的adminObject
         adminObjectMap.put(adminObject.getTableName(), adminObject);
     }
 
+    /**
+     * 获取adminObject
+     *
+     * @param tableName 数据库表名
+     **/
     public static AdminObject getAdminObject(String tableName) {
         if (adminObjectMap.containsKey(tableName)) {
             return adminObjectMap.get(tableName);
@@ -66,6 +62,8 @@ public class AdminContainer {
 
     /**
      * 判断是否存在此adminObject
+     *
+     * @param tableName 数据库表名
      **/
     public static boolean existsAdminObject(String tableName) {
         return adminObjectMap.containsKey(tableName);
@@ -80,7 +78,7 @@ public class AdminContainer {
                 // 处理AdminObject数据
                 build(adminObject);
             } catch (GeneralException e) {
-                logService.error(e.getMessage());
+                LOG.error(e.getMessage());
             }
         }
     }
@@ -109,8 +107,8 @@ public class AdminContainer {
 
         // 获取model的所有字段
         for (Field field : model.getDeclaredFields()) {
-            boolean isForeignID = false;
             AdminField adminField = new AdminField();
+            // 先根据PearField的参数填充adminField
             if (field.isAnnotationPresent(PearField.class)) {
                 PearField pearField = field.getAnnotation(PearField.class);
                 // pearField填充label字段
@@ -186,7 +184,10 @@ public class AdminContainer {
                         adminField.setCanNull(true);
                     }
                 }
-                // adminField将外键与主键字段存入primaryKeyMap
+
+                // 当字段标记为唯一键或主键时，如果以id结尾则将字段名以键值对方式存入primaryKeyMap中，
+                // 并且如果当前类中存在此字段对应类属性，则将类属性名与字段名存入primaryKeyMap中，
+                // 最后将主键和唯一键分别存入primaryKeys和uniqueKeys中
                 if ((column != null && column.unique()) || field.getAnnotation(Id.class) != null) {
                     String keyName = adminField.getName();
                     // 如果字段以id结尾，则其为外键
@@ -194,23 +195,11 @@ public class AdminContainer {
                         String idName = field.getName().substring(0, field.getName().length() - 2);
                         if (!idName.isEmpty()) {
                             // 获取model的外键对应的实体类字段
-                            for (Field foreignField : model.getDeclaredFields()) {
-                                if (foreignField.getName().equals(idName)) {
-                                    // 外键不放入adminField中
-                                    isForeignID = true;
-                                    // 忽略外键
-                                    if (adminObject.getIgnores() == null) {
-                                        adminObject.setIgnores(new HashMap<>());
-                                    }
-                                    adminObject.getIgnores().put(field.getName(), true);
-                                    AdminForeign adminForeign = new AdminForeign();
-                                    adminForeign.setFieldName(CamelToSnakeUtil.toSnakeCase(foreignField.getName()));
-                                    adminForeign.setField(foreignField.getName());
-                                    adminForeign.setPath(CamelToSnakeUtil.toSnakeCase(foreignField.getName()));
-                                    // adminField存入外键信息
-                                    adminField.setForeign(adminForeign);
-                                    keyName = CamelToSnakeUtil.toSnakeCase(foreignField.getName());
-                                }
+                            try {
+                                Field foreignField = model.getDeclaredField(idName);
+                                keyName = CamelToSnakeUtil.toSnakeCase(foreignField.getName());
+                            } catch (NoSuchFieldException e) {
+                                LOG.warn("No such foreign field: {} in model: {}", idName, model.getName());
                             }
                         }
                         if (adminObject.getPrimaryKeyMap() == null) {
@@ -220,7 +209,7 @@ public class AdminContainer {
                             adminObject.getPrimaryKeyMap().put(keyName, adminField.getName());
                         }
                     }
-                    // adminField将主键存入primary
+                    // 将主键和唯一键分别存入primaryKeys和uniqueKeys中
                     if (field.getAnnotation(Id.class) != null) {
                         if (adminObject.getPrimaryKeys() == null) {
                             adminObject.setPrimaryKeys(new ArrayList<>());
@@ -236,21 +225,50 @@ public class AdminContainer {
                             adminObject.getUniqueKeys().add(keyName);
                         }
                     }
+                }
 
-                }
-                // adminField存入属性
-                if (adminField.getAttribute() != null) {
-                    adminObject.getAttributes().forEach((key, value) -> {
-                        if (key.equals(field.getName())) {
-                            adminField.setAttribute(value);
+                // 如果当前字段后缀为id（非主键），扫描所有属性获取其类属性，如果存在则构建AdminForeign
+                // 对于类属性字段需要在adminObject的AdminField列表中删除，只保留外键id字段
+                if (field.getName().endsWith("id") || field.getName().endsWith("Id") || field.getName().endsWith("ID")) {
+                    String idName = field.getName().substring(0, field.getName().length() - 2);
+                    if (!idName.isEmpty()) {
+                        // 获取model的外键对应的实体类字段
+                        try {
+                            Field foreignField = model.getDeclaredField(idName);
+                            // 忽略外键对应的类属性
+                            if (adminObject.getIgnores() == null) {
+                                adminObject.setIgnores(new HashMap<>());
+                            }
+                            adminObject.getIgnores().put(foreignField.getName(), true);
+                            AdminForeign adminForeign = new AdminForeign();
+                            adminForeign.setFieldName(CamelToSnakeUtil.toSnakeCase(field.getName()));
+                            adminForeign.setField(field.getName());
+                            adminForeign.setForeignField(CamelToSnakeUtil.toSnakeCase(foreignField.getName()));
+                            adminForeign.setPath("/" + foreignField.getName());
+                            // adminField存入外键信息
+                            adminField.setForeign(adminForeign);
+                        } catch (NoSuchFieldException e) {
+                            LOG.warn("No such foreign field: {} in model: {}", idName, model.getName());
                         }
-                    });
+                    }
+
+                    // adminField存入属性
+                    if (adminField.getAttribute() != null) {
+                        adminObject.getAttributes().forEach((key, value) -> {
+                            if (key.equals(field.getName())) {
+                                adminField.setAttribute(value);
+                            }
+                        });
+                    }
                 }
-            }
-            if (!isForeignID) {
                 list.add(adminField);
             }
+            if(adminObject.getIgnores()!=null) {
+                for (String key : adminObject.getIgnores().keySet()) {
+                    list.removeIf(f -> f.getName().equals(key));
+                }
+            }
+            adminObject.setFields(list);
         }
-        adminObject.setFields(list);
     }
 }

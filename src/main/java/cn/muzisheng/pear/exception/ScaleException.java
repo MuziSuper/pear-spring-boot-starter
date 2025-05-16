@@ -1,6 +1,7 @@
 package cn.muzisheng.pear.exception;
 /**
- *  Encapsulated decimal conversion exception
+ *  JWT加解密失败
+ *  code: 501
  **/
 public class ScaleException extends RuntimeException {
     public ScaleException(String message){
