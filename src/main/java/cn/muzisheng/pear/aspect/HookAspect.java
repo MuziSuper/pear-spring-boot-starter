@@ -122,7 +122,7 @@ public class HookAspect {
             }else{
                 throw new AuthorizationException("unauthorized;signUrl="+signUrl);
             }
-        }else if(!user.isStaff() && !user.isSuperUser()) {
+        }else if(!user.getIsStaff() && !user.getIsSuperUser()) {
             throw new ForbiddenException("forbidden");
         }
     }

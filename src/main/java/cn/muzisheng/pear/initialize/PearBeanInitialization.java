@@ -3,6 +3,7 @@ package cn.muzisheng.pear.initialize;
 import cn.muzisheng.pear.annotation.PearField;
 import cn.muzisheng.pear.annotation.PearObject;
 import cn.muzisheng.pear.model.AdminObject;
+import cn.muzisheng.pear.utils.CamelToSnakeUtil;
 import cn.muzisheng.pear.utils.PluralUtil;
 import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.persistence.Column;
@@ -67,6 +68,7 @@ public class PearBeanInitialization implements BeanPostProcessor {
             for (Field field : fields) {
                 if (field.isAnnotationPresent(PearField.class)) {
                     PearField pearFieldAnnotation = field.getAnnotation(PearField.class);
+                    // 对name的处理，优先使用Column注解的name字段去除反引号，其次是转为驼峰式的原属性名
                     String name = "";
                     if (field.isAnnotationPresent(Column.class)) {
                         Column column = field.getAnnotation(Column.class);
@@ -74,7 +76,7 @@ public class PearBeanInitialization implements BeanPostProcessor {
                         name = column.name().replaceAll("`", "");
                     }
                     if (name.isEmpty()) {
-                        name = field.getName();
+                        name = CamelToSnakeUtil.toSnakeCase(field.getName());
                     }
                     if (pearFieldAnnotation.isEdit()) {
                         edits.add(name);

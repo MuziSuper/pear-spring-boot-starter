@@ -59,4 +59,9 @@ public class ExceptionApi {
         ExceptionResponse errorResponse = new ExceptionResponse(Constant.SQL_EXCEPTION, e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(errorResponse, HttpStatus.HTTP_VERSION_NOT_SUPPORTED);
     }
+    @ExceptionHandler(TimeException.class)
+    public ResponseEntity<ExceptionResponse> handleTimeException(TimeException e) {
+        ExceptionResponse errorResponse = new ExceptionResponse(Constant.TIME_EXCEPTION, e.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(errorResponse, HttpStatus.VARIANT_ALSO_NEGOTIATES);
+    }
 }

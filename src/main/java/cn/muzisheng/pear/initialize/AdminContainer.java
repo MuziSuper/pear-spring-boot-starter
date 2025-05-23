@@ -108,21 +108,9 @@ public class AdminContainer {
         // 获取model的所有字段
         for (Field field : model.getDeclaredFields()) {
             AdminField adminField = new AdminField();
-            // 先根据PearField的参数填充adminField
-            if (field.isAnnotationPresent(PearField.class)) {
-                PearField pearField = field.getAnnotation(PearField.class);
-                // pearField填充label字段
-                adminField.setLabel(pearField.label());
-                // pearField填充placeholder字段
-                adminField.setPlaceholder(pearField.placeholder());
-                // pearField填充name字段
-                adminField.setFieldName(CamelToSnakeUtil.toSnakeCase(field.getName()));
-            }
-            // 若pearField没有属性label则默认
-            if (adminField.getLabel() == null || adminField.getLabel().isEmpty()) {
-                adminField.setLabel(field.getName().replaceAll("_", " "));
-            }
-
+            // adminField存入name字段与临时的fieldName
+            adminField.setName(field.getName());
+            adminField.setFieldName(CamelToSnakeUtil.toSnakeCase(field.getName()));
             /*
              * 若为实体类对象，则递归，这部分还没做，先非对象
              */
@@ -131,25 +119,14 @@ public class AdminContainer {
             if (field.getType() == BeforeCreate.class || field.getType() == BeforeUpdate.class || field.getType() == BeforeDelete.class || field.getType() == BeforeRender.class || field.getType() == AccessCheck.class || field.getType() == AdminViewOnSite.class || field.getType() == BeforeQueryRenderFunc.class) {
                 continue;
             }
-            // adminField存入name
-            if (field.isAnnotationPresent(Column.class)) {
-                Column column = field.getAnnotation(Column.class);
-                adminField.setName(column.name().replaceAll("`", ""));
-            } else {
-                adminField.setName(field.getName());
-            }
             // adminField存入type
-            if (field.getType() == Date.class || field.getType() == LocalDate.class || field.getType() == LocalDateTime.class || field.getType() == LocalTime.class) {
-                adminField.setType("timestamp");
-            } else {
-                adminField.setType(field.getType().getSimpleName());
-            }
+            adminField.setType(field.getType());
             // adminField存入isArray
             if (field.getType().isArray()) {
                 adminField.setCanNull(true);
                 adminField.setIsArray(true);
             }
-
+            // adminField存入fieldName
             if (field.getAnnotations() != null) {
                 // adminField存入此字段所有注解类型
                 List<String> annotationList = new ArrayList<>();
@@ -157,6 +134,21 @@ public class AdminContainer {
                     annotationList.add(annotation.annotationType().getSimpleName());
                 }
                 adminField.setAnnotation(annotationList.toArray(String[]::new));
+
+                // 先根据PearField的参数填充adminField
+                if (field.isAnnotationPresent(PearField.class)) {
+                    PearField pearField = field.getAnnotation(PearField.class);
+                    // pearField填充label字段
+                    adminField.setLabel(pearField.label());
+                    // pearField填充placeholder字段
+                    adminField.setPlaceholder(pearField.placeholder());
+                }
+
+                // 若pearField没有属性label则默认
+                if (adminField.getLabel() == null || adminField.getLabel().isEmpty()) {
+                    adminField.setLabel(field.getName().replaceAll("_", " "));
+                }
+
                 // adminField存入NotColumn
                 Transient ignore = field.getAnnotation(Transient.class);
                 if (ignore != null) {
@@ -183,6 +175,8 @@ public class AdminContainer {
                     if (column.nullable()) {
                         adminField.setCanNull(true);
                     }
+                    // adminField存入name
+                    adminField.setFieldName(column.name().replaceAll("`", ""));
                 }
 
                 // 当字段标记为唯一键或主键时，如果以id结尾则将字段名以键值对方式存入primaryKeyMap中，

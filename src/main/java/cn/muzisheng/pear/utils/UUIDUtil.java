@@ -1,9 +1,8 @@
 package cn.muzisheng.pear.utils;
 
-import java.util.Collections;
 import java.util.Random;
 
-public class UUIDUtils {
+public class UUIDUtil {
     public static String generateId() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();

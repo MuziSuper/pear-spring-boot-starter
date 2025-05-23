@@ -6,10 +6,7 @@ import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.core.config.ConfigService;
 import cn.muzisheng.pear.core.user.UserService;
 import cn.muzisheng.pear.entity.User;
-import cn.muzisheng.pear.exception.AuthorizationException;
-import cn.muzisheng.pear.exception.ForbiddenException;
-import cn.muzisheng.pear.exception.GeneralException;
-import cn.muzisheng.pear.exception.IllegalException;
+import cn.muzisheng.pear.exception.*;
 import cn.muzisheng.pear.handler.BuildContext;
 import cn.muzisheng.pear.initialize.AdminContainer;
 import cn.muzisheng.pear.mapper.AdminMapper;
@@ -17,6 +14,7 @@ import cn.muzisheng.pear.model.*;
 import cn.muzisheng.pear.params.AdminQueryResult;
 import cn.muzisheng.pear.params.Filter;
 import cn.muzisheng.pear.params.QueryForm;
+import cn.muzisheng.pear.utils.TimeTransitionUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,8 +39,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -126,20 +126,21 @@ public class AdminServiceImpl implements AdminService {
      * @return 处理后的请求体
      **/
     public Map<String, Object> unmarshalFrom(AdminObject adminObject, Map<String, Object> body, Map<String, Object> params) {
-        Map<String, Boolean> editable = new HashMap<>();
-        // 获取可编辑字段
-        if (adminObject.getEdits() != null) {
-            for (String edit : adminObject.getEdits()) {
-                editable.put(edit, true);
-            }
+        if(body==null){
+            body = new HashMap<>();
         }
-        // 删除请求体中不可编辑字段
-        body.keySet().removeIf(field -> !editable.containsKey(field));
+        // 获取可编辑字段
+//        if (adminObject.getEdits() != null) {
+//            body.keySet().removeIf(field -> !adminObject.getEdits().contains(field));
+//        }
         // 添加body中没有的query参数，整合数据到body中
         for (String field : params.keySet()) {
             if (!body.containsKey(field)) {
                 body.put(field, params.get(field));
             }
+        }
+        if(body.isEmpty()){
+            throw new IllegalException("The processed dataset is empty.");
         }
         // 将body中的键值转换为目标类型
         for (AdminField adminField : adminObject.getFields()) {
@@ -150,7 +151,7 @@ public class AdminServiceImpl implements AdminService {
                 continue;
             }
             // 获取目标类型
-            Class<?> targetClass = adminField.getType().getClass();
+            Class<?> targetClass = adminField.getType();
             // 如果某一数据为Map,则尝试获取其value的键值
             if (val instanceof Map<?, ?> valMap) {
                 for (Map.Entry<?, ?> entry2 : valMap.entrySet()) {
@@ -171,6 +172,13 @@ public class AdminServiceImpl implements AdminService {
 
     private Object convertValue(Class<?> targetClass, Object val) {
         if (val.getClass() == targetClass) {
+            if(targetClass.equals(Boolean.class)){
+                if((Boolean) val){
+                    val=1;
+                }else{
+                    val=0;
+                }
+            }
             return val;
         }
         try {
@@ -184,20 +192,21 @@ public class AdminServiceImpl implements AdminService {
                 val = formatAsFloat(val);
             } else if (targetClass.equals(Boolean.class)) {
                 String valString = (String) val;
-                if (valString.equalsIgnoreCase("true") || valString.equalsIgnoreCase("on") || valString.equalsIgnoreCase("yes") || valString.equals("1")) {
-                    val = true;
-                } else if (valString.equalsIgnoreCase("false") || valString.equalsIgnoreCase("off") || valString.equalsIgnoreCase("no") || valString.equals("0")) {
-                    val = false;
+                if (valString.equalsIgnoreCase("true") || valString.equalsIgnoreCase("on") || valString.equalsIgnoreCase("yes")) {
+                    val = 1;
+                } else if (valString.equalsIgnoreCase("false") || valString.equalsIgnoreCase("off") || valString.equalsIgnoreCase("no")) {
+                    val = 0;
                 } else {
                     val = false;
                 }
             } else if (targetClass.equals(LocalDateTime.class)) {
-                val = LocalDateTime.parse((String) val);
+                val = TimeTransitionUtil.stringToLocalDateTime((String) val);
             } else if (targetClass.equals(LocalDate.class)) {
-                val = LocalDate.parse((String) val);
+                val = TimeTransitionUtil.stringToLocalDateTime((String) val);
             } else if (targetClass.equals(Date.class)) {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                val = dateFormat.parse((String) val);
+                val = TimeTransitionUtil.stringToDate((String) val);
+            } else if(targetClass.equals(LocalTime.class)) {
+                val = TimeTransitionUtil.stringToLocalTime((String) val);
             } else {
                 try {
                     val = JSON.parseObject((String) val, targetClass);
@@ -205,7 +214,7 @@ public class AdminServiceImpl implements AdminService {
                     val = null;
                 }
             }
-        } catch (DateTimeParseException | ParseException e) {
+        } catch (TimeException e) {
             LOG.info("target type:{}, but cannot parse date: {}", targetClass, val);
             val = null;
         }
@@ -568,37 +577,39 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 序列化对象，将result转为map[string]any
+     * 序列化对象，将result转为map[string]any,展示可shows字段
      **/
     private Map<String, Object> marshalOne(HttpServletRequest request, AdminObject adminObject, Object result) {
         Map<String, Object> data = new HashMap<>();
-        for (AdminField field : adminObject.getFields()) {
-            if (field.getForeign() != null) {
-                AdminValue foreignValue = new AdminValue();
-                foreignValue.setValue(field.getForeign().getField());
-                if (field.getForeign().getFieldName() != null) {
-                    foreignValue.setLabel(field.getForeign().getFieldName());
-                } else {
-                    foreignValue.setLabel(foreignValue.getValue().toString());
+        if(result instanceof List<?> list){
+            for(Object obj : list){
+                if(obj instanceof Map<?,?> map){
+                    for(Map.Entry<?,?> entry : map.entrySet()){
+                        if(entry.getKey() instanceof String) {
+                            if(adminObject.getShows().contains((String) entry.getKey())) {
+                                data.put((String) entry.getKey(), entry.getValue());
+                            }
+                        }
+                    }
                 }
-                data.put(field.getName(), foreignValue);
-            } else {
-                String filedName = field.getName();
-                data.put(field.getName(), filedName);
             }
-        }
-        if (adminObject.getAdminViewOnSite() != null) {
-            try {
-                data.put("_adminExtra", adminObject.getAdminViewOnSite().execute(request,adminObject, result));
-            } catch (Exception e) {
-                LOG.error("AdminViewOnSite error");
+            if(data.isEmpty()){
+                LOG.warn("The dataset rendered by BeforeRender is not of type List<Map<String,Object>>.");
+            }
+
+            if (adminObject.getAdminViewOnSite() != null) {
+                try {
+                    data.put("_adminExtra", adminObject.getAdminViewOnSite().execute(request,adminObject, result));
+                } catch (Exception e) {
+                    LOG.error("AdminViewOnSite error");
+                }
             }
         }
         return data;
     }
 
     /**
-     * 根据query值遍历并获取其映射数据库表的主键或外键键值对
+     * 根据query值遍历并获取其映射数据库表的主键或唯一键键值对
      **/
     private Map<String, Object> getPrimaryValues(HttpServletRequest request, AdminObject adminObject) {
         Map<String, Object> queryMap = new HashMap<>();

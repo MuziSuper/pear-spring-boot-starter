@@ -34,7 +34,7 @@ public class AdminField {
     /**
      * 定义此字段的数据类型
      **/
-    private String type;
+    private Class<?> type;
     /**
      * 定义此字段的注解
      **/

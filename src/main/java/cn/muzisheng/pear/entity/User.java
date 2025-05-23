@@ -69,17 +69,17 @@ public class User{
     // 是否为管理员身份
     @TableField(value = "isSuperUser")
     @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
-    private boolean isSuperUser;
+    private Boolean isSuperUser;
     // 是否为员工
     @TableField(value = "isStaff")
     @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
-    private boolean isStaff;
+    private Boolean isStaff;
     // 状态是否正常
     @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
-    private boolean enabled;
+    private Boolean enabled;
     // 是否激活
     @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
-    private boolean activated;
+    private Boolean activated;
     // 最后一次登陆时间
     @TableField(fill= FieldFill.UPDATE,value ="lastLogin")
     @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)

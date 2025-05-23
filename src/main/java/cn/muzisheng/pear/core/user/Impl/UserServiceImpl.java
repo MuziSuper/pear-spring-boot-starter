@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
         Map<String, Object> req = new HashMap<>();
         req.put("email", user.getEmail());
-        req.put("activation", user.isActivated());
+        req.put("activation", user.getActivated());
 
         /*
          * 获取缓存中的配置项，确认用户是否启用激活用户操作，触发身份校验事件，发布消息

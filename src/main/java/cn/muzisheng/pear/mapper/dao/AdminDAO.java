@@ -26,11 +26,15 @@ public class AdminDAO {
                 builder.append(" AND ");
             }
             // `key` = `value`
-            builder.append("`").append(entry.getKey()).append("`").append(" = ").append("`").append(entry.getValue()).append("`");
+            if(entry.getValue() instanceof Number){
+                builder.append("`").append(entry.getKey()).append("`").append(" = ").append(entry.getValue()).append(" ");
+            }else{
+                builder.append("`").append(entry.getKey()).append("`").append(" = ").append("'").append(entry.getValue()).append("' ");
+            }
             index++;
         }
         // LIMIT 1
-        builder.append(" LIMIT 1");
+        builder.append("LIMIT 1");
         LOG.info(builder.toString());
         return builder.toString();
     }
@@ -40,6 +44,7 @@ public class AdminDAO {
         if (showClause == null) {
             showClause = "*";
         }
+        // SELECT * FROM `tableName`
         builder.append("SELECT ").append(showClause).append(" ");
         if (tableName.isEmpty()) {
             throw new GeneralException("The table name cannot be left blank.");
@@ -83,9 +88,13 @@ public class AdminDAO {
                 values.append(", ");
                 keys.append(", ");
             }
-            values.append("'").append(entry.getValue()).append("'");
+            if(entry.getValue() instanceof Number){
+                values.append(entry.getValue());
+            }else{
+                values.append("'").append(entry.getValue()).append("'");
+            }
 //            values.append(entry.getValue());
-            keys.append("'").append(entry.getKey()).append("'");
+            keys.append("`").append(entry.getKey()).append("`");
         }
         keys.append(") ");
         values.append(") ");

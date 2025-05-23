@@ -89,8 +89,8 @@ public class PearApplicationInitialization implements CommandLineRunner {
                         System.exit(1);
                     }
                 }
-                user.setStaff(true);
-                user.setSuperUser(true);
+                user.setIsStaff(true);
+                user.setIsSuperUser(true);
                 user.setActivated(true);
                 user.setEnabled(true);
                 if(!userDAO.save(user)){
