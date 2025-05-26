@@ -83,7 +83,7 @@ public class HookAspect {
             }
         }
         if(request==null||adminObject==null){
-            throw new IllegalException("request not found");
+            throw new IllegalException("Request or adminObject not found.");
         }
         if(verification.SystemVerify()){
             withAdminAuth(request);

@@ -14,7 +14,7 @@ public interface AdminService {
 
     ResponseEntity<Result<Object>> handleQueryOrGetOne(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm);
     ResponseEntity<Result<Map<String,Object>>> handleCreate(HttpServletRequest request, String model, AdminObject adminObject, Map<String,Object> data);
-    ResponseEntity<Result<Map<String,Object>>> handleUpdate(AdminObject adminObject);
+    ResponseEntity<Result<Map<String,Object>>> handleUpdate(HttpServletRequest request, String model, AdminObject adminObject, Map<String,Object> data);
     ResponseEntity<Result<Map<String,Object>>> handleDelete(AdminObject adminObject);
     ResponseEntity<Result<Map<String,Object>>> handleAction(AdminObject adminObject);
     ResponseEntity<Result<Map<String,Object>>> adminJson(HttpServletRequest request);

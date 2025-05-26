@@ -14,27 +14,27 @@ public @interface PearField {
     /**
      * 是否显示
      **/
-    boolean isShow() default false;
+    boolean isShow() default true;
     /**
      * 是否可修改
      **/
-    boolean isEdit() default false;
+    boolean isEdit() default true;
     /**
      * 是否可过滤
      **/
-    boolean isFilterable() default false;
+    boolean isFilterable() default true;
     /**
      * 是否可排序
      **/
-    boolean isOrderable() default false;
+    boolean isOrderable() default true;
     /**
      * 是否可查询
      **/
-    boolean isSearchable() default false;
+    boolean isSearchable() default true;
     /**
      * 是否需要
      **/
-    boolean isRequire() default false;
+    boolean isRequire() default true;
     /**
      * 是否为主键
      **/

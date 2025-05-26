@@ -28,85 +28,84 @@ public class User{
     // 主键
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @PearField(isPrimaryKey = true,isRequire = true,isFilterable = true,isShow = true)
+    @PearField(isPrimaryKey = true)
     private Long id;
     // 创建时间
     @TableField(fill= FieldFill.INSERT,value ="gmtCreated")
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isOrderable = true)
+    @PearField(isEdit = false)
     private LocalDateTime gmtCreated;
 
     // 更新时间
     @TableField(fill= FieldFill.INSERT_UPDATE,value ="gmtModified")
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isFilterable = true,isEdit = true,isOrderable = true)
+    @PearField
     private LocalDateTime gmtModified;
     // 邮箱
     @Column(length = 128)
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isFilterable = true,isEdit = true)
+    @PearField
     private String email;
     // 密码
     @Column(length = 128)
-    @PearField(isRequire = true)
+    @PearField(isShow = false,isSearchable = false)
     private String password;
     // 电话
     @Column(length = 64)
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private String phone;
     // 英文姓
     @Column(length = 128)
     @TableField(value = "firstName")
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private String firstName;
     // 英文名
     @Column(length = 128)
     @TableField(value = "lastName")
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private String lastName;
     // 用户显示名
     @Column(length = 128)
     @TableField(value = "displayName")
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private String displayName;
     // 是否为管理员身份
     @TableField(value = "isSuperUser")
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private Boolean isSuperUser;
     // 是否为员工
     @TableField(value = "isStaff")
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private Boolean isStaff;
     // 状态是否正常
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private Boolean enabled;
     // 是否激活
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private Boolean activated;
     // 最后一次登陆时间
     @TableField(fill= FieldFill.UPDATE,value ="lastLogin")
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private LocalDateTime lastLogin;
     // 最后一次登陆ip
     @Column(length = 128)
     @TableField(value = "lastLoginIp")
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private String lastLoginIp;
     // 用户来源渠道
     @Column(length = 64)
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private String source;
     // 语言环境
     @Column(length = 20)
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private String locale;
     // 时区
     @Column(length = 200)
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private String timezone;
     // 用户信息
-//    @Column(columnDefinition = "TEXT")
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private String profile;
     // 用户认证令牌
-    @PearField(isRequire = true,isShow = true,isFilterable = true,isSearchable = true,isEdit = true)
+    @PearField
     private String token;
     public User(String username, String password){
         this.password = password;

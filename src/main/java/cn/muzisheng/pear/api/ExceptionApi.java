@@ -64,4 +64,10 @@ public class ExceptionApi {
         ExceptionResponse errorResponse = new ExceptionResponse(Constant.TIME_EXCEPTION, e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(errorResponse, HttpStatus.VARIANT_ALSO_NEGOTIATES);
     }
+    @ExceptionHandler(AdminErrorException.class)
+    public ResponseEntity<ExceptionResponse> handleTimeException(AdminErrorException e) {
+        ExceptionResponse errorResponse = new ExceptionResponse(Constant.ADMIN_EXCEPTION, e.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INSUFFICIENT_STORAGE);
+    }
 }
+

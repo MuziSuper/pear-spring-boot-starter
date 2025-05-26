@@ -20,6 +20,7 @@ public class Constant {
     public static final int HOOK_EXCEPTION = 504;
     public static final int SQL_EXCEPTION = 505;
     public static final int TIME_EXCEPTION = 506;
+    public static final int ADMIN_EXCEPTION = 507;
     public static final int ILLEGAL_EXCEPTION = 400;
     public static final int UNAPPROVED_EXCEPTION = 401;
     public static final int FORBIDDEN_EXCEPTION = 403;

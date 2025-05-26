@@ -5,7 +5,6 @@ import cn.muzisheng.pear.core.admin.AdminService;
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.core.config.ConfigService;
 import cn.muzisheng.pear.core.user.UserService;
-import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.*;
 import cn.muzisheng.pear.handler.BuildContext;
 import cn.muzisheng.pear.initialize.AdminContainer;
@@ -22,27 +21,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.lang.model.element.NestingKind;
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -61,7 +47,7 @@ public class AdminServiceImpl implements AdminService {
         this.resourceLoader = resourceLoader;
     }
 
-//    @Verification(UserVerify = true)
+    @Verification(UserVerify = true)
     @Override
     public ResponseEntity<Result<Object>> handleQueryOrGetOne(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm) {
         Response<Object> response = new Response<>();
@@ -79,9 +65,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 处理请求体或请求头中的数据，并返回结果
+     * 根据请求头与请求体的参数创建admin
+     *
+     * @param adminObject 通用类对象
+     * @param data        请求体
+     * @return 创建的admin数据
      **/
-//    @Verification(UserVerify = true)
+    @Verification(UserVerify = true)
     @Override
     public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, String model, AdminObject adminObject, Map<String, Object> data) {
         Response<Map<String, Object>> response = new Response<>();
@@ -91,27 +81,64 @@ public class AdminServiceImpl implements AdminService {
             throw new IllegalException("Both the query parameter and the request body are null.");
         }
         // 获取整合好的数据
-        Map<String, Object> res = unmarshalFrom(adminObject, data, params);
+        Map<String, Object> res = unmarshalFrom(adminObject, data, params, true);
 
         if (adminObject.getBeforeCreate() != null) {
             try {
-                adminObject.getBeforeCreate().execute(request, adminObject,res);
+                adminObject.getBeforeCreate().execute(request, adminObject, res);
             } catch (Exception e) {
                 LOG.error("beforeCreate error", e);
-                throw new GeneralException("beforeCreate error: "+ e.getMessage());
+                throw new HookException("beforeCreate error: " + e.getMessage());
             }
         }
         if (adminMapper.create(model, res) < 1) {
-            LOG.error("create error. ");
+            LOG.error("admin creation failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
+            throw new AdminErrorException("admin creation failed. " + (res.get("email") != null ? "email: " + res.get("email") : ""));
         }
         if (adminObject.getBeforeRender() != null) {
             try {
-                adminObject.getBeforeRender().execute(request,adminObject, res);
+                adminObject.getBeforeRender().execute(request, adminObject, res);
             } catch (Exception e) {
                 LOG.error("beforeRender error", e);
-                throw new GeneralException("beforeRender error");
+                throw new HookException("beforeRender error");
             }
         }
+        response.setData(res);
+        return response.value();
+    }
+
+    /**
+     * 根据请求头与请求体的参数更新admin
+     *
+     * @param adminObject 通用类对象
+     * @param data        请求体
+     * @return 更新的admin数据
+     **/
+//    @Verification(UserVerify = true)
+    @Override
+    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, String model, AdminObject adminObject, Map<String, Object> data) {
+        Map<String, Object> keys = getPrimaryValues(request, adminObject);
+        if (keys.isEmpty() || data.isEmpty()) {
+            throw new IllegalException("The parameter or primary key is empty.");
+        }
+        List<Map<String, Object>> list = adminMapper.selectFirst(model, keys);
+        if (list.isEmpty()) {
+            throw new IllegalException("The primary key does not exist.");
+        }
+        Map<String, Object> res = unmarshalFrom(adminObject, data, keys, false);
+        if(adminObject.getBeforeUpdate() != null){
+            try {
+                adminObject.getBeforeUpdate().execute(request, adminObject, res);
+            } catch (Exception e) {
+                LOG.error("beforeUpdate error", e);
+                throw new HookException("beforeUpdate error");
+            }
+        }
+        if (adminMapper.update(model, res) < 1) {
+            LOG.error("admin update failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
+            throw new AdminErrorException("admin update failed. " + (res.get("email") != null ? "email: " + res.get("email") : ""));
+        }
+        Response<Map<String, Object>> response = new Response<>();
         response.setData(res);
         return response.value();
     }
@@ -123,23 +150,27 @@ public class AdminServiceImpl implements AdminService {
      * @param adminObject 通用类对象
      * @param body        请求体
      * @param params      query中参数集合
+     * @param initial     是否为创建对象
      * @return 处理后的请求体
+     * @throws IllegalException 请求体数据为空
      **/
-    public Map<String, Object> unmarshalFrom(AdminObject adminObject, Map<String, Object> body, Map<String, Object> params) {
-        if(body==null){
+    public Map<String, Object> unmarshalFrom(AdminObject adminObject, Map<String, Object> body, Map<String, Object> params, boolean initial) {
+        if (body == null) {
             body = new HashMap<>();
         }
-        // 获取可编辑字段
-//        if (adminObject.getEdits() != null) {
-//            body.keySet().removeIf(field -> !adminObject.getEdits().contains(field));
-//        }
+        if (!initial) {
+            // 获取可编辑字段
+            if (adminObject.getEdits() != null) {
+                body.keySet().removeIf(field -> !adminObject.getEdits().contains(field));
+            }
+        }
         // 添加body中没有的query参数，整合数据到body中
         for (String field : params.keySet()) {
             if (!body.containsKey(field)) {
                 body.put(field, params.get(field));
             }
         }
-        if(body.isEmpty()){
+        if (body.isEmpty()) {
             throw new IllegalException("The processed dataset is empty.");
         }
         // 将body中的键值转换为目标类型
@@ -172,11 +203,11 @@ public class AdminServiceImpl implements AdminService {
 
     private Object convertValue(Class<?> targetClass, Object val) {
         if (val.getClass() == targetClass) {
-            if(targetClass.equals(Boolean.class)){
-                if((Boolean) val){
-                    val=1;
-                }else{
-                    val=0;
+            if (targetClass.equals(Boolean.class)) {
+                if ((Boolean) val) {
+                    val = 1;
+                } else {
+                    val = 0;
                 }
             }
             return val;
@@ -205,7 +236,7 @@ public class AdminServiceImpl implements AdminService {
                 val = TimeTransitionUtil.stringToLocalDateTime((String) val);
             } else if (targetClass.equals(Date.class)) {
                 val = TimeTransitionUtil.stringToDate((String) val);
-            } else if(targetClass.equals(LocalTime.class)) {
+            } else if (targetClass.equals(LocalTime.class)) {
                 val = TimeTransitionUtil.stringToLocalTime((String) val);
             } else {
                 try {
@@ -306,11 +337,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(AdminObject adminObject) {
-        return null;
-    }
-
-    @Override
     public ResponseEntity<Result<Map<String, Object>>> handleDelete(AdminObject adminObject) {
         return null;
     }
@@ -340,10 +366,10 @@ public class AdminServiceImpl implements AdminService {
         try {
             Resource[] resources = resourceLoader.getResources("classpath:static/**/*");
             for (Resource resource : resources) {
-                if (resource.getFilename().endsWith(".css")) {
+                if (resource.getFilename() != null && !resource.getFilename().isEmpty() && resource.getFilename().endsWith(".css")) {
                     cssFiles.add(resource.getFilename());
                 }
-                if (resource.getFilename().endsWith(".js")) {
+                if (resource.getFilename() != null && !resource.getFilename().isEmpty() && resource.getFilename().endsWith(".js")) {
                     jsFiles.add(resource.getFilename());
                 }
             }
@@ -529,10 +555,10 @@ public class AdminServiceImpl implements AdminService {
         List<Map<String, Object>> result = adminMapper.query(adminObject.getTableName(), showClause.toString(), whereClause, orderClause.toString(), whereClauseBuilder.toString(), queryForm.getLimit());
         if (adminObject.getBeforeRender() != null) {
             try {
-                adminObject.getBeforeRender().execute(request, adminObject,result);
+                adminObject.getBeforeRender().execute(request, adminObject, result);
             } catch (Exception e) {
                 LOG.warn("BeforeRender error: {}", e.getMessage());
-                throw new GeneralException("BeforeRender error: "+ e.getMessage());
+                throw new GeneralException("BeforeRender error: " + e.getMessage());
 
             }
         }
@@ -567,7 +593,7 @@ public class AdminServiceImpl implements AdminService {
                 adminObject.getBeforeRender().execute(request, adminObject, result);
             } catch (Exception e) {
                 LOG.warn("BeforeRender error: {}", e.getMessage());
-                throw new GeneralException("BeforeRender error: "+ e.getMessage());
+                throw new GeneralException("BeforeRender error: " + e.getMessage());
             }
         }
         // 序列化对象，将result转为map[string]any
@@ -581,25 +607,25 @@ public class AdminServiceImpl implements AdminService {
      **/
     private Map<String, Object> marshalOne(HttpServletRequest request, AdminObject adminObject, Object result) {
         Map<String, Object> data = new HashMap<>();
-        if(result instanceof List<?> list){
-            for(Object obj : list){
-                if(obj instanceof Map<?,?> map){
-                    for(Map.Entry<?,?> entry : map.entrySet()){
-                        if(entry.getKey() instanceof String) {
-                            if(adminObject.getShows().contains((String) entry.getKey())) {
+        if (result instanceof List<?> list) {
+            for (Object obj : list) {
+                if (obj instanceof Map<?, ?> map) {
+                    for (Map.Entry<?, ?> entry : map.entrySet()) {
+                        if (entry.getKey() instanceof String) {
+                            if (adminObject.getShows().contains((String) entry.getKey())) {
                                 data.put((String) entry.getKey(), entry.getValue());
                             }
                         }
                     }
                 }
             }
-            if(data.isEmpty()){
+            if (data.isEmpty()) {
                 LOG.warn("The dataset rendered by BeforeRender is not of type List<Map<String,Object>>.");
             }
 
             if (adminObject.getAdminViewOnSite() != null) {
                 try {
-                    data.put("_adminExtra", adminObject.getAdminViewOnSite().execute(request,adminObject, result));
+                    data.put("_adminExtra", adminObject.getAdminViewOnSite().execute(request, adminObject, result));
                 } catch (Exception e) {
                     LOG.error("AdminViewOnSite error");
                 }

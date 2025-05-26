@@ -62,21 +62,23 @@ public class AdminApi {
     public ResponseEntity<Result<Map<String, Object>>> AdminJson(HttpServletRequest request) {
         return adminService.adminJson(request);
     }
-
+    /**
+     * 获取所有静态文件信息
+     **/
     @GetMapping("/")
     public ResponseEntity<Result<Map<String, Object>>> AdminFilepath(HttpServletRequest request) {
         return adminService.adminFilepath(request);
     }
-//    @PatchMapping("{model}")
-//    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
-//        if(AdminContainer.existsAdminObject(model)) {
-//            return adminService.handleQueryOrGetOne(adminObject);
-//        }
-//        Response<Map<String, Object>> response = new Response<>();
-//        response.setError("Model not found");
-//        response.setStatus(Constant.GENERAL_EXCEPTION);
-//        return response.value();
-//    }
+    @PatchMapping("{model}")
+    public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody(required = false) Map<String, Object> data) {
+        if(AdminContainer.existsAdminObject(model)) {
+            return adminService.handleUpdate(request,model, AdminContainer.getAdminObject(model), data);
+        }
+        Response<Map<String, Object>> response = new Response<>();
+        response.setError("Model not found");
+        response.setStatus(Constant.ILLEGAL_EXCEPTION);
+        return response.value();
+    }
 //    @DeleteMapping("{model}")
 //    public ResponseEntity<Result<Map<String, Object>>> handleDelete(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
 //        for(PearObject adminObject : PearApplicationInitialization.adminObjects){

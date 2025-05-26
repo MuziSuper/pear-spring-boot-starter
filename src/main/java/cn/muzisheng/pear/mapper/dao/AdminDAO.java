@@ -47,7 +47,7 @@ public class AdminDAO {
         // SELECT * FROM `tableName`
         builder.append("SELECT ").append(showClause).append(" ");
         if (tableName.isEmpty()) {
-            throw new GeneralException("The table name cannot be left blank.");
+            throw new SqlStatementException("The table name cannot be left blank.");
         }
         builder.append("FROM `").append(tableName).append("` ");
         if (!whereClause.isEmpty()) {
@@ -74,7 +74,7 @@ public class AdminDAO {
     public String create(String tableName, Map<String, Object> map) {
         StringBuilder builder = new StringBuilder();
         if (tableName.isEmpty()) {
-            throw new GeneralException("The table name cannot be left blank.");
+            throw new SqlStatementException("The table name cannot be left blank.");
         }
         // INSERT INTO `tableName`
         builder.append("INSERT INTO `").append(tableName).append("` ");
@@ -103,4 +103,29 @@ public class AdminDAO {
         LOG.info(builder.toString());
         return builder.toString();
     }
+    public String update(String tableName,Map<String,Object> map){
+        StringBuilder builder = new StringBuilder();
+        if (tableName.isEmpty()) {
+            throw new SqlStatementException("The table name cannot be left blank.");
+        }
+        builder.append("UPDATE `").append(tableName).append("` ");
+        StringBuilder  keys = new StringBuilder();
+        StringBuilder values = new StringBuilder();
+        int index = 0;
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if (index++ > 0) {
+                values.append(", ");
+                keys.append(", ");
+            }
+            if(entry.getValue() instanceof Number){
+                values.append("`").append(entry.getKey()).append("` = ").append(entry.getValue());
+            }else{
+                values.append("`").append(entry.getKey()).append("` = ").append("'").append(entry.getValue()).append("'");
+            }
+            keys.append("`").append(entry.getKey()).append("`");
+        }
+        builder.append("SET ").append(values).append(" WHERE ").append(keys).append(";");
+        return builder.toString();
+    }
+
 }
