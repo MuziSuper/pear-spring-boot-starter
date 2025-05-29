@@ -161,7 +161,7 @@ public class AdminObject {
         if(this.permissions==null){
             this.permissions=new HashMap<>();
         }
-        if(user.getIsSuperUser()){
+        if(user.getIsSuperUser()!=null&&user.getIsSuperUser()){
             this.permissions.put("create",true);
             this.permissions.put("update",true);
             this.permissions.put("delete",true);

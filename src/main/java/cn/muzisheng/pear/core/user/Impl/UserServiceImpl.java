@@ -71,6 +71,7 @@ public class UserServiceImpl implements UserService {
          * 触发用户注册事件，发布消息，
          * 后期消息系统进行补充
          */
+
         LOG.info("register user success, user email: {}", registerUserForm.getEmail());
 
         Map<String, Object> req = new HashMap<>();

@@ -75,15 +75,10 @@
                     data: JSON.stringify(registerUserForm),
                     success: function(response) {
                         if (response.data) {
-                            // 保存token到cookie，设置24小时过期
-                            const token = response.data.token.replace('Bearer ', '');
-                            const date = new Date();
-                            date.setTime(date.getTime() + (24 * 60 * 60 * 1000)); // 24小时后过期
-                            document.cookie = `token=${token}; expires=${date.toUTCString()}; path=/`;
-                            alert('注册成功');
-                            window.location.href = '/auth/dashboard';
+                            alert('注册成功,自动跳转登录页面...');
+                            window.location.href = `/auth/login?email=${encodeURIComponent(email)}`;
                         } else {
-                            alert('注册失败');
+                            alert('注册失败!');
                         }
                     },
                     error: function(xhr, status, error) {
@@ -94,7 +89,7 @@
                             // 跳转到登录页面并传递邮箱参数
                             window.location.href = `/auth/login?email=${encodeURIComponent(email)}`;
                         } else {
-                        alert('请求失败');
+                        alert('请求失败!');
                         }
                     }
                 });

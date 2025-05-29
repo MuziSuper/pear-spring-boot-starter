@@ -36,32 +36,6 @@ public class HookAspect {
         this.userService = userService;
         this.configService = configService;
     }
-    @Pointcut("@annotation(cn.muzisheng.pear.annotation.BeforeCreate)")
-    public void beforeCreate() {
-    }
-
-    @Pointcut("@annotation(cn.muzisheng.pear.annotation.BeforeRender)")
-    public void beforeRender() {
-    }
-
-    @Pointcut("@annotation(cn.muzisheng.pear.annotation.BeforeDelete)")
-    public void beforeDelete() {
-    }
-
-    @Pointcut("@annotation(cn.muzisheng.pear.annotation.BeforeUpdate)")
-    public void beforeUpdate() {
-    }
-
-    @Pointcut("@annotation(cn.muzisheng.pear.annotation.AccessCheck)")
-    public void accessCheck() {
-    }
-    @Pointcut("@annotation(cn.muzisheng.pear.annotation.AdminViewOnSite)")
-    public void adminViewOnSite() {
-    }
-
-    @Pointcut("@annotation(cn.muzisheng.pear.annotation.Verification)")
-    public void verification() {
-    }
     @Around("verification()")
     public Object verificationFunc(ProceedingJoinPoint jp) throws Throwable{
         // 获取方法签名

@@ -42,17 +42,17 @@ public class PearBeanInitialization implements BeanPostProcessor {
             // tableName字段mybatisPlus的优先级最高,其次是pear,最后是默认
             if (clazz.isAnnotationPresent(TableName.class)) {
                 TableName tablename = clazz.getAnnotation(TableName.class);
-                object.setTableName(tablename.value().replaceAll("`", "").toLowerCase());
+                object.setTableName(tablename.value().replaceAll("`", ""));
             } else if (clazz.isAnnotationPresent(Entity.class)) {
                 Entity entity = clazz.getAnnotation(Entity.class);
-                object.setTableName(entity.name().replaceAll("`", "").toLowerCase());
+                object.setTableName(entity.name().replaceAll("`", ""));
             } else if(pearObjectAnnotation.TableName() != null&&!pearObjectAnnotation.TableName().isEmpty()){
-                object.setTableName(pearObjectAnnotation.TableName().replaceAll("`", "").toLowerCase());
+                object.setTableName(CamelToSnakeUtil.toSnakeCase(pearObjectAnnotation.TableName().replaceAll("`", "")));
             }else{
-                object.setTableName(clazz.getSimpleName().toLowerCase());
+                object.setTableName(CamelToSnakeUtil.toSnakeCase(clazz.getSimpleName()));
             }
             if (object.getTableName() == null || object.getTableName().isEmpty()) {
-                object.setTableName(clazz.getSimpleName().toLowerCase());
+                object.setTableName(CamelToSnakeUtil.toSnakeCase(clazz.getSimpleName()));
             }
             // 类信息填充完毕，以下对字段信息进行填充
             Set<String> shows = new HashSet<>();

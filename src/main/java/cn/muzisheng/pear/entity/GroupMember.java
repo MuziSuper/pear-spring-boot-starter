@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
  **/
 @Data
 @Component
-@Entity
-@TableName("groupmember")
+@Entity(name = "`group_member`")
+@TableName("group_member")
 @PearObject(
         desc = "Group member information, including member permissions.",
         path = "/groupMember",
@@ -29,13 +29,14 @@ public class GroupMember {
      **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @PearField(isPrimaryKey = true,isRequire = true,isShow = true)
+    @PearField(isPrimaryKey = true)
     private Long id;
     /**
      * 用户id
      **/
-    @TableField(value = "userId")
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @Column(name = "user_id")
+    @TableField(value = "user_id")
+    @PearField
     private Long userId;
     /**
      * 用户
@@ -45,8 +46,9 @@ public class GroupMember {
     /**
      * 组id
      **/
-    @TableField(value = "groupId")
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @Column(name = "group_id")
+    @TableField(value = "group_id")
+    @PearField
     private Long groupId;
     /**
      * 组
@@ -57,26 +59,28 @@ public class GroupMember {
      * 角色
      **/
     @Column(length = 100)
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @PearField
     private String role;
     /**
      * 描述
      **/
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @PearField
     private String description;
     /**
      * 创建时间
      **/
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isOrderable = true)
-    @TableField(fill= FieldFill.INSERT,value = "gmtCreated")
+    @Column(name = "gmt_created")
+    @PearField(isEdit = false)
+    @TableField(fill= FieldFill.INSERT,value = "gmt_created")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime gmtCreated;
     /**
      * 修改时间
      **/
-    @TableField(fill= FieldFill.INSERT_UPDATE,value = "gmtModified")
+    @Column(name = "gmt_modified")
+    @TableField(fill= FieldFill.INSERT_UPDATE,value = "gmt_modified")
     @Temporal(TemporalType.TIMESTAMP)
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isOrderable = true)
+    @PearField
     private LocalDateTime gmtModified;
 
 }

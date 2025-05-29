@@ -108,7 +108,7 @@ $(document).ready(function () {
             map.data.objects.forEach((item, index) => {
                 const menuItem = $(`
                     <li>
-                        <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100" data-model="${item.name}" data-desc="${item.desc}" data-filterables='${JSON.stringify(item.filterables || [])}'>
+                        <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100" data-model="${item.tableName}" data-desc="${item.desc}" data-filterables='${JSON.stringify(item.filterables || [])}'>
                             <i class="fa-solid fa-database fa-ms mr-4 ml-2"></i> ${item.name}
                         </a>
                     </li>

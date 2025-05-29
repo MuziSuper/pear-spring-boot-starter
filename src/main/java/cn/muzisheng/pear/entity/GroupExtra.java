@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 @Data
-@Entity
-@TableName("groupextra")
+@Entity(name = "group_extra")
+@TableName("group_extra")
 @PearObject(
         desc = "Additional information of the user group.",
         path = "/groupExtra",
@@ -29,30 +29,31 @@ public class GroupExtra {
      **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @PearField(isPrimaryKey = true,isRequire = true,isShow = true)
+    @PearField(isPrimaryKey = true,isEdit = false)
     private Long id;
     /**
      * 组对象类型
      **/
-    @Column(length = 128)
-    @TableId(value="groupType")
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true,isOrderable = true)
+    @Column(length = 128,name = "group_type")
+    @TableId(value="group_type")
+    @PearField
     private String groupType;
     /**
      * groupId
      **/
-    @TableField(value="groupId")
-    @PearField(isUniqueKey = true,isRequire = true,isShow = true,isSearchable = true,isEdit = true,isOrderable = true)
+    @Column(name = "group_id")
+    @TableField(value="group_id")
+    @PearField(isUniqueKey = true)
     private Long groupId;
     /**
      * 键
      **/
     @Column(length = 128)
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isOrderable = true)
+    @PearField
     private String key;
     /**
      * 值
      **/
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isOrderable = true)
+    @PearField
     private String value;
 }

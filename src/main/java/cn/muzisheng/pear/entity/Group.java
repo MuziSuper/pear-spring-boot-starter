@@ -28,41 +28,42 @@ public class Group {
      **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @PearField(isPrimaryKey = true,isRequire = true,isShow = true)
+    @PearField(isPrimaryKey = true,isEdit = false)
     private Long id;
     /**
      * 用户组名称
      **/
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @PearField
     @Column(length = 200)
     private String name;
     /**
      * 用户组类型
      **/
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @PearField
     @Column(length = 24)
     private String type;
     /**
      * 用户组附加信息
      **/
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @PearField
     private String extra;
     /**
      * 用户组权限
      **/
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @PearField(isFilterable = false, isOrderable = false, isSearchable = false)
     private byte[] permission;
     /**
      * 创建时间
      **/
-    @TableField(fill= FieldFill.INSERT,value = "gmtCreated")
-    @Temporal(TemporalType.TIMESTAMP)
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true,isOrderable = true)
+    @TableField(fill= FieldFill.INSERT,value = "gmt_created")
+    @Column(name = "gmt_created")
+    @PearField(isEdit = false)
     private LocalDateTime gmtCreated;
     /**
      * 修改时间
      **/
-    @TableField(fill= FieldFill.INSERT_UPDATE,value = "gmtModified")
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true,isOrderable = true)
+    @TableField(fill= FieldFill.INSERT_UPDATE,value = "gmt_modified")
+    @Column(name = "gmt_modified")
+    @PearField
     private LocalDateTime gmtModified;
 }

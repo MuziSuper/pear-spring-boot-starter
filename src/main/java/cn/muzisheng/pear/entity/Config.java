@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Entity
+@Entity(name = "config")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -26,23 +26,23 @@ import org.springframework.stereotype.Component;
 )
 public class Config {
     @Id
-    @PearField(isPrimaryKey = true,isRequire = true,isShow = true)
+    @PearField(isPrimaryKey = true, isEdit = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 128)
+    @Column(length = 128, name = "`key`")
     @TableField(value = "`key`")
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @PearField
     private String key;
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @PearField
     @Column(length = 200)
     private String description;
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @PearField
     private boolean autoload;
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @PearField
     private boolean pub;
     @Column(length = 20)
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @PearField
     private String format;
-    @PearField(isRequire = true,isShow = true,isSearchable = true,isEdit = true)
+    @PearField
     private String value;
 }

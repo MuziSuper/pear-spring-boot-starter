@@ -3,10 +3,12 @@ package cn.muzisheng.pear.params;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class RegisterUserForm {
     private String email;
     private String password;

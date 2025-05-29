@@ -134,7 +134,7 @@ public class AdminServiceImpl implements AdminService {
                 throw new HookException("beforeUpdate error");
             }
         }
-        if (adminMapper.update(model, res) < 1) {
+        if (adminMapper.update(model, keys) < 1) {
             LOG.error("admin update failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
             throw new AdminErrorException("admin update failed. " + (res.get("email") != null ? "email: " + res.get("email") : ""));
         }
@@ -520,18 +520,19 @@ public class AdminServiceImpl implements AdminService {
         // 排序子句，不加ORDER BY
         List<Order> orders;
         StringBuilder orderClause = new StringBuilder();
-        if (queryForm.getOrders() != null && queryForm.getOrders().get(0) != null) {
+        if (queryForm.getOrders() != null && !queryForm.getOrders().isEmpty()) {
             orders = queryForm.getOrders();
         } else {
             orders = adminObject.getOrders();
         }
-        for (Order order : orders) {
-            if (!orderClause.isEmpty()) {
-                orderClause.append(",");
+        if (orders != null){
+            for (Order order : orders) {
+                if (!orderClause.isEmpty()) {
+                    orderClause.append(",");
+                }
+                orderClause.append(String.format("`%s`.`%s` %s", adminObject.getTableName(), order.getName(), order.getOp().toUpperCase()));
             }
-            orderClause.append(String.format("`%s`.`%s` %s", adminObject.getTableName(), order.getName(), order.getOp().toUpperCase()));
         }
-
         StringBuilder whereClauseBuilder = new StringBuilder();
         if (queryForm.getKeyword() != null) {
             for (String searchField : adminObject.getSearches()) {
