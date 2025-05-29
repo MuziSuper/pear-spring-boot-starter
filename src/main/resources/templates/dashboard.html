@@ -83,11 +83,30 @@
           </div>
           
           <button id="apply-filter" class="bg-blue-500 text-white px-4 h-8 rounded-md hover:bg-blue-600">应用筛选</button>
+          
+          <!-- 创建按钮 -->
+          <button id="create-btn" class="bg-green-500 text-white px-4 h-8 rounded-md hover:bg-green-600">
+            <i class="fa-solid fa-plus mr-1"></i>创建
+          </button>
         </div>
       </div>
       
+      <!-- 创建表单部分 -->
+      <div id="create-form-container" class="hidden mt-8 mx-auto bg-white rounded-lg shadow-lg p-6" style="width: 1020px">
+        <h2 class="text-xl font-bold mb-4">创建新数据</h2>
+        <form id="create-form" class="space-y-4">
+          <div id="form-fields" class="grid grid-cols-2 gap-4">
+            <!-- 动态生成的表单字段将在这里 -->
+          </div>
+          <div class="flex justify-end space-x-4 mt-6">
+            <button type="button" id="cancel-create" class="bg-gray-500 text-white px-6 py-2 rounded-md hover:bg-gray-600">取消</button>
+            <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600">提交</button>
+          </div>
+        </form>
+      </div>
+
       <!-- 表格部分 -->
-      <div class="mt-8 mx-auto bg-white rounded-lg shadow-lg overflow-hidden" style="width: 1020px">
+      <div id="table-container" class="mt-8 mx-auto bg-white rounded-lg shadow-lg overflow-hidden" style="width: 1020px">
         <table class="w-full">
           <thead id="table-head" class="bg-gray-50">
           </thead>

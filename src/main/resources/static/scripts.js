@@ -512,4 +512,84 @@ $(document).ready(function () {
                 break;
         }
     }
+    // 创建按钮点击事件
+    $('#create-btn').click(function() {
+        const currentModelData = map.data.objects.find(obj => obj.name === currentModel);
+        if (!currentModelData) return;
+
+        $('#table-container').addClass('hidden');
+        $('#create-form-container').removeClass('hidden');
+        
+        // 使用当前模型的字段信息
+        const fields = currentModelData.edits || [];
+        const requires = currentModelData.requires || [];
+        
+        // 清空并重新生成表单字段
+        $('#form-fields').empty();
+        fields.forEach(field => {
+          const isRequired = requires.includes(field);
+          const fieldHtml = `
+            <div class="form-field">
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                ${field} ${isRequired ? '<span class="text-red-500">*</span>' : ''}
+              </label>
+              <input type="text" name="${field}" 
+                class="w-full text-sm outline-none border-2 rounded-md h-8 px-2 border-gray-300 focus:border-gray-400"
+                ${isRequired ? 'required' : ''}>
+            </div>
+          `;
+          $('#form-fields').append(fieldHtml);
+        });
+      });
+
+      // 取消按钮点击事件
+      $('#cancel-create').click(function() {
+        $('#create-form-container').addClass('hidden');
+        $('#table-container').removeClass('hidden');
+      });
+
+      // 表单提交事件
+      $('#create-form').submit(function(e) {
+        e.preventDefault();
+        
+        // 收集表单数据
+        const formData = {};
+        $(this).find('input').each(function() {
+          const value = $(this).val().trim();
+          if (value) {
+            formData[$(this).attr('name')] = value;
+          }
+        });
+
+        // 获取当前模型的必填字段
+        const currentModelData = map.data.objects.find(obj => obj.name === currentModel);
+        const requires = currentModelData?.requires || [];
+        
+        // 验证必填字段
+        const missingFields = requires.filter(field => !formData[field]);
+        
+        if (missingFields.length > 0) {
+          alert('请填写以下必填字段：' + missingFields.join(', '));
+          return;
+        }
+
+        // 发送创建请求
+        $.ajax({
+          url: '/admin/' + currentModel,
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(formData),
+          success: function(response) {
+            if (response.code === 200) {
+              alert('创建成功！');
+              window.location.reload();
+            } else {
+              alert('创建失败：' + (response.message || '未知错误'));
+            }
+          },
+          error: function(xhr) {
+            alert('创建失败：' + (xhr.responseJSON?.message || '服务器错误'));
+          }
+        });
+      });
 });
