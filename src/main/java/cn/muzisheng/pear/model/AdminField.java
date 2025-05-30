@@ -28,7 +28,7 @@ public class AdminField {
      **/
     private String name;
     /**
-     * 定义此字段在数据库中的名称
+     * 定义此字段在数据库中的名称, 系统默认为驼峰式
      **/
     private String fieldName;
     /**
@@ -63,4 +63,13 @@ public class AdminField {
      * 字段是否数据库自动生成
      **/
     private Boolean isAutoId;
+    /**
+     * 自动更新时间
+     **/
+    private Boolean isAutoUpdateTime;
+    /**
+     * 自动插入时间
+     **/
+    private Boolean isAutoInsertTime;
+
 }

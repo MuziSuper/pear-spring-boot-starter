@@ -64,6 +64,6 @@ public class Group {
      **/
     @TableField(fill= FieldFill.INSERT_UPDATE,value = "gmt_modified")
     @Column(name = "gmt_modified")
-    @PearField
+    @PearField(isEdit = false)
     private LocalDateTime gmtModified;
 }

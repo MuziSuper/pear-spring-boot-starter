@@ -5,6 +5,7 @@ import cn.muzisheng.pear.annotation.PearObject;
 import cn.muzisheng.pear.model.AdminObject;
 import cn.muzisheng.pear.utils.CamelToSnakeUtil;
 import cn.muzisheng.pear.utils.PluralUtil;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +18,7 @@ import java.util.*;
 import java.util.HashSet;
 
 /**
- * 在bean被加载前通过PearObject与PearField注解填充AdminObject对象
+ * 在bean被加载前通过PearObject与PearField注解填充AdminObject对象存入AdminContainer中
  **/
 @Component
 public class PearBeanInitialization implements BeanPostProcessor {
@@ -34,23 +35,24 @@ public class PearBeanInitialization implements BeanPostProcessor {
             object.setDesc(pearObjectAnnotation.desc());
             object.setGroup(pearObjectAnnotation.group());
             if (pearObjectAnnotation.path() == null || pearObjectAnnotation.path().isEmpty()) {
-                object.setPath("/" + clazz.getSimpleName());
+                object.setPath("/" + object.getName());
             }
             if (pearObjectAnnotation.pluralName() == null || pearObjectAnnotation.pluralName().isEmpty()) {
                 object.setPluralName(PluralUtil.pluralize(bean.getClass().getSimpleName()));
             }
-            // tableName字段mybatisPlus的优先级最高,其次是pear,最后是默认
-            if (clazz.isAnnotationPresent(TableName.class)) {
-                TableName tablename = clazz.getAnnotation(TableName.class);
-                object.setTableName(tablename.value().replaceAll("`", ""));
-            } else if (clazz.isAnnotationPresent(Entity.class)) {
+            // tableName字段最高优先级为JPA自动创建表的表名优先，其次是mybatisPlus指定的表名，再是PearObject注解的TableName
+            if (clazz.isAnnotationPresent(Entity.class)) {
                 Entity entity = clazz.getAnnotation(Entity.class);
                 object.setTableName(entity.name().replaceAll("`", ""));
+            } else if (clazz.isAnnotationPresent(TableName.class)) {
+                TableName tablename = clazz.getAnnotation(TableName.class);
+                object.setTableName(tablename.value().replaceAll("`", ""));
             } else if(pearObjectAnnotation.TableName() != null&&!pearObjectAnnotation.TableName().isEmpty()){
                 object.setTableName(CamelToSnakeUtil.toSnakeCase(pearObjectAnnotation.TableName().replaceAll("`", "")));
             }else{
                 object.setTableName(CamelToSnakeUtil.toSnakeCase(clazz.getSimpleName()));
             }
+            // 如果没有表名，则使用驼峰式类名
             if (object.getTableName() == null || object.getTableName().isEmpty()) {
                 object.setTableName(CamelToSnakeUtil.toSnakeCase(clazz.getSimpleName()));
             }
@@ -68,15 +70,20 @@ public class PearBeanInitialization implements BeanPostProcessor {
             for (Field field : fields) {
                 if (field.isAnnotationPresent(PearField.class)) {
                     PearField pearFieldAnnotation = field.getAnnotation(PearField.class);
-                    // 对name的处理，优先使用Column注解的name字段去除反引号，其次是转为驼峰式的原属性名
+                    // 对name的处理，优先使用Column注解的name字段去除反引号，其次是原属性名
                     String name = "";
                     if (field.isAnnotationPresent(Column.class)) {
                         Column column = field.getAnnotation(Column.class);
                         // 去除反引号，获取mybaitsPlus指定的字段名
                         name = column.name().replaceAll("`", "");
+                    }else if(field.isAnnotationPresent(TableField.class)){
+                        TableField tableField = field.getAnnotation(TableField.class);
+                        name = tableField.value().replaceAll("`", "");
+                    }else{
+                        name = field.getName();
                     }
                     if (name.isEmpty()) {
-                        name = CamelToSnakeUtil.toSnakeCase(field.getName());
+                        name = field.getName();
                     }
                     if (pearFieldAnnotation.isEdit()) {
                         edits.add(name);

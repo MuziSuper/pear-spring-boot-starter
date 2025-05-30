@@ -109,7 +109,7 @@ public class User{
 
     // 更新时间
     @TableField(fill= FieldFill.INSERT_UPDATE,value ="gmt_modified")
-    @PearField
+    @PearField(isEdit = false)
     @Column(name = "gmt_modified")
     private LocalDateTime gmtModified;
     public User(String username, String password){

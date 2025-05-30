@@ -65,7 +65,7 @@ public class Product {
     /**
      * 修改时间
      **/
-    @PearField
+    @PearField(isEdit = false)
     @Column(name = "gmt_modified")
     @TableField(fill= FieldFill.INSERT_UPDATE,value = "gmt_modified")
     private LocalDateTime gmtModified;

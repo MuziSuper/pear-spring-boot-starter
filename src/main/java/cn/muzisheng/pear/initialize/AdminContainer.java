@@ -5,6 +5,8 @@ import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.handler.*;
 import cn.muzisheng.pear.model.*;
 import cn.muzisheng.pear.utils.CamelToSnakeUtil;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -140,6 +142,21 @@ public class AdminContainer {
                 adminField.setLabel(pearField.label());
                 // pearField填充placeholder字段
                 adminField.setPlaceholder(pearField.placeholder());
+                adminField.setIsAutoInsertTime(pearField.isAutoInsertTime());
+                adminField.setIsAutoUpdateTime(pearField.isAutoUpdateTime());
+            }
+            if(field.isAnnotationPresent(TableField.class)){
+                TableField tableField = field.getAnnotation(TableField.class);
+                if(tableField.fill()== FieldFill.INSERT_UPDATE){
+                    adminField.setIsAutoInsertTime(true);
+                    adminField.setIsAutoUpdateTime(true);
+                }
+                if(tableField.fill()== FieldFill.INSERT){
+                    adminField.setIsAutoInsertTime(true);
+                }
+                if(tableField.fill()== FieldFill.UPDATE){
+                    adminField.setIsAutoUpdateTime(true);
+                }
             }
 
             // 若pearField没有属性label则默认

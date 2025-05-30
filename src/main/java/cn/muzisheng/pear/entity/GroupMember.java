@@ -80,7 +80,7 @@ public class GroupMember {
     @Column(name = "gmt_modified")
     @TableField(fill= FieldFill.INSERT_UPDATE,value = "gmt_modified")
     @Temporal(TemporalType.TIMESTAMP)
-    @PearField
+    @PearField(isEdit = false)
     private LocalDateTime gmtModified;
 
 }

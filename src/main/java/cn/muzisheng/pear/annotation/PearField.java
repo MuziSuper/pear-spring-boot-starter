@@ -48,6 +48,14 @@ public @interface PearField {
      **/
     String placeholder() default "";
     /**
+     * 自动更新时间
+     **/
+    boolean isAutoUpdateTime() default false;
+    /**
+     * 自动插入时间
+     **/
+    boolean isAutoInsertTime() default false;
+    /**
      * 客户端显示名称
      **/
     String label() default "";

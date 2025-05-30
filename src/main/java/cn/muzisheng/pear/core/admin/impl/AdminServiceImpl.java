@@ -71,7 +71,7 @@ public class AdminServiceImpl implements AdminService {
      * @param data        请求体
      * @return 创建的admin数据
      **/
-    @Verification(UserVerify = true)
+//    @Verification(UserVerify = true)
     @Override
     public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, String model, AdminObject adminObject, Map<String, Object> data) {
         Response<Map<String, Object>> response = new Response<>();
@@ -91,6 +91,7 @@ public class AdminServiceImpl implements AdminService {
                 throw new HookException("beforeCreate error: " + e.getMessage());
             }
         }
+        flushTime(adminObject, res, true);
         if (adminMapper.create(model, res) < 1) {
             LOG.error("admin creation failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
             throw new AdminErrorException("admin creation failed. " + (res.get("email") != null ? "email: " + res.get("email") : ""));
@@ -105,6 +106,25 @@ public class AdminServiceImpl implements AdminService {
         }
         response.setData(res);
         return response.value();
+    }
+    /**
+     * 在res中添加更新时间
+     *
+     * @param adminObject 通用类对象
+     * @param res        处理体
+     * @param isCreate   新创建
+     **/
+    private void flushTime(AdminObject adminObject, Map<String, Object> res, boolean isCreate) {
+        adminObject.getFields().forEach(field -> {
+            if (isCreate) {
+                if (field.getIsAutoInsertTime()) {
+                    res.put(field.getFieldName(), LocalDateTime.now());
+                }
+            }
+            if (field.getIsAutoUpdateTime()) {
+                res.put(field.getFieldName(), LocalDateTime.now());
+            }
+        });
     }
 
     /**
@@ -126,7 +146,7 @@ public class AdminServiceImpl implements AdminService {
             throw new IllegalException("The primary key does not exist.");
         }
         Map<String, Object> res = unmarshalFrom(adminObject, data, keys, false);
-        if(adminObject.getBeforeUpdate() != null){
+        if (adminObject.getBeforeUpdate() != null) {
             try {
                 adminObject.getBeforeUpdate().execute(request, adminObject, res);
             } catch (Exception e) {
@@ -145,7 +165,7 @@ public class AdminServiceImpl implements AdminService {
 
 
     /**
-     * 添加主键值到请求体中,并将请求体数据经过处理后返回
+     * 添加主键值到请求体中,并将请求体数据经过处理后返回,过滤了不可编辑字段
      *
      * @param adminObject 通用类对象
      * @param body        请求体
@@ -158,8 +178,8 @@ public class AdminServiceImpl implements AdminService {
         if (body == null) {
             body = new HashMap<>();
         }
-        if (!initial) {
-            // 获取可编辑字段
+        // 删除不可编辑字段
+        if (initial) {
             if (adminObject.getEdits() != null) {
                 body.keySet().removeIf(field -> !adminObject.getEdits().contains(field));
             }
@@ -176,7 +196,7 @@ public class AdminServiceImpl implements AdminService {
         // 将body中的键值转换为目标类型
         for (AdminField adminField : adminObject.getFields()) {
             // 获取body中的此字段数据
-            Object val = body.get(adminField.getName());
+            Object val = body.get(adminField.getFieldName());
             // 不存在则跳过
             if (val == null) {
                 continue;
@@ -196,7 +216,13 @@ public class AdminServiceImpl implements AdminService {
                 }
             }
 
-            body.put(adminField.getName(), convertValue(targetClass, val));
+            body.put(adminField.getFieldName(), convertValue(targetClass, val));
+        }
+        flushTime(adminObject, body, initial);
+        if (adminObject.getIgnores() != null) {
+            for (String key : adminObject.getIgnores().keySet()) {
+                body.remove(key);
+            }
         }
         return body;
     }
@@ -525,7 +551,7 @@ public class AdminServiceImpl implements AdminService {
         } else {
             orders = adminObject.getOrders();
         }
-        if (orders != null){
+        if (orders != null) {
             for (Order order : orders) {
                 if (!orderClause.isEmpty()) {
                     orderClause.append(",");

@@ -42,11 +42,11 @@ public class AdminObject {
      **/
     private String desc;
     /**
-     * 其相关CURD的路径前缀
+     * 其相关CURD的路径前缀，eg: /AdminObject.name
      **/
     private String path;
     /**
-     * 可展示在前端的字段列表
+     * 可展示在前端的字段列表,默认存储为驼峰式即AdminField.fieldName
      **/
     private List<String> shows;
     /**
@@ -54,31 +54,31 @@ public class AdminObject {
      **/
     private List<Order> Orders;
     /**
-     * 可编辑的字段列表
+     * 可编辑的字段列表,默认存储为驼峰式即AdminField.fieldName
      **/
     private List<String> edits;
     /**
-     * 可用于过滤的字段
+     * 可用于过滤的字段,默认存储为驼峰式即AdminField.fieldName
      **/
     private List<String> filterables;
     /**
-     * 可用于排序的字段
+     * 可用于排序的字段,默认存储为驼峰式即AdminField.fieldName
      **/
     private List<String> Orderables;
     /**
-     * 可用于搜索的字段
+     * 可用于搜索的字段,默认存储为驼峰式即AdminField.fieldName
      **/
     private List<String> searches;
     /**
-     * 必须存在的字段
+     * 必须存在的字段,默认存储为驼峰式即AdminField.fieldName
      **/
     private List<String> requires;
     /**
-     * 主键字段列表
+     * 主键字段列表,默认存储为驼峰式即AdminField.fieldName
      **/
     private List<String> primaryKeys;
     /**
-     * 唯一键字段列表
+     * 唯一键字段列表,默认存储为驼峰式即AdminField.fieldName
      **/
     private List<String> uniqueKeys;
     /**
@@ -122,7 +122,7 @@ public class AdminObject {
      **/
     private Map<String, AdminAttribute> Attributes;
     /**
-     * 数据库表名称
+     * 数据库表名称,默认存储为驼峰式即AdminObject.tableName
      **/
     private String tableName;
     /**
