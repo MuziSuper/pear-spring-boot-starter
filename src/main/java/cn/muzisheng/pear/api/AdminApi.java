@@ -71,7 +71,7 @@ public class AdminApi {
     }
     @PatchMapping("{model}")
     public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody(required = false) Map<String, Object> data) {
-        if(AdminContainer.existsAdminObject(model)) {
+            if(AdminContainer.existsAdminObject(model)) {
             return adminService.handleUpdate(request,model, AdminContainer.getAdminObject(model), data);
         }
         Response<Map<String, Object>> response = new Response<>();
@@ -79,18 +79,16 @@ public class AdminApi {
         response.setStatus(Constant.ILLEGAL_EXCEPTION);
         return response.value();
     }
-//    @DeleteMapping("{model}")
-//    public ResponseEntity<Result<Map<String, Object>>> handleDelete(HttpServletRequest request, @PathVariable("model") String model,@RequestParam("filed") String filed) {
-//        for(PearObject adminObject : PearApplicationInitialization.adminObjects){
-//            if(adminObject.getTableName().equals(model)){
-//                return adminService.handleQueryOrGetOne(adminObject);
-//            }
-//        }
-//        Response<Map<String, Object>> response = new Response<>();
-//        response.setError("Model not found");
-//        response.setStatus(Constant.GENERAL_EXCEPTION);
-//        return response.value();
-//    }
+    @DeleteMapping("{model}")
+    public ResponseEntity<Result<Map<String, Object>>> handleDelete(HttpServletRequest request, @PathVariable("model") String model) {
+        if(AdminContainer.existsAdminObject(model)) {
+            return adminService.handleDelete(request,model, AdminContainer.getAdminObject(model));
+        }
+        Response<Map<String, Object>> response = new Response<>();
+        response.setError("Model not found");
+        response.setStatus(Constant.ILLEGAL_EXCEPTION);
+        return response.value();
+    }
 //
 //    @PostMapping("{model}/{name}")
 //    public ResponseEntity<Result<Map<String, Object>>> adminAction(HttpServletRequest request, @PathVariable("model") String model,@PathVariable("name") String name,@RequestParam("filed") String filed,@RequestParam("keys") String jsonDataMap) {

@@ -9,6 +9,7 @@ import cn.muzisheng.pear.exception.*;
 import cn.muzisheng.pear.handler.BuildContext;
 import cn.muzisheng.pear.initialize.AdminContainer;
 import cn.muzisheng.pear.mapper.AdminMapper;
+import cn.muzisheng.pear.mapper.dao.AdminDAO;
 import cn.muzisheng.pear.model.*;
 import cn.muzisheng.pear.params.AdminQueryResult;
 import cn.muzisheng.pear.params.Filter;
@@ -25,6 +26,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLSyntaxErrorException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -32,8 +34,8 @@ import java.util.*;
 
 @Service
 public class AdminServiceImpl implements AdminService {
-
     private final AdminMapper adminMapper;
+
     private final UserService userService;
     private final ConfigService configService;
     private final ResourcePatternResolver resourceLoader;
@@ -75,7 +77,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, String model, AdminObject adminObject, Map<String, Object> data) {
         Response<Map<String, Object>> response = new Response<>();
-        // 根据query值遍历并获取其映射数据库表的主键或外键键值对
+        // 根据query值遍历并获取其映射数据库表的主键或唯一键键值对
         Map<String, Object> params = getPrimaryValues(request, adminObject);
         if (params.isEmpty() && data == null) {
             throw new IllegalException("Both the query parameter and the request body are null.");
@@ -92,9 +94,13 @@ public class AdminServiceImpl implements AdminService {
             }
         }
         flushTime(adminObject, res, true);
-        if (adminMapper.create(model, res) < 1) {
-            LOG.error("admin creation failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
-            throw new AdminErrorException("admin creation failed. " + (res.get("email") != null ? "email: " + res.get("email") : ""));
+        try {
+            if (adminMapper.create(model, res) < 1) {
+                LOG.error("admin creation failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
+                throw new AdminErrorException("admin creation failed. " + (res.get("email") != null ? "email: " + res.get("email") : ""));
+            }
+        }catch (Exception e){
+            throw new SqlStatementException(e.getMessage());
         }
         if (adminObject.getBeforeRender() != null) {
             try {
@@ -108,27 +114,7 @@ public class AdminServiceImpl implements AdminService {
         return response.value();
     }
     /**
-     * 在res中添加更新时间
-     *
-     * @param adminObject 通用类对象
-     * @param res        处理体
-     * @param isCreate   新创建
-     **/
-    private void flushTime(AdminObject adminObject, Map<String, Object> res, boolean isCreate) {
-        adminObject.getFields().forEach(field -> {
-            if (isCreate) {
-                if (field.getIsAutoInsertTime()) {
-                    res.put(field.getFieldName(), LocalDateTime.now());
-                }
-            }
-            if (field.getIsAutoUpdateTime()) {
-                res.put(field.getFieldName(), LocalDateTime.now());
-            }
-        });
-    }
-
-    /**
-     * 根据请求头与请求体的参数更新admin
+     * 根据请求头与请求体的参数更新admin，请求头中要有主键或唯一键信息
      *
      * @param adminObject 通用类对象
      * @param data        请求体
@@ -141,7 +127,12 @@ public class AdminServiceImpl implements AdminService {
         if (keys.isEmpty() || data.isEmpty()) {
             throw new IllegalException("The parameter or primary key is empty.");
         }
-        List<Map<String, Object>> list = adminMapper.selectFirst(model, keys);
+        List<Map<String, Object>> list;
+        try {
+            list = adminMapper.selectFirst(model, keys);
+        } catch (Exception e){
+            throw new SqlStatementException(e.getMessage());
+        }
         if (list.isEmpty()) {
             throw new IllegalException("The primary key does not exist.");
         }
@@ -154,15 +145,102 @@ public class AdminServiceImpl implements AdminService {
                 throw new HookException("beforeUpdate error");
             }
         }
-        if (adminMapper.update(model, keys) < 1) {
-            LOG.error("admin update failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
-            throw new AdminErrorException("admin update failed. " + (res.get("email") != null ? "email: " + res.get("email") : ""));
+        try {
+            if (adminMapper.update(model, keys, res) < 1) {
+                LOG.error("admin update failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
+                throw new AdminErrorException("admin update failed. " + (res.get("email") != null ? "email: " + res.get("email") : ""));
+            }
+        }catch (Exception e){
+            throw new SqlStatementException(e.getMessage());
         }
         Response<Map<String, Object>> response = new Response<>();
         response.setData(res);
         return response.value();
     }
 
+    @Override
+    public ResponseEntity<Result<Map<String, Object>>> handleDelete(HttpServletRequest request, String model, AdminObject adminObject) {
+        Response<Map<String, Object>> response = new Response<>();
+        Map<String, Object> keys = getPrimaryValues(request, adminObject);
+        if(keys.isEmpty()){
+            throw new IllegalException("The primary key is empty.");
+        }
+        List<Map<String, Object>> list;
+        try{
+            list = adminMapper.selectFirst(model, keys);
+        }catch (Exception e){
+            throw new SqlStatementException(e.getMessage());
+        }
+        if (list.isEmpty()) {
+            throw new IllegalException("The primary key does not exist.");
+        }
+        if(adminObject.getBeforeDelete()!= null){
+            try {
+                adminObject.getBeforeDelete().execute(request, adminObject, list.get(0));
+            } catch (Exception e) {
+                LOG.error("beforeDelete error", e);
+                throw new HookException("beforeDelete error");
+            }
+        }
+        try{
+         if (adminMapper.delete(model, keys) < 1) {
+            LOG.error("admin delete failed. The key is {}", keys);
+        }
+        }catch (Exception e){
+            throw new SqlStatementException(e.getMessage());
+        }
+        response.setData(list.get(0));
+        return response.value();
+    }
+
+
+    @Override
+    public ResponseEntity<Result<Map<String, Object>>> handleAction(AdminObject adminObject) {
+        return null;
+    }
+
+    @Verification
+    @Override
+    public ResponseEntity<Result<Map<String, Object>>> adminJson(HttpServletRequest request) {
+        Response<Map<String, Object>> response = new Response<>();
+        Map<String, Object> map = handleAdminJson(request, AdminContainer.getAllAdminObjects(), (req, data) -> {
+            data.put("dashboard", configService.getValue(Constant.KEY_ADMIN_DASHBOARD));
+            return data;
+        });
+        response.setData(map);
+        return response.value();
+    }
+    /**
+     *  获取后台文件路径
+     **/
+//    @Verification
+    @Override
+    public ResponseEntity<Result<Map<String, Object>>> adminFilepath(HttpServletRequest request) {
+        List<String> cssFiles = new ArrayList<>();
+        List<String> jsFiles = new ArrayList<>();
+        try {
+            Resource[] resources = resourceLoader.getResources("classpath:static/**/*");
+            for (Resource resource : resources) {
+                if (resource.getFilename() != null && !resource.getFilename().isEmpty() && resource.getFilename().endsWith(".css")) {
+                    cssFiles.add(resource.getFilename());
+                }
+                if (resource.getFilename() != null && !resource.getFilename().isEmpty() && resource.getFilename().endsWith(".js")) {
+                    jsFiles.add(resource.getFilename());
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            throw new GeneralException();
+        }
+        Response<Map<String, Object>> response = new Response<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("Scripts", jsFiles);
+        map.put("Styles", cssFiles);
+        map.put("Dashboard", configService.getValue(Constant.KEY_ADMIN_DASHBOARD));
+        map.put("Objects", AdminContainer.getAllAdminObjects());
+        response.setData(map);
+        return response.value();
+    }
 
     /**
      * 添加主键值到请求体中,并将请求体数据经过处理后返回,过滤了不可编辑字段
@@ -179,11 +257,11 @@ public class AdminServiceImpl implements AdminService {
             body = new HashMap<>();
         }
         // 删除不可编辑字段
-        if (initial) {
+//        if (initial) {
             if (adminObject.getEdits() != null) {
                 body.keySet().removeIf(field -> !adminObject.getEdits().contains(field));
             }
-        }
+//        }
         // 添加body中没有的query参数，整合数据到body中
         for (String field : params.keySet()) {
             if (!body.containsKey(field)) {
@@ -360,57 +438,6 @@ public class AdminServiceImpl implements AdminService {
             val = 0;
         }
         return val;
-    }
-
-    @Override
-    public ResponseEntity<Result<Map<String, Object>>> handleDelete(AdminObject adminObject) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Result<Map<String, Object>>> handleAction(AdminObject adminObject) {
-        return null;
-    }
-
-    @Verification
-    @Override
-    public ResponseEntity<Result<Map<String, Object>>> adminJson(HttpServletRequest request) {
-        Response<Map<String, Object>> response = new Response<>();
-        Map<String, Object> map = handleAdminJson(request, AdminContainer.getAllAdminObjects(), (req, data) -> {
-            data.put("dashboard", configService.getValue(Constant.KEY_ADMIN_DASHBOARD));
-            return data;
-        });
-        response.setData(map);
-        return response.value();
-    }
-
-    @Verification
-    @Override
-    public ResponseEntity<Result<Map<String, Object>>> adminFilepath(HttpServletRequest request) {
-        List<String> cssFiles = new ArrayList<>();
-        List<String> jsFiles = new ArrayList<>();
-        try {
-            Resource[] resources = resourceLoader.getResources("classpath:static/**/*");
-            for (Resource resource : resources) {
-                if (resource.getFilename() != null && !resource.getFilename().isEmpty() && resource.getFilename().endsWith(".css")) {
-                    cssFiles.add(resource.getFilename());
-                }
-                if (resource.getFilename() != null && !resource.getFilename().isEmpty() && resource.getFilename().endsWith(".js")) {
-                    jsFiles.add(resource.getFilename());
-                }
-            }
-        } catch (Exception e) {
-            LOG.error(e.getMessage());
-            throw new GeneralException();
-        }
-        Response<Map<String, Object>> response = new Response<>();
-        Map<String, Object> map = new HashMap<>();
-        map.put("Scripts", jsFiles);
-        map.put("Styles", cssFiles);
-        map.put("Dashboard", configService.getValue(Constant.KEY_ADMIN_DASHBOARD));
-        map.put("Objects", AdminContainer.getAllAdminObjects());
-        response.setData(map);
-        return response.value();
     }
 
     /**
@@ -690,4 +717,23 @@ public class AdminServiceImpl implements AdminService {
         return queryMap;
     }
 
+    /**
+     * 在res中添加插入更新时间
+     *
+     * @param adminObject 通用类对象
+     * @param res        处理体
+     * @param isCreate   新创建
+     **/
+    private void flushTime(AdminObject adminObject, Map<String, Object> res, boolean isCreate) {
+        adminObject.getFields().forEach(field -> {
+            if (isCreate) {
+                if (field.getIsAutoInsertTime()) {
+                    res.put(field.getFieldName(), LocalDateTime.now());
+                }
+            }
+            if (field.getIsAutoUpdateTime()) {
+                res.put(field.getFieldName(), LocalDateTime.now());
+            }
+        });
+    }
 }

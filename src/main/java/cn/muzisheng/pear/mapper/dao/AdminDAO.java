@@ -14,9 +14,6 @@ public class AdminDAO {
 
     public String selectFirst(String tableName, Map<String, Object> keys) {
         StringBuilder builder = new StringBuilder();
-        if (tableName == null || tableName.isEmpty() || keys == null || keys.isEmpty()) {
-            throw new SqlStatementException("The table name and query conditions cannot be left blank.");
-        }
         // SELECT * FROM `tableName` WHERE
         builder.append("SELECT * FROM `").append(tableName).append("` ").append("WHERE ");
         int index = 0;
@@ -73,9 +70,6 @@ public class AdminDAO {
 
     public String create(String tableName, Map<String, Object> map) {
         StringBuilder builder = new StringBuilder();
-        if (tableName.isEmpty()) {
-            throw new SqlStatementException("The table name cannot be left blank.");
-        }
         // INSERT INTO `tableName`
         builder.append("INSERT INTO `").append(tableName).append("` ");
         StringBuilder values = new StringBuilder();
@@ -103,29 +97,53 @@ public class AdminDAO {
         LOG.info(builder.toString());
         return builder.toString();
     }
-    public String update(String tableName,Map<String,Object> map){
+    public String update(String tableName,Map<String,Object> key,Map<String,Object> map){
         StringBuilder builder = new StringBuilder();
-        if (tableName.isEmpty()) {
-            throw new SqlStatementException("The table name cannot be left blank.");
-        }
         builder.append("UPDATE `").append(tableName).append("` ");
-        StringBuilder  keys = new StringBuilder();
-        StringBuilder values = new StringBuilder();
-        int index = 0;
+        StringBuilder  resBuf = new StringBuilder();
+        StringBuilder  keyBuf = new StringBuilder();
+
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-            if (index++ > 0) {
-                values.append(", ");
-                keys.append(", ");
+            if (!resBuf.isEmpty()) {
+                resBuf.append(", ");
             }
             if(entry.getValue() instanceof Number){
-                values.append("`").append(entry.getKey()).append("` = ").append(entry.getValue());
+                resBuf.append("`").append(entry.getKey()).append("` = ").append(entry.getValue());
             }else{
-                values.append("`").append(entry.getKey()).append("` = ").append("'").append(entry.getValue()).append("'");
+                resBuf.append("`").append(entry.getKey()).append("` = ").append("'").append(entry.getValue()).append("'");
             }
-            keys.append("`").append(entry.getKey()).append("`");
         }
-        builder.append("SET ").append(values).append(" WHERE ").append(keys).append(";");
+        for( Map.Entry<String, Object> entry : key.entrySet()){
+            if(!keyBuf.isEmpty()){
+                keyBuf.append(" AND ");
+            }
+             if(entry.getValue() instanceof Number){
+                  keyBuf.append("`").append(entry.getKey()).append("` = ").append(entry.getValue());
+             }
+             else{
+                 keyBuf.append("`").append(entry.getKey()).append("` = ").append("'").append(entry.getValue()).append("'");
+             }
+        }
+        builder.append("SET ").append(resBuf).append(" WHERE ").append(keyBuf).append(";");
+        LOG.info(builder.toString());
         return builder.toString();
     }
+     public String delete(String tableName,Map<String,Object> keys){
+        StringBuilder builder = new StringBuilder();
+        builder.append("DELETE FROM `").append(tableName).append("` ");
+        StringBuilder  keyBuf = new StringBuilder();
+        for( Map.Entry<String, Object> entry : keys.entrySet()){
+            if(!keyBuf.isEmpty()){
+                keyBuf.append(" AND ");
+            }
+             if(entry.getValue() instanceof Number){
+                  keyBuf.append("`").append(entry.getKey()).append(entry.getValue());
+             }else if(entry.getValue() instanceof String){
+                 keyBuf.append("`").append(entry.getKey()).append("` = ").append("'").append(entry.getValue()).append("'");
+             }
+        }
+        builder.append("WHERE ").append(keyBuf).append(";");
+        return builder.toString();
+     }
 
 }

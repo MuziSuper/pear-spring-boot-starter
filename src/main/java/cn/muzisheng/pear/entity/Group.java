@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * 用户组
  **/
 @Data
-@Entity
+@Entity(name = "`group`")
 @Component
 @TableName("`group`")
 @PearObject(

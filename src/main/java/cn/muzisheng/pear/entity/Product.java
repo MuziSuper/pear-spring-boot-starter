@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 /**
  * 货品
  **/
-@Entity
+@Entity(name = "product")
 @Data
 @Component
 @TableName("product")
