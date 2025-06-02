@@ -46,10 +46,10 @@ public interface AdminMapper {
      **/
     @UpdateProvider(type = AdminDAO.class, method = "update")
     int update(String tableName,Map<String,Object> key,Map<String,Object> map);
-     /**
+     /*s
      * 删除tableName表
      * @param tableName 表名
-     * @param key 删除的主键或唯一键集合
+     * @param keys 删除的主键或唯一键集合
      * @return 删除数量，1为成功，0为失败
      **/
      @DeleteProvider(type = AdminDAO.class, method = "delete")

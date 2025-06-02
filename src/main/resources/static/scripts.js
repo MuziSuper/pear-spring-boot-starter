@@ -20,7 +20,7 @@ const queryForm = {
 
 $(document).ready(function () {
     let data = {};
-    let map = {};
+    let adminJson = {};
     const pageSize = 10;
     let currentPage = 1;
     let totalPages;
@@ -36,16 +36,15 @@ $(document).ready(function () {
         window.location.href = '/auth/login';
         return;
     }
-
     // 调用/admin/json接口获取数据
     $.ajax({
         url: '/admin/json',
         method: 'POST',
         success: function(response) {
             if (response) {
-                // 将数据存储到map中
-                map = response;
-                console.log('管理员数据已加载到map中:', map);
+                // 将数据存储到adminJson中
+                adminJson = response;
+                console.log('管理员数据已加载到adminJson中:', adminJson);
                 // 初始化侧边栏菜单
                 initSidebarMenu();
             } else {
@@ -104,12 +103,12 @@ $(document).ready(function () {
         const sidebarMenu = $('#sidebar-menu');
         sidebarMenu.empty();
 
-        if (map.data && map.data.objects) {
-            map.data.objects.forEach((item, index) => {
+        if (adminJson.data && adminJson.data.objects) {
+            adminJson.data.objects.forEach((item, index) => {
                 const menuItem = $(`
                     <li>
                         <a href="#" class="flex items-center text-xl p-4 text-gray-700 hover:bg-gray-100" data-model="${item.tableName}" data-desc="${item.desc}" data-filterables='${JSON.stringify(item.filterables || [])}'>
-                            <i class="fa-solid fa-database fa-ms mr-4 ml-2"></i> ${item.name}
+                            <i class="fa-solid fa-database fa-ms mr-4 ml-2"></i> ${item.tableName}
                         </a>
                     </li>
                 `);
@@ -117,8 +116,8 @@ $(document).ready(function () {
 
                 // 如果是第一个模型，自动选中
                 if (index === 0) {
-                    currentModel = item.name;
-                    $('.text-2xl.ml-16.font-bold.mb-6 h1').text(item.name);
+                    currentModel = item.tableName;
+                    $('.text-2xl.ml-16.font-bold.mb-6 h1').text(item.tableName);
                     $('.text-2xl.ml-16.font-bold.mb-6 p').text(item.desc);
                     menuItem.find('a').addClass('bg-gray-100');
                     // 初始化第一个模型的筛选字段
@@ -152,6 +151,10 @@ $(document).ready(function () {
                 // 更新选中状态
                 sidebarMenu.find('a').removeClass('bg-gray-100');
                 $(this).addClass('bg-gray-100');
+                
+                // 确保创建表单隐藏，表格显示
+                $('#create-form-container').addClass('hidden');
+                $('#table-container').removeClass('hidden');
                 
                 // 更新筛选字段
                 initFilterFields(filterables);
@@ -225,7 +228,7 @@ $(document).ready(function () {
         if (!currentModel) return;
         
         updateQueryForm();
-        postData(`/admin/${currentModel.toLowerCase()}`, queryForm, function (response) {
+        postData(`/admin/${currentModel}`, queryForm, function (response) {
             console.log('请求成功:', response);
             data = response.data;
             totalPages = Math.ceil(data.totalCount / pageSize);
@@ -464,12 +467,12 @@ $(document).ready(function () {
         updateFilterOptions(fieldType);
     });
 
-    function getFieldType(fieldName) {
+    function getFieldType(tableName) {
         // 这里可以根据实际需求判断字段类型
         // 例如通过字段名后缀或配置信息来判断
-        if (fieldName.toLowerCase().includes('time') || fieldName.toLowerCase().includes('date')) {
+        if (tableName.toLowerCase().includes('time') || tableName.toLowerCase().includes('date')) {
             return 'datetime';
-        } else if (fieldName.toLowerCase().includes('id')) {
+        } else if (tableName.toLowerCase().includes('id')) {
             return 'number';
         } else {
             return 'text';
@@ -514,11 +517,12 @@ $(document).ready(function () {
     }
     // 创建按钮点击事件
     $('#create-btn').click(function() {
-        const currentModelData = map.data.objects.find(obj => obj.name === currentModel);
+        const currentModelData = adminJson.data.objects.find(obj => obj.tableName === currentModel);
         if (!currentModelData) return;
 
         $('#table-container').addClass('hidden');
         $('#create-form-container').removeClass('hidden');
+        $('#pagination').addClass('hidden'); // 隐藏分页部分
         
         // 使用当前模型的字段信息
         const fields = currentModelData.edits || [];
@@ -527,69 +531,78 @@ $(document).ready(function () {
         // 清空并重新生成表单字段
         $('#form-fields').empty();
         fields.forEach(field => {
-          const isRequired = requires.includes(field);
-          const fieldHtml = `
+            const isRequired = requires.includes(field);
+            const fieldHtml = `
             <div class="form-field">
-              <label class="block text-sm font-medium text-gray-700 mb-1">
+                <label class="block text-sm font-medium text-gray-700 mb-1">
                 ${field} ${isRequired ? '<span class="text-red-500">*</span>' : ''}
-              </label>
-              <input type="text" name="${field}" 
+                </label>
+                <input type="text" name="${field}" 
                 class="w-full text-sm outline-none border-2 rounded-md h-8 px-2 border-gray-300 focus:border-gray-400"
                 ${isRequired ? 'required' : ''}>
             </div>
-          `;
-          $('#form-fields').append(fieldHtml);
+            `;
+            $('#form-fields').append(fieldHtml);
         });
-      });
+    });
 
-      // 取消按钮点击事件
-      $('#cancel-create').click(function() {
+    // 取消按钮点击事件
+    $('#cancel-create').click(function() {
         $('#create-form-container').addClass('hidden');
         $('#table-container').removeClass('hidden');
-      });
+        $('#pagination').removeClass('hidden'); // 显示分页部分
+        $('#create-form')[0].reset(); // 重置表单
+    });
 
-      // 表单提交事件
-      $('#create-form').submit(function(e) {
+    // 表单提交事件
+    $('#create-form').submit(function(e) {
         e.preventDefault();
         
         // 收集表单数据
         const formData = {};
         $(this).find('input').each(function() {
-          const value = $(this).val().trim();
-          if (value) {
-            formData[$(this).attr('name')] = value;
-          }
+            const value = $(this).val().trim();
+            if (value) {
+                formData[$(this).attr('name')] = value;
+            }
         });
 
         // 获取当前模型的必填字段
-        const currentModelData = map.data.objects.find(obj => obj.name === currentModel);
+        const currentModelData = adminJson.data.objects.find(obj => obj.tableName === currentModel);
         const requires = currentModelData?.requires || [];
         
         // 验证必填字段
         const missingFields = requires.filter(field => !formData[field]);
         
         if (missingFields.length > 0) {
-          alert('请填写以下必填字段：' + missingFields.join(', '));
-          return;
+            alert('请填写以下必填字段：' + missingFields.join(', '));
+            return;
         }
 
         // 发送创建请求
         $.ajax({
-          url: '/admin/' + currentModel,
-          method: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify(formData),
-          success: function(response) {
-            if (response.code === 200) {
-              alert('创建成功！');
-              window.location.reload();
-            } else {
-              alert('创建失败：' + (response.message || '未知错误'));
+            url: '/admin/' + currentModel.toLowerCase(),
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                if (response.code === 200) {
+                    alert('创建成功！');
+                    // 隐藏创建表单，显示表格和分页
+                    $('#create-form-container').addClass('hidden');
+                    $('#table-container').removeClass('hidden');
+                    $('#pagination').removeClass('hidden');
+                    // 重置表单
+                    $('#create-form')[0].reset();
+                    // 刷新数据
+                    fetchDataAndRender();
+                } else {
+                    alert('创建失败：' + (response.message || '未知错误'));
+                }
+            },
+            error: function(xhr) {
+                alert('创建失败：' + (xhr.responseJSON?.message || '服务器错误'));
             }
-          },
-          error: function(xhr) {
-            alert('创建失败：' + (xhr.responseJSON?.message || '服务器错误'));
-          }
         });
-      });
+    });
 });
