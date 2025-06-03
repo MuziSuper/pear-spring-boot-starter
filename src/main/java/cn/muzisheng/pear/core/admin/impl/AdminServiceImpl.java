@@ -5,6 +5,7 @@ import cn.muzisheng.pear.core.admin.AdminService;
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.core.config.ConfigService;
 import cn.muzisheng.pear.core.user.UserService;
+import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.*;
 import cn.muzisheng.pear.handler.BuildContext;
 import cn.muzisheng.pear.initialize.AdminContainer;
@@ -93,7 +94,6 @@ public class AdminServiceImpl implements AdminService {
                 throw new HookException("beforeCreate error: " + e.getMessage());
             }
         }
-        flushTime(adminObject, res, true);
         try {
             if (adminMapper.create(model, res) < 1) {
                 LOG.error("admin creation failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
@@ -327,12 +327,12 @@ public class AdminServiceImpl implements AdminService {
                 val = formatAsFloat(val);
             } else if (targetClass.equals(Boolean.class)) {
                 String valString = (String) val;
-                if (valString.equalsIgnoreCase("true") || valString.equalsIgnoreCase("on") || valString.equalsIgnoreCase("yes")) {
+                if (valString.equalsIgnoreCase("true") || valString.equalsIgnoreCase("on") || valString.equalsIgnoreCase("yes")|| valString.equals("1")) {
                     val = 1;
-                } else if (valString.equalsIgnoreCase("false") || valString.equalsIgnoreCase("off") || valString.equalsIgnoreCase("no")) {
+                } else if (valString.equalsIgnoreCase("false") || valString.equalsIgnoreCase("off") || valString.equalsIgnoreCase("no")|| valString.equals("0")) {
                     val = 0;
                 } else {
-                    val = false;
+                    val = 0;
                 }
             } else if (targetClass.equals(LocalDateTime.class)) {
                 val = TimeTransitionUtil.stringToLocalDateTime((String) val);
@@ -456,7 +456,11 @@ public class AdminServiceImpl implements AdminService {
                     continue;
                 }
             }
-            adminObject.buildPermissions(userService.currentUser(request));
+            User user=userService.currentUser(request);
+            if(user==null){
+                throw new AuthorizationException("未登录");
+            }
+            adminObject.buildPermissions(user);
             viewObjects.add(adminObject);
         }
         // 获取渲染页面的所有站点信息
@@ -517,56 +521,58 @@ public class AdminServiceImpl implements AdminService {
             queryForm.setLimit(0);
         }
         String whereClause = "";
-        for (Filter filter : queryForm.getFilters()) {
-            String queryClause = filter.getQueryClause();
-            if (queryClause != null) {
-                // 如果是like操作，则构造LIKE语句whereClause，先不带WHERE,下文还有限定字筛选
-                if (Constant.FILTER_OP_LIKE.equals(filter.getOp())) {
-                    if (filter.getValue() instanceof Object[] values) {
-                        List<String> conditions = new ArrayList<>();
-                        for (Object value : values) {
+        if(queryForm.getFilters() != null) {
+            for (Filter filter : queryForm.getFilters()) {
+                String queryClause = filter.getQueryClause();
+                if (queryClause != null) {
+                    // 如果是like操作，则构造LIKE语句whereClause，先不带WHERE,下文还有限定字筛选
+                    if (Constant.FILTER_OP_LIKE.equals(filter.getOp())) {
+                        if (filter.getValue() instanceof Object[] values) {
+                            List<String> conditions = new ArrayList<>();
+                            for (Object value : values) {
+                                if (value instanceof String strValue) {
+                                    if (strValue.isEmpty()) {
+                                        continue;
+                                    }
+                                    // 转义双引号，并构造 LIKE 语句
+                                    String escapedValue = strValue.replace("\"", "\\\"");
+                                    String condition = String.format("`%s`.`%s` LIKE '%%%s%%'", adminObject.getTableName(), filter.getName(), escapedValue);
+                                    conditions.add(condition);
+                                }
+                            }
+                            if (!conditions.isEmpty()) {
+                                // 因为多个筛选条件则拼接OR语句
+                                whereClause = String.join(" OR ", conditions);
+                            }
+                        } else {
+                            Object value = filter.getValue();
                             if (value instanceof String strValue) {
                                 if (strValue.isEmpty()) {
                                     continue;
                                 }
-                                // 转义双引号，并构造 LIKE 语句
                                 String escapedValue = strValue.replace("\"", "\\\"");
-                                String condition = String.format("`%s`.`%s` LIKE '%%%s%%'", adminObject.getTableName(), filter.getName(), escapedValue);
-                                conditions.add(condition);
+                                whereClause = String.format("`%s`.`%s` LIKE '%%%s%%'", adminObject.getTableName(), filter.getName(), escapedValue);
                             }
                         }
-                        if (!conditions.isEmpty()) {
-                            // 因为多个筛选条件则拼接OR语句
-                            whereClause = String.join(" OR ", conditions);
-                        }
-                    } else {
-                        Object value = filter.getValue();
-                        if (value instanceof String strValue) {
-                            if (strValue.isEmpty()) {
-                                continue;
-                            }
-                            String escapedValue = strValue.replace("\"", "\\\"");
-                            whereClause = String.format("`%s`.`%s` LIKE '%%%s%%'", adminObject.getTableName(), filter.getName(), escapedValue);
-                        }
-                    }
-                    // 如果是between操作，则构造BETWEEN语句,也不带WHERE
-                } else if (Constant.FILTER_OP_BETWEEN.equals(filter.getOp())) {
-                    if (filter.getValue() instanceof List<?> values) {
-                        if (values.size() == 2) {
-                            // `user`.name BETWEEN 'John' AND 'Doe'
-                            if ((values.get(0) instanceof Integer && values.get(1) instanceof Integer) || (values.get(0) instanceof Float && values.get(1) instanceof Float)) {
-                                whereClause = String.format("`%s`.%s %s %s AND %s", adminObject.getTableName(), filter.getName(), queryClause, values.get(0), values.get(1));
+                        // 如果是between操作，则构造BETWEEN语句,也不带WHERE
+                    } else if (Constant.FILTER_OP_BETWEEN.equals(filter.getOp())) {
+                        if (filter.getValue() instanceof List<?> values) {
+                            if (values.size() == 2) {
+                                // `user`.name BETWEEN 'John' AND 'Doe'
+                                if ((values.get(0) instanceof Integer && values.get(1) instanceof Integer) || (values.get(0) instanceof Float && values.get(1) instanceof Float)) {
+                                    whereClause = String.format("`%s`.%s %s %s AND %s", adminObject.getTableName(), filter.getName(), queryClause, values.get(0), values.get(1));
+                                } else {
+                                    whereClause = String.format("`%s`.%s %s '%s' AND '%s'", adminObject.getTableName(), filter.getName(), queryClause, values.get(0), values.get(1));
+                                }
                             } else {
-                                whereClause = String.format("`%s`.%s %s '%s' AND '%s'", adminObject.getTableName(), filter.getName(), queryClause, values.get(0), values.get(1));
+                                throw new GeneralException("Expected an Object[] value with length 2 for between operation but got " + values.size());
                             }
                         } else {
-                            throw new GeneralException("Expected an Object[] value with length 2 for between operation but got " + values.size());
+                            throw new GeneralException("Expected an Object[] value for between operation but got " + filter.getValue().getClass().getName());
                         }
                     } else {
-                        throw new GeneralException("Expected an Object[] value for between operation but got " + filter.getValue().getClass().getName());
+                        whereClause = String.format("`%s`.%s'%s'", adminObject.getTableName(), queryClause, filter.getValue());
                     }
-                } else {
-                    whereClause = String.format("`%s`.%s'%s'", adminObject.getTableName(), queryClause, filter.getValue());
                 }
             }
         }

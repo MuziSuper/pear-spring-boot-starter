@@ -569,10 +569,10 @@ $(document).ready(function () {
 
         // 获取当前模型的必填字段
         const currentModelData = adminJson.data.objects.find(obj => obj.tableName === currentModel);
-        const requires = currentModelData?.requires || [];
+        const edits = currentModelData?.edits || [];
         
         // 验证必填字段
-        const missingFields = requires.filter(field => !formData[field]);
+        const missingFields = edits.filter(field => !formData[field]);
         
         if (missingFields.length > 0) {
             alert('请填写以下必填字段：' + missingFields.join(', '));
@@ -581,8 +581,8 @@ $(document).ready(function () {
 
         // 发送创建请求
         $.ajax({
-            url: '/admin/' + currentModel.toLowerCase(),
-            method: 'POST',
+            url: '/admin/' + currentModel,
+            method: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function(response) {

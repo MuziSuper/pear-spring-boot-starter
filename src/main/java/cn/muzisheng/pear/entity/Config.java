@@ -37,9 +37,9 @@ public class Config {
     @Column(length = 200)
     private String description;
     @PearField
-    private boolean autoload;
+    private Boolean autoload;
     @PearField
-    private boolean pub;
+    private Boolean pub;
     @Column(length = 20)
     @PearField
     private String format;

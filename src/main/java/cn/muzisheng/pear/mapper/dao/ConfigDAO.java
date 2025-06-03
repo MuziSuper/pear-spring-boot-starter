@@ -24,7 +24,7 @@ public class ConfigDAO {
         Config existingConfig = configMapper.selectOne(queryWrapper.eq("`key`", config.getKey()));
         if (existingConfig != null) {
             config.setDescription(existingConfig.getDescription());
-            config.setPub(existingConfig.isPub());
+            config.setPub(existingConfig.getPub());
             config.setId(existingConfig.getId());
             // 数据存在，更新数据
             return configMapper.updateById(config) > 0;
