@@ -27,6 +27,9 @@ $(document).ready(function () {
     let currentSortField = '';
     let currentSortOrder = 'asc';
     let currentModel = ''; // 当前选中的模型
+    let userData = null; // 存储用户数据
+    let editableFields = []; // 可编辑字段列表
+    let showableFields = []; // 可显示字段列表
 
     // 从cookie中获取token
     const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
@@ -36,6 +39,7 @@ $(document).ready(function () {
         window.location.href = '/auth/login';
         return;
     }
+
     // 调用/admin/json接口获取数据
     $.ajax({
         url: '/admin/json',
@@ -47,6 +51,16 @@ $(document).ready(function () {
                 console.log('管理员数据已加载到adminJson中:', adminJson);
                 // 初始化侧边栏菜单
                 initSidebarMenu();
+                
+                // 获取用户表的配置信息
+                const userModel = adminJson.data.objects.find(obj => obj.tableName === 'user');
+                if (userModel) {
+                    editableFields = userModel.edits || [];
+                    showableFields = userModel.shows || [];
+                    // 获取并显示当前用户信息
+                    userData = adminJson.data.user;
+                    renderUserInfo();
+                }
             } else {
                 console.error('获取管理员数据失败');
             }
@@ -58,6 +72,163 @@ $(document).ready(function () {
             alert('用户未登录自动跳转到登录页面...');
             checkLogin();
         }
+    });
+
+    // 渲染用户信息
+    function renderUserInfo() {
+        const container = $('#user-info-container');
+        container.empty();
+
+        showableFields.forEach(field => {
+            const value = userData[field] || '';
+            const isEditable = editableFields.includes(field);
+            
+            const fieldDiv = $(`
+                <div class="field-item" data-field="${field}">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">${field}</label>
+                    <div class="field-value ${isEditable ? 'cursor-pointer hover:bg-gray-50' : ''} h-10 px-3 flex items-center rounded-md border ${isEditable ? 'border-gray-200 hover:border-gray-300' : 'border-transparent'} transition-colors duration-200">
+                        ${value ? `<span class="text-gray-900">${value}</span>` : '<span class="text-gray-400">未设置</span>'}
+                    </div>
+                </div>
+            `);
+            
+            container.append(fieldDiv);
+        });
+    }
+
+    // 字段点击事件
+    $(document).on('click', '.field-value', function() {
+        const fieldItem = $(this).closest('.field-item');
+        const field = fieldItem.data('field');
+        
+        // 检查字段是否可编辑
+        if (!editableFields.includes(field)) {
+            return;
+        }
+        
+        // 如果已经是输入框，不需要再次转换
+        if (fieldItem.find('input').length > 0) {
+            return;
+        }
+        
+        const value = userData[field] || '';
+        
+        // 创建输入框，保持相同的高度和内边距
+        const input = $(`<input type="text" class="w-full text-sm outline-none border border-gray-300 rounded-md h-10 px-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" value="${value}">`);
+        
+        // 替换原有的显示元素
+        $(this).replaceWith(input);
+        input.focus();
+        
+        // 显示更新按钮
+        $('#update-container').removeClass('hidden');
+    });
+
+    // 取消编辑
+    $('#cancel-edit').click(function() {
+        renderUserInfo();
+        $('#update-container').addClass('hidden');
+    });
+
+    // 更新用户信息
+    $('#update-user-info').click(function() {
+        const updateData = {};
+        let hasChanges = false;
+
+        // 收集所有输入框的值
+        $('.field-item').each(function() {
+            const field = $(this).data('field');
+            const input = $(this).find('input');
+            
+            if (input.length > 0) {
+                const newValue = input.val();
+                if (newValue !== userData[field]) {
+                    updateData[field] = newValue;
+                    hasChanges = true;
+                }
+            }
+        });
+
+        if (!hasChanges) {
+            renderUserInfo();
+            $('#update-container').addClass('hidden');
+            return;
+        }
+
+        // 获取用户表的tableName
+        const userModel = adminJson.data.objects.find(obj => obj.tableName === 'user');
+        if (!userModel) {
+            alert('获取用户表信息失败');
+            return;
+        }
+
+        $.ajax({
+            url: `/admin/${userModel.tableName}?id=${userData.id}`,
+            method: 'PATCH',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            contentType: 'application/json',
+            data: JSON.stringify(updateData),
+            success: function(response) {
+                if (response.code === 200 || response.success) {  // 添加 success 检查
+                    // 更新本地数据
+                    Object.assign(userData, updateData);
+                    // 显示成功提示
+                    const message = $(`
+                        <div class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg z-50 animate-fade-in-out">
+                            更新成功
+                        </div>
+                    `);
+                    $('body').append(message);
+                    setTimeout(() => message.remove(), 2000);
+                    // 重新渲染用户信息
+                    renderUserInfo();
+                    // 隐藏更新按钮
+                    $('#update-container').addClass('hidden');
+                } else {
+                    alert('更新失败：' + (response.message || '未知错误'));
+                }
+            },
+            error: function(xhr) {
+                alert('更新失败：' + (xhr.responseJSON?.message || '服务器错误'));
+            }
+        });
+    });
+
+    // 设置图标点击事件
+    $('#settings-icon').click(function() {
+        $('#data-page').addClass('hidden');
+        $('#settings-page').removeClass('hidden');
+        $(this).find('i').removeClass('text-gray-500').addClass('text-gray-900');
+        // 隐藏分页
+        $('#pagination').addClass('hidden');
+    });
+
+    // 返回按钮点击事件
+    $('#back-to-dashboard').click(function() {
+        $('#settings-page').addClass('hidden');
+        $('#data-page').removeClass('hidden');
+        $('#settings-icon').find('i').removeClass('text-gray-900').addClass('text-gray-500');
+        // 显示分页
+        $('#pagination').removeClass('hidden');
+        // 重新渲染用户信息（取消所有编辑状态）
+        renderUserInfo();
+        // 隐藏更新按钮
+        $('#update-container').addClass('hidden');
+    });
+
+    // 侧边栏菜单项点击时也返回数据页面
+    $(document).on('click', '#sidebar-menu a', function() {
+        $('#settings-page').addClass('hidden');
+        $('#data-page').removeClass('hidden');
+        $('#settings-icon').find('i').removeClass('text-gray-900').addClass('text-gray-500');
+        // 显示分页
+        $('#pagination').removeClass('hidden');
+        // 重新渲染用户信息（取消所有编辑状态）
+        renderUserInfo();
+        // 隐藏更新按钮
+        $('#update-container').addClass('hidden');
     });
 
     // 重置QueryForm为初始状态

@@ -2,6 +2,7 @@ package cn.muzisheng.pear.initialize;
 
 import cn.muzisheng.pear.core.config.ConfigService;
 import cn.muzisheng.pear.mapper.dao.UserDAO;
+import cn.muzisheng.pear.model.AdminObject;
 import cn.muzisheng.pear.properties.CacheProperties;
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.entity.User;
@@ -18,6 +19,7 @@ import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.*;
 
 /**
@@ -120,6 +122,22 @@ public class PearApplicationInitialization implements CommandLineRunner {
         configService.checkValue(Constant.KEY_SITE_USER_ID_TYPE, "email", Constant.ConfigFormatText, true, true);
         // 构建入口
         AdminContainer.buildAdminObjects(AdminContainer.getAllAdminObjects());
+        userAddFunc();
+    }
+    private void userAddFunc(){
+        AdminObject.BuilderFactory  builderFactory=new AdminObject.BuilderFactory(User.class);
+            builderFactory.setBeforeUpdate((request, adminObject, object) -> {
+                if (object instanceof Map<?, ?>) {
+                    Map<String, Object> objectMap = (Map<String, Object>) object;
+                    if (objectMap.containsKey("password")) {
+                        Object password = objectMap.get("password");
+                        if (password instanceof String pwdStr && !pwdStr.isEmpty()) {
+                            objectMap.put("password", userDAO.HashPassword(pwdStr));
+                        }
+
+                    }
+                }
+            });
     }
 
 }

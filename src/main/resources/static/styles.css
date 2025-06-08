@@ -240,3 +240,69 @@ thead {
   height: 16px;
   cursor: pointer;
 }
+
+/* 设置页面样式 */
+.field-value {
+    position: relative;
+    background-color: #fff;
+}
+
+.field-value:hover {
+    background-color: #f9fafb;
+}
+
+.field-value.editable::after {
+    content: '\f303';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.field-value.editable:hover::after {
+    opacity: 1;
+}
+
+/* 成功提示动画 */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+.animate-fade-in-out {
+    animation: fadeInOut 2s ease forwards;
+}
+
+/* 输入框焦点动画 */
+input:focus {
+    transition: all 0.2s ease;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* 按钮过渡效果 */
+button {
+    transition: all 0.2s ease;
+}
+
+button:active {
+    transform: scale(0.98);
+}

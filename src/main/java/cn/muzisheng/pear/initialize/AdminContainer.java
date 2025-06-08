@@ -52,7 +52,6 @@ public class AdminContainer {
 
     /**
      * 获取adminObject
-     *
      * @param tableName 数据库表名
      **/
     public static AdminObject getAdminObject(String tableName) {
@@ -60,6 +59,14 @@ public class AdminContainer {
             return adminObjectMap.get(tableName);
         }
         return null;
+    }
+    /**
+     * 获取adminObject
+     * @param clazz 类对象
+     **/
+    public static AdminObject getAdminObject(Class<?> clazz) {
+        String tableName = CamelToSnakeUtil.toSnakeCase(clazz.getSimpleName());
+        return getAdminObject(tableName);
     }
 
     /**

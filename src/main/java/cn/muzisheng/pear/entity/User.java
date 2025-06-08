@@ -30,6 +30,10 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @PearField(isPrimaryKey = true)
     private Long id;
+    // 头像
+    @Column
+    @PearField(label = "Avatar", isShow = false)
+    private String avatar;
     // 邮箱
     @Column(length = 128)
     @PearField

@@ -186,7 +186,7 @@ public class AdminObject {
     public static class BuilderFactory {
         private final AdminObject adminObject;
         public BuilderFactory(Class<?> clazz) {
-            AdminObject adminObject= AdminContainer.getAllAdminObjects().stream().filter(object -> object.getModel() == clazz).findFirst().orElse(null);
+            AdminObject adminObject= AdminContainer.getAdminObject(clazz);
             if(adminObject == null){
                 throw new GeneralException("AdminObject of"+clazz.getName()+"is null.");
             }

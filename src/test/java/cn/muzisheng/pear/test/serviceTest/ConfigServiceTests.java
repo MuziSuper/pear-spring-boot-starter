@@ -183,7 +183,7 @@ public class ConfigServiceTests {
             config.setAutoload(true);
             config.setPub(true);
             assertDoesNotThrow(()->{
-                configService.setValue(config.getKey(),config.getValue(),config.getFormat(),config.isAutoload(),config.isPub());
+                configService.setValue(config.getKey(),config.getValue(),config.getFormat(),config.getAutoload(),config.getPub());
             });
         }
     }
