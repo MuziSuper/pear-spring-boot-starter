@@ -188,7 +188,7 @@ app.log.file=log
 app.log.log-catalogue-address=log/log-day
 app.log.warn-catalogue-address=log/log-day
 app.log.error-catalogue-address=log/log-day
-# Cache expiration time
+# CacheStrategy expiration time
 app.cathe.expire=24*60*60*1000
 ```
 

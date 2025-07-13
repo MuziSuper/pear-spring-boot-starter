@@ -31,7 +31,7 @@ public class Product {
      **/
     @Id
     @PearField(isPrimaryKey = true,isEdit = false)
-    private String id;
+    private Long id;
     /**
      * 货品名称
      **/

@@ -36,16 +36,16 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     @Nullable
     public String getEnv(String key) {
-        if (PearApplicationInitialization.EnvCache != null) {
-            String value = PearApplicationInitialization.EnvCache.get(key);
+        if (PearApplicationInitialization.envCacheStrategy != null) {
+            String value = PearApplicationInitialization.envCacheStrategy.get(key);
             if (value != null) {
                 // 刷新缓存
-                PearApplicationInitialization.EnvCache.add(key, value);
+                PearApplicationInitialization.envCacheStrategy.put(key, value);
                 return value;
             }
             value = searchAllEnv(key);
             if (value != null) {
-                PearApplicationInitialization.EnvCache.add(key, value);
+                PearApplicationInitialization.envCacheStrategy.put(key, value);
                 return value;
             }
         }
@@ -86,7 +86,7 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public void setValue(String key, String value, String format, boolean autoload, boolean pub) {
         key = key.toLowerCase();
-        PearApplicationInitialization.ConfigCache.remove(key);
+        PearApplicationInitialization.configCacheStrategy.remove(key);
         Config config = new Config();
         config.setKey(key);
         config.setValue(value);
@@ -101,8 +101,8 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public String getValue(String key) {
         key = key.toLowerCase();
-        if (PearApplicationInitialization.ConfigCache != null) {
-            String value = PearApplicationInitialization.ConfigCache.get(key);
+        if (PearApplicationInitialization.configCacheStrategy != null) {
+            String value = PearApplicationInitialization.configCacheStrategy.get(key);
             if (value != null) {
                 return value;
             }
@@ -111,8 +111,8 @@ public class ConfigServiceImpl implements ConfigService {
         if (config == null) {
             return null;
         }
-        if (PearApplicationInitialization.ConfigCache != null) {
-            PearApplicationInitialization.ConfigCache.add(key, config.getValue());
+        if (PearApplicationInitialization.configCacheStrategy != null) {
+            PearApplicationInitialization.configCacheStrategy.put(key, config.getValue());
         }
         return config.getValue();
     }
@@ -169,8 +169,8 @@ public class ConfigServiceImpl implements ConfigService {
     public void loadAutoLoads() {
         List<Config> configs = configDAO.getConfigsWithTrueAutoload();
         for (Config config : configs) {
-            if (PearApplicationInitialization.ConfigCache != null) {
-                PearApplicationInitialization.ConfigCache.add(config.getKey(), config.getValue());
+            if (PearApplicationInitialization.configCacheStrategy != null) {
+                PearApplicationInitialization.configCacheStrategy.put(config.getKey(), config.getValue());
             }
         }
     }
@@ -179,8 +179,8 @@ public class ConfigServiceImpl implements ConfigService {
     public Config[] loadPublicConfigs() {
         List<Config> configs = configDAO.getConfigsWithTruePub();
         for (Config config : configs) {
-            if (PearApplicationInitialization.ConfigCache != null) {
-                PearApplicationInitialization.ConfigCache.add(config.getKey(), config.getValue());
+            if (PearApplicationInitialization.configCacheStrategy != null) {
+                PearApplicationInitialization.configCacheStrategy.put(config.getKey(), config.getValue());
             }
         }
         return configs.toArray(new Config[0]);
@@ -215,8 +215,8 @@ public class ConfigServiceImpl implements ConfigService {
                                 }
                                 properties[0] = properties[0].trim().toLowerCase();
                                 properties[1] = properties[1].trim();
-                                if (PearApplicationInitialization.EnvCache != null) {
-                                    PearApplicationInitialization.EnvCache.add(properties[0], properties[1]);
+                                if (PearApplicationInitialization.envCacheStrategy != null) {
+                                    PearApplicationInitialization.envCacheStrategy.put(properties[0], properties[1]);
                                 }
                                 if (key.equalsIgnoreCase(properties[0])) {
                                     map.put(key, properties[1]);

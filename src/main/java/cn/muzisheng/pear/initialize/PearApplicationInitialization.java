@@ -7,19 +7,17 @@ import cn.muzisheng.pear.properties.CacheProperties;
 import cn.muzisheng.pear.constant.Constant;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.UserException;
-import cn.muzisheng.pear.utils.ExpiredCache;
-import cn.muzisheng.pear.utils.ExpiredCacheFactory;
+import cn.muzisheng.pear.utils.CacheStrategy;
+import cn.muzisheng.pear.utils.LFUCacheUtil;
 import org.apache.commons.cli.*;
 import org.apache.commons.cli.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.*;
 
 /**
@@ -31,16 +29,16 @@ public class PearApplicationInitialization implements CommandLineRunner {
     private final UserDAO userDAO;
     private final ConfigService configService;
     private final static Logger logService= LoggerFactory.getLogger(PearApplicationInitialization.class);
-    public static ExpiredCache<String,String> ConfigCache;
-    public static ExpiredCache<String,String> EnvCache;
+    public static CacheStrategy<String,String> configCacheStrategy;
+    public static CacheStrategy<String,String> envCacheStrategy;
 
     @Autowired
     public PearApplicationInitialization(UserDAO userDAO, CacheProperties cacheProperties, ConfigService configService) {
         this.userDAO = userDAO;
         this.configService = configService;
         // 初始化缓存
-        ConfigCache= ExpiredCacheFactory.newExpiredCacheFactory(cacheProperties.getCapacity(),cacheProperties.getExpire());
-        EnvCache=ExpiredCacheFactory.newExpiredCacheFactory(cacheProperties.getCapacity(),cacheProperties.getExpire());
+        configCacheStrategy =new CacheStrategy<>(new LFUCacheUtil<>(cacheProperties));
+        envCacheStrategy =new CacheStrategy<>(new LFUCacheUtil<>(cacheProperties));
     }
 
     @Override

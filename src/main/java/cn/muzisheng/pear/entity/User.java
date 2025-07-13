@@ -32,7 +32,7 @@ public class User{
     private Long id;
     // 头像
     @Column
-    @PearField(label = "Avatar", isShow = false)
+    @PearField(isShow = false)
     private String avatar;
     // 邮箱
     @Column(length = 128)

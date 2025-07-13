@@ -14,8 +14,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties("app.cache")
 public class CacheProperties {
-    private long expire=Constant.CACHE_EXPIRED;
-    private int capacity=Constant.CACHE_CAPACITY;
+
+    private long expire;
+    private int capacity;
     @PostConstruct
     public void init() {
         if(expire<=0){
