@@ -8,8 +8,24 @@
         <groupId>cn.muzisheng.pear</groupId>
         <artifactId>pear-spring-boot-starter</artifactId>
         <version>1.1.14</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>pear-starter-boot-cache</artifactId>
+    <version>1.1.14</version>
+    <dependencies>
+        <dependency>
+            <groupId>cn.muzisheng.pear</groupId>
+            <artifactId>pear-spring-boot-basic</artifactId>
+            <version>1.1.14</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.muzisheng.pear</groupId>
+            <artifactId>pear-spring-boot-cache</artifactId>
+            <version>1.1.14</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
-    
+    <artifactId>pear-spring-boot-cache</artifactId>
+
 </project>

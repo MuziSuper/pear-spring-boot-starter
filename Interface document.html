@@ -2,74 +2,71 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>API 文档 - 用户管理</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Pear API 文档</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             line-height: 1.6;
-            margin: 20px;
-            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
             color: #333;
         }
         h1, h2 {
             color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        h1 {
-            font-size: 28px;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 5px;
-        }
-        h2 {
-            font-size: 24px;
-            margin-top: 20px;
-        }
-        pre {
-            background-color: #2d2d2d;
-            color: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-            font-size: 14px;
         }
         .endpoint {
-            margin-bottom: 30px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
         }
-        .endpoint p {
-            margin: 5px 0;
+        .method {
+            display: inline-block;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-right: 10px;
         }
-        .endpoint strong {
-            color: #2c3e50;
+        .get {
+            background-color: #61affe;
+            color: white;
         }
-        .fa-icon {
-            margin-right: 5px;
+        .post {
+            background-color: #49cc90;
+            color: white;
         }
-        @media (max-width: 768px) {
-            body {
-                margin: 10px;
-            }
-            .endpoint {
-                padding: 15px;
-            }
-            pre {
-                font-size: 12px;
-            }
+        .put {
+            background-color: #fca130;
+            color: white;
+        }
+        .delete {
+            background-color: #f93e3e;
+            color: white;
+        }
+        .patch {
+            background-color: #50e3c2;
+            color: white;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .param {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-<h1>API 文档 - 用户管理</h1>
+<h1>Pear API 文档</h1>
+
+<h2>用户管理</h2>
 
 <div class="endpoint">
-    <h2><i class="fas fa-user-plus fa-icon"></i> 注册用户</h2>
-    <p><strong>URL:</strong> /user/register</p>
-    <p><strong>方法:</strong> POST</p>
+    <h3><span class="method post">POST</span> /user/register - 用户注册</h3>
     <p><strong>请求体:</strong></p>
     <pre>
 {
@@ -78,7 +75,7 @@
     "email": "string"
 }
     </pre>
-    <p><strong>响应:</strong></p>
+    <p><strong>成功响应:</strong></p>
     <pre>
 {
     "success": true,
@@ -93,9 +90,7 @@
 </div>
 
 <div class="endpoint">
-    <h2><i class="fas fa-sign-in-alt fa-icon"></i> 用户登录</h2>
-    <p><strong>URL:</strong> /user/login</p>
-    <p><strong>方法:</strong> POST</p>
+    <h3><span class="method post">POST</span> /user/login - 用户登录</h3>
     <p><strong>请求体:</strong></p>
     <pre>
 {
@@ -103,7 +98,7 @@
     "password": "string"
 }
     </pre>
-    <p><strong>响应:</strong></p>
+    <p><strong>成功响应:</strong></p>
     <pre>
 {
     "success": true,
@@ -118,16 +113,14 @@
 </div>
 
 <div class="endpoint">
-    <h2><i class="fas fa-info-circle fa-icon"></i> 获取用户信息</h2>
-    <p><strong>URL:</strong> /user/info</p>
-    <p><strong>方法:</strong> POST</p>
+    <h3><span class="method post">POST</span> /user/info - 获取用户信息</h3>
     <p><strong>请求参数:</strong></p>
     <pre>
 {
-    "with_token": "string"
+    "with_token": "string"  // 可选
 }
     </pre>
-    <p><strong>响应:</strong></p>
+    <p><strong>成功响应:</strong></p>
     <pre>
 {
     "success": true,
@@ -135,12 +128,207 @@
         "userId": "string",
         "username": "string",
         "email": "string",
-        "token": "string"
+        "token": "string"  // 当with_token参数存在时返回
     },
     "message": "获取用户信息成功"
 }
     </pre>
 </div>
+
+<h2>后台管理</h2>
+
+<div class="endpoint">
+    <h3><span class="method post">POST</span> /admin/{model} - 查询数据</h3>
+    <p><strong>路径参数:</strong></p>
+    <ul>
+        <li><span class="param">model</span> - 模型名称</li>
+    </ul>
+    <p><strong>请求体:</strong> (可选)</p>
+    <pre>
+{
+    "filters": [
+        {
+            "field": "string",
+            "op": "string",
+            "value": "string"
+        }
+    ],
+    "orders": [
+        {
+            "field": "string",
+            "op": "string"
+        }
+    ],
+    "limit": 100
+}
+    </pre>
+    <p><strong>成功响应:</strong></p>
+    <pre>
+{
+    "success": true,
+    "data": {
+        "items": [
+            {
+                // 模型数据
+            }
+        ],
+        "total": 100
+    },
+    "message": "查询成功"
+}
+    </pre>
+</div>
+
+<div class="endpoint">
+    <h3><span class="method put">PUT</span> /admin/{model} - 创建数据</h3>
+    <p><strong>路径参数:</strong></p>
+    <ul>
+        <li><span class="param">model</span> - 模型名称</li>
+    </ul>
+    <p><strong>请求体:</strong></p>
+    <pre>
+{
+    // 模型字段
+}
+    </pre>
+    <p><strong>成功响应:</strong></p>
+    <pre>
+{
+    "success": true,
+    "data": {
+        // 创建后的完整模型数据
+    },
+    "message": "创建成功"
+}
+    </pre>
+</div>
+
+<div class="endpoint">
+    <h3><span class="method patch">PATCH</span> /admin/{model} - 更新数据</h3>
+    <p><strong>路径参数:</strong></p>
+    <ul>
+        <li><span class="param">model</span> - 模型名称</li>
+    </ul>
+    <p><strong>请求体:</strong></p>
+    <pre>
+{
+    // 需要更新的字段
+}
+    </pre>
+    <p><strong>成功响应:</strong></p>
+    <pre>
+{
+    "success": true,
+    "data": {
+        // 更新后的完整模型数据
+    },
+    "message": "更新成功"
+}
+    </pre>
+</div>
+
+<div class="endpoint">
+    <h3><span class="method delete">DELETE</span> /admin/{model} - 删除数据</h3>
+    <p><strong>路径参数:</strong></p>
+    <ul>
+        <li><span class="param">model</span> - 模型名称</li>
+    </ul>
+    <p><strong>成功响应:</strong></p>
+    <pre>
+{
+    "success": true,
+    "message": "删除成功"
+}
+    </pre>
+</div>
+
+<div class="endpoint">
+    <h3><span class="method post">POST</span> /admin/json - 获取系统JSON数据</h3>
+    <p><strong>需要管理员权限</strong></p>
+    <p><strong>成功响应:</strong></p>
+    <pre>
+{
+    "success": true,
+    "data": {
+        // 系统配置数据
+    },
+    "message": "获取成功"
+}
+    </pre>
+</div>
+
+<div class="endpoint">
+    <h3><span class="method get">GET</span> /admin/ - 获取静态文件信息</h3>
+    <p><strong>成功响应:</strong></p>
+    <pre>
+{
+    "success": true,
+    "data": {
+        // 静态文件信息
+    },
+    "message": "获取成功"
+}
+    </pre>
+</div>
+
+<h2>错误码</h2>
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>错误码</th>
+        <th>描述</th>
+        <th>HTTP状态码</th>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>非法参数</td>
+        <td>400 Bad Request</td>
+    </tr>
+    <tr>
+        <td>401</td>
+        <td>未授权</td>
+        <td>401 Unauthorized</td>
+    </tr>
+    <tr>
+        <td>403</td>
+        <td>禁止访问</td>
+        <td>403 Forbidden</td>
+    </tr>
+    <tr>
+        <td>500</td>
+        <td>常规异常</td>
+        <td>500 Internal Server Error</td>
+    </tr>
+    <tr>
+        <td>502</td>
+        <td>用户服务异常</td>
+        <td>502 Bad Gateway</td>
+    </tr>
+    <tr>
+        <td>503</td>
+        <td>用户异常</td>
+        <td>503 Service Unavailable</td>
+    </tr>
+    <tr>
+        <td>504</td>
+        <td>钩子函数异常</td>
+        <td>504 Gateway Timeout</td>
+    </tr>
+    <tr>
+        <td>505</td>
+        <td>SQL语句错误</td>
+        <td>505 HTTP Version Not Supported</td>
+    </tr>
+    <tr>
+        <td>506</td>
+        <td>时间转换错误</td>
+        <td>506 Variant Also Negotiates</td>
+    </tr>
+    <tr>
+        <td>507</td>
+        <td>Admin数据库操作失败</td>
+        <td>507 Insufficient Storage</td>
+    </tr>
+</table>
 
 </body>
 </html>

@@ -8,7 +8,8 @@
         <artifactId>pear-spring-boot-starter</artifactId>
         <version>1.1.14</version>
     </parent>
-    <artifactId>pear-starter-boot-constant</artifactId>
+    <artifactId>pear-spring-boot-constant</artifactId>
 
-    
+    <version>1.1.14</version>
+
 </project>
