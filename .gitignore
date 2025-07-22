@@ -1,8 +1,8 @@
 HELP.md
-target
+/target/
 !.mvn/wrapper/maven-wrapper.jar
 src/main/resources/test.properties
-log
+/log/
 ### STS ###
 .apt_generated
 .classpath

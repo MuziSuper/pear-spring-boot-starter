@@ -1,0 +1,92 @@
+{
+  "groups": [
+    {
+      "name": "pear.cache.default",
+      "type": "cn.muzisheng.pear.properties.CacheProperties",
+      "sourceType": "cn.muzisheng.pear.properties.CacheProperties"
+    },
+    {
+      "name": "pear.log",
+      "type": "cn.muzisheng.pear.properties.LogProperties",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "pear.site",
+      "type": "cn.muzisheng.pear.properties.SiteProperties",
+      "sourceType": "cn.muzisheng.pear.properties.SiteProperties"
+    },
+    {
+      "name": "pear.token",
+      "type": "cn.muzisheng.pear.properties.TokenProperties",
+      "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
+    },
+    {
+      "name": "pear.user",
+      "type": "cn.muzisheng.pear.properties.UserProperties",
+      "sourceType": "cn.muzisheng.pear.properties.UserProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "pear.log.error-catalogue-address",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "pear.log.file-path",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "pear.log.file-pattern",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "pear.log.level",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "pear.log.log-catalogue-address",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "pear.log.stdout-pattern",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "pear.log.warn-catalogue-address",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.LogProperties"
+    },
+    {
+      "name": "pear.token.expire",
+      "type": "java.lang.Long",
+      "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
+    },
+    {
+      "name": "pear.token.head",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
+    },
+    {
+      "name": "pear.token.issue",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
+    },
+    {
+      "name": "pear.token.salt",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
+    },
+    {
+      "name": "pear.token.subject",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
+    }
+  ],
+  "hints": []
+}

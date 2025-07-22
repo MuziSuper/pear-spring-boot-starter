@@ -6,16 +6,17 @@
     <parent>
         <groupId>cn.muzisheng.pear</groupId>
         <artifactId>pear-spring-boot-starter</artifactId>
-        <version>1.1.14</version>
+        <version>1.2.0</version>
     </parent>
     <artifactId>pear-spring-boot-core</artifactId>
-    <version>1.1.14</version>
+    <name>pear-spring-boot-core</name>
+    <version>1.2.0</version>
 
     <dependencies>
         <dependency>
             <groupId>cn.muzisheng.pear</groupId>
             <artifactId>pear-spring-boot-basic</artifactId>
-            <version>1.1.14</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>cn.muzisheng.pear</groupId>
@@ -36,6 +37,12 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.muzisheng.pear</groupId>
+            <artifactId>pear-spring-boot-utils</artifactId>
+            <version>1.2.0</version>
             <scope>compile</scope>
         </dependency>
 

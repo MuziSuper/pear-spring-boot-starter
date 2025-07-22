@@ -6,11 +6,12 @@
     <parent>
         <groupId>cn.muzisheng.pear</groupId>
         <artifactId>pear-spring-boot-starter</artifactId>
-        <version>1.1.14</version>
+        <version>1.2.0</version>
     </parent>
 
     <artifactId>pear-spring-boot-utils</artifactId>
-    <version>1.1.14</version>
+    <name>pear-spring-boot-utils</name>
+    <version>1.2.0</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -21,13 +22,13 @@
         <dependency>
             <groupId>cn.muzisheng.pear</groupId>
             <artifactId>pear-spring-boot-basic</artifactId>
-            <version>1.1.14</version>
+            <version>1.2.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>cn.muzisheng.pear</groupId>
             <artifactId>pear-spring-boot-constant</artifactId>
-            <version>1.1.14</version>
+            <version>1.2.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
