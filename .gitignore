@@ -1,6 +1,7 @@
 HELP.md
-/target/
+
 /**/target/
+/target/
 !.mvn/wrapper/maven-wrapper.jar
 src/main/resources/test.properties
 /log/
