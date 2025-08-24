@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Jul 23 19:06:44 CST 2025
+maven-source-plugin-3.3.0.jar>nexus-aliyun=
+maven-source-plugin-3.3.0.pom>nexus-aliyun=

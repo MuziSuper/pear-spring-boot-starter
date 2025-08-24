@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ =============================================================================
+  ~
+  ~   Copyright (c) 2011-2022, The THYMELEAF team (http://www.thymeleaf.org)
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  ~
+  ~ =============================================================================
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.thymeleaf</groupId>
+  <artifactId>thymeleaf-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>3.1.2.RELEASE</version>
+  <name>thymeleaf parent</name>
+  <description>Modern server-side Java template engine for both web and standalone environments</description>
+  <url>http://www.thymeleaf.org</url>
+
+  <organization>
+    <name>Thymeleaf</name>
+    <url>https://www.thymeleaf.org</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Thymeleaf</name>
+      <organization>The Thymeleaf Team</organization>
+      <organizationUrl>https://www.thymeleaf.org/team.html</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <url>https://github.com/thymeleaf/thymeleaf</url>
+    <developerConnection>scm:git:git@github.com:thymeleaf/thymeleaf</developerConnection>
+  </scm>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>sonatype-nexus-staging</id>
+      <name>Sonatype Nexus Staging</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    </repository>
+  </distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <url>https://repo.spring.io/milestone</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>springio-snapshots</id>
+      <name>Spring Snapshots</name>
+      <url>https://repo.spring.io/snapshot</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <url>https://repo.spring.io/milestone</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <properties>
+    <java.version>8</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
+    <project.build.sourceEncoding>US-ASCII</project.build.sourceEncoding>
+    <project.build.propertiesEncoding>ISO-8859-1</project.build.propertiesEncoding>
+    <resource.delimiter>@</resource.delimiter>
+    <!-- These are needed for showing the build timestamp correctly at thymeleaf.properties.    -->
+    <timestamp>${maven.build.timestamp}</timestamp>
+    <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ssZ</maven.build.timestamp.format>
+    <!-- ======================     -->
+    <!-- DEPENDENCY versions        -->
+    <!-- ======================     -->
+    <thymeleaf.version>${project.version}</thymeleaf.version>
+    <jakarta-servlet-api.version>6.0.0</jakarta-servlet-api.version>
+    <jakarta-servlet-jsp-api.version>3.1.0</jakarta-servlet-jsp-api.version>
+    <jakarta-servlet-jsp-jstl-api.version>3.0.0</jakarta-servlet-jsp-jstl-api.version>
+    <jakarta-validation-api.version>3.0.2</jakarta-validation-api.version>
+    <jakarta-mail-api.version>2.0.1</jakarta-mail-api.version>
+    <javax-servlet-api.version>4.0.1</javax-servlet-api.version>
+    <javax-servlet-jsp-api.version>2.3.3</javax-servlet-jsp-api.version>
+    <javax-servlet-jsp-jstl-api.version>1.2.2</javax-servlet-jsp-jstl-api.version>
+    <javax-validation-api.version>2.0.1.Final</javax-validation-api.version>
+    <javax-mail-api.version>1.6.2</javax-mail-api.version>
+    <apache-taglibs-standard.version>1.2.5</apache-taglibs-standard.version>
+    <glassfish-jakarta-servlet-jsp-jstl.version>3.0.0</glassfish-jakarta-servlet-jsp-jstl.version>
+    <ognl.version>3.3.4</ognl.version>
+    <attoparser.version>2.0.7.RELEASE</attoparser.version>
+    <unbescape.version>1.1.6.RELEASE</unbescape.version>
+    <spring-framework5.version>5.3.29</spring-framework5.version>
+    <spring-framework6.version>6.0.11</spring-framework6.version>
+    <spring-security5.version>5.8.5</spring-security5.version>
+    <spring-security6.version>6.1.2</spring-security6.version>
+    <spring-webflow2.version>2.5.1.RELEASE</spring-webflow2.version>
+    <spring-webflow3.version>3.0.0</spring-webflow3.version>
+    <jackson.version>2.15.2</jackson.version>
+    <reactor.version>2022.0.9</reactor.version>
+    <commons-lang3.version>3.13.0</commons-lang3.version>
+    <commons-io.version>2.13.0</commons-io.version>
+    <commons-fileupload.version>1.5</commons-fileupload.version>
+    <hibernate-validator-jakarta.version>8.0.1.Final</hibernate-validator-jakarta.version>
+    <hibernate-validator-javax.version>6.2.5.Final</hibernate-validator-javax.version>
+    <mockito.version>5.4.0</mockito.version>
+    <slf4j.version>2.0.7</slf4j.version>
+    <log4j.version>2.20.0</log4j.version>
+    <junit.version>5.10.0</junit.version>
+    <!-- ======================     -->
+    <!-- MAVEN PLUGIN versions      -->
+    <!-- ======================     -->
+    <maven-clean-plugin.version>3.3.1</maven-clean-plugin.version>
+    <maven-dependency-plugin.version>3.6.0</maven-dependency-plugin.version>
+    <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+    <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+    <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+    <maven-failsafe-plugin.version>3.1.2</maven-failsafe-plugin.version>
+    <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
+    <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
+    <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
+    <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+    <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
+    <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
+    <maven-scm-plugin.version>2.0.1</maven-scm-plugin.version>
+    <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+    <maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
+    <maven-versions-plugin.version>2.16.0</maven-versions-plugin.version>
+    <maven-cargo-plugin.version>1.10.8</maven-cargo-plugin.version>
+  </properties>
+
+
+  <dependencyManagement>
+    <dependencies>
+
+      <dependency>
+        <groupId>org.thymeleaf</groupId>
+        <artifactId>thymeleaf</artifactId>
+        <version>${thymeleaf.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.thymeleaf</groupId>
+        <artifactId>thymeleaf-spring5</artifactId>
+        <version>${thymeleaf.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.thymeleaf</groupId>
+        <artifactId>thymeleaf-spring6</artifactId>
+        <version>${thymeleaf.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.thymeleaf.extras</groupId>
+        <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+        <version>${thymeleaf.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.thymeleaf.extras</groupId>
+        <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+        <version>${thymeleaf.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.thymeleaf.testing</groupId>
+        <artifactId>thymeleaf-testing</artifactId>
+        <version>${thymeleaf.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.thymeleaf.testing</groupId>
+        <artifactId>thymeleaf-testing-spring5</artifactId>
+        <version>${thymeleaf.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.thymeleaf.testing</groupId>
+        <artifactId>thymeleaf-testing-spring6</artifactId>
+        <version>${thymeleaf.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.thymeleaf.examples</groupId>
+        <artifactId>thymeleaf-examples</artifactId>
+        <version>${thymeleaf.version}</version>
+        <type>pom</type>
+      </dependency>
+
+      <dependency>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>${jakarta-servlet-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>jakarta.servlet.jsp</groupId>
+        <artifactId>jakarta.servlet.jsp-api</artifactId>
+        <version>${jakarta-servlet-jsp-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>jakarta.servlet.jsp.jstl</groupId>
+        <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+        <version>${jakarta-servlet-jsp-jstl-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>jakarta.validation</groupId>
+        <artifactId>jakarta.validation-api</artifactId>
+        <version>${jakarta-validation-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>jakarta.mail</groupId>
+        <artifactId>jakarta.mail-api</artifactId>
+        <version>${jakarta-mail-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sun.mail</groupId>
+        <artifactId>jakarta.mail</artifactId>
+        <version>${jakarta-mail-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>${javax-servlet-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.servlet.jsp</groupId>
+        <artifactId>javax.servlet.jsp-api</artifactId>
+        <version>${javax-servlet-jsp-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.servlet.jsp.jstl</groupId>
+        <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+        <version>${javax-servlet-jsp-jstl-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.validation</groupId>
+        <artifactId>validation-api</artifactId>
+        <version>${javax-validation-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.mail</groupId>
+        <artifactId>javax.mail-api</artifactId>
+        <version>${javax-mail-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sun.mail</groupId>
+        <artifactId>javax.mail</artifactId>
+        <version>${javax-mail-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.taglibs</groupId>
+        <artifactId>taglibs-standard-impl</artifactId>
+        <version>${apache-taglibs-standard.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.glassfish.web</groupId>
+        <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+        <version>${glassfish-jakarta-servlet-jsp-jstl.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>ognl</groupId>
+        <artifactId>ognl</artifactId>
+        <version>${ognl.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.attoparser</groupId>
+        <artifactId>attoparser</artifactId>
+        <version>${attoparser.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.unbescape</groupId>
+        <artifactId>unbescape</artifactId>
+        <version>${unbescape.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons-lang3.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons-io.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>${commons-fileupload.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockito.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>${jackson.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.projectreactor</groupId>
+        <artifactId>reactor-bom</artifactId>
+        <version>${reactor.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-bom</artifactId>
+        <version>${log4j.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+
+  <build>
+
+    <pluginManagement>
+      <plugins>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>${maven-clean-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>${maven-dependency-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
+            <!-- This will generate metadata for reflection on method parameters (JDK8+)        -->
+            <parameters>true</parameters>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${maven-resources-plugin.version}</version>
+          <configuration>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <propertiesEncoding>${project.build.propertiesEncoding}</propertiesEncoding>
+            <delimiters>
+              <!-- We set the resource delimiters to only @*@ in order to avoid the ${*} syntax -->
+              <!-- colliding with properties meant to be resolved by Spring.                    -->
+              <delimiter>${resource.delimiter}</delimiter>
+            </delimiters>
+            <useDefaultDelimiters>false</useDefaultDelimiters>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven-surefire-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${maven-failsafe-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven-jar-plugin.version}</version>
+          <configuration>
+            <archive>
+              <addMavenDescriptor>false</addMavenDescriptor>
+              <manifest>
+                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              </manifest>
+              <manifestEntries>
+                <!-- These two entries are non-standard, specified by the Apache Software       -->
+                <!-- Foundation in their release preparation procedures as a way to pass this   -->
+                <!-- information on to the library users. See:                                  -->
+                <!-- http://commons.apache.org/releases/prepare.html                            -->
+                <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
+                <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
+                <!-- Set the Built-By attribute to avoid displaying specific usernames.         -->
+                <Built-By>thymeleaf</Built-By>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>${maven-war-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${maven-javadoc-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven-source-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>${maven-gpg-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>gpg-sign</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- NOTE releases will be performed by means of maven-deploy-plugin. This means that   -->
+        <!-- the maven-releases-plugin will not be needed as a part of the release cycle.       -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>${maven-deploy-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-scm-plugin</artifactId>
+          <version>${maven-scm-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>${maven-antrun-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>${maven-assembly-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>${maven-versions-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.cargo</groupId>
+          <artifactId>cargo-maven3-plugin</artifactId>
+          <version>${maven-cargo-plugin.version}</version>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+
+      <!-- NOTE maven-gpg-plugin needs to be set for execution at this point because the pom    -->
+      <!-- artifact generated for thymeleaf-parent also needs to be signed for deployment.      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+      </plugin>
+
+    </plugins>
+
+  </build>
+
+  <modules>
+    <module>lib</module>
+    <module>tests</module>
+    <module>examples</module>
+    <module>dist</module>
+  </modules>
+
+</project>

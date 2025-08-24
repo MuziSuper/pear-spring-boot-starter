@@ -9,11 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-
+@Data
 @Entity(name = "config")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @TableName("config")
 @PearObject(
         desc = "A configuration center for the pear system to configure static data for transfer to clients",
@@ -42,4 +41,5 @@ public class Config {
     private String format;
     @PearField
     private String value;
+
 }

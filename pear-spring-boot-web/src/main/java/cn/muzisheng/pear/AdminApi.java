@@ -5,11 +5,19 @@ import cn.muzisheng.pear.initialize.AdminContainer;
 import cn.muzisheng.pear.model.Response;
 import cn.muzisheng.pear.model.Result;
 import cn.muzisheng.pear.params.QueryForm;
+import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.context.annotation.Condition;
+import org.springframework.context.annotation.ConditionContext;
+import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -85,17 +93,6 @@ public class AdminApi {
         response.setStatus(Constant.ILLEGAL_EXCEPTION);
         return response.value();
     }
-//
-//    @PostMapping("{model}/{name}")
-//    public ResponseEntity<Result<Map<String, Object>>> adminAction(HttpServletRequest request, @PathVariable("model") String model,@PathVariable("name") String name,@RequestParam("filed") String filed,@RequestParam("keys") String jsonDataMap) {
-//        for(PearObject adminObject : PearApplicationInitialization.adminObjects){
-//            if(adminObject.getTableName().equals(model)){
-//                return adminService.handleQueryOrGetOne(adminObject);
-//            }
-//        }
-//        Response<Map<String, Object>> response = new Response<>();
-//        response.setError("Model not found");
-//        response.setStatus(Constant.GENERAL_EXCEPTION);
-//        return response.value();
-//    }
+
+
 }

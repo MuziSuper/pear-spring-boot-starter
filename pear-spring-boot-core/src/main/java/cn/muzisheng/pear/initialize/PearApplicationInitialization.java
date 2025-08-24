@@ -11,7 +11,6 @@ import cn.muzisheng.pear.service.ConfigService;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -26,11 +25,12 @@ import java.util.*;
 public class PearApplicationInitialization implements CommandLineRunner {
     private final UserDAO userDAO;
     private final ConfigService configService;
-    private final static Logger logService= LoggerFactory.getLogger(PearApplicationInitialization.class);
+    private final static Logger LOG = LoggerFactory.getLogger(PearApplicationInitialization.class);
     public static CacheStrategy<String,String> configCacheStrategy;
     public static CacheStrategy<String,String> envCacheStrategy;
 
     public PearApplicationInitialization(UserDAO userDAO, CacheConfig config, ConfigService configService) {
+        LOG.info("PearApplicationInitialization注册成功");
         this.userDAO = userDAO;
         this.configService = configService;
         // 初始化缓存
@@ -40,6 +40,7 @@ public class PearApplicationInitialization implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        LOG.info("pear application initialization!");
         // 命令行参数
         Options options = new Options();
         List<Option> optionList=new ArrayList<>();
@@ -57,9 +58,9 @@ public class PearApplicationInitialization implements CommandLineRunner {
             cmd = parser.parse(options, args, true);
             // 打印帮助信息
             if (cmd.hasOption("h")) {
-                logService.info(String.format("%-15s %-15s%-15s %-15s", Constant.HELP_OPTION,Constant.HELP_LONG_OPTION,Constant.HELP_ARGUMENTS,Constant.HELP_DESCRIPTION));
+                LOG.info(String.format("%-15s %-15s%-15s %-15s", Constant.HELP_OPTION,Constant.HELP_LONG_OPTION,Constant.HELP_ARGUMENTS,Constant.HELP_DESCRIPTION));
                 for (Option option : optionList) {
-                    logService.info(String.format("-%-15s %-15s %-15s %-15s",option.getOpt(),option.getLongOpt(),option.getArgs()==1,option.getDescription()));
+                    LOG.info(String.format("-%-15s %-15s %-15s %-15s",option.getOpt(),option.getLongOpt(),option.getArgs()==1,option.getDescription()));
                 }
                 System.exit(1);
             }
@@ -77,12 +78,12 @@ public class PearApplicationInitialization implements CommandLineRunner {
                      if(!userDAO.setPassword(user,password)){
                          throw new UserException(user.getEmail(), "failed to update password");
                      }
-                     logService.warn("superuser updates passwords, the superuser is "+email);
+                     LOG.warn("superuser updates passwords, the superuser is "+email);
                      System.exit(1);
                 }else{
                     user=userDAO.createUser(email,password);
                     if(user==null){
-                        logService.error("failed to create a user: "+email);
+                        LOG.error("failed to create a user: "+email);
                         System.exit(1);
                     }
                 }
@@ -93,7 +94,7 @@ public class PearApplicationInitialization implements CommandLineRunner {
                 if(!userDAO.save(user)){
                     throw new UserException(user.getEmail(), "failed to save superuser");
                 }
-                logService.warn("create a super administrator: "+email);
+                LOG.warn("create a super administrator: "+email);
                 System.exit(1);
             }
 

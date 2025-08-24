@@ -19,12 +19,12 @@ public class CacheStrategy<K, V> {
     private String cacheName;
     private CacheStrategy() {
     }
-    private CacheStrategy(CacheStrategyEnum strategy,int capacity, long expire, String cacheName){
-        this.strategy = strategy;
-        this.capacity = capacity;
-        this.cacheName = cacheName;
-        this.expire = expire;
-    }
+//    private CacheStrategy(CacheStrategyEnum strategy,int capacity, long expire, String cacheName){
+//        this.strategy = strategy;
+//        this.capacity = capacity;
+//        this.cacheName = cacheName;
+//        this.expire = expire;
+//    }
     public static class Builder<K,V> {
         private final AtomicInteger count=new AtomicInteger(0);
         private final CacheStrategy<K,V> cacheStrategy=new CacheStrategy<>();
@@ -106,39 +106,39 @@ public class CacheStrategy<K, V> {
         return cache.toString();
     }
 
-    public static void main(String[] args) {
-        CacheConfig config= new CacheConfig.Builder().expire(1000).capacity(4).build();
-        CacheStrategy<Integer,Integer> cacheStrategy = new CacheStrategy.Builder<Integer, Integer>().cacheStrategy(config).build();
-        cacheStrategy.put(1, 1);
-        cacheStrategy.put(2, 2);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(cacheStrategy.get(1));
-        System.out.println(cacheStrategy.get(2));
-        cacheStrategy.put(3, 3);
-        cacheStrategy.put(4, 4);
-        System.out.println(cacheStrategy.size());
-        System.out.println(cacheStrategy);
-        cacheStrategy.put(5, 5);
-        cacheStrategy.put(6, 6);
-        cacheStrategy.put(9, 9);
-        cacheStrategy.put(7, 7);
-        cacheStrategy.put(7, 8);
-        cacheStrategy.put(5, 3);
-        System.out.println(cacheStrategy.size());
-        System.out.println(cacheStrategy);
-        CacheStrategy<String,String> cacheStrategy2=new CacheStrategy
-                .Builder<String,String>()
-                .capacity(3)
-                .strategy(CacheStrategyEnum.LFU)
-                .build();
-        cacheStrategy2.put("1","1");
-        cacheStrategy2.put("2","2");
-        cacheStrategy2.put("3","3");
-        cacheStrategy2.put("4","4");
-        System.out.println(cacheStrategy2.size());
-    }
+//    public static void main(String[] args) {
+//        CacheConfig config= new CacheConfig.Builder().expire(1000).capacity(4).build();
+//        CacheStrategy<Integer,Integer> cacheStrategy = new CacheStrategy.Builder<Integer, Integer>().cacheStrategy(config).build();
+//        cacheStrategy.put(1, 1);
+//        cacheStrategy.put(2, 2);
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        System.out.println(cacheStrategy.get(1));
+//        System.out.println(cacheStrategy.get(2));
+//        cacheStrategy.put(3, 3);
+//        cacheStrategy.put(4, 4);
+//        System.out.println(cacheStrategy.size());
+//        System.out.println(cacheStrategy);
+//        cacheStrategy.put(5, 5);
+//        cacheStrategy.put(6, 6);
+//        cacheStrategy.put(9, 9);
+//        cacheStrategy.put(7, 7);
+//        cacheStrategy.put(7, 8);
+//        cacheStrategy.put(5, 3);
+//        System.out.println(cacheStrategy.size());
+//        System.out.println(cacheStrategy);
+//        CacheStrategy<String,String> cacheStrategy2=new CacheStrategy
+//                .Builder<String,String>()
+//                .capacity(3)
+//                .strategy(CacheStrategyEnum.LFU)
+//                .build();
+//        cacheStrategy2.put("1","1");
+//        cacheStrategy2.put("2","2");
+//        cacheStrategy2.put("3","3");
+//        cacheStrategy2.put("4","4");
+//        System.out.println(cacheStrategy2.size());
+//    }
 }

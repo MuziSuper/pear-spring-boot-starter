@@ -1,10 +1,12 @@
 package cn.muzisheng.pear.properties;
 
 import cn.muzisheng.pear.config.CacheConfig;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * 缓存默认属性
  **/
+@Data
 @ConfigurationProperties("pear.cache.default")
 public class CacheProperties {
 

@@ -24,9 +24,36 @@
       "name": "pear.user",
       "type": "cn.muzisheng.pear.properties.UserProperties",
       "sourceType": "cn.muzisheng.pear.properties.UserProperties"
+    },
+    {
+      "name": "starter.db",
+      "type": "cn.muzisheng.pear.properties.JpaProperties",
+      "sourceType": "cn.muzisheng.pear.properties.JpaProperties"
     }
   ],
   "properties": [
+    {
+      "name": "pear.cache.default.cache-name",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.CacheProperties"
+    },
+    {
+      "name": "pear.cache.default.capacity",
+      "type": "java.lang.Integer",
+      "sourceType": "cn.muzisheng.pear.properties.CacheProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "pear.cache.default.expire",
+      "type": "java.lang.Long",
+      "sourceType": "cn.muzisheng.pear.properties.CacheProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "pear.cache.default.strategy",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.CacheProperties"
+    },
     {
       "name": "pear.log.error-catalogue-address",
       "type": "java.lang.String",
@@ -63,6 +90,11 @@
       "sourceType": "cn.muzisheng.pear.properties.LogProperties"
     },
     {
+      "name": "pear.site.auth-prefix",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.SiteProperties"
+    },
+    {
       "name": "pear.token.expire",
       "type": "java.lang.Long",
       "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
@@ -86,6 +118,18 @@
       "name": "pear.token.subject",
       "type": "java.lang.String",
       "sourceType": "cn.muzisheng.pear.properties.TokenProperties"
+    },
+    {
+      "name": "pear.user.password-salt",
+      "type": "java.lang.String",
+      "sourceType": "cn.muzisheng.pear.properties.UserProperties"
+    },
+    {
+      "name": "starter.db.auto-create",
+      "type": "java.lang.Boolean",
+      "description": "是否自动建表",
+      "sourceType": "cn.muzisheng.pear.properties.JpaProperties",
+      "defaultValue": false
     }
   ],
   "hints": []

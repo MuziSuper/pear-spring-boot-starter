@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"cn.muzisheng.pear"},{"l":"cn.muzisheng.pear.autoConfig"},{"l":"cn.muzisheng.pear.cache"},{"l":"cn.muzisheng.pear.model"},{"l":"所有程序包","u":"allpackages-index.html"}];updateSearchResults();

@@ -14,15 +14,15 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 
 public class RedisCache<K,V> implements CacheInterface<K,V> {
-    @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+    private final RedisTemplate<String,Object> redisTemplate;
     private final static Logger LOG= LoggerFactory.getLogger(RedisCache.class);
     private final ReadWriteLock lock=new ReentrantReadWriteLock();
     private final Lock writeLock=lock.writeLock();
     private final Lock readLock=lock.readLock();
     private final String CACHE_KEY;
-    public RedisCache(CacheConfig config){
+    public RedisCache(CacheConfig config,RedisTemplate<String,Object> redisTemplate){
         CACHE_KEY=config.getCacheName();
+        this.redisTemplate=redisTemplate;
     }
 
 

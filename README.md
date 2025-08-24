@@ -56,7 +56,7 @@
 <dependency>
   <groupId>cn.muzisheng.pear</groupId>
   <artifactId>pear-spring-boot-starter</artifactId>
-  <version>1.1.13</version>
+  <version>1.2.2</version>
 </dependency>
 ```
 
@@ -73,10 +73,21 @@
 
 ## 📚 使用指南
 
-### 模型定义
+### 启用Pear
+通过在主启动类上添加`@PearApplication`注解启用Pear，如果项目中添加了MySQL的配置，则会自动在该MySQL中创建名为`pear`的数据库并创建多个框架需要使用到的基础表结构；
+```java
+@SpringBootApplication
+@PearApplication
+public class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}
+```
 
-使用[@PearObject](file:///Applications/LocalGit/pear-spring-boot-starter/pear-spring-boot-core/src/main/java/cn/muzisheng/pear/annotation/PearObject.java#L7-L46)和[@PearField](file:///Applications/LocalGit/pear-spring-boot-starter/pear-spring-boot-core/src/main/java/cn/muzisheng/pear/annotation/PearField.java#L9-L62)注解定义数据模型：
+### 实体类定义
 
+使用[@PearObject](file:///Applications/LocalGit/pear-spring-boot-starter/pear-spring-boot-core/src/main/java/cn/muzisheng/pear/annotation/PearObject.java#L7-L46)和[@PearField](file:///Applications/LocalGit/pear-spring-boot-starter/pear-spring-boot-core/src/main/java/cn/muzisheng/pear/annotation/PearField.java#L9-L62)注解定义实体类，框架会自动生成对应的实体的增删改查接口，并在后台页面中提供数据管理，根据配置信息对应字段会有相应的状态。
 ```
 package cn.muzisheng.pear.example;
 
@@ -193,37 +204,58 @@ public class ExampleDemo {
 
 
 ### 注解说明
+#### PearObject 注解
 
-#### @PearObject
+PearObject 是一个用于标注实体类的注解，用于定义与数据库表相关的元数据信息。
+
+#### 功能说明
+- 标记实体类为 Pear 框架管理的对象
+- 定义实体对应的数据库表名、访问路径等配置
+- 支持配置前端展示相关属性，如页面地址、图标等
+
+#### 属性列表
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| tableName | String | "" | 数据库表名 |
+| TableName | String | "" | 数据库表名 |
 | group | String | "" | 模型分组 |
 | desc | String | "" | 模型描述 |
 | path | String | "" | 访问路径 |
 | editPage | String | "" | 编辑页面地址 |
 | listPage | String | "" | 列表页面地址 |
 | pluralName | String | "" | 复数名称 |
-| iconUrl | String | "" | 图标URL |
+| iconUrl | String | "" | 图URL |
 | isInvisible | boolean | false | 是否隐藏 |
 
-#### @PearField
+---
+
+#### PearField 注解
+
+PearField 是一个用于标注实体类字段的注解，用于定义字段在数据库和前端展示中的行为，必须依托PearObject 注解。
+
+#### 功能说明
+- 定义字段在数据库操作和前端展示中的各种属性
+- 控制字段的显示、编辑、搜索等行为
+- 支持自动时间戳功能
+
+#### 属性列表
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| isShow | boolean | false | 是否显示 |
-| isEdit | boolean | false | 是否可编辑 |
-| isFilterable | boolean | false | 是否可过滤 |
-| isOrderable | boolean | false | 是否可排序 |
-| isSearchable | boolean | false | 是否可搜索 |
-| isRequire | boolean | false | 是否必填 |
+| isShow | boolean | true | 是否显示 |
+| isEdit | boolean | true | 是否可编辑 |
+| isFilterable | boolean | true | 是否可过滤 |
+| isOrderable | boolean | true | 是否可排序 |
+| isSearchable | boolean | true | 是否可搜索 |
+| isRequire | boolean | true | 是否必填 |
 | isPrimaryKey | boolean | false | 是否主键 |
 | isUniqueKey | boolean | false | 是否唯一键 |
 | placeholder | String | "" | 默认值 |
-| label | String | "" | 显示名称 |
-
+| isAutoUpdateTime | boolean | false | 是否自动更新时间 |
+| isAutoInsertTime | boolean | false | 是否自动插入时间 |
+| label | String | "" | 客户端显示名称 |
 ### 初始化配置
+当实体类被@PearObject注解，其类与字段信息就会封装成一个AdminObject对象，存储在AdminContainer容器中，可以在项目CommandLineRunner初始化时通过AdminObject.BuilderFactory对象对某个实体类的AdminObject对象进一步配置，如添加前后置钩子函数等：
 
 ```
 @Component
@@ -263,7 +295,6 @@ Pear支持多种配置方式，包括：
 
 1. **properties文件配置**：通过application.properties进行传统配置
 2. **配置类配置**：通过Java配置类进行类型安全的配置
-3. **运行时动态配置**：通过配置中心进行动态配置
 
 ### properties配置示例
 
@@ -532,10 +563,13 @@ public void run(String... args) {
 ## 🚧 待办事项
 
 - [ ] 修复Redis必须依赖的问题
-- [ ] 重新添加画幅pear
+- [ ] 对外暴露Cache工厂Bean，可以创建缓存容器实例，可以通过配置设置默认参数如容器名、数据量、过期时间、缓存策略，对于Redis的缓存实例
+      Bean只负责创建、安全的缓存策略转换、删除，对于数据的管理全交由缓存容器处理
+      对于Pear的缓存容器实例，交由我自己创建
 - [ ] 实现细粒度权限控制
 - [ ] 改进密码修改表单安全性
 - [ ] 优化前端删除操作体验
+- [ ] 修改searchAllEnv方法获取打包后的properties文件
 
 ## 🤝 参与贡献
 

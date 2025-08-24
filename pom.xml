@@ -11,6 +11,7 @@
         <module>pear-spring-boot-web</module>
         <module>pear-spring-boot-utils</module>
         <module>pear-spring-boot-basic</module>
+        <module>pear-spring-boot-starter</module>
     </modules>
 
     <parent>
@@ -21,19 +22,20 @@
     </parent>
     <name>cn.muzisheng.pear</name>
     <groupId>cn.muzisheng.pear</groupId>
-    <artifactId>pear-spring-boot-starter</artifactId>
-    <version>1.2.0</version>
+    <artifactId>pear</artifactId>
+    <version>1.2.2</version>
     <description>
         Pear is a back-end framework that facilitates the development of back-end personnel, with a built-in visual
         background management interface
     </description>
     <licenses>
         <license>
-            <name>muzisheng.pear</name>
-            <url>https://github.com/MuziSuper/pear-spring-boot-starter</url>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
+
 
 
     <url>https://github.com/MuziSuper/pear</url>
@@ -47,23 +49,24 @@
     </developers>
 
     <scm>
-        <connection>https://github.com/MuziSuper/pear.git</connection>
+        <connection>scm:git:https://github.com/MuziSuper/pear.git</connection>
         <developerConnection>scm:git:https://github.com/MuziSuper/pear.git</developerConnection>
         <url>https://github.com/MuziSuper/pear</url>
     </scm>
 
     <distributionManagement>
-        <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
-            <id>sonatype-nexus-staging</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>cn.muzisheng</id>
+            <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/</url>
         </repository>
+        <snapshotRepository>
+            <id>cn.muzisheng</id>
+            <url>https://ossrh-staging-api.central.sonatype.com/content/repositories/snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <properties>
+        <pear.version>1.2.2</pear.version>
         <java.version>17</java.version>
         <spring-boot.version>3.3.4</spring-boot.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -86,6 +89,36 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>cn.muzisheng.pear</groupId>
+                <artifactId>pear-spring-boot-cache</artifactId>
+                <version>${pear.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.muzisheng.pear</groupId>
+                <artifactId>pear-spring-boot-constant</artifactId>
+                <version>${pear.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.muzisheng.pear</groupId>
+                <artifactId>pear-spring-boot-basic</artifactId>
+                <version>${pear.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.muzisheng.pear</groupId>
+                <artifactId>pear-spring-boot-web</artifactId>
+                <version>${pear.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.muzisheng.pear</groupId>
+                <artifactId>pear-spring-boot-utils</artifactId>
+                <version>${pear.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.muzisheng.pear</groupId>
+                <artifactId>pear-spring-boot-core</artifactId>
+                <version>${pear.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -94,10 +127,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!-- 自动装配 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
@@ -139,18 +174,8 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
-        <!-- Fastjson，ds推荐使用默认的Jackson -->
-        <!--            <dependency>-->
-        <!--                <groupId>com.alibaba</groupId>-->
-        <!--                <artifactId>fastjson</artifactId>-->
-        <!--            </dependency>-->
-        <!-- 进制转换, ds推荐使用Apache Commons Codec -->
-        <!--            <dependency>-->
-        <!--                <groupId>org.netbeans.external</groupId>-->
-        <!--                <artifactId>org-apache-commons-codec</artifactId>-->
-        <!--                <optional>true</optional>-->
-        <!--            </dependency>-->
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
@@ -198,24 +223,11 @@
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
         </dependency>
-
-        <!-- 运行时扫描类路径-->
-        <!--            <dependency>-->
-        <!--                <groupId>org.reflections</groupId>-->
-        <!--                <artifactId>reflections</artifactId>-->
-        <!--            </dependency>-->
-
-        <!-- 需要分布式会话才需要 -->
-        <!--            <dependency>-->
-        <!--                <groupId>org.springframework.session</groupId>-->
-        <!--                <artifactId>spring-session-core</artifactId>-->
-        <!--            </dependency>-->
-
-
     </dependencies>
 
 
     <build>
+        <pluginManagement>
         <plugins>
             <!-- 发布到Maven中央仓库，需先在settings.xml文件中配置server -->
             <plugin>
@@ -226,6 +238,7 @@
                 <configuration>
                     <publishingServerId>cn.muzisheng</publishingServerId>
                     <autoPublish>true</autoPublish>
+                    <waitUntil>published</waitUntil>
                 </configuration>
             </plugin>
             <!-- 生成源码包 -->
@@ -273,121 +286,13 @@
                     </execution>
                 </executions>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-surefire-plugin</artifactId>-->
-<!--                <version>3.2.5</version>-->
-<!--                <configuration>-->
-<!--                    <skipTests>true</skipTests>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-
-<!--            &lt;!&ndash; 添加 maven-deploy-plugin 确保正确部署 &ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-deploy-plugin</artifactId>-->
-<!--                <version>3.1.1</version>-->
-<!--            </plugin>-->
-
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <source>17</source>-->
-<!--                    <target>17</target>-->
-<!--                    <compilerArgs>-->
-<!--                        <arg>-parameters</arg>-->
-<!--                    </compilerArgs>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--            &lt;!&ndash; 对于多模块项目，添加 flatten-maven-plugin &ndash;&gt;-->
-
-<!--            <plugin>-->
-<!--                <groupId>org.codehaus.mojo</groupId>-->
-<!--                <artifactId>flatten-maven-plugin</artifactId>-->
-<!--                <version>1.2.5</version>-->
-<!--                <configuration>-->
-<!--                    <updatePomFile>true</updatePomFile>-->
-<!--                    <flattenMode>resolveCiFriendliesOnly</flattenMode>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>flatten</id>-->
-<!--                        <phase>process-resources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>flatten</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                    <execution>-->
-<!--                        <id>flatten.clean</id>-->
-<!--                        <phase>clean</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>clean</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--            &lt;!&ndash;sonatype发布插件&ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>org.sonatype.central</groupId>-->
-<!--                <artifactId>central-publishing-maven-plugin</artifactId>-->
-<!--                <version>0.4.0</version>-->
-<!--                <extensions>true</extensions>-->
-<!--                <configuration>-->
-<!--                    <publishingServerId>cn.muzisheng</publishingServerId>-->
-<!--                    <tokenAuth>true</tokenAuth>-->
-<!--                    <autoPublish>false</autoPublish>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--            &lt;!&ndash; 生成source &ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-source-plugin</artifactId>-->
-<!--                <version>3.0.1</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>attach-sources</id>-->
-<!--                        <goals>-->
-<!--                            <goal>jar-no-fork</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--            &lt;!&ndash; Javadoc &ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-javadoc-plugin</artifactId>-->
-<!--                <version>2.9.1</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>attach-javadocs</id>-->
-<!--                        <goals>-->
-<!--                            <goal>jar</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--            &lt;!&ndash; 工程文件自动签名&ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-gpg-plugin</artifactId>-->
-<!--                <version>1.6</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>sign-artifacts</id>-->
-<!--                        <phase>verify</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>sign</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    <gpgArguments>-->
-<!--                        <arg>&#45;&#45;pinentry-mode</arg>-->
-<!--                        <arg>loopback</arg>-->
-<!--                    </gpgArguments>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+        </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 

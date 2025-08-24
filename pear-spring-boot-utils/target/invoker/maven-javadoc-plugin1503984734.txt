@@ -1,0 +1,27 @@
+Invoking Maven for the goals: [org.apache.maven.plugins:maven-javadoc-plugin:3.6.0:javadoc] with no properties
+
+M2_HOME=/Applications/IntelliJ IDEA.app/Contents/plugins/maven/lib/maven3
+MAVEN_OPTS=null
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home
+JAVA_OPTS=null
+
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------< cn.muzisheng.pear:pear-spring-boot-basic >--------------
+[INFO] Building pear-spring-boot-basic 1.2.2
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> javadoc:3.6.0:javadoc (default-cli) > generate-sources @ pear-spring-boot-basic >>>
+[INFO] 
+[INFO] <<< javadoc:3.6.0:javadoc (default-cli) < generate-sources @ pear-spring-boot-basic <<<
+[INFO] 
+[INFO] 
+[INFO] --- javadoc:3.6.0:javadoc (default-cli) @ pear-spring-boot-basic ---
+[INFO] No previous run data found, generating javadoc.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.052 s
+[INFO] Finished at: 2025-08-23T19:18:16+08:00
+[INFO] ------------------------------------------------------------------------

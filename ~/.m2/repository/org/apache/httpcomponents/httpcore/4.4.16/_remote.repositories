@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Jul 23 19:10:19 CST 2025
+httpcore-4.4.16.jar>nexus-aliyun=
+httpcore-4.4.16.pom>nexus-aliyun=

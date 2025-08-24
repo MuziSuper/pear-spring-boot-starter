@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>plexus-components</artifactId>
+    <groupId>org.codehaus.plexus</groupId>
+    <version>6.5</version>
+  </parent>
+
+  <artifactId>plexus-interactivity</artifactId>
+  <version>1.1</version>
+  <packaging>pom</packaging>
+
+  <name>Plexus Interactivity Handler Component</name>
+
+  <scm>
+    <connection>${scm.url}</connection>
+    <developerConnection>${scm.url}</developerConnection>
+    <url>https://github.com/codehaus-plexus/plexus-interactivity</url>
+    <tag>plexus-interactivity-1.1</tag>
+  </scm>
+  <issueManagement>
+    <system>github</system>
+    <url>https://github.com/codehaus-plexus/plexus-interactivity/issues</url>
+  </issueManagement>
+  <distributionManagement>
+    <site>
+      <id>github:gh-pages</id>
+      <url>${scm.url}</url>
+    </site>
+  </distributionManagement>
+
+  <properties>
+    <scm.url>scm:git:https://github.com/codehaus-plexus/plexus-interactivity.git</scm.url>
+    <project.build.outputTimestamp>2021-09-11T07:18:40Z</project.build.outputTimestamp>
+  </properties>
+
+  <modules>
+    <module>plexus-interactivity-api</module>
+    <module>plexus-interactivity-jline</module>
+  </modules>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <topSiteURL>${scm.url}</topSiteURL>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

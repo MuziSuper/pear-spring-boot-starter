@@ -4,6 +4,7 @@ cn/muzisheng/pear/properties/CacheProperties.class
 cn/muzisheng/pear/config/auto/SiteAutoConfiguration.class
 cn/muzisheng/pear/config/SiteConfig$Builder.class
 cn/muzisheng/pear/config/CacheConfig.class
+cn/muzisheng/pear/properties/JpaProperties.class
 cn/muzisheng/pear/exception/HookException.class
 cn/muzisheng/pear/config/LogConfig.class
 cn/muzisheng/pear/config/TokenConfig$Builder.class
@@ -19,10 +20,13 @@ cn/muzisheng/pear/config/auto/TokenAutoConfiguration.class
 cn/muzisheng/pear/exception/ForbiddenException.class
 cn/muzisheng/pear/config/TokenConfig.class
 cn/muzisheng/pear/config/auto/UserAutoConfiguration.class
+cn/muzisheng/pear/config/auto/JpaAutoConfiguration.class
 META-INF/spring-configuration-metadata.json
 cn/muzisheng/pear/config/RedisConfig.class
 cn/muzisheng/pear/properties/TokenProperties.class
 cn/muzisheng/pear/properties/LogProperties.class
+cn/muzisheng/pear/config/auto/SqlAutoConfiguration.class
+cn/muzisheng/pear/config/auto/CorsAutoConfiguration.class
 cn/muzisheng/pear/exception/UserException.class
 cn/muzisheng/pear/exception/GeneralException.class
 cn/muzisheng/pear/config/SiteConfig.class
