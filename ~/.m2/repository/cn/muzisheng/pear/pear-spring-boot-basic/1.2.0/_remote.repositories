@@ -1,6 +1,0 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Wed Jul 23 19:17:25 CST 2025
-pear-spring-boot-basic-1.2.0-javadoc.jar>=
-pear-spring-boot-basic-1.2.0-sources.jar>=
-pear-spring-boot-basic-1.2.0.jar>=
-pear-spring-boot-basic-1.2.0.pom>=
