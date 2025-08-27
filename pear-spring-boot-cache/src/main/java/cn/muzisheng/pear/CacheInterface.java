@@ -1,5 +1,7 @@
 package cn.muzisheng.pear;
-
+/**
+ * 缓存接口，定义缓存实例的行为
+ **/
 public interface CacheInterface<K,V> {
 
     V get(K key);

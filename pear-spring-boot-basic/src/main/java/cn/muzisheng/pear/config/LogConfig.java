@@ -5,6 +5,9 @@ import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.Setter;
 import org.springframework.boot.logging.LogLevel;
+/**
+ * 日志配置类，允许开发人员自行注入LogConfig实例，但只允许通过内部Builder类创建
+ **/
 @Data
 public class LogConfig {
     private String level= Constant.LOG_DEFAULT_LEVEL;
@@ -14,6 +17,8 @@ public class LogConfig {
     private String logCatalogueAddress= Constant.LOG_DEFAULT_LOG_CATALOGUE_PATH;
     private String warnCatalogueAddress=Constant.LOG_DEFAULT_WARN_CATALOGUE_PATH;
     private String errorCatalogueAddress=Constant.LOG_DEFAULT_ERROR_CATALOGUE_PATH;
+    private LogConfig(){
+    }
     @PostConstruct
     public void validate() {
         if(level==null||level.isEmpty()){

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 @Data
-@ConfigurationProperties(prefix = "pear.token")
+@ConfigurationProperties(prefix = "pear.starter.token")
 public class TokenProperties {
     private String salt;
     private String head;
@@ -16,9 +16,7 @@ public class TokenProperties {
     private String issue;
     private String subject;
     public void applyTo(TokenConfig config){
-        if (salt != null){
-            config.setSalt(salt);
-        }
+
         if (head != null){
             config.setHead(head);
         }

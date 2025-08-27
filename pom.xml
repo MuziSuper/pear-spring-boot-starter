@@ -203,11 +203,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>3.50.0</version>
-        </dependency>
         <!-- jwt框架 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

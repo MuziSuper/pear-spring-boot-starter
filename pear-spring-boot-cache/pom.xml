@@ -14,6 +14,11 @@
             <artifactId>pear-spring-boot-basic</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>cn.muzisheng.pear</groupId>
+            <artifactId>pear-spring-boot-utils</artifactId>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <name>pear-spring-boot-cache</name>
     <artifactId>pear-spring-boot-cache</artifactId>

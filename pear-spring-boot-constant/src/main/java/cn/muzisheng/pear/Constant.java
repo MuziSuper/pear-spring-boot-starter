@@ -25,6 +25,11 @@ public class Constant {
     public static final int UNAPPROVED_EXCEPTION = 401;
     public static final int FORBIDDEN_EXCEPTION = 403;
 
+    // 缓存类型
+    public static final String CACHE_TYPE_LRU = "LRU";
+    public static final String CACHE_TYPE_LFU = "LFU";
+    public static final String CACHE_TYPE_REDIS = "REDIS";
+
     // 响应信息
     public static final String ILLEGAL_MESSAGE_EXCEPTION = "The user passed in an illegal parameter.";
     public static final String HOOK_NOTFOUND_EXCEPTION = "The hook method failed to obtain the result.";
@@ -37,16 +42,20 @@ public class Constant {
 
     // token默认配置
     public static final long TOKEN_DEFAULT_EXPIRE_DAY = 7 * 24 * 60 * 60 * 1000L;
-    public static final String TOKEN_DEFAULT_SECRET_SALT = "pear_token_";
     public static final String TOKEN_DEFAULT_SECRET_PREFIX = "Bearer ";
     public static final String TOKEN_DEFAULT_ISSUER = "pear";
     public static final String TOKEN_DEFAULT_SUBJECT = "authentication";
+
+    // Jpa默认配置
+    public static final boolean DB_AUTO_CREATE = true;
+
 
     // cache默认配置
     public static final Long CACHE_DEFAULT_EXPIRED=24*60*60*1000L;
     public static final int CACHE_DEFAULT_CAPACITY=20;
     public static final String CACHE_DEFAULT_STRATEGY = "LRU";
     public static final String CACHE_DEFAULT_NAME = "PEAR_CACHE";
+    public static final boolean CACHE_DEFAULT_REDIS_ENABLE = true;
 
     // config默认配置
     public static final String AUTH_PREFIX = "/auth";
@@ -105,22 +114,22 @@ public class Constant {
     public static final String KEY_SITE_USER_ID_TYPE= "KEY_SITE_USER_ID_TYPE";
 
 
-    // permission type
+    // 权限类型
     public static final String PERMISSION_ALL="all";
     public static final String PERMISSION_CREATE="create";
     public static final String PERMISSION_READ="read";
     public static final String PERMISSION_UPDATE="update";
     public static final String PERMISSION_DELETE="delete";
 
-    // groupRole type
+    // 组成员类型
     public static final String GROUP_ROLE_ADMIN="Admin";
     public static final String GROUP_ROLE_MEMBER="member";
 
-    // group type
+    // 组类型
     public static final String GROUP_TYPE_ADMIN="Admin";
     public static final String GROUP_TYPE_APP="app";
 
-    // Admin param
+    // Admin查询m默认最大结果数
     public static final int DEFAULT_QUERY_LIMIT =102400;
 
     // 排序条件

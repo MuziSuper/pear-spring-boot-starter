@@ -137,6 +137,6 @@ public class SnowIdUtil {
         }
         //让上面100个线程执行结束后，在走下面输出信息
         latch.await();
-        System.out.println("生成20万条雪花ID总用时=" + Long.toString(System.currentTimeMillis() - start));
+        System.out.println("生成20万条雪花ID总用时=" + (System.currentTimeMillis() - start));
     }
 }

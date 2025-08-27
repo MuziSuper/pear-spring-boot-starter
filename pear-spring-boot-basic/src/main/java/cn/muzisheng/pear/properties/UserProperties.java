@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 @Data
-@ConfigurationProperties("pear.user")
+@ConfigurationProperties("pear.starter.user")
 public class UserProperties {
     private String passwordSalt;
     public void applyTo(UserConfig config){

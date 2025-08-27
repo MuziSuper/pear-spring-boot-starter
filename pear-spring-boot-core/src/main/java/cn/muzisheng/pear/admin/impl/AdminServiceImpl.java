@@ -341,7 +341,7 @@ public class AdminServiceImpl implements AdminService {
                 val = TimeTransitionUtil.stringToLocalTime((String) val);
             } else {
                 try {
-                    val = objectMapper.convertValue((String) val, targetClass);
+                    val = objectMapper.convertValue(val, targetClass);
                 } catch (IllegalArgumentException e) {
                     val = null;
                 }

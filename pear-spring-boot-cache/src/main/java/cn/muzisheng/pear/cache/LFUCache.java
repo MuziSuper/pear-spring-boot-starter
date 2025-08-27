@@ -26,22 +26,16 @@ public class LFUCache<K, V> implements CacheInterface<K, V> {
     private final long expire;
     private final String cacheName;
 
-    public LFUCache(int capacity, long expire, String cacheName) {
+    public LFUCache(int capacity, long expire,String cacheName) {
         this.capacity = capacity;
         this.expire = expire;
-        this.cache = new HashMap<>();
-        this.frequencyMap = new HashMap<>();
-        this.frequencyKeysMap = new TreeMap<>();
         this.cacheName = cacheName;
-    }
-
-    public LFUCache(CacheConfig config) {
-        this.capacity = config.getCapacity();
-        this.expire = config.getExpire();
-        this.cacheName = config.getCacheName();
         this.cache = new HashMap<>();
         this.frequencyMap = new HashMap<>();
         this.frequencyKeysMap = new TreeMap<>();
+    }
+    public LFUCache(CacheConfig config){
+        this(config.getCapacity(),config.getExpire(),config.getCacheName());
     }
 
     @Override
@@ -203,7 +197,8 @@ public class LFUCache<K, V> implements CacheInterface<K, V> {
     @Override
     public String toString() {
         return "LFUCache{" +
-                "cache=" + cache.toString() +
+                "cacheName="+cacheName+
+                ", cache=" + cache.toString() +
                 ", frequencyMap=" + frequencyMap.toString() +
                 ", frequencyKeysMap=" + frequencyKeysMap.toString() +
                 '}';

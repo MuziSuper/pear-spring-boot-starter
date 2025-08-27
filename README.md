@@ -303,8 +303,8 @@ Pear支持多种配置方式，包括：
 # ==================================
 # 缓存配置 (Cache)
 # ==================================
-app.cache.expire=86400000  # 缓存过期时间(毫秒)，默认24小时
-app.cache.capacity=20      # 缓存容量，默认20
+app.cacheTemplate.expire=86400000  # 缓存过期时间(毫秒)，默认24小时
+app.cacheTemplate.capacity=20      # 缓存容量，默认20
 
 # ==================================
 # 环境配置 (Config)
@@ -406,10 +406,10 @@ public interface CacheInterface<K,V> {
 
 // 缓存策略模式
 public class CacheStrategy<K, V> {
-  private CacheInterface<K, V> cache;
+  private CacheInterface<K, V> cacheTemplate;
   
-  public void setCacheStrategy(CacheInterface<K, V> cache) {
-    this.cache = cache;
+  public void setCacheStrategy(CacheInterface<K, V> cacheTemplate) {
+    this.cacheTemplate = cacheTemplate;
   }
   
   // ...其他方法...
@@ -478,7 +478,7 @@ Pear实现了灵活的配置系统，支持多种配置方式：
 
 ```
 // 配置属性类
-@ConfigurationProperties("app.cache")
+@ConfigurationProperties("app.cacheTemplate")
 public class CacheProperties {
   private long expire;
   private int capacity;

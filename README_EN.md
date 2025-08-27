@@ -4,7 +4,7 @@
         <a href="README.md">中文</a> | <a href="README_EN.md">English</a>
     </p>
     <img src="favicon.svg" alt="Pear Logo" width="200" height="200">
-    <p>🚀 Pear is a java middleware, which is convenient for the development of back-end personnel, with a built-in visual background management interface, which can add, delete, modify and check data, and provides hook methods, which can allow developers to perform some general operations before and after data processing, such as data encryption or desensitization, etc., and also provides an independent log system and cache system for log archiving and caching hot data, and more functions are still in development!
+    <p>🚀 Pear is a java middleware, which is convenient for the development of back-end personnel, with a built-in visual background management interface, which can add, delete, modify and check data, and provides hook methods, which can allow developers to perform some general operations before and after data processing, such as data encryption or desensitization, etc., and also provides an independent log system and cacheTemplate system for log archiving and caching hot data, and more functions are still in development!
 </p>
     <p>🛠️ Integration frameworks | 🎉 High versatility | 🖋️ Low operability | 🔑 High scalability</p>
     <p>
@@ -223,11 +223,11 @@ Use H5 to call the backend 'api' with jQuery and render the page, and use 'tailw
 
 #### Feature introduction
 
-1. Provide a thread-safe cache container that can store multiple pairs of key-value pairs and carry the timestamp of the current deposit, and also set the expiration time of all data in this container;
-2. Provide a get method to get the cache, and return null if it misses;
-3. Provide the add method to add the cache, and the existing key name will be overwritten;
-4. Provide a containsmethod to determine whether this key exists in the cache;
-5. Provide the remove method to delete the cache of this key, if this key does not exist, it will not be operated;
+1. Provide a thread-safe cacheTemplate container that can store multiple pairs of key-value pairs and carry the timestamp of the current deposit, and also set the expiration time of all data in this container;
+2. Provide a get method to get the cacheTemplate, and return null if it misses;
+3. Provide the add method to add the cacheTemplate, and the existing key name will be overwritten;
+4. Provide a containsmethod to determine whether this key exists in the cacheTemplate;
+5. Provide the remove method to delete the cacheTemplate of this key, if this key does not exist, it will not be operated;
 
 ### Core General Purpose System
 

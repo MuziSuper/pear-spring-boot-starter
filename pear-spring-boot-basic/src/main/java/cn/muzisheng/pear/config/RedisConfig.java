@@ -15,9 +15,12 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 import java.time.Duration;
-
+/**
+ * Redis配置类，允许开发人员自行注入RedisConfig实例，但只允许通过内部Builder类创建
+ **/
 @Data
 public class RedisConfig {
+    // 缓存过期时间
     private long expire;
     public RedisConfig(CacheConfig config) {
         expire=config.getExpire();
@@ -55,7 +58,6 @@ public class RedisConfig {
                 .disableCachingNullValues() // 禁止缓存null值
                 .computePrefixWith(cacheName -> cacheName + "::")
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
-
         return RedisCacheManager.builder(cacheWriter)
                 .cacheDefaults(cacheConfiguration)
                 .build();

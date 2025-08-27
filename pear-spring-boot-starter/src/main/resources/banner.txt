@@ -5,8 +5,8 @@ ${AnsiColor.BRIGHT_CYAN}
  |  __/| |___ / ___ \|  _ <
  |_|   |_____/_/   \_\_| \_\
 ${AnsiColor.BRIGHT_CYAN}
-:: Pear Framework ::        ${application.version:${project.version:1.2.1}}
-:: Spring Boot ::           ${spring-boot.version}
-:: Powered by Java ::       ${java.version}
+:: Pear Framework ::        @pear.version@
+:: Spring Boot ::           @spring-boot.version@
+:: Powered by Java ::       @java.version@
 ${AnsiColor.DEFAULT}
 

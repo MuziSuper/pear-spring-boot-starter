@@ -8,7 +8,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+/**
+ * 日志条件化装配类
+ **/
 @Configuration
 @EnableConfigurationProperties(LogProperties.class)
 public class LogAutoConfiguration {
@@ -18,7 +20,7 @@ public class LogAutoConfiguration {
     @ConditionalOnMissingBean(LogConfig.class)
     public LogConfig defaultLogConfig(LogProperties properties) {
         LOG.info("LogConfig默认注册完成");
-        LogConfig config = new LogConfig();
+        LogConfig config = new LogConfig.Builder().build();
         properties.applyTo(config);
         return config;
     }

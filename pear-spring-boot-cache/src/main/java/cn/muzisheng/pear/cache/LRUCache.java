@@ -17,9 +17,11 @@ public class LRUCache<K,V> implements CacheInterface<K,V> {
     private final Lock readLock=readWriteLock.readLock();
     private final Lock writeLock=readWriteLock.writeLock();
     private final long expire;
+    private final String cacheName;
 
     public LRUCache(int capacity, long expire, String cacheName) {
         this.expire = expire;
+        this.cacheName = cacheName;
         cache = new LinkedHashMap<>(capacity,0.75f,true){
             @Override
             protected boolean removeEldestEntry(java.util.Map.Entry<K,ExpiredCacheValue<V>> eldest) {
@@ -28,13 +30,7 @@ public class LRUCache<K,V> implements CacheInterface<K,V> {
         };
     }
     public LRUCache(CacheConfig config) {
-        this.expire = config.getExpire();
-        cache = new LinkedHashMap<>(config.getCapacity(),0.75f,true){
-            @Override
-            protected boolean removeEldestEntry(java.util.Map.Entry<K,ExpiredCacheValue<V>> eldest) {
-                return size()>config.getCapacity();
-            }
-        };
+         this(config.getCapacity(),config.getExpire(),config.getCacheName());
     }
     @Override
     public void put(K key,V value){

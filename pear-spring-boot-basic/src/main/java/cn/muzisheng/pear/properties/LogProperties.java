@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.context.annotation.Configuration;
 @Data
-@ConfigurationProperties("pear.log")
+@ConfigurationProperties("pear.starter.log")
 public class LogProperties {
     private String level;
     private String stdoutPattern;

@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
-@ConfigurationProperties("pear.site")
+@ConfigurationProperties("pear.starter.site")
 public class SiteProperties {
     private String authPrefix;
     public void applyTo(SiteConfig config){

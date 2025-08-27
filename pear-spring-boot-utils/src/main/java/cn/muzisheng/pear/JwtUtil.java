@@ -23,14 +23,12 @@ public class JwtUtil {
      * 过期时间(单位:秒)
      */
     private final long JWT_EXPIRE;
-    private final String JWT_SALT;
     private final String JWT_HEAD;
     private final String JWT_ISSUE;
     private final String JWT_SUBJECT;
     private final SecretKey KEY;
     public JwtUtil(TokenConfig tokenConfig) {
         this.JWT_EXPIRE = tokenConfig.getExpire();
-        this.JWT_SALT = tokenConfig.getSalt();
         this.JWT_HEAD = tokenConfig.getHead();
         this.JWT_ISSUE = tokenConfig.getIssue();
         this.JWT_SUBJECT = tokenConfig.getSubject();
@@ -60,28 +58,8 @@ public class JwtUtil {
                 .signWith(KEY,ALGORITHM)
                 .compact();
         return JWT_HEAD + jwtStr;
-//        Map<String, Object> claims = new HashMap<>();
-//        claims.put("email", email);
-//        return Constant.TOKEN_DEFAULT_SECRET_PREFIX + Jwts.builder().claims(claims)
-//                .setExpiration(generateExpirationDate())
-//                .signWith(SignatureAlgorithm.HS512, tokenConfig.getSalt())
-//                .compact();
     }
 
-//    /**
-//     * 刷新token过期时间
-//     * @throws AuthorizationException bad token
-//     */
-////    @Deprecated
-////    public String refreshToken(String token) {
-////        Claims claims;
-////        try{
-////            claims = getClaimFromToken(token);
-////        }catch (ExpiredJwtException e){
-////            claims=e.getClaims();
-////        }
-////        return generateTokenWithClaims(claims);
-////    }
 
     /**
      * 从token中获取登录用户名,如果返回null,说明token已经过期
@@ -92,7 +70,9 @@ public class JwtUtil {
         Claims claims = claimsJws.getPayload();
         return claims.get("email", String.class);
     }
-
+    /**
+     * 删除token前缀
+     **/
     public String delTokenPrefix(String token){
         return token.replace(Constant.TOKEN_DEFAULT_SECRET_PREFIX,"");
     }
@@ -107,7 +87,7 @@ public class JwtUtil {
                 .verifyWith(KEY)
                 .build()
                 .parseSignedClaims(delTokenPrefix(token));
-                }catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e){
+        }catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e){
             throw new AuthorizationException("bad token",e);
         }
         return claims;

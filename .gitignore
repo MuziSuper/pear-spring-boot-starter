@@ -12,7 +12,7 @@ src/main/resources/test.properties
 .project
 .settings
 .springBeans
-.sts4-cache
+.sts4-cacheTemplate
 
 ### IntelliJ IDEA ###
 .idea

@@ -1,6 +1,6 @@
 package cn.muzisheng.pear.initialize;
 
-import cn.muzisheng.pear.CacheStrategy;
+import cn.muzisheng.pear.CacheTemplate;
 import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.config.CacheConfig;
 import cn.muzisheng.pear.dao.UserDAO;
@@ -26,16 +26,16 @@ public class PearApplicationInitialization implements CommandLineRunner {
     private final UserDAO userDAO;
     private final ConfigService configService;
     private final static Logger LOG = LoggerFactory.getLogger(PearApplicationInitialization.class);
-    public static CacheStrategy<String,String> configCacheStrategy;
-    public static CacheStrategy<String,String> envCacheStrategy;
+    public static CacheTemplate<String,String> configCacheTemplate;
+    public static CacheTemplate<String,String> envCacheTemplate;
 
     public PearApplicationInitialization(UserDAO userDAO, CacheConfig config, ConfigService configService) {
         LOG.info("PearApplicationInitialization注册成功");
         this.userDAO = userDAO;
         this.configService = configService;
         // 初始化缓存
-        configCacheStrategy =new CacheStrategy.Builder<String,String>().cacheStrategy(config).cacheName("config_cache").build();
-        envCacheStrategy =new CacheStrategy.Builder<String,String>().cacheStrategy(config).cacheName("env_cache").build();
+        configCacheTemplate = new CacheTemplate.Builder<String,String>().cacheStrategy(config).cacheName("pear_cache").build();
+        envCacheTemplate = new CacheTemplate.Builder<String,String>().cacheStrategy(config).cacheName("per_env").build();
     }
 
     @Override

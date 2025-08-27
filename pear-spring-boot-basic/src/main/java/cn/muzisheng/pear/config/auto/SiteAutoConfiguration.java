@@ -8,7 +8,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+/**
+ * 站点条件化装配类
+ **/
 @Configuration
 @EnableConfigurationProperties(SiteProperties.class)
 public class SiteAutoConfiguration {
@@ -18,7 +20,7 @@ public class SiteAutoConfiguration {
     @ConditionalOnMissingBean(SiteConfig.class)
     public SiteConfig defaultConfigProperties(SiteProperties properties) {
         LOG.info("SiteConfig默认注入完成");
-        SiteConfig config = new SiteConfig(); // 使用默认值初始化
+        SiteConfig config = new SiteConfig.Builder().build(); // 使用默认值初始化
         properties.applyTo(config); // 应用属性配置覆盖
         return config;
     }

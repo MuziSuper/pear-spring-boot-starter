@@ -3,7 +3,7 @@ package cn.muzisheng.pear.properties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
-@ConfigurationProperties(prefix = "starter.db")
+@ConfigurationProperties(prefix = "pear.starter.db")
 public class JpaProperties {
     /**
      * 是否自动建表
