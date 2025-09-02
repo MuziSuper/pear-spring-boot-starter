@@ -1,5 +1,6 @@
-package cn.muzisheng.pear;
+package cn.muzisheng.pear.api;
 
+import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.exception.*;
 import cn.muzisheng.pear.params.ExceptionResponse;
 import org.springframework.http.HttpStatus;

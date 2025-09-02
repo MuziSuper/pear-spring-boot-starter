@@ -59,11 +59,18 @@ public class JwtUtil {
                 .compact();
         return JWT_HEAD + jwtStr;
     }
+    /**
+     * 刷新token
+     **/
+    public String refreshToken(String token) {
+     String email = getEmailFromToken(token);
+     return getEmailFromToken(email);
+    }
 
 
     /**
      * 从token中获取登录用户名,如果返回null,说明token已经过期
-     * @throws AuthorizationException bad token
+     * @throws AuthorizationException bad token or token expired
      */
     public String getEmailFromToken(String token){
         Jws<Claims> claimsJws = getClaimFromToken(token);
@@ -78,7 +85,7 @@ public class JwtUtil {
     }
     /**
      * 从token中获取Claim
-     * @throws AuthorizationException bad token
+     * @throws AuthorizationException bad token or token expired
      */
     private Jws<Claims> getClaimFromToken(String token) {
         Jws<Claims> claims;
@@ -89,6 +96,8 @@ public class JwtUtil {
                 .parseSignedClaims(delTokenPrefix(token));
         }catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e){
             throw new AuthorizationException("bad token",e);
+        }catch (ExpiredJwtException e){
+            throw new AuthorizationException("token expired",e);
         }
         return claims;
     }

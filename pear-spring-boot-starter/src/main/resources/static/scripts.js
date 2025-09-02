@@ -1,12 +1,29 @@
 // 检查用户是否已登录
 function checkLogin() {
-    const token = localStorage.getItem('token');
+    const token = getCookie('token');
     if (!token) {
         window.location.href = '/auth/login';
         return false;
     }
     return true;
 }
+
+// 从cookie中获取token的函数
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+// 设置全局Ajax默认行为，在请求头中添加Authorization
+$.ajaxSetup({
+    beforeSend: function(xhr) {
+        const token = getCookie('token');
+        if (token) {
+            xhr.setRequestHeader('Authorization', token);
+        }
+    }
+});
 
 const queryForm = {
     pos: 0,
@@ -32,7 +49,7 @@ $(document).ready(function () {
     let showableFields = []; // 可显示字段列表
 
     // 从cookie中获取token
-    const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+    const token = getCookie('token');
       
     if (!token) {
         // 如果没有token，重定向到登录页面

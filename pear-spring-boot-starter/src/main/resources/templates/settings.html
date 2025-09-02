@@ -22,17 +22,10 @@
 
         $(document).ready(function() {
             $('#logout').click(function() {
-                $.ajax({
-                    url: `${baseUrl}/api/logout`,
-                    method: 'POST',
-                    success: function() {
-                        alert('注销成功');
-                        window.location.href = '/login.html';
-                    },
-                    error: function() {
-                        alert('注销失败');
-                    }
-                });
+                // 清除cookie中的token
+                document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                alert('注销成功');
+                window.location.href = '/auth/login';
             });
         });
     </script>

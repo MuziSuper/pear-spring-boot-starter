@@ -20,11 +20,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * 定义@Verification校验注解的通知
+ **/
 @Aspect
 @Component
 public class HookAspect {
@@ -59,14 +59,17 @@ public class HookAspect {
                 break;
             }
         }
+        User user=userService.currentUser(request);
         if(request==null){
             throw new IllegalException("Request not found.");
         }
-        if(verification.SystemVerify()){
-            withAdminAuth(request);
+        // 系统级校验
+        if(verification.SystemVerify()&&withAdminAuth(request,verification)){
+           LOG.info("---System-level verification operation log----\n"+"UseId: "+user.getId()+"\nUser Role: "+user.getRole()+"\nAction："+method.getName());
         }
-        if(verification.UserVerify()&&adminObject!=null){
-            accessCheck(adminObject,request);
+        // 用户级校验
+        if(verification.UserVerify()&&adminObject!=null&&accessCheck(adminObject,request)){
+            LOG.info("---User-level verification operation log----\n"+"UseId: "+user.getId()+"\nUser Role: "+user.getRole());
         }
         return jp.proceed();
     }
@@ -76,7 +79,7 @@ public class HookAspect {
      * @param request     请求
      * @throws AuthorizationException 身份校验不通过
      **/
-    private void accessCheck(AdminObject adminObject, HttpServletRequest request){
+    private boolean accessCheck(AdminObject adminObject, HttpServletRequest request){
         if(adminObject.getAccessCheck()!=null){
             try {
                 adminObject.getAccessCheck().execute(request,adminObject);
@@ -89,8 +92,9 @@ public class HookAspect {
     /**
      * 系统级校验用户是否登录，未登录则抛出异常
      * @param request 请求
+     * @throws AuthorizationException 用户未登录
      **/
-    private void withAdminAuth(HttpServletRequest request){
+    private boolean withAdminAuth(HttpServletRequest request,Verification verification){
         User user=userService.currentUser(request);
         if(user==null){
             String signUrl=configService.getValue(Constant.KEY_SITE_SIGNIN_URL);
@@ -99,7 +103,8 @@ public class HookAspect {
             }else{
                 throw new AuthorizationException("unauthorized;signUrl="+signUrl);
             }
-        }else if(user.getIsStaff()!=null && user.getIsSuperUser()!=null && !user.getIsStaff() && !user.getIsSuperUser()) {
+        }
+        if(!user.getRole().checkPermissions(verification.MinLevel())) {
             throw new ForbiddenException("forbidden");
         }
     }

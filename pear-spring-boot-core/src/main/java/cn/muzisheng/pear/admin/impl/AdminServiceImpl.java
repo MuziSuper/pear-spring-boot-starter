@@ -33,7 +33,7 @@ import java.util.*;
 @Service
 public class AdminServiceImpl implements AdminService {
     private final AdminMapper adminMapper;
-    private final ObjectMapper objectMapper=new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private final UserService userService;
     private final ConfigService configService;
     private final ResourcePatternResolver resourceLoader;
@@ -47,7 +47,6 @@ public class AdminServiceImpl implements AdminService {
         this.resourceLoader = resourceLoader;
     }
 
-    @Verification(UserVerify = true)
     @Override
     public ResponseEntity<Result<Object>> handleQueryOrGetOne(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm) {
         Response<Object> response = new Response<>();
@@ -96,12 +95,12 @@ public class AdminServiceImpl implements AdminService {
                 LOG.error("admin creation failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
                 throw new AdminErrorException("admin creation failed. " + (res.get("email") != null ? "email: " + res.get("email") : ""));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new SqlStatementException(e.getMessage());
         }
-        if (adminObject.getBeforeRender() != null) {
+        if (adminObject.getAfterCreate() != null) {
             try {
-                adminObject.getBeforeRender().execute(request, adminObject, res);
+                adminObject.getAfterCreate().execute(request, adminObject, res);
             } catch (Exception e) {
                 LOG.error("beforeRender error", e);
                 throw new HookException("beforeRender error");
@@ -110,6 +109,7 @@ public class AdminServiceImpl implements AdminService {
         response.setData(res);
         return response.value();
     }
+
     /**
      * 根据请求头与请求体的参数更新admin，请求头中要有主键或唯一键信息
      *
@@ -127,13 +127,14 @@ public class AdminServiceImpl implements AdminService {
         List<Map<String, Object>> list;
         try {
             list = adminMapper.selectFirst(model, keys);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new SqlStatementException(e.getMessage());
         }
         if (list.isEmpty()) {
             throw new IllegalException("The primary key does not exist.");
         }
         Map<String, Object> res = unmarshalFrom(adminObject, data, keys, false);
+        // 运行beforeUpdate钩子
         if (adminObject.getBeforeUpdate() != null) {
             try {
                 adminObject.getBeforeUpdate().execute(request, adminObject, res);
@@ -147,7 +148,7 @@ public class AdminServiceImpl implements AdminService {
                 LOG.error("admin update failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
                 throw new AdminErrorException("admin update failed. " + (res.get("email") != null ? "email: " + res.get("email") : ""));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new SqlStatementException(e.getMessage());
         }
         Response<Map<String, Object>> response = new Response<>();
@@ -159,19 +160,19 @@ public class AdminServiceImpl implements AdminService {
     public ResponseEntity<Result<Map<String, Object>>> handleDelete(HttpServletRequest request, String model, AdminObject adminObject) {
         Response<Map<String, Object>> response = new Response<>();
         Map<String, Object> keys = getPrimaryValues(request, adminObject);
-        if(keys.isEmpty()){
+        if (keys.isEmpty()) {
             throw new IllegalException("The primary key is empty.");
         }
         List<Map<String, Object>> list;
-        try{
+        try {
             list = adminMapper.selectFirst(model, keys);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new SqlStatementException(e.getMessage());
         }
         if (list.isEmpty()) {
             throw new IllegalException("The primary key does not exist.");
         }
-        if(adminObject.getBeforeDelete()!= null){
+        if (adminObject.getBeforeDelete() != null) {
             try {
                 adminObject.getBeforeDelete().execute(request, adminObject, list.get(0));
             } catch (Exception e) {
@@ -179,11 +180,11 @@ public class AdminServiceImpl implements AdminService {
                 throw new HookException("beforeDelete error");
             }
         }
-        try{
-         if (adminMapper.delete(model, keys) < 1) {
-            LOG.error("admin delete failed. The key is {}", keys);
-        }
-        }catch (Exception e){
+        try {
+            if (adminMapper.delete(model, keys) < 1) {
+                LOG.error("admin delete failed. The key is {}", keys);
+            }
+        } catch (Exception e) {
             throw new SqlStatementException(e.getMessage());
         }
         response.setData(list.get(0));
@@ -207,8 +208,9 @@ public class AdminServiceImpl implements AdminService {
         response.setData(map);
         return response.value();
     }
+
     /**
-     *  获取后台文件路径
+     * 获取后台文件路径
      **/
 //    @Verification
     @Override
@@ -255,9 +257,9 @@ public class AdminServiceImpl implements AdminService {
         }
         // 删除不可编辑字段
 //        if (initial) {
-            if (adminObject.getEdits() != null) {
-                body.keySet().removeIf(field -> !adminObject.getEdits().contains(field));
-            }
+        if (adminObject.getEdits() != null) {
+            body.keySet().removeIf(field -> !adminObject.getEdits().contains(field));
+        }
 //        }
         // 添加body中没有的query参数，整合数据到body中
         for (String field : params.keySet()) {
@@ -324,9 +326,9 @@ public class AdminServiceImpl implements AdminService {
                 val = formatAsFloat(val);
             } else if (targetClass.equals(Boolean.class)) {
                 String valString = (String) val;
-                if (valString.equalsIgnoreCase("true") || valString.equalsIgnoreCase("on") || valString.equalsIgnoreCase("yes")|| valString.equals("1")) {
+                if (valString.equalsIgnoreCase("true") || valString.equalsIgnoreCase("on") || valString.equalsIgnoreCase("yes") || valString.equals("1")) {
                     val = 1;
-                } else if (valString.equalsIgnoreCase("false") || valString.equalsIgnoreCase("off") || valString.equalsIgnoreCase("no")|| valString.equals("0")) {
+                } else if (valString.equalsIgnoreCase("false") || valString.equalsIgnoreCase("off") || valString.equalsIgnoreCase("no") || valString.equals("0")) {
                     val = 0;
                 } else {
                     val = 0;
@@ -453,11 +455,10 @@ public class AdminServiceImpl implements AdminService {
                     continue;
                 }
             }
-            User user=userService.currentUser(request);
-            if(user==null){
+            User user = userService.currentUser(request);
+            if (user == null) {
                 throw new AuthorizationException("未登录");
             }
-            adminObject.buildPermissions(user);
             viewObjects.add(adminObject);
         }
         // 获取渲染页面的所有站点信息
@@ -518,7 +519,7 @@ public class AdminServiceImpl implements AdminService {
             queryForm.setLimit(0);
         }
         String whereClause = "";
-        if(queryForm.getFilters() != null) {
+        if (queryForm.getFilters() != null) {
             for (Filter filter : queryForm.getFilters()) {
                 String queryClause = filter.getQueryClause();
                 if (queryClause != null) {
@@ -639,8 +640,8 @@ public class AdminServiceImpl implements AdminService {
             LOG.error("invalid primary key");
             throw new IllegalException("invalid primary key");
         }
-        // 使用预加载，获取对象及其外键链接的数据
-        Object result = adminMapper.selectFirst(adminObject.getTableName(), queryMap);
+        // 使用预加载，获取对象及其外键链接的数据 Limit 1
+        List<Map<String, Object>> result = adminMapper.selectFirst(adminObject.getTableName(), queryMap);
         if (result == null) {
             LOG.error("Data cannot be found.");
             throw new GeneralException("Data cannot be found.");
@@ -653,39 +654,32 @@ public class AdminServiceImpl implements AdminService {
                 throw new GeneralException("BeforeRender error: " + e.getMessage());
             }
         }
-        // 序列化对象，将result转为map[string]any
-        Map<String, Object> data = marshalOne(request, adminObject, result);
+        // 序列化对象
+        Map<String, Object> data = marshalOne(adminObject, result);
+        if (adminObject.getAdminViewOnSite() != null) {
+            try {
+                data.put("_adminExtra", adminObject.getAdminViewOnSite().execute(request, adminObject, result));
+            } catch (Exception e) {
+                LOG.error("AdminViewOnSite error");
+            }
+        }
         response.setData(data);
         return response.value();
     }
 
     /**
-     * 序列化对象，将result转为map[string]any,展示可shows字段
+     * 序列化对象，将result中唯一的Map数据,展示可shows字段
      **/
-    private Map<String, Object> marshalOne(HttpServletRequest request, AdminObject adminObject, Object result) {
+    private Map<String, Object> marshalOne(AdminObject adminObject, List<Map<String, Object>> result) {
         Map<String, Object> data = new HashMap<>();
-        if (result instanceof List<?> list) {
-            for (Object obj : list) {
-                if (obj instanceof Map<?, ?> map) {
-                    for (Map.Entry<?, ?> entry : map.entrySet()) {
-                        if (entry.getKey() instanceof String) {
-                            if (adminObject.getShows().contains((String) entry.getKey())) {
-                                data.put((String) entry.getKey(), entry.getValue());
-                            }
-                        }
-                    }
+        for (Map<String, Object> map : result) {
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                if (adminObject.getShows().contains( entry.getKey())) {
+                    data.put(entry.getKey(), entry.getValue());
                 }
             }
             if (data.isEmpty()) {
                 LOG.warn("The dataset rendered by BeforeRender is not of type List<Map<String,Object>>.");
-            }
-
-            if (adminObject.getAdminViewOnSite() != null) {
-                try {
-                    data.put("_adminExtra", adminObject.getAdminViewOnSite().execute(request, adminObject, result));
-                } catch (Exception e) {
-                    LOG.error("AdminViewOnSite error");
-                }
             }
         }
         return data;
@@ -724,8 +718,8 @@ public class AdminServiceImpl implements AdminService {
      * 在res中添加插入更新时间
      *
      * @param adminObject 通用类对象
-     * @param res        处理体
-     * @param isCreate   新创建
+     * @param res         处理体
+     * @param isCreate    新创建
      **/
     private void flushTime(AdminObject adminObject, Map<String, Object> res, boolean isCreate) {
         adminObject.getFields().forEach(field -> {

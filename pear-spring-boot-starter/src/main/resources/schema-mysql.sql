@@ -85,3 +85,24 @@ CREATE TABLE IF NOT EXISTS `user` (
     `gmt_modified` DATETIME,
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+                        `code` int NOT NULL,
+                        `desc` varchar(255) DEFAULT NULL,
+                        `role` varchar(255) DEFAULT NULL,
+                        PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+BEGIN;
+INSERT INTO `role` (`code`, `desc`, `role`) VALUES (0, 'The administrators in the group have the highest privileges and are the creators and managers of the user group.', 'superuser');
+INSERT INTO `role` (`code`, `desc`, `role`) VALUES (1, 'The accountant in the group, by default, has all the permissions except for those of the administrator. They can modify all data except that of the administrator.', 'accountant');
+INSERT INTO `role` (`code`, `desc`, `role`) VALUES (2, 'The ordinary employees in the group are set as read-only by default. They can only modify their own user information but cannot change their own permissions.', 'staff');
+INSERT INTO `role` (`code`, `desc`, `role`) VALUES (3, 'Without any permissions, all data will be made public within the organization, except for the password.', 'customer');
+COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;

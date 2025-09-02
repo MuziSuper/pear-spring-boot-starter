@@ -9,17 +9,21 @@ import jakarta.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.stream.Stream;
 
 @Service
@@ -191,42 +195,24 @@ public class ConfigServiceImpl implements ConfigService {
      **/
     public String searchAllEnv(String key) {
         HashMap<String, String> map = new HashMap<>();
-        try (Stream<Path> paths = Files.walk(Paths.get(Constant.APP_DEFAULT_SEARCH_PROPERTIES_PATH))) {
-            paths.filter(Files::isRegularFile)
-                    .filter(p -> p.toString().endsWith(".properties"))
-                    .forEach(p -> {
-                        try {
-                            String line;
-                            BufferedReader buf = new BufferedReader(new FileReader(p.toFile()));
-                            while ((line = buf.readLine()) != null) {
-                                line = line.trim();
-                                if (line.isEmpty()) {
-                                    continue;
-                                }
-                                if (line.startsWith("#")) {
-                                    continue;
-                                }
-                                if (!line.contains("=")) {
-                                    continue;
-                                }
-                                String[] properties = line.split("=", 2);
-                                if (properties.length != 2) {
-                                    continue;
-                                }
-                                properties[0] = properties[0].trim().toLowerCase();
-                                properties[1] = properties[1].trim();
-                                if (PearApplicationInitialization.envCacheTemplate != null) {
-                                    PearApplicationInitialization.envCacheTemplate.put(properties[0], properties[1]);
-                                }
-                                if (key.equalsIgnoreCase(properties[0])) {
-                                    map.put(key, properties[1]);
-                                    break;
-                                }
-                            }
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+        try  {
+            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+            Resource[] resources = resolver.getResources("classpath*:**/*.properties");
+            for (Resource resource : resources) {
+                try(InputStream inputStream = resource.getInputStream()) {
+                    Properties properties = new Properties();
+                    properties.load(inputStream);
+                    for (String propertiesKey : properties.stringPropertyNames())   {
+                        String propertiesValue=properties.getProperty(propertiesKey);
+                        if(PearApplicationInitialization.envCacheTemplate!= null){
+                            PearApplicationInitialization.envCacheTemplate.put(key, propertiesValue);
                         }
-                    });
+                        if(propertiesKey.equalsIgnoreCase(key)){
+                            map.put(key, propertiesValue);
+                        }
+                    }
+                }
+            }
         } catch (Exception e) {
             LOG.error("File cannot be accessed");
         }

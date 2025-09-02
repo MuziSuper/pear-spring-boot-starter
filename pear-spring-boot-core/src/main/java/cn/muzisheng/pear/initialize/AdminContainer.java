@@ -124,7 +124,7 @@ public class AdminContainer {
              */
 
             // 忽略钩子方法
-            if (field.getType() == BeforeCreate.class || field.getType() == BeforeUpdate.class || field.getType() == BeforeDelete.class || field.getType() == BeforeRender.class || field.getType() == AccessCheck.class || field.getType() == AdminViewOnSite.class || field.getType() == BeforeQueryRenderFunc.class) {
+            if (field.getType() == BeforeCreate.class || field.getType() == BeforeUpdate.class || field.getType() == BeforeDelete.class || field.getType() == BeforeRender.class || field.getType() == AccessCheck.class || field.getType() == AdminViewOnSite.class || field.getType() == AfterCreate.class) {
                 continue;
             }
             // adminField存入type

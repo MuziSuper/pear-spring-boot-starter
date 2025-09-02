@@ -1,5 +1,7 @@
 package cn.muzisheng.pear.annotation;
 
+import cn.muzisheng.pear.model.RoleEnum;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -13,5 +15,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Verification {
     boolean SystemVerify() default true;
-    boolean UserVerify() default false;
+    boolean UserVerify() default true;
+    RoleEnum MinLevel() default RoleEnum.CUSTOMER;
 }

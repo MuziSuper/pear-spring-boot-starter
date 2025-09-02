@@ -25,7 +25,8 @@ public interface UserService {
      **/
     ResponseEntity<Result<User>> userInfo(HttpServletRequest request, String token);
     /**
-     * 获取当前用户，并将用户信息存储到session中
+     * 尝试从Session浏览器会话中获取id并获取User实例存储到Session请求会话中，若Session请求会话中已经存储User实例则直接返回
      **/
     User currentUser(HttpServletRequest request);
+
 }

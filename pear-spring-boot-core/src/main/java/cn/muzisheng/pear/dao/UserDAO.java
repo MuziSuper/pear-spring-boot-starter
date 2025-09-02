@@ -4,6 +4,7 @@ import cn.muzisheng.pear.config.UserConfig;
 import cn.muzisheng.pear.mapper.UserMapper;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.ScaleException;
+import cn.muzisheng.pear.model.RoleEnum;
 import cn.muzisheng.pear.properties.UserProperties;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;

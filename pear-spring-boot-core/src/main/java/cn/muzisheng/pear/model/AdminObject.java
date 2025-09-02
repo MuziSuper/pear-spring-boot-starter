@@ -105,10 +105,7 @@ public class AdminObject {
      * 需要在前端下载的样式文件源地址列表
      **/
     private List<String> styles;
-    /**
-     * 权限设置,不同的操作权限的有无
-     **/
-    private Map<String, Boolean> permissions;
+
     /**
      * 图标
      **/
@@ -154,24 +151,13 @@ public class AdminObject {
      **/
     private BeforeDelete beforeDelete;
     /**
-     * 预渲染钩子方法
+     * 预展示数据钩子方法
      **/
     private BeforeRender beforeRender;
-    public void buildPermissions(User user){
-        if(this.permissions==null){
-            this.permissions=new HashMap<>();
-        }
-        if(user.getIsSuperUser()!=null&&user.getIsSuperUser()){
-            this.permissions.put("create",true);
-            this.permissions.put("update",true);
-            this.permissions.put("delete",true);
-            this.permissions.put("action",true);
-        }
-        this.permissions.put("create",false);
-        this.permissions.put("update",false);
-        this.permissions.put("delete",false);
-        this.permissions.put("action",false);
-    }
+    /**
+     * 创建完成钩子方法
+     **/
+    private AfterCreate afterCreate;
     @Override
     public String toString() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -219,10 +205,7 @@ public class AdminObject {
             adminObject.getAdminScripts().add(AdminScript);
             return this;
         }
-        public BuilderFactory setPermissions(Map<String, Boolean> permissions){
-            adminObject.setPermissions(permissions);
-            return this;
-        }
+
         public BuilderFactory setAttributes(Map<String, AdminAttribute> Attributes){
             adminObject.setAttributes(Attributes);
             return this;

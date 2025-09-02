@@ -1,4 +1,4 @@
-package cn.muzisheng.pear;
+package cn.muzisheng.pear.api;
 
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.model.Result;

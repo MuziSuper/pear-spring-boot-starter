@@ -1,4 +1,4 @@
-package cn.muzisheng.pear;
+package cn.muzisheng.pear.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

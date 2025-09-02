@@ -3,12 +3,14 @@ package cn.muzisheng.pear.service.Impl;
 import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.Context;
 import cn.muzisheng.pear.JwtUtil;
+import cn.muzisheng.pear.StringUtil;
 import cn.muzisheng.pear.dao.UserDAO;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.AuthorizationException;
 import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.model.Response;
 import cn.muzisheng.pear.model.Result;
+import cn.muzisheng.pear.model.RoleEnum;
 import cn.muzisheng.pear.params.LoginForm;
 import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.service.UserService;
@@ -53,6 +55,7 @@ public class UserServiceImpl implements UserService {
             result.setStatus(Constant.USER_EXCEPTION);
             return result.value();
         }
+        user.setRole(RoleEnum.CUSTOMER);
         user.setDisplayName(registerUserForm.getDisplayName());
         user.setFirstName(registerUserForm.getFirstName());
         user.setLastName(registerUserForm.getLastName());
@@ -68,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
         /*
          * 触发用户注册事件，发布消息，
-         * 后期消息系统进行补充
+         * 后期搭建消息系统进行补充
          */
 
         LOG.info("register user success, user email: {}", registerUserForm.getEmail());
@@ -95,13 +98,13 @@ public class UserServiceImpl implements UserService {
         Response<User> result = new Response<>();
 
         // 判断参数是否为空,有token直接判断token (携带token且只输入密码也可以过，但前端要限制)，没有token就必须有email和password
-        if (loginForm == null || loginForm.equals(new LoginForm())) {
+        if (loginForm == null) {
             throw new IllegalException();
         }
-        if ((loginForm.getAuthToken() == null||loginForm.getAuthToken().isEmpty()) && loginForm.getEmail().isEmpty()) {
-            throw new IllegalException("email is required");
+        if (StringUtil.isEmpty(loginForm.getAuthToken()) && StringUtil.isEmpty(loginForm.getEmail())) {
+            throw new IllegalException("empty email");
         }
-        if ((loginForm.getAuthToken() == null||loginForm.getAuthToken().isEmpty()) && loginForm.getPassword().isEmpty()) {
+        if (StringUtil.isEmpty(loginForm.getAuthToken()) && StringUtil.isEmpty(loginForm.getPassword())) {
             throw new IllegalException("empty password");
         }
 
@@ -109,17 +112,20 @@ public class UserServiceImpl implements UserService {
         User user;
         if (loginForm.getPassword()!=null) {
             user = userDAO.getUserByEmail(loginForm.getEmail());
+            // 查无用户直接返回
             if (user == null) {
                 result.setError("user not exist");
                 result.setStatus(Constant.USER_EXCEPTION);
                 return result.value();
             }
+            // 密码错误直接返回
             if (!checkPassword(user, loginForm.getPassword())) {
                 result.setError("unauthorized");
                 result.setStatus(Constant.USER_EXCEPTION);
                 return result.value();
             }
         } else {
+            // 从token解析出user,内部错误会抛出自定义异常不用捕获
             user = decodeHashToken(loginForm.getAuthToken());
         }
         login(request, user);
@@ -206,6 +212,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 解析token，返回用户信息
+     * @throws AuthorizationException token过期或无法错误
      **/
     public User decodeHashToken(String token) {
         String email;

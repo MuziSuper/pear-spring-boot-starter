@@ -7,6 +7,7 @@ import cn.muzisheng.pear.dao.UserDAO;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.UserException;
 import cn.muzisheng.pear.model.AdminObject;
+import cn.muzisheng.pear.model.RoleEnum;
 import cn.muzisheng.pear.service.ConfigService;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
@@ -69,7 +70,7 @@ public class PearApplicationInitialization implements CommandLineRunner {
              * 处理数据库参数，可以使用mysql与sqlite，并且配合memory参数使用sqlite内存模式
              */
 
-            // 创建超级用户，不从这创建的，都是无R权限的用户
+            // 创建超级用户，不从这创建的，都是无任何权限的客户身份
             if (cmd.hasOption("u")&&cmd.hasOption("p")) {
                 String email = cmd.getOptionValue("u");
                 String password=cmd.getOptionValue("p");
@@ -87,8 +88,7 @@ public class PearApplicationInitialization implements CommandLineRunner {
                         System.exit(1);
                     }
                 }
-                user.setIsStaff(true);
-                user.setIsSuperUser(true);
+                user.setRole(RoleEnum.SUPERUSER);
                 user.setActivated(true);
                 user.setEnabled(true);
                 if(!userDAO.save(user)){
@@ -133,7 +133,10 @@ public class PearApplicationInitialization implements CommandLineRunner {
 
                     }
                 }
+            }).setBeforeUpdate((request, adminObject, object) -> {
+
             });
     }
+
 
 }

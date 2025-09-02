@@ -2,6 +2,8 @@ package cn.muzisheng.pear.entity;
 
 import cn.muzisheng.pear.annotation.PearField;
 import cn.muzisheng.pear.annotation.PearObject;
+import cn.muzisheng.pear.handler.RoleEnumTypeHandler;
+import cn.muzisheng.pear.model.RoleEnum;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -61,16 +63,6 @@ public class User{
     @TableField(value = "display_name")
     @PearField
     private String displayName;
-    // 是否为管理员身份
-    @TableField(value = "is_superUser")
-    @PearField
-    @Column(name = "is_superUser")
-    private Boolean isSuperUser;
-    // 是否为员工
-    @TableField(value = "is_staff")
-    @PearField
-    @Column(name = "is_staff")
-    private Boolean isStaff;
     // 状态是否正常
     @PearField
     private Boolean enabled;
@@ -102,6 +94,9 @@ public class User{
     // 用户信息
     @PearField
     private String profile;
+
+    @TableField(typeHandler = RoleEnumTypeHandler.class)
+    private RoleEnum role;
     // 用户认证令牌
     @PearField
     private String token;
