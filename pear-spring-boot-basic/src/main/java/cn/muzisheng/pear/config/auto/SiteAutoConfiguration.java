@@ -19,7 +19,7 @@ public class SiteAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(SiteConfig.class)
     public SiteConfig defaultConfigProperties(SiteProperties properties) {
-        LOG.info("SiteConfig默认注入完成");
+        LOG.info("SiteConfig默认注册完成");
         SiteConfig config = new SiteConfig.Builder().build(); // 使用默认值初始化
         properties.applyTo(config); // 应用属性配置覆盖
         return config;

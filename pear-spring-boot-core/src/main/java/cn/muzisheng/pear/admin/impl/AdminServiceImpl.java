@@ -70,7 +70,7 @@ public class AdminServiceImpl implements AdminService {
      * @param data        请求体
      * @return 创建的admin数据
      **/
-//    @Verification(UserVerify = true)
+    @Verification
     @Override
     public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, String model, AdminObject adminObject, Map<String, Object> data) {
         Response<Map<String, Object>> response = new Response<>();
@@ -117,7 +117,7 @@ public class AdminServiceImpl implements AdminService {
      * @param data        请求体
      * @return 更新的admin数据
      **/
-//    @Verification(UserVerify = true)
+    @Verification
     @Override
     public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, String model, AdminObject adminObject, Map<String, Object> data) {
         Map<String, Object> keys = getPrimaryValues(request, adminObject);
@@ -442,32 +442,20 @@ public class AdminServiceImpl implements AdminService {
     /**
      * 获取站点信息与pear数据集
      **/
-    private Map<String, Object> handleAdminJson(HttpServletRequest request, List<AdminObject> AdminObjects, BuildContext buildContext) {
+    @Verification
+    private Map<String, Object> handleAdminJson(HttpServletRequest request, List<AdminObject> adminObjects, BuildContext buildContext) {
         Map<String, Object> res = new HashMap<>();
-        List<AdminObject> viewObjects = new ArrayList<>();
-        for (AdminObject adminObject : AdminObjects) {
-            // adminObject逐个进行钩子权限检查（用户级）,目前未约定返回结果，只根据抛出的异常判断是否通过检查
-            if (adminObject.getAccessCheck() != null) {
-                try {
-                    adminObject.getAccessCheck().execute(request, adminObject);
-                } catch (Exception e) {
-                    LOG.error(e.getMessage());
-                    continue;
-                }
-            }
-            User user = userService.currentUser(request);
-            if (user == null) {
-                throw new AuthorizationException("未登录");
-            }
-            viewObjects.add(adminObject);
+        User user = userService.currentUser(request);
+        if (user == null) {
+            throw new AuthorizationException("未登录");
         }
         // 获取渲染页面的所有站点信息
         Map<String, Object> siteCtx = getRenderPageContext(request);
-        //
+
         if (buildContext != null) {
             buildContext.execute(request, siteCtx);
         }
-        res.put("objects", viewObjects);
+        res.put("objects", adminObjects);
         res.put("user", userService.currentUser(request));
         res.put("site", siteCtx);
         return res;
@@ -656,13 +644,6 @@ public class AdminServiceImpl implements AdminService {
         }
         // 序列化对象
         Map<String, Object> data = marshalOne(adminObject, result);
-        if (adminObject.getAdminViewOnSite() != null) {
-            try {
-                data.put("_adminExtra", adminObject.getAdminViewOnSite().execute(request, adminObject, result));
-            } catch (Exception e) {
-                LOG.error("AdminViewOnSite error");
-            }
-        }
         response.setData(data);
         return response.value();
     }

@@ -4,6 +4,7 @@ import cn.muzisheng.pear.cache.LFUCache;
 import cn.muzisheng.pear.cache.LRUCache;
 import cn.muzisheng.pear.cache.RedisCache;
 import cn.muzisheng.pear.config.CacheConfig;
+import cn.muzisheng.pear.exception.CacheException;
 import cn.muzisheng.pear.model.CacheStrategyEnum;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.data.redis.core.KeyBoundCursor;
@@ -67,7 +68,7 @@ public class CacheTemplate<K,V> {
                 cacheTemplate.cache = new LRUCache<>(cacheTemplate.capacity, cacheTemplate.expire, cacheTemplate.cacheName);
             } else if (Constant.CACHE_TYPE_REDIS.equals(cacheTemplate.strategy.getStrategy())) {
                 if(cacheTemplate.redisTemplate==null){
-                    throw new NullPointerException("redisTemplate is null");
+                    throw new CacheException("redisTemplate is null");
                 }
                 cacheTemplate.cache = new RedisCache<>(cacheTemplate.cacheName,cacheTemplate.redisTemplate);
             }else {

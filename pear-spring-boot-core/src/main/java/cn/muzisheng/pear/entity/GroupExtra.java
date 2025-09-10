@@ -46,7 +46,7 @@ public class GroupExtra {
     /**
      * 键
      **/
-    @Column(length = 128)
+    @Column(length = 128,name = "`key`")
     @PearField
     private String key;
     /**

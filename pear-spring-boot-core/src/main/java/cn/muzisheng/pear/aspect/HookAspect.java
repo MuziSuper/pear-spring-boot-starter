@@ -1,12 +1,16 @@
 package cn.muzisheng.pear.aspect;
 
 import cn.muzisheng.pear.Constant;
+import cn.muzisheng.pear.JwtUtil;
+import cn.muzisheng.pear.StringUtil;
 import cn.muzisheng.pear.annotation.*;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.AuthorizationException;
 import cn.muzisheng.pear.exception.ForbiddenException;
 import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.model.AdminObject;
+import cn.muzisheng.pear.model.OperationEnum;
+import cn.muzisheng.pear.model.RoleEnum;
 import cn.muzisheng.pear.service.ConfigService;
 import cn.muzisheng.pear.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * 定义@Verification校验注解的通知
@@ -30,15 +35,18 @@ import java.lang.reflect.Method;
 public class HookAspect {
     private final UserService userService;
     private final ConfigService configService;
+    private final JwtUtil jwtUtil;
     private static final Logger LOG = LoggerFactory.getLogger(HookAspect.class);
     @Autowired
-    public HookAspect(UserService userService, ConfigService configService) {
+    public HookAspect(UserService userService, ConfigService configService, JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
         this.userService = userService;
         this.configService = configService;
     }
     // 定义切点：所有带有@Verification注解的方法
     @Pointcut("@annotation(cn.muzisheng.pear.annotation.Verification)")
     public void verificationPointcut() {}
+
     @Around("verificationPointcut()")
     public Object verificationFunc(ProceedingJoinPoint jp) throws Throwable{
         // 获取方法签名
@@ -59,13 +67,13 @@ public class HookAspect {
                 break;
             }
         }
-        User user=userService.currentUser(request);
         if(request==null){
             throw new IllegalException("Request not found.");
         }
+        User user=userService.currentUser(request);
         // 系统级校验
-        if(verification.SystemVerify()&&withAdminAuth(request,verification)){
-           LOG.info("---System-level verification operation log----\n"+"UseId: "+user.getId()+"\nUser Role: "+user.getRole()+"\nAction："+method.getName());
+        if(verification.SystemVerify()&&!withAdminAuth(request,verification,adminObject)){
+            LOG.info("---System-level verification operation log----\n"+"UseId: "+user.getId()+"\nUser Role: "+user.getRole()+"\nAction："+method.getName());
         }
         // 用户级校验
         if(verification.UserVerify()&&adminObject!=null&&accessCheck(adminObject,request)){
@@ -82,19 +90,24 @@ public class HookAspect {
     private boolean accessCheck(AdminObject adminObject, HttpServletRequest request){
         if(adminObject.getAccessCheck()!=null){
             try {
-                adminObject.getAccessCheck().execute(request,adminObject);
-            } catch (Exception e) {
-                LOG.error("accessCheck error", e);
-                throw new AuthorizationException("accessCheck error");
+                return adminObject.getAccessCheck().execute(request,adminObject);
+            }catch (Exception e){
+                throw new AuthorizationException(e.getMessage());
             }
         }
+        return true;
     }
     /**
      * 系统级校验用户是否登录，未登录则抛出异常
      * @param request 请求
      * @throws AuthorizationException 用户未登录
+     * @throws ForbiddenException 用户权限不足
      **/
-    private boolean withAdminAuth(HttpServletRequest request,Verification verification){
+    private boolean withAdminAuth(HttpServletRequest request, Verification verification, AdminObject adminObject){
+        String token=request.getHeader("Authorization");
+        if(StringUtil.isEmpty(token) ||jwtUtil.getEmailFromToken(token)==null){
+            throw new AuthorizationException("unauthorized");
+        }
         User user=userService.currentUser(request);
         if(user==null){
             String signUrl=configService.getValue(Constant.KEY_SITE_SIGNIN_URL);
@@ -104,9 +117,16 @@ public class HookAspect {
                 throw new AuthorizationException("unauthorized;signUrl="+signUrl);
             }
         }
-        if(!user.getRole().checkPermissions(verification.MinLevel())) {
+        if(user.getRole().checkPermissions(verification.MinLevel())) {
             throw new ForbiddenException("forbidden");
         }
+        if(verification.Operation()!=OperationEnum.ADMIN_NULL&&adminObject.getPermissions()!=null){
+            Map<OperationEnum, RoleEnum> permissions=adminObject.getPermissions();
+            if(user.getRole().checkPermissions(permissions.get(verification.Operation()))){
+                throw new ForbiddenException("forbidden");
+            }
+        }
+        return true;
     }
 
 }

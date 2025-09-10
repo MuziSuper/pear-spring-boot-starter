@@ -1,6 +1,5 @@
 package cn.muzisheng.pear.config.auto;
 
-import cn.muzisheng.pear.conditional.OnCacheEnabledCondition;
 import cn.muzisheng.pear.config.CacheConfig;
 import cn.muzisheng.pear.config.RedisConfig;
 import cn.muzisheng.pear.properties.CacheProperties;
@@ -8,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.*;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -34,8 +34,8 @@ public class CacheAutoConfiguration {
      * 当用户选择redis作为缓存系统且存在Redis工厂且选择启用pear的redis配置（默认）时，向容器中注入RedisConfig
      **/
     @Bean
-    @Conditional(OnCacheEnabledCondition.class)
     @ConditionalOnBean({CacheConfig.class, RedisConnectionFactory.class})
+    @ConditionalOnProperty(name = "pear.cache.redis.enabled", havingValue = "true", matchIfMissing = false)
     public RedisConfig RedisCacheConfig(CacheConfig config) {
         LOG.info("RedisConfig默认注册完成");
         return new RedisConfig(config);

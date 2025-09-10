@@ -69,5 +69,10 @@ public class ExceptionApi {
         ExceptionResponse errorResponse = new ExceptionResponse(Constant.ADMIN_EXCEPTION, e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(errorResponse, HttpStatus.INSUFFICIENT_STORAGE);
     }
+    @ExceptionHandler(CacheException.class)
+    public ResponseEntity<ExceptionResponse> handleCacheExecption(CacheException e) {
+        ExceptionResponse errorResponse = new ExceptionResponse(Constant.CACHE_EXCEPTION, e.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(errorResponse, HttpStatus.LOOP_DETECTED);
+    }
 }
 

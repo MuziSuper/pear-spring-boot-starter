@@ -2,7 +2,6 @@ package cn.muzisheng.pear.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @AllArgsConstructor
@@ -10,8 +9,7 @@ public enum RoleEnum {
     SUPERUSER(0,"SUPERUSER"),
     ACCOUNTANT(1,"ACCOUNTANT"),
     STAFF(2,"STAFF"),
-    CUSTOMER(3,"CUSTOMER"),
-    EXTEND(4,"EXTEND");    
+    CUSTOMER(3,"CUSTOMER");
     
     private final Integer code;
     private final String role;
@@ -19,8 +17,11 @@ public enum RoleEnum {
     public String toString(){
         return role;
     }
+    /**
+     * 角色权限检查, 判断当前角色是否有当前行为的权限
+     **/
     public boolean checkPermissions(RoleEnum role){
-        return this.code >= role.code;
+        return this.code < role.code;
     }
 
     public static boolean contains(String role){

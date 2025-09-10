@@ -5,6 +5,8 @@ import cn.muzisheng.pear.PluralUtil;
 import cn.muzisheng.pear.annotation.PearField;
 import cn.muzisheng.pear.annotation.PearObject;
 import cn.muzisheng.pear.model.AdminObject;
+import cn.muzisheng.pear.model.OperationEnum;
+import cn.muzisheng.pear.model.RoleEnum;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.annotation.Nullable;
@@ -34,13 +36,15 @@ public class PearBeanInitialization implements BeanPostProcessor {
             object.setName(clazz.getSimpleName());
             object.setDesc(pearObjectAnnotation.desc());
             object.setGroup(pearObjectAnnotation.group());
+            // path字段最高优先级为PearObject注解的path字段，其次是类名
             if (pearObjectAnnotation.path() == null || pearObjectAnnotation.path().isEmpty()) {
                 object.setPath("/" + object.getName());
             }
+            // pluralName字段最高优先级为PearObject注解的pluralName字段，其次是类名的复数
             if (pearObjectAnnotation.pluralName() == null || pearObjectAnnotation.pluralName().isEmpty()) {
-                object.setPluralName(PluralUtil.pluralize(bean.getClass().getSimpleName()));
+                object.setPluralName(PluralUtil.pluralize(object.getName()));
             }
-            // tableName字段最高优先级为JPA自动创建表的表名优先，其次是mybatisPlus指定的表名，再是PearObject注解的TableName
+            // tableName字段最高优先级为JPA自动创建表的表名优先，其次是mybatisPlus指定的表名，再是PearObject注解的TableName,否则使用驼峰式类名
             if (clazz.isAnnotationPresent(Entity.class)) {
                 Entity entity = clazz.getAnnotation(Entity.class);
                 object.setTableName(entity.name().replaceAll("`", ""));
@@ -48,14 +52,20 @@ public class PearBeanInitialization implements BeanPostProcessor {
                 TableName tablename = clazz.getAnnotation(TableName.class);
                 object.setTableName(tablename.value().replaceAll("`", ""));
             } else if(pearObjectAnnotation.TableName() != null&&!pearObjectAnnotation.TableName().isEmpty()){
-                object.setTableName(CamelToSnakeUtil.toSnakeCase(pearObjectAnnotation.TableName().replaceAll("`", "")));
+                object.setTableName(pearObjectAnnotation.TableName().replaceAll("`", ""));
             }else{
-                object.setTableName(CamelToSnakeUtil.toSnakeCase(clazz.getSimpleName()));
+                object.setTableName(CamelToSnakeUtil.toSnakeCase(object.getName()));
             }
-            // 如果没有表名，则使用驼峰式类名
-            if (object.getTableName() == null || object.getTableName().isEmpty()) {
-                object.setTableName(CamelToSnakeUtil.toSnakeCase(clazz.getSimpleName()));
-            }
+            // 权限字段填充
+            HashMap<OperationEnum, RoleEnum> permissions = new HashMap<>();
+            permissions.put(OperationEnum.ADMIN_ALL, RoleEnum.CUSTOMER);
+            permissions.put(OperationEnum.ADMIN_SELECT, RoleEnum.CUSTOMER);
+            permissions.put(OperationEnum.ADMIN_CREATE, RoleEnum.CUSTOMER);
+            permissions.put(OperationEnum.ADMIN_UPDATE, RoleEnum.CUSTOMER);
+            permissions.put(OperationEnum.ADMIN_DELETE, RoleEnum.CUSTOMER);
+            permissions.put(OperationEnum.ADMIN_OTHER, RoleEnum.CUSTOMER);
+            object.setPermissions(permissions);
+
             // 类信息填充完毕，以下对字段信息进行填充
             Set<String> shows = new HashSet<>();
             Set<String> edits = new HashSet<>();

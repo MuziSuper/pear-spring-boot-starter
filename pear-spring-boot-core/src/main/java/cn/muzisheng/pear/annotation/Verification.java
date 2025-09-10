@@ -1,5 +1,6 @@
 package cn.muzisheng.pear.annotation;
 
+import cn.muzisheng.pear.model.OperationEnum;
 import cn.muzisheng.pear.model.RoleEnum;
 
 import java.lang.annotation.ElementType;
@@ -14,7 +15,12 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Verification {
+    // 系统级权限校验，对自动生成的CRUD方法按照AdminObject的permissions字段进行权限校验
     boolean SystemVerify() default true;
+    // 用户级权限校验，调用AccessCheck钩子函数
     boolean UserVerify() default true;
+    // 最小权限等级
     RoleEnum MinLevel() default RoleEnum.CUSTOMER;
+    // admin行为
+    OperationEnum Operation() default OperationEnum.ADMIN_NULL;
 }

@@ -6,13 +6,13 @@ import cn.muzisheng.pear.config.CacheConfig;
 import cn.muzisheng.pear.dao.UserDAO;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.UserException;
-import cn.muzisheng.pear.model.AdminObject;
 import cn.muzisheng.pear.model.RoleEnum;
 import cn.muzisheng.pear.service.ConfigService;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -22,21 +22,21 @@ import java.util.*;
  * pear框架初始化程序
  **/
 @Component
-@Order(1)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class PearApplicationInitialization implements CommandLineRunner {
     private final UserDAO userDAO;
     private final ConfigService configService;
     private final static Logger LOG = LoggerFactory.getLogger(PearApplicationInitialization.class);
-    public static CacheTemplate<String,String> configCacheTemplate;
-    public static CacheTemplate<String,String> envCacheTemplate;
+    public static CacheTemplate<String, String> configCacheTemplate;
+    public static CacheTemplate<String, String> envCacheTemplate;
 
     public PearApplicationInitialization(UserDAO userDAO, CacheConfig config, ConfigService configService) {
-        LOG.info("PearApplicationInitialization注册成功");
+        LOG.info("PearApplicationInitialization注册完成");
         this.userDAO = userDAO;
         this.configService = configService;
         // 初始化缓存
-        configCacheTemplate = new CacheTemplate.Builder<String,String>().cacheStrategy(config).cacheName("pear_cache").build();
-        envCacheTemplate = new CacheTemplate.Builder<String,String>().cacheStrategy(config).cacheName("per_env").build();
+        configCacheTemplate = new CacheTemplate.Builder<String, String>().cacheStrategy(config).cacheName("pear_cache").build();
+        envCacheTemplate = new CacheTemplate.Builder<String, String>().cacheStrategy(config).cacheName("per_env").build();
     }
 
     @Override
@@ -44,13 +44,13 @@ public class PearApplicationInitialization implements CommandLineRunner {
         LOG.info("pear application initialization!");
         // 命令行参数
         Options options = new Options();
-        List<Option> optionList=new ArrayList<>();
+        List<Option> optionList = new ArrayList<>();
         optionList.add(new Option("u", "superuser", true, "username"));
         optionList.add(new Option("p", "password", true, "user password"));
         optionList.add(new Option("h", "help", false, "help Information"));
         optionList.add(new Option("d", "driver", true, "database driven"));
         optionList.add(new Option("m", "memory", true, "sqlite is memory-enabled"));
-        for(Option option:optionList){
+        for (Option option : optionList) {
             options.addOption(option);
         }
         CommandLineParser parser = new DefaultParser();
@@ -59,9 +59,9 @@ public class PearApplicationInitialization implements CommandLineRunner {
             cmd = parser.parse(options, args, true);
             // 打印帮助信息
             if (cmd.hasOption("h")) {
-                LOG.info(String.format("%-15s %-15s%-15s %-15s", Constant.HELP_OPTION,Constant.HELP_LONG_OPTION,Constant.HELP_ARGUMENTS,Constant.HELP_DESCRIPTION));
+                LOG.info(String.format("%-15s %-15s%-15s %-15s", Constant.HELP_OPTION, Constant.HELP_LONG_OPTION, Constant.HELP_ARGUMENTS, Constant.HELP_DESCRIPTION));
                 for (Option option : optionList) {
-                    LOG.info(String.format("-%-15s %-15s %-15s %-15s",option.getOpt(),option.getLongOpt(),option.getArgs()==1,option.getDescription()));
+                    LOG.info(String.format("-%-15s %-15s %-15s %-15s", option.getOpt(), option.getLongOpt(), option.getArgs() == 1, option.getDescription()));
                 }
                 System.exit(1);
             }
@@ -71,30 +71,30 @@ public class PearApplicationInitialization implements CommandLineRunner {
              */
 
             // 创建超级用户，不从这创建的，都是无任何权限的客户身份
-            if (cmd.hasOption("u")&&cmd.hasOption("p")) {
+            if (cmd.hasOption("u") && cmd.hasOption("p")) {
                 String email = cmd.getOptionValue("u");
-                String password=cmd.getOptionValue("p");
-                User user=userDAO.getUserByEmail(email);
-                if(user!=null){
-                     if(!userDAO.setPassword(user,password)){
-                         throw new UserException(user.getEmail(), "failed to update password");
-                     }
-                     LOG.warn("superuser updates passwords, the superuser is "+email);
-                     System.exit(1);
-                }else{
-                    user=userDAO.createUser(email,password);
-                    if(user==null){
-                        LOG.error("failed to create a user: "+email);
+                String password = cmd.getOptionValue("p");
+                User user = userDAO.getUserByEmail(email);
+                if (user != null) {
+                    if (!userDAO.setPassword(user, password)) {
+                        throw new UserException(user.getEmail(), "failed to update password");
+                    }
+                    LOG.warn("superuser updates passwords, the superuser is " + email);
+                    System.exit(1);
+                } else {
+                    user = userDAO.createUser(email, password);
+                    if (user == null) {
+                        LOG.error("failed to create a user: " + email);
                         System.exit(1);
                     }
                 }
                 user.setRole(RoleEnum.SUPERUSER);
                 user.setActivated(true);
                 user.setEnabled(true);
-                if(!userDAO.save(user)){
+                if (!userDAO.save(user)) {
                     throw new UserException(user.getEmail(), "failed to save superuser");
                 }
-                LOG.warn("create a super administrator: "+email);
+                LOG.warn("create a super administrator: " + email);
                 System.exit(1);
             }
 
@@ -108,34 +108,32 @@ public class PearApplicationInitialization implements CommandLineRunner {
         configService.checkValue(Constant.ICON_SVG_ADDRESS, "../static/favicon.png", Constant.ConfigFormatText, true, true);
         configService.checkValue(Constant.KEY_SITE_SIGNIN_URL, "/auth/login", Constant.ConfigFormatText, true, true);
         configService.checkValue(Constant.KEY_SITE_SIGNUP_URL, "/auth/register", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_DASHBOARD_URL, "/auth/dashboard", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_SETTINGS_URL, "/auth/settings", Constant.ConfigFormatText, true, true);
         configService.checkValue(Constant.KEY_SITE_LOGOUT_URL, "/auth/logout", Constant.ConfigFormatText, true, true);
         configService.checkValue(Constant.KEY_SITE_RESET_PASSWORD_URL, "/auth/reset_password", Constant.ConfigFormatText, true, true);
-        configService.checkValue(Constant.KEY_SITE_SIGNIN_API, "/auth/login", Constant.ConfigFormatText, true, true);
-        configService.checkValue(Constant.KEY_SITE_SIGNUP_API, "/auth/register", Constant.ConfigFormatText, true, true);
-        configService.checkValue(Constant.KEY_SITE_RESET_PASSWORD_DONE_API, "/auth/reset_password_done", Constant.ConfigFormatText, true, true);
-        configService.checkValue(Constant.KEY_SITE_CHANGE_EMAIL_DONE_API, "/auth/change_email_done", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_SIGNIN_API, "/user/login", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_SIGNUP_API, "/user/register", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_INFO_API, "/user/info", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_RESET_PASSWORD_DONE_API, "/user/reset_password_done", Constant.ConfigFormatText, true, true);
+        configService.checkValue(Constant.KEY_SITE_CHANGE_EMAIL_DONE_API, "/user/change_email_done", Constant.ConfigFormatText, true, true);
         configService.checkValue(Constant.KEY_SITE_LOGIN_NEXT, "/", Constant.ConfigFormatText, true, true);
         configService.checkValue(Constant.KEY_SITE_USER_ID_TYPE, "email", Constant.ConfigFormatText, true, true);
         // 构建入口
         AdminContainer.buildAdminObjects(AdminContainer.getAllAdminObjects());
         userAddFunc();
     }
-    private void userAddFunc(){
-        AdminObject.BuilderFactory builderFactory=new AdminObject.BuilderFactory(User.class);
-            builderFactory.setBeforeUpdate((request, adminObject, object) -> {
-                if (object instanceof Map<?, ?>) {
-                    Map<String, Object> objectMap = (Map<String, Object>) object;
-                    if (objectMap.containsKey("password")) {
-                        Object password = objectMap.get("password");
-                        if (password instanceof String pwdStr && !pwdStr.isEmpty()) {
-                            objectMap.put("password", userDAO.HashPassword(pwdStr));
-                        }
 
-                    }
+    private void userAddFunc() {
+        AdminContainer.AdminFactory adminFactory = new AdminContainer.AdminFactory(User.class);
+        adminFactory.setBeforeUpdate((request, adminObject, object) -> {
+            if (object.containsKey("password")) {
+                Object password = object.get("password");
+                if (password instanceof String pwdStr && !pwdStr.isEmpty()) {
+                    object.put("password", userDAO.HashPassword(pwdStr));
                 }
-            }).setBeforeUpdate((request, adminObject, object) -> {
-
-            });
+            }
+        });
     }
 
 

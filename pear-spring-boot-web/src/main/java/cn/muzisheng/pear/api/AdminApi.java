@@ -31,7 +31,7 @@ public class AdminApi {
     public ResponseEntity<Result<Object>> query(HttpServletRequest request, @PathVariable("model") String model, @RequestBody(required = false) QueryForm queryForm) {
         // 判断模型是否存在
         if(AdminContainer.existsAdminObject(model)) {
-            return adminService.handleQueryOrGetOne(request, model, AdminContainer.getAdminObject(model), queryForm);
+            return adminService.handleQueryOrGetOne(request, model, new AdminContainer.AdminFactory(model).getAdminObject(), queryForm);
         }
         Response<Object> response = new Response<>();
         response.setError("Model not found");
@@ -48,7 +48,7 @@ public class AdminApi {
     @PutMapping("{model}")
     public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody(required = false) Map<String, Object> data) {
         if(AdminContainer.existsAdminObject(model)) {
-            return adminService.handleCreate(request, model, AdminContainer.getAdminObject(model), data);
+            return adminService.handleCreate(request, model, new AdminContainer.AdminFactory(model).getAdminObject(), data);
         }
         Response<Map<String, Object>> response = new Response<>();
         response.setError("Model not found");
@@ -78,7 +78,7 @@ public class AdminApi {
     @PatchMapping("{model}")
     public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, @PathVariable("model") String model, @RequestBody(required = false) Map<String, Object> data) {
             if(AdminContainer.existsAdminObject(model)) {
-            return adminService.handleUpdate(request,model, AdminContainer.getAdminObject(model), data);
+            return adminService.handleUpdate(request,model, new AdminContainer.AdminFactory(model).getAdminObject(), data);
         }
         Response<Map<String, Object>> response = new Response<>();
         response.setError("Model not found");
@@ -93,7 +93,7 @@ public class AdminApi {
     @DeleteMapping("{model}")
     public ResponseEntity<Result<Map<String, Object>>> handleDelete(HttpServletRequest request, @PathVariable("model") String model) {
         if(AdminContainer.existsAdminObject(model)) {
-            return adminService.handleDelete(request,model, AdminContainer.getAdminObject(model));
+            return adminService.handleDelete(request,model, new AdminContainer.AdminFactory(model).getAdminObject());
         }
         Response<Map<String, Object>> response = new Response<>();
         response.setError("Model not found");

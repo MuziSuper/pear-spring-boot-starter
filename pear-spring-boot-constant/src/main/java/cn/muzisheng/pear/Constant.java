@@ -21,6 +21,7 @@ public class Constant {
     public static final int SQL_EXCEPTION = 505;
     public static final int TIME_EXCEPTION = 506;
     public static final int ADMIN_EXCEPTION = 507;
+    public static final int CACHE_EXCEPTION = 508;
     public static final int ILLEGAL_EXCEPTION = 400;
     public static final int UNAPPROVED_EXCEPTION = 401;
     public static final int FORBIDDEN_EXCEPTION = 403;
@@ -52,7 +53,7 @@ public class Constant {
 
     // cache默认配置
     public static final Long CACHE_DEFAULT_EXPIRED=24*60*60*1000L;
-    public static final int CACHE_DEFAULT_CAPACITY=20;
+    public static final int CACHE_DEFAULT_CAPACITY=200;
     public static final String CACHE_DEFAULT_STRATEGY = "LRU";
     public static final String CACHE_DEFAULT_NAME = "PEAR_CACHE";
     public static final boolean CACHE_DEFAULT_REDIS_ENABLE = true;
@@ -85,8 +86,6 @@ public class Constant {
     public static final String LOG_DEFAULT_WARN_CATALOGUE_PATH="log/warn-day";
     public static final String LOG_DEFAULT_ERROR_CATALOGUE_PATH="log/error-day";
 
-    // 默认搜索properties路径
-    public static final String APP_DEFAULT_SEARCH_PROPERTIES_PATH="src/Application/resources";
 
     // static resources
     public static final String ICON_SVG_ADDRESS="ICON_SVG_ADDRESS";
@@ -104,10 +103,13 @@ public class Constant {
     public static final String KEY_SITE_NAME="KEY_SITE_NAME";
     public static final String KEY_SITE_SIGNIN_URL= "KEY_SITE_SIGNIN_URL";
     public static final String KEY_SITE_SIGNUP_URL= "KEY_SITE_SIGNUP_URL";
+    public static final String KEY_SITE_DASHBOARD_URL= "KEY_SITE_DASHBOARD_URL";
+    public static final String KEY_SITE_SETTINGS_URL= "KEY_SITE_SETTINGS_URL";
     public static final String KEY_SITE_LOGOUT_URL= "KEY_SITE_LOGOUT_URL";
     public static final String KEY_SITE_RESET_PASSWORD_URL= "KEY_SITE_RESET_PASSWORD_URL";
     public static final String KEY_SITE_SIGNIN_API= "KEY_SITE_SIGNIN_API";
     public static final String KEY_SITE_SIGNUP_API= "KEY_SITE_SIGNUP_API";
+    public static final String KEY_SITE_INFO_API= "KEY_SITE_INFO_API";
     public static final String KEY_SITE_RESET_PASSWORD_DONE_API= "KEY_SITE_RESET_PASSWORD_DONE_API";
     public static final String KEY_SITE_CHANGE_EMAIL_DONE_API= "KEY_SITE_CHANGE_EMAIL_DONE_API";
     public static final String KEY_SITE_LOGIN_NEXT= "KEY_SITE_LOGIN_NEXT";
@@ -115,11 +117,13 @@ public class Constant {
 
 
     // 权限类型
-    public static final String PERMISSION_ALL="all";
-    public static final String PERMISSION_CREATE="create";
-    public static final String PERMISSION_READ="read";
-    public static final String PERMISSION_UPDATE="update";
-    public static final String PERMISSION_DELETE="delete";
+    public static final String ADMIN_ALL="ADMIN_ALL";
+    public static final String ADMIN_NULL="ADMIN_NULL";
+    public static final String ADMIN_OTHER="ADMIN_OHTER";
+    public static final String ADMIN_CREATE="ADMIN_CREATE";
+    public static final String ADMIN_SELECT="ADMIN_SELECT";
+    public static final String ADMIN_UPDATE="ADMIN_UPDATE";
+    public static final String ADMIN_DELETE="ADMIN_DELETE";
 
     // 组成员类型
     public static final String GROUP_ROLE_ADMIN="Admin";

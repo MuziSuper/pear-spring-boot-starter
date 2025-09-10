@@ -89,7 +89,7 @@
                             // 跳转到登录页面并传递邮箱参数
                             window.location.href = `/auth/login?email=${encodeURIComponent(email)}`;
                         } else {
-                        alert('请求失败!');
+                        alert('邮箱已存在，可自动跳转登录页面。。。');
                         }
                     }
                 });

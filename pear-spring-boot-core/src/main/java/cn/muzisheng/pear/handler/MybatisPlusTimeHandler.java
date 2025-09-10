@@ -13,14 +13,12 @@ public class MybatisPlusTimeHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        log.info("插入时自动填充");
         this.strictInsertFill(metaObject, "gmt_created", LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, "gmt_modified", LocalDateTime.class, LocalDateTime.now());
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        log.info("更新时自动填充");
         this.strictUpdateFill(metaObject, "gmt_modified", LocalDateTime.class, LocalDateTime.now());
     }
 

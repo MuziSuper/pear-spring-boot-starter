@@ -4,15 +4,14 @@ import cn.muzisheng.pear.CamelToSnakeUtil;
 import cn.muzisheng.pear.annotation.PearField;
 import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.handler.*;
-import cn.muzisheng.pear.model.AdminField;
-import cn.muzisheng.pear.model.AdminForeign;
-import cn.muzisheng.pear.model.AdminObject;
+import cn.muzisheng.pear.model.*;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Transient;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -27,7 +26,7 @@ import java.util.*;
 @Component
 public class AdminContainer {
     private static final Logger LOG = LoggerFactory.getLogger(AdminContainer.class);
-    private static final List<AdminObject> adminObjects = new ArrayList<>();
+    private static final List<AdminObject> adminObjects = new LinkedList<>();
     private static final Map<String, AdminObject> adminObjectMap = new HashMap<>();
 
     /**
@@ -40,7 +39,7 @@ public class AdminContainer {
     /**
      * 添加adminObject的tableName字段进入adminObjectMap
      **/
-    public static void addAdminObject(AdminObject adminObject) {
+    protected static void addAdminObject(AdminObject adminObject) {
         if (adminObjectMap.containsKey(adminObject.getTableName())) {
             LOG.warn("The database table named \"" + adminObject.getTableName() + "\" already exists.");
         }
@@ -53,7 +52,7 @@ public class AdminContainer {
      * 获取adminObject
      * @param tableName 数据库表名
      **/
-    public static AdminObject getAdminObject(String tableName) {
+   private static AdminObject getAdminObject(String tableName) {
         if (adminObjectMap.containsKey(tableName)) {
             return adminObjectMap.get(tableName);
         }
@@ -63,7 +62,7 @@ public class AdminContainer {
      * 获取adminObject
      * @param clazz 类对象
      **/
-    public static AdminObject getAdminObject(Class<?> clazz) {
+    private static AdminObject getAdminObject(Class<?> clazz) {
         String tableName = CamelToSnakeUtil.toSnakeCase(clazz.getSimpleName());
         return getAdminObject(tableName);
     }
@@ -115,6 +114,10 @@ public class AdminContainer {
 
         // 获取model的所有字段
         for (Field field : model.getDeclaredFields()) {
+            // 忽略钩子方法
+            if (field.getType() == BeforeCreate.class || field.getType() == BeforeUpdate.class || field.getType() == BeforeDelete.class || field.getType() == BeforeRender.class || field.getType() == AccessCheck.class || field.getType() == AfterCreate.class) {
+                continue;
+            }
             AdminField adminField = new AdminField();
             // adminField存入name字段与临时的fieldName
             adminField.setName(field.getName());
@@ -123,10 +126,6 @@ public class AdminContainer {
              * 若为实体类对象，则递归，这部分还没做，先非对象
              */
 
-            // 忽略钩子方法
-            if (field.getType() == BeforeCreate.class || field.getType() == BeforeUpdate.class || field.getType() == BeforeDelete.class || field.getType() == BeforeRender.class || field.getType() == AccessCheck.class || field.getType() == AdminViewOnSite.class || field.getType() == AfterCreate.class) {
-                continue;
-            }
             // adminField存入type
             adminField.setType(field.getType());
             // adminField存入isArray
@@ -288,4 +287,159 @@ public class AdminContainer {
             adminObject.setFields(list);
         }
     }
+    @Getter
+    // 对外提供用于修改adminObject的属性
+    public static class AdminFactory {
+        private final AdminObject adminObject;
+        public AdminFactory(String model) {
+            AdminObject adminObject= AdminContainer.getAdminObject(model);
+            if(adminObject == null){
+                throw new GeneralException("AdminObject of "+model+" is null.");
+            }
+            this.adminObject=adminObject;
+        }
+       public AdminFactory(Class<?> clazz){
+            AdminObject adminObject= AdminContainer.getAdminObject(clazz);
+            if(adminObject == null){
+                throw new GeneralException("AdminObject of "+clazz.getName()+" is null.");
+            }
+            this.adminObject=adminObject;
+       }
+        public void setShows(List<String> shows) {
+            adminObject.setShows(shows);
+        }
+        public void addShow(String show) {
+            if(adminObject.getShows()==null){
+                adminObject.setShows(new ArrayList<>());
+            }
+            adminObject.getShows().add(show);
+        }
+        public void setEdits(List<String> edits) {
+            adminObject.setEdits(edits);
+        }
+        public void addEdit(String edit) {
+            if(adminObject.getEdits()==null){
+                adminObject.setEdits(new ArrayList<>());
+            }
+            adminObject.getEdits().add(edit);
+        }
+        public void setFilterables(List<String> filterables) {
+            adminObject.setFilterables(filterables);
+        }
+        public void addFilterable(String filterable) {
+            if(adminObject.getFilterables()==null){
+                adminObject.setFilterables(new ArrayList<>());
+            }
+            adminObject.getFilterables().add(filterable);
+        }
+        public void setOrders(List<Order> orders){
+            adminObject.setOrders(orders);
+        }
+        public void addOrder(Order order){
+            if(adminObject.getOrders()==null){
+                adminObject.setOrders(new ArrayList<>());
+            }
+            adminObject.getOrders().add(order);
+        }
+        public void setSearches(List<String> searches) {
+            adminObject.setSearches(searches);
+        }
+        public void addSearch(String search) {
+            if(adminObject.getSearches()==null){
+                adminObject.setSearches(new ArrayList<>());
+            }
+            adminObject.getSearches().add(search);
+        }
+        public void setRequires(List<String> requires) {
+            adminObject.setRequires(requires);
+        }
+        public void addRequire(String require) {
+            if(adminObject.getRequires()==null){
+                adminObject.setRequires(new ArrayList<>());
+            }
+            adminObject.getRequires().add(require);
+        }
+        public void setPluralName(String pluralName) {
+            adminObject.setPluralName(pluralName);
+        }
+        public void setEditPage(String editPage) {
+            adminObject.setEditPage(editPage);
+        }
+        public void setListPage(String listPage) {
+            adminObject.setListPage(listPage);
+        }
+        public void setStyles(List<String> styles){
+            adminObject.setStyles(styles);
+        }
+        public void addStyle(String style){
+            if(adminObject.getStyles()==null){
+                adminObject.setStyles(new ArrayList<>());
+            }
+            adminObject.getStyles().add(style);
+        }
+        public void setAdminScripts(List<AdminScript> AdminScripts){
+            adminObject.setAdminScripts(AdminScripts);
+        }
+        public void addAdminScript(AdminScript AdminScript){
+            if(adminObject.getAdminScripts()==null){
+                adminObject.setAdminScripts(new ArrayList<>());
+            }
+            adminObject.getAdminScripts().add(AdminScript);
+
+        }
+        public void setAdminIcon(AdminIcon adminIcon){
+            adminObject.setIcon(adminIcon);
+        }
+
+        public void setAttributes(Map<String, AdminAttribute> Attributes){
+            adminObject.setAttributes(Attributes);
+        }
+       public void addAttribute(String fieldName, AdminAttribute value){
+            if(adminObject.getAttributes()==null){
+                adminObject.setAttributes(new HashMap<>());
+            }
+            adminObject.getAttributes().put(fieldName, value);
+        }
+        public void setInvisible(boolean invisible){
+            adminObject.setInvisible(invisible);
+        }
+        public void setIgnores(Map<String, Boolean> ignores){
+            adminObject.setIgnores(ignores);
+        }
+        public void addIgnore(String fieldName,boolean ignore){
+            if(adminObject.getIgnores()==null){
+                adminObject.setIgnores(new HashMap<>());
+            }
+            adminObject.getIgnores().put(fieldName, ignore);
+        }
+        public void updatePermissions(OperationEnum role, RoleEnum permission){
+            if(adminObject.getPermissions()==null){
+                adminObject.setPermissions(new HashMap<>());
+            }
+            adminObject.getPermissions().put(role, permission);
+        }
+        public void setAccessCheck(AccessCheck accessCheck){
+            adminObject.setAccessCheck(accessCheck);
+            
+        }
+        public void setBeforeCreate(BeforeCreate beforeCreate){
+            adminObject.setBeforeCreate(beforeCreate);
+            
+        }
+        public void setBeforeUpdate(BeforeUpdate beforeUpdate){
+            adminObject.setBeforeUpdate(beforeUpdate);
+            
+        }
+        public void setBeforeDelete(BeforeDelete beforeDelete){
+            adminObject.setBeforeDelete(beforeDelete);
+            
+        }
+        public void setBeforeRender(BeforeRender beforeRender){
+            adminObject.setBeforeRender(beforeRender);
+        }
+        public void setAfterCreate(AfterCreate afterCreate){
+            adminObject.setAfterCreate(afterCreate);
+        }
+    }
+
 }

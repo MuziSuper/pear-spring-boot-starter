@@ -18,7 +18,6 @@ import java.util.Map;
  * 加载客户端模型
  **/
 @Data
-@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdminObject {
     /**
@@ -131,9 +130,10 @@ public class AdminObject {
      **/
     private Map<String, String> primaryKeyMap;
     /**
-     * 渲染页面方法
+     * 模型内操作权限的映射
      **/
-    private AdminViewOnSite adminViewOnSite;
+    private Map<OperationEnum,RoleEnum> permissions;
+
     /**
      * 身份验证方法
      **/
@@ -158,6 +158,7 @@ public class AdminObject {
      * 创建完成钩子方法
      **/
     private AfterCreate afterCreate;
+
     @Override
     public String toString() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -166,76 +167,6 @@ public class AdminObject {
             return objectMapper.writeValueAsString(this);
         } catch (Exception e) {
             return super.toString();
-        }
-    }
-
-    public static class BuilderFactory {
-        private final AdminObject adminObject;
-        public BuilderFactory(Class<?> clazz) {
-            AdminObject adminObject= AdminContainer.getAdminObject(clazz);
-            if(adminObject == null){
-                throw new GeneralException("AdminObject of "+clazz.getName()+" is null.");
-            }
-            this.adminObject=adminObject;
-        }
-        public BuilderFactory setOrders(List<Order> orders){
-            adminObject.setOrders(orders);
-            return this;
-        }
-
-        public BuilderFactory setOrder(Order order){
-            if(adminObject.getOrders()==null){
-                adminObject.setOrders(new ArrayList<>());
-            }
-            adminObject.getOrders().add(order);
-            return this;
-        }
-        public BuilderFactory setStyles(List<String> styles){
-            adminObject.setStyles(styles);
-            return this;
-        }
-        public BuilderFactory setAdminScripts(List<AdminScript> AdminScripts){
-            adminObject.setAdminScripts(AdminScripts);
-            return this;
-        }
-        public BuilderFactory setAdminScript(AdminScript AdminScript){
-            if(adminObject.getAdminScripts()==null){
-                adminObject.setAdminScripts(new ArrayList<>());
-            }
-            adminObject.getAdminScripts().add(AdminScript);
-            return this;
-        }
-
-        public BuilderFactory setAttributes(Map<String, AdminAttribute> Attributes){
-            adminObject.setAttributes(Attributes);
-            return this;
-        }
-        public BuilderFactory setAccessCheck(AccessCheck accessCheck){
-            adminObject.setAccessCheck(accessCheck);
-            return this;
-        }
-        public BuilderFactory setBeforeCreate(BeforeCreate beforeCreate){
-            adminObject.setBeforeCreate(beforeCreate);
-            return this;
-        }
-        public BuilderFactory setBeforeUpdate(BeforeUpdate beforeUpdate){
-            adminObject.setBeforeUpdate(beforeUpdate);
-            return this;
-        }
-        public BuilderFactory setBeforeDelete(BeforeDelete beforeDelete){
-            adminObject.setBeforeDelete(beforeDelete);
-            return this;
-        }
-        public BuilderFactory setBeforeRender(BeforeRender beforeRender){
-            adminObject.setBeforeRender(beforeRender);
-            return this;
-        }
-        public BuilderFactory setAdminViewOnSite(AdminViewOnSite adminViewOnSite){
-            adminObject.setAdminViewOnSite(adminViewOnSite);
-            return this;
-        }
-        public AdminObject build(){
-            return adminObject;
         }
     }
 }

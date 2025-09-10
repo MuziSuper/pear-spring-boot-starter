@@ -3,7 +3,7 @@ package cn.muzisheng.pear.model;
 import lombok.Data;
 
 /**
- * 字段的额外属性
+ * 字段的额外属性，针对该字段的前端设计
  **/
 @Data
 public class AdminAttribute {

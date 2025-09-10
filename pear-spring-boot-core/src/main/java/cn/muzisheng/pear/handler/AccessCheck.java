@@ -5,5 +5,5 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @FunctionalInterface
 public interface AccessCheck {
-    void execute(HttpServletRequest request, AdminObject adminObject);
+   boolean execute(HttpServletRequest request, AdminObject adminObject);
 }
