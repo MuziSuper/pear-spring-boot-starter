@@ -4,10 +4,13 @@ import cn.muzisheng.pear.CacheTemplate;
 import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.config.CacheConfig;
 import cn.muzisheng.pear.dao.UserDAO;
+import cn.muzisheng.pear.entity.Role;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.UserException;
-import cn.muzisheng.pear.model.RoleEnum;
 import cn.muzisheng.pear.service.ConfigService;
+import cn.muzisheng.pear.service.Impl.RoleServiceImpl;
+import cn.muzisheng.pear.service.PermissionService;
+import cn.muzisheng.pear.service.RoleService;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,17 +29,24 @@ import java.util.*;
 public class PearApplicationInitialization implements CommandLineRunner {
     private final UserDAO userDAO;
     private final ConfigService configService;
+    private final PermissionService permissionService;
+    private final RoleService roleService;
     private final static Logger LOG = LoggerFactory.getLogger(PearApplicationInitialization.class);
     public static CacheTemplate<String, String> configCacheTemplate;
     public static CacheTemplate<String, String> envCacheTemplate;
+    public static CacheTemplate<Long,long[]> PermissionTemplate;
 
-    public PearApplicationInitialization(UserDAO userDAO, CacheConfig config, ConfigService configService) {
+
+    public PearApplicationInitialization(UserDAO userDAO, CacheConfig config, ConfigService configService, RoleService roleService, PermissionService permissionService, Role role) {
         LOG.info("PearApplicationInitialization注册完成");
         this.userDAO = userDAO;
         this.configService = configService;
+        this.permissionService = permissionService;
+        this.roleService = roleService;
         // 初始化缓存
         configCacheTemplate = new CacheTemplate.Builder<String, String>().cacheStrategy(config).cacheName("pear_cache").build();
         envCacheTemplate = new CacheTemplate.Builder<String, String>().cacheStrategy(config).cacheName("per_env").build();
+        PermissionTemplate = new CacheTemplate.Builder<Long, long[]>().cacheStrategy(config).cacheName("pear_permission").build();
     }
 
     @Override
@@ -70,6 +80,25 @@ public class PearApplicationInitialization implements CommandLineRunner {
              * 处理数据库参数，可以使用mysql与sqlite，并且配合memory参数使用sqlite内存模式
              */
 
+            // Pear基础角色与权限入库
+            permissionService.createPermission(Constant.ADMIN_CREATE,"ADMIN can be created.");
+            permissionService.createPermission(Constant.ADMIN_DELETE,"ADMIN can be deleted.");
+            permissionService.createPermission(Constant.ADMIN_UPDATE,"ADMIN can be updated.");
+            permissionService.createPermission(Constant.ADMIN_SELECT,"ADMIN can be selected.");
+            permissionService.createPermission(Constant.PERMISSION_WRITER,"Writable operation permission.");
+            permissionService.createPermission(Constant.PERMISSION_SYNC,"The current permission group is locked and cannot be operated on.");
+            permissionService.createPermission(Constant.ADMIN_NULL,"An empty operation indicates no operation permission at all.");
+            roleService.createRole(Constant.ROLE_SUPERUSER,"Super Administrator, with all permissions.");
+            roleService.createRole(Constant.ROLE_STAFF,"Employees have the permission to access the background system and query data.");
+            roleService.createRole(Constant.ROLE_CUSTOMER,"Customers cannot log in to the background system.");
+            roleService.createRole(Constant.ROLE_FINANCE,"The finance department can access the background system and read and write all data except for permissions.");
+            roleService.createRole(Constant.ROLE_SECRETARY,"The secretary can access the background and read and write all data, but cannot modify the administrator's permissions.");
+            permissionService.addPermissions(Constant.ROLE_SUPERUSER, Constant.ADMIN_CREATE, Constant.ADMIN_DELETE, Constant.ADMIN_UPDATE, Constant.ADMIN_SELECT, Constant.PERMISSION_WRITER);
+            permissionService.addPermissions(Constant.ROLE_STAFF, Constant.ADMIN_SELECT);
+            permissionService.addPermissions(Constant.ROLE_CUSTOMER, Constant.ADMIN_NULL);
+            permissionService.addPermissions(Constant.ROLE_FINANCE, Constant.ADMIN_SELECT, Constant.ADMIN_UPDATE, Constant.ADMIN_CREATE, Constant.ADMIN_DELETE);
+            permissionService.addPermissions(Constant.ROLE_SUPERUSER, Constant.ADMIN_CREATE, Constant.ADMIN_DELETE, Constant.ADMIN_UPDATE, Constant.ADMIN_SELECT, Constant.PERMISSION_WRITER);
+
             // 创建超级用户，不从这创建的，都是无任何权限的客户身份
             if (cmd.hasOption("u") && cmd.hasOption("p")) {
                 String email = cmd.getOptionValue("u");
@@ -88,7 +117,7 @@ public class PearApplicationInitialization implements CommandLineRunner {
                         System.exit(1);
                     }
                 }
-                user.setRole(RoleEnum.SUPERUSER);
+               roleService.addUserRole(user.getId(), Constant.ROLE_SUPERUSER);
                 user.setActivated(true);
                 user.setEnabled(true);
                 if (!userDAO.save(user)) {
@@ -119,6 +148,7 @@ public class PearApplicationInitialization implements CommandLineRunner {
         configService.checkValue(Constant.KEY_SITE_CHANGE_EMAIL_DONE_API, "/user/change_email_done", Constant.ConfigFormatText, true, true);
         configService.checkValue(Constant.KEY_SITE_LOGIN_NEXT, "/", Constant.ConfigFormatText, true, true);
         configService.checkValue(Constant.KEY_SITE_USER_ID_TYPE, "email", Constant.ConfigFormatText, true, true);
+
         // 构建入口
         AdminContainer.buildAdminObjects(AdminContainer.getAllAdminObjects());
         userAddFunc();

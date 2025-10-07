@@ -5,8 +5,6 @@ import cn.muzisheng.pear.PluralUtil;
 import cn.muzisheng.pear.annotation.PearField;
 import cn.muzisheng.pear.annotation.PearObject;
 import cn.muzisheng.pear.model.AdminObject;
-import cn.muzisheng.pear.model.OperationEnum;
-import cn.muzisheng.pear.model.RoleEnum;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.annotation.Nullable;
@@ -56,15 +54,6 @@ public class PearBeanInitialization implements BeanPostProcessor {
             }else{
                 object.setTableName(CamelToSnakeUtil.toSnakeCase(object.getName()));
             }
-            // 权限字段填充
-            HashMap<OperationEnum, RoleEnum> permissions = new HashMap<>();
-            permissions.put(OperationEnum.ADMIN_ALL, RoleEnum.CUSTOMER);
-            permissions.put(OperationEnum.ADMIN_SELECT, RoleEnum.CUSTOMER);
-            permissions.put(OperationEnum.ADMIN_CREATE, RoleEnum.CUSTOMER);
-            permissions.put(OperationEnum.ADMIN_UPDATE, RoleEnum.CUSTOMER);
-            permissions.put(OperationEnum.ADMIN_DELETE, RoleEnum.CUSTOMER);
-            permissions.put(OperationEnum.ADMIN_OTHER, RoleEnum.CUSTOMER);
-            object.setPermissions(permissions);
 
             // 类信息填充完毕，以下对字段信息进行填充
             Set<String> shows = new HashSet<>();

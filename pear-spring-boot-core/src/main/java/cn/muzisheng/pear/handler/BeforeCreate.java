@@ -13,6 +13,7 @@ public interface BeforeCreate {
      * @param request 请求
      * @param adminObject AdminObject对象
      * @param object 创建前的数据
+     * @throws Exception 任何异常都会被捕获并抛出HookException异常
      **/
-    void execute(HttpServletRequest request, AdminObject adminObject, Map<String, Object> object);
+    void execute(HttpServletRequest request, AdminObject adminObject, Map<String, Object> object) throws Exception;
 }

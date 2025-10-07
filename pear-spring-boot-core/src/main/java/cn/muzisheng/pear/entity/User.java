@@ -2,8 +2,6 @@ package cn.muzisheng.pear.entity;
 
 import cn.muzisheng.pear.annotation.PearField;
 import cn.muzisheng.pear.annotation.PearObject;
-import cn.muzisheng.pear.handler.RoleEnumTypeHandler;
-import cn.muzisheng.pear.model.RoleEnum;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -12,9 +10,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.JdbcType;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity(name = "user")
 @NoArgsConstructor
@@ -95,9 +95,6 @@ public class User{
     // 用户信息
     @PearField
     private String profile;
-
-    @TableField(typeHandler = RoleEnumTypeHandler.class)
-    private RoleEnum role;
     // 用户认证令牌
     @PearField
     private String token;

@@ -1,29 +1,24 @@
 // 检查用户是否已登录
 function checkLogin() {
-    const token = getCookie('token');
+    const token = localStorage.getItem('token');
     if (!token) {
+        alert('用户未登录自动跳转到登录页面...');
         window.location.href = '/auth/login';
         return false;
     }
     return true;
 }
 
-// 从cookie中获取token的函数
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+// 从localStorage中获取token的函数
+function getToken() {
+    return localStorage.getItem('token');
 }
 
-// 设置全局Ajax默认行为，在请求头中添加Authorization
-$.ajaxSetup({
-    beforeSend: function(xhr) {
-        const token = getCookie('token');
-        if (token) {
-            xhr.setRequestHeader('Authorization', token);
-        }
-    }
-});
+// 登出函数
+function logout() {
+    localStorage.removeItem('token');
+    window.location.href = '/auth/login';
+}
 
 const queryForm = {
     pos: 0,
@@ -48,8 +43,8 @@ $(document).ready(function () {
     let editableFields = []; // 可编辑字段列表
     let showableFields = []; // 可显示字段列表
 
-    // 从cookie中获取token
-    const token = getCookie('token');
+    // 从localStorage中获取token
+    const token = localStorage.getItem('token');
       
     if (!token) {
         // 如果没有token，重定向到登录页面
@@ -86,7 +81,6 @@ $(document).ready(function () {
             console.error('请求失败:', error);
             console.error('状态:', status);
             console.error('响应:', xhr.responseText);
-            alert('用户未登录自动跳转到登录页面...');
             checkLogin();
         }
     });

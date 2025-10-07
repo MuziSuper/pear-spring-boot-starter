@@ -8,7 +8,9 @@ import io.jsonwebtoken.security.WeakKeyException;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.time.Instant;
+import java.util.Base64;
 import java.util.Date;
 
 
@@ -32,8 +34,10 @@ public class JwtUtil {
         this.JWT_HEAD = tokenConfig.getHead();
         this.JWT_ISSUE = tokenConfig.getIssue();
         this.JWT_SUBJECT = tokenConfig.getSubject();
+
         try {
-            this.KEY = Jwts.SIG.HS256.key().build();
+            byte[] decode = Base64.getDecoder().decode(Constant.TOKEN_DEFAULT_SALT);
+            this.KEY =  new SecretKeySpec(decode, 0, decode.length,"HmacSHA256");
         }catch (WeakKeyException e){
             throw new JwtException("The salt is too weak.");
         }
@@ -47,7 +51,7 @@ public class JwtUtil {
         String jwtStr=Jwts.builder()
                 .header()
                 .add("typ", "JWT")
-                .add("alg", "HS256")
+                .add("alg", "HmacSHA256")
                 .and()
                 .claim("email", email)
                 .id(uuid)
@@ -102,5 +106,18 @@ public class JwtUtil {
         return claims;
     }
 
-
+//    private String optimizeSalt(String salt){
+//        StringBuilder buffer = new StringBuilder();
+//        for (int i = 0; i < salt.length(); i++) {
+//            char c = salt.charAt(i);
+//            if (c >= 'a' && c <= 'z') {
+//                buffer.append(c);
+//            } else if (c >= 'A' && c <= 'Z') {
+//                buffer.append(c);
+//            } else if (c >= '0' && c <= '9') {
+//                buffer.append(c);
+//            }
+//        }
+//        return buffer.toString();
+//    }
 }

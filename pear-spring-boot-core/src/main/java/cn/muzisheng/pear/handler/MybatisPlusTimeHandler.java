@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-@Slf4j
 @Component // 必须声明为Spring组件
 public class MybatisPlusTimeHandler implements MetaObjectHandler {
 

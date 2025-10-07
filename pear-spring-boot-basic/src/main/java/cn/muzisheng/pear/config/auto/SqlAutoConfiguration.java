@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 数据库条件化装配类，当mysql作为数据库时，会自动运行
+ * 数据库条件化装配类，当mysql作为数据库时，会自动运行resources内的sql脚本
  **/
 @Configuration
 @ConditionalOnProperty(

@@ -46,6 +46,7 @@ public class Constant {
     public static final String TOKEN_DEFAULT_SECRET_PREFIX = "Bearer ";
     public static final String TOKEN_DEFAULT_ISSUER = "pear";
     public static final String TOKEN_DEFAULT_SUBJECT = "authentication";
+    public static final String TOKEN_DEFAULT_SALT="PEARTOKENDEFAULTSALTMUZISHENGSUPERHANDSOMEANDINTELLIGENT";
 
     // Jpa默认配置
     public static final boolean DB_AUTO_CREATE = true;
@@ -116,14 +117,22 @@ public class Constant {
     public static final String KEY_SITE_USER_ID_TYPE= "KEY_SITE_USER_ID_TYPE";
 
 
-    // 权限类型
-    public static final String ADMIN_ALL="ADMIN_ALL";
+    // pear权限类型
     public static final String ADMIN_NULL="ADMIN_NULL";
-    public static final String ADMIN_OTHER="ADMIN_OHTER";
     public static final String ADMIN_CREATE="ADMIN_CREATE";
     public static final String ADMIN_SELECT="ADMIN_SELECT";
     public static final String ADMIN_UPDATE="ADMIN_UPDATE";
     public static final String ADMIN_DELETE="ADMIN_DELETE";
+    public static final String PERMISSION_WRITER="PERMISSION_WRITER";
+    public static final String PERMISSION_SYNC="PERMISSION_SYNC";
+
+
+    // pear角色类型
+    public static final String ROLE_SUPERUSER="superuser";
+    public static final String ROLE_STAFF="staff";
+    public static final String ROLE_CUSTOMER="customer";
+    public static final String ROLE_FINANCE="finance";
+    public static final String ROLE_SECRETARY="secretary";
 
     // 组成员类型
     public static final String GROUP_ROLE_ADMIN="Admin";

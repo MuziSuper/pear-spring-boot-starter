@@ -412,12 +412,6 @@ public class AdminContainer {
             }
             adminObject.getIgnores().put(fieldName, ignore);
         }
-        public void updatePermissions(OperationEnum role, RoleEnum permission){
-            if(adminObject.getPermissions()==null){
-                adminObject.setPermissions(new HashMap<>());
-            }
-            adminObject.getPermissions().put(role, permission);
-        }
         public void setAccessCheck(AccessCheck accessCheck){
             adminObject.setAccessCheck(accessCheck);
             

@@ -46,7 +46,7 @@ public class AdminServiceImpl implements AdminService {
         this.userService = userService;
         this.resourceLoader = resourceLoader;
     }
-
+    @Verification(Permission = Constant.ADMIN_SELECT)
     @Override
     public ResponseEntity<Result<Object>> handleQueryOrGetOne(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm) {
         Response<Object> response = new Response<>();
@@ -70,7 +70,7 @@ public class AdminServiceImpl implements AdminService {
      * @param data        请求体
      * @return 创建的admin数据
      **/
-    @Verification
+    @Verification(Permission = Constant.ADMIN_CREATE)
     @Override
     public ResponseEntity<Result<Map<String, Object>>> handleCreate(HttpServletRequest request, String model, AdminObject adminObject, Map<String, Object> data) {
         Response<Map<String, Object>> response = new Response<>();
@@ -117,7 +117,7 @@ public class AdminServiceImpl implements AdminService {
      * @param data        请求体
      * @return 更新的admin数据
      **/
-    @Verification
+    @Verification(Permission = Constant.ADMIN_UPDATE)
     @Override
     public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, String model, AdminObject adminObject, Map<String, Object> data) {
         Map<String, Object> keys = getPrimaryValues(request, adminObject);
@@ -156,6 +156,7 @@ public class AdminServiceImpl implements AdminService {
         return response.value();
     }
 
+    @Verification(Permission = Constant.ADMIN_DELETE)
     @Override
     public ResponseEntity<Result<Map<String, Object>>> handleDelete(HttpServletRequest request, String model, AdminObject adminObject) {
         Response<Map<String, Object>> response = new Response<>();
@@ -191,13 +192,12 @@ public class AdminServiceImpl implements AdminService {
         return response.value();
     }
 
-
     @Override
     public ResponseEntity<Result<Map<String, Object>>> handleAction(AdminObject adminObject) {
         return null;
     }
 
-    @Verification
+    @Verification(Permission = Constant.ADMIN_SELECT)
     @Override
     public ResponseEntity<Result<Map<String, Object>>> adminJson(HttpServletRequest request) {
         Response<Map<String, Object>> response = new Response<>();
@@ -212,7 +212,7 @@ public class AdminServiceImpl implements AdminService {
     /**
      * 获取后台文件路径
      **/
-//    @Verification
+    @Verification(Permission = Constant.ADMIN_SELECT)
     @Override
     public ResponseEntity<Result<Map<String, Object>>> adminFilepath(HttpServletRequest request) {
         List<String> cssFiles = new ArrayList<>();

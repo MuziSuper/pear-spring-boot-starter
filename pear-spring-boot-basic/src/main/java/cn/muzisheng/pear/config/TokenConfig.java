@@ -29,6 +29,7 @@ public class TokenConfig {
         if(subject==null||subject.isEmpty()){
             subject=Constant.TOKEN_DEFAULT_SUBJECT;
         }
+
     }
     public static Builder builder(){
         return new Builder();
@@ -52,6 +53,7 @@ public class TokenConfig {
             tokenConfig.subject=subject;
             return this;
         }
+
         public TokenConfig build(){
             return tokenConfig;
         }

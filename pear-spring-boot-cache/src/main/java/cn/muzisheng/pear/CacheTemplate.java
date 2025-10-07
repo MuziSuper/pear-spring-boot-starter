@@ -65,14 +65,14 @@ public class CacheTemplate<K,V> {
                 cacheTemplate.expire=Constant.CACHE_DEFAULT_EXPIRED;
             }
             if (Constant.CACHE_TYPE_LRU.equals(cacheTemplate.strategy.getStrategy())) {
-                cacheTemplate.cache = new LRUCache<>(cacheTemplate.capacity, cacheTemplate.expire, cacheTemplate.cacheName);
+                cacheTemplate.cache = new LRUCache<K,V>(cacheTemplate.capacity, cacheTemplate.expire, cacheTemplate.cacheName);
             } else if (Constant.CACHE_TYPE_REDIS.equals(cacheTemplate.strategy.getStrategy())) {
                 if(cacheTemplate.redisTemplate==null){
                     throw new CacheException("redisTemplate is null");
                 }
-                cacheTemplate.cache = new RedisCache<>(cacheTemplate.cacheName,cacheTemplate.redisTemplate);
+                cacheTemplate.cache = new RedisCache<K,V>(cacheTemplate.cacheName,cacheTemplate.redisTemplate);
             }else {
-                cacheTemplate.cache = new LFUCache<>(cacheTemplate.capacity, cacheTemplate.expire, cacheTemplate.cacheName);
+                cacheTemplate.cache = new LFUCache<K,V>(cacheTemplate.capacity, cacheTemplate.expire, cacheTemplate.cacheName);
             }
             return cacheTemplate;
         }
@@ -90,6 +90,7 @@ public class CacheTemplate<K,V> {
     public void remove(K key) {
         cache.remove(key);
     }
+
 
     public void clear() {
         cache.clear();

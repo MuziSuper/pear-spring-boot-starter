@@ -132,7 +132,7 @@ public class AdminObject {
     /**
      * 模型内操作权限的映射
      **/
-    private Map<OperationEnum,RoleEnum> permissions;
+    private Map<Integer,List<Integer>> permissions;
 
     /**
      * 身份验证方法

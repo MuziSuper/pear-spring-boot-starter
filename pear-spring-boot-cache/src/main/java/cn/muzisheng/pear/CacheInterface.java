@@ -14,4 +14,6 @@ public interface CacheInterface<K,V> {
     void clear();
     boolean containsKey(K key);
     String toString();
+
+
 }

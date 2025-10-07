@@ -13,7 +13,6 @@ src/main/resources/test.properties
 .settings
 .springBeans
 .sts4-cacheTemplate
-
 ### IntelliJ IDEA ###
 .idea
 *.iws

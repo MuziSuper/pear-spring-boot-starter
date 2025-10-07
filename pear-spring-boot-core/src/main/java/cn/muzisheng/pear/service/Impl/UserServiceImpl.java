@@ -4,13 +4,13 @@ import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.Context;
 import cn.muzisheng.pear.JwtUtil;
 import cn.muzisheng.pear.StringUtil;
+import cn.muzisheng.pear.annotation.Verification;
 import cn.muzisheng.pear.dao.UserDAO;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.AuthorizationException;
 import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.model.Response;
 import cn.muzisheng.pear.model.Result;
-import cn.muzisheng.pear.model.RoleEnum;
 import cn.muzisheng.pear.params.LoginForm;
 import cn.muzisheng.pear.params.RegisterUserForm;
 import cn.muzisheng.pear.service.UserService;
@@ -55,7 +55,6 @@ public class UserServiceImpl implements UserService {
             result.setStatus(Constant.USER_EXCEPTION);
             return result.value();
         }
-        user.setRole(RoleEnum.CUSTOMER);
         user.setDisplayName(registerUserForm.getDisplayName());
         user.setFirstName(registerUserForm.getFirstName());
         user.setLastName(registerUserForm.getLastName());
@@ -92,7 +91,6 @@ public class UserServiceImpl implements UserService {
         result.setData(req);
         return result.value();
     }
-
     @Override
     public ResponseEntity<Result<User>> login(HttpServletRequest request, LoginForm loginForm) {
         Response<User> result = new Response<>();
@@ -144,15 +142,6 @@ public class UserServiceImpl implements UserService {
         user=userDAO.getUserById(user.getId());
         if(user==null){
             throw new AuthorizationException();
-        }
-        if(!"".equals(token)){
-            String newToken;
-            try{
-//             newToken=jwtUtil.refreshToken(token);
-            }catch (AuthorizationException e){
-                newToken=jwtUtil.generateTokenWithEmail(user.getEmail());
-            }
-//            user.setToken(newToken);
         }
         result.setData(user);
         return result.value();

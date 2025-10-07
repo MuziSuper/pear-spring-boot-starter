@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @ConfigurationProperties(prefix = "pear.starter.token")
 public class TokenProperties {
-    private String salt;
     private String head;
     private Long expire;
     private String issue;

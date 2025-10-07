@@ -28,64 +28,13 @@ import java.util.stream.Stream;
 
 @Service
 public class ConfigServiceImpl implements ConfigService {
-    private final Environment environment;
     private final ConfigDAO configDAO;
     private final static Logger LOG = LoggerFactory.getLogger(ConfigServiceImpl.class);
 
-    public ConfigServiceImpl(Environment environment, ConfigDAO configDAO) {
-        this.environment = environment;
+    public ConfigServiceImpl(ConfigDAO configDAO) {
         this.configDAO = configDAO;
     }
 
-    @Override
-    @Nullable
-    public String getEnv(String key) {
-        if (PearApplicationInitialization.envCacheTemplate != null) {
-            String value = PearApplicationInitialization.envCacheTemplate.get(key);
-            if (value != null) {
-                // 刷新缓存
-                PearApplicationInitialization.envCacheTemplate.put(key, value);
-                return value;
-            }
-            value = searchAllEnv(key);
-            if (value != null) {
-                PearApplicationInitialization.envCacheTemplate.put(key, value);
-                return value;
-            }
-        }
-
-        return environment.getProperty(key, String.class);
-    }
-    @SuppressWarnings("unchecked")
-    @Nullable
-    public <T> T getEnv(String key, Class<T> type) {
-        String valueStr = getEnv(key);
-        if (valueStr == null) {
-            return null;
-        }
-        if (type == Integer.class) {
-            try {
-                return (T) Integer.valueOf(valueStr);
-            } catch (NumberFormatException e) {
-                LOG.warn("Type conversion failure");
-                return null;
-            }
-        } else if (type == Boolean.class) {
-            return (T) Boolean.valueOf(valueStr);
-        } else {
-            return type.cast(valueStr);
-        }
-    }
-
-    @Override
-    public boolean getBoolEnv(String key) {
-        return Boolean.TRUE.equals(getEnv(key, Boolean.class));
-    }
-
-    @Override
-    public int getIntEnv(String key) {
-        return Optional.ofNullable(getEnv(key, Integer.class)).orElse(0);
-    }
 
     @Override
     public void setValue(String key, String value, String format, boolean autoload, boolean pub) {
@@ -190,32 +139,5 @@ public class ConfigServiceImpl implements ConfigService {
         return configs.toArray(new Config[0]);
     }
 
-    /**
-     * 搜索/src/Application/resources目录下所有properties文件,遍历配置项，将遍历到的配置项加载到缓存中，直到查找到对应key键的配置项，停止遍历。
-     **/
-    public String searchAllEnv(String key) {
-        HashMap<String, String> map = new HashMap<>();
-        try  {
-            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            Resource[] resources = resolver.getResources("classpath*:**/*.properties");
-            for (Resource resource : resources) {
-                try(InputStream inputStream = resource.getInputStream()) {
-                    Properties properties = new Properties();
-                    properties.load(inputStream);
-                    for (String propertiesKey : properties.stringPropertyNames())   {
-                        String propertiesValue=properties.getProperty(propertiesKey);
-                        if(PearApplicationInitialization.envCacheTemplate!= null){
-                            PearApplicationInitialization.envCacheTemplate.put(key, propertiesValue);
-                        }
-                        if(propertiesKey.equalsIgnoreCase(key)){
-                            map.put(key, propertiesValue);
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            LOG.error("File cannot be accessed");
-        }
-        return map.get(key);
-    }
+
 }

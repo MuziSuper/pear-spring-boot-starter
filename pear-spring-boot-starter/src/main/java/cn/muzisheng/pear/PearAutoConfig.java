@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Import;
 
 @Import({
         PearBeanConfig.class,
-        PearMapperConfig.class
+        PearMapperConfig.class,
+        PearEntityConfig.class
 })
+
 public class PearAutoConfig {
 }

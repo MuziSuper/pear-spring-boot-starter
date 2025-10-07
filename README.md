@@ -52,7 +52,7 @@
 
 ### Maven依赖
 
-```
+```properties
 <dependency>
   <groupId>cn.muzisheng.pear</groupId>
   <artifactId>pear-spring-boot-starter</artifactId>
@@ -74,7 +74,7 @@
 ## 📚 使用指南
 
 ### 启用Pear
-通过在主启动类上添加`@PearApplication`注解启用Pear，如果项目中添加了MySQL的配置，则会自动在该MySQL中创建名为`pear`的数据库并创建多个框架需要使用到的基础表结构；
+1. 通过在主启动类上添加`@PearApplication`注解启用Pear的所有条件化配置；
 ```java
 @SpringBootApplication
 @PearApplication
@@ -84,11 +84,12 @@ public class DemoApplication {
     }
 }
 ```
+2. 在properties配置文件中添加`spring.jpa.hibernate.ddl-auto= update`与MySQL数据库配置，会自动在该MySQL库中创建多个框架需要使用到的基础表结构；
 
 ### 实体类定义
 
 使用[@PearObject](file:///Applications/LocalGit/pear-spring-boot-starter/pear-spring-boot-core/src/main/java/cn/muzisheng/pear/annotation/PearObject.java#L7-L46)和[@PearField](file:///Applications/LocalGit/pear-spring-boot-starter/pear-spring-boot-core/src/main/java/cn/muzisheng/pear/annotation/PearField.java#L9-L62)注解定义实体类，框架会自动生成对应的实体的增删改查接口，并在后台页面中提供数据管理，根据配置信息对应字段会有相应的状态。
-```
+```java
 package cn.muzisheng.pear.example;
 
 import cn.muzisheng.pear.annotation.PearField;
@@ -257,7 +258,7 @@ PearField 是一个用于标注实体类字段的注解，用于定义字段在�
 ### 初始化配置
 当实体类被@PearObject注解，其类与字段信息就会封装成一个AdminObject对象，存储在AdminContainer容器中，可以在项目CommandLineRunner初始化时通过AdminObject.BuilderFactory对象对某个实体类的AdminObject对象进一步配置，如添加前后置钩子函数等：
 
-```
+```java
 @Component
 public class PearInitializer implements CommandLineRunner {
 
@@ -297,39 +298,40 @@ Pear支持多种配置方式，包括：
 2. **配置类配置**：通过Java配置类进行类型安全的配置
 
 ### properties配置示例
-
-
-```
+```properties
 # ==================================
 # 缓存配置 (Cache)
 # ==================================
 app.cacheTemplate.expire=86400000  # 缓存过期时间(毫秒)，默认24小时
 app.cacheTemplate.capacity=20      # 缓存容量，默认20
+app.cacheTemplate.strategy=LRU     # 缓存策略，默认LRU
 
 # ==================================
-# 环境配置 (Config)
+# 环境配置 (Site)
 # ==================================
-app.env.auth-prefix=/auth  # 认证路径前缀
+app.site.auth-prefix=/auth         # 认证路径前缀
+app.site.login-url=/auth/login     # 登录页面URL
+app.site.dashboard-url=/auth/dashboard  # 仪表盘URL
 
 # ==================================
 # 日志配置 (Log)
 # ==================================
-app.log.level=INFO  # 日志级别
+app.log.level=INFO                 # 日志级别
 app.log.stdout-pattern=%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %-17black(%thread) %-82green(%logger{70}-%line) %highlight(%msg){black} %highlight(%ex){red} \n  # 标准输出格式
 app.log.file-pattern=%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n  # 文件输出格式
-app.log.file-path=log  # 日志文件路径
-app.log.log-catalogue-address=log/log-day  # 日志目录
+app.log.file-path=log              # 日志文件路径
+app.log.log-catalogue-address=log/log-day    # 日志目录
 app.log.warn-catalogue-address=log/warn-day  # 警告日志目录
 app.log.error-catalogue-address=log/error-day  # 错误日志目录
 
 # ==================================
 # Token配置
 # ==================================
-app.token.salt=pear_token_  # Token盐值
-app.token.head=Bearer       # Token头前缀
-app.token.expire=604800000  # Token过期时间(毫秒)，默认7天
-app.token.issue=pear        # Token签发者
-app.token.subject=authentication  # Token主题
+app.token.salt=pear_token_         # Token盐值
+app.token.head=Bearer              # Token头前缀
+app.token.expire=604800000         # Token过期时间(毫秒)，默认7天
+app.token.issue=pear               # Token签发者
+app.token.subject=authentication   # Token主题
 
 # ==================================
 # 用户密码配置
@@ -337,19 +339,19 @@ app.token.subject=authentication  # Token主题
 app.user.password.salt=PEAR_APPLICATION_SALT  # 密码加密盐值
 ```
 
-
 ### 配置类配置示例
 
-```
+```java
 @Configuration
 public class PearConfig {
   
     @Bean
     public CacheConfig cacheConfig() {
         return CacheConfig.builder()
-            .expire(3600000)  // 1小时
-            .capacity(500)    // 容量500
-            .build();         // 构建最终实例
+            .expire(3600000)    // 1小时
+            .capacity(500)      // 容量500
+            .strategy(CacheStrategyEnum.LFU)  // 使用LFU策略
+            .build();
     }
   
     @Bean
@@ -367,6 +369,24 @@ public class PearConfig {
     public UserConfig userConfig() {
         return UserConfig.builder()
             .passwordSalt("user_custom_salt")
+            .build();
+    }
+    
+    @Bean
+    public SiteConfig siteConfig() {
+        return SiteConfig.builder()
+            .authPrefix("/admin")
+            .loginUrl("/admin/login")
+            .dashboardUrl("/admin/dashboard")
+            .build();
+    }
+    
+    @Bean
+    public LogConfig logConfig() {
+        return LogConfig.builder()
+            .level("DEBUG")
+            .stdoutPattern("%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n")
+            .filePath("logs")
             .build();
     }
 }
@@ -392,8 +412,9 @@ Pear实现了基于策略模式的缓存系统，支持LRU和LFU两种缓存淘�
 
 1. **LRU(最近最少使用)**：基于LinkedHashMap实现，适合访问具有时间局部性的场景
 2. **LFU(最不经常使用)**：基于TreeMap和LinkedHashSet实现，基于访问频率进行淘汰
+3. **Redis**: 基于Redis实现，缓存淘汰策略自动跟随Redis配置
 
-```
+```java
 // 缓存接口定义
 public interface CacheInterface<K,V> {
   V get(K key);
@@ -428,152 +449,84 @@ public class LFUCacheUtil<K,V> implements CacheInterface<K,V> {
 
 
 ### 权限控制
-用户注册后还需要管理员开启登录权限即赋予非客户的身份
-当用户以非客户身份登录后台系统后服务端会生成一个Token密钥存放在客户端cookie中
-交由服务端控制过期时间，在每次访问admin/接口时会通过拦截器验证Token密钥是否过期与有效
-并保存会话Session信息存储用户的id，每个admin/接口都会尝试获取存储在会话中的用户Id
-若Id为空则返回未登录状态客户端退回到登录页面
+Pear框架实现了基于角色的权限控制(RBAC)系统，采用双层权限校验机制：
 
-Pear实现了基于代理模式的注解权限控制系统，会进行用户态与系统态两层权限校验,系统态主要是检测用户当前身份是否有权限执行某系统操作，默认检测用户是否钩子函数，存在则直接执行：
-
-```
+#### 权限架构
+- 系统级权限校验：基于用户角色和预定义权限进行校验
+- 用户级权限校验：通过自定义钩子函数实现灵活的权限控制
+#### 核心组件
+- Permission(权限)：最小的权限单元，定义具体的操作权限
+- Role(角色)：权限的集合，可分配给用户
+- User(用户)：系统用户，通过角色获得相应权限
+#### 权限校验机制
+Pear框架通过@Verification注解实现权限控制：
+```java
 // 权限注解定义
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AccessCheck {
-  String value();  // 权限标识
-  String[] args() default {};  // 所需参数
+public @interface Verification {
+    // 是否启用系统级权限校验，默认为启用
+    boolean SystemVerify() default true;
+    // 是否启用用户级权限校验，默认为启用
+    boolean UserVerify() default true;
+    // 权限代码
+    String Permission() default Constant.ADMIN_NULL;
 }
 
-// 权限切面实现
-@Aspect
-@Component
-public class AccessCheckAspect {
-  
-  @Around("accessCheck()")
-  public Object accessCheckFunc(ProceedingJoinPoint jp) throws Throwable {
-    // 获取方法签名
-    Method method = ((MethodSignature) jp.getSignature()).getMethod();
-    // 获取方法注解
-    AccessCheck beforeCreate = method.getAnnotation(AccessCheck.class);
-    
-    // 参数处理
-    Object[] methodArgs = jp.getArgs();
-    
-    // 权限验证逻辑
-    if (hasPermission(beforeCreate.value())) {
-      // 执行目标方法
-      return jp.proceed();
-    } else {
-      throw new ForbiddenException("没有访问权限");
-    }
-  }
-  
-  // 权限验证逻辑
-  private boolean hasPermission(String permission) {
-    // 实现具体的权限验证逻辑
-  }
-}
-```
-
-
-### 智能配置系统
-
-Pear实现了灵活的配置系统，支持多种配置方式：
-
-```
-// 配置属性类
-@ConfigurationProperties("app.cacheTemplate")
-public class CacheProperties {
-  private long expire;
-  private int capacity;
-  
-  public void applyTo(CacheConfig config) {
-    if (this.expire > 0) {
-      config.setExpire(this.expire);
-    }
-    if (this.capacity > 0) {
-      config.setCapacity(this.capacity);
-    }
-  }
+// 使用示例
+@Verification(Permission = Constant.ADMIN_UPDATE)
+public ResponseEntity<Result<Map<String, Object>>> handleUpdate(...) {
+    // 方法实现
 }
 
-// 缓存自动配置类
-@Configuration
-@EnableConfigurationProperties(CacheProperties.class)
-public class CacheAutoConfiguration {
-  
-  @Bean
-  @ConditionalOnMissingBean(CacheConfig.class)
-  public CacheConfig defaultCacheProperties(CacheProperties properties) {
-    CacheConfig config = new CacheConfig();
-    properties.applyTo(config);
-    return config;
-  }
-}
 ```
+#### 内置权限类型
+框架预定义了以下权限类型：
+- ADMIN_CREATE：创建权限
+- ADMIN_DELETE：删除权限
+- ADMIN_UPDATE：更新权限
+- ADMIN_SELECT：查询权限
+- PERMISSION_WRITER：写操作权限
+- PERMISSION_SYNC：锁定权限(推荐仅用于superuser角色，从而保证管理员超级权限不会被修改)
+- ADMIN_NULL：无权限
+#### 内置角色类型
+框架预定义了以下角色：
+- ROLE_SUPERUSER：超级管理员，拥有所有权限
+- ROLE_STAFF：员工，可访问后台系统和查询数据
+- ROLE_CUSTOMER：客户，无法登录后台系统
+- ROLE_FINANCE：财务，可读写除权限外的所有数据
+- ROLE_SECRETARY：秘书，可读写所有数据但不能修改管理员权限
+权限校验流程
+1. 系统级校验：
+检查方法上的@Verification注解，根据用户角色获取其拥有的权限ID集合，验证用户是否拥有执行操作所需的权限
+2. 用户级校验：
+执行自定义的AccessCheck钩子函数，允许开发者实现复杂的权限逻辑
+3. 权限缓存
+为了提高性能，用户权限ID集合会被缓存：使用PearApplicationInitialization.PermissionTemplate缓存用户权限，当权限或角色发生变化时，自动清除相关缓存
 
-
-### 初始化配置
-
-```
-@Override
-public void run(String... args) {
-  // 命令行参数解析
-  Options options = new Options();
-  options.addOption(new Option("u", "superuser", true, "用户名"));
-  options.addOption(new Option("p", "password", true, "用户密码"));
-  options.addOption(new Option("h", "help", false, "帮助信息"));
-  
-  CommandLineParser parser = new DefaultParser();
-  CommandLine cmd = parser.parse(options, args, true);
-  
-  // 处理数据库参数
-  if (cmd.hasOption("u") && cmd.hasOption("p")) {
-    String email = cmd.getOptionValue("u");
-    String password = cmd.getOptionValue("p");
-    User user = userDAO.getUserByEmail(email);
-    
-    if (user != null) {
-      if (!userDAO.setPassword(user, password)) {
-        throw new UserException(email, "密码更新失败");
-      }
-    } else {
-      user = userDAO.createUser(email, password);
-    }
-    
-    // 设置用户角色
-    user.setIsStaff(true);
-    user.setIsSuperUser(true);
-    user.setActivated(true);
-    user.setEnabled(true);
-    
-    if (!userDAO.save(user)) {
-      throw new UserException(email, "用户保存失败");
-    }
-  }
-  
-  // 系统配置入库
-  configService.checkValue(Constant.KEY_SITE_NAME, "pear", Constant.ConfigFormatText, true, true);
-  configService.checkValue(Constant.ICON_SVG_ADDRESS, "../static/favicon.svg", Constant.ConfigFormatText, true, true);
-  configService.checkValue(Constant.ICON_SVG_ADDRESS, "../static/favicon.png", Constant.ConfigFormatText, true, true);
-  
-  // 构建入口
-  AdminContainer.buildAdminObjects(AdminContainer.getAllAdminObjects());
-  userAddFunc();
-}
-```
 
 
 ## 🚧 待办事项
+- [ ] 后端：优化第三代权限系统
+- [ ] 后端：考虑删除Token只保留Session作为权限校验
+- [ ] 后端：将Admin的DAO层重构，不依赖mybatis采用JDBC原始实现
+- [ ] 后端：通过观察者模式对所有事件进行监听，当触发事件并且开发者绑定了观察者时进行事件存储与输出
+- [ ] 后端：解决Admin无法处理用户自定义实体类继承其他类的情况
+- [ ] 后端：完善优化日志输出对warn级别添加黄色
+- [ ] 后端：将缓存容器统一交由AdminContainer进行管理,由cacheName为唯一键K,HK为数据键，HV为数据值,默认配置控制的是默认创建的容器缓存策略，用户可自定义缓存策略
+- [ ] 后端：将项目中所有的直接引用（字符串，如所有admin的接口以及拦截器的拦截路径等）转换为从Config或者Env的符号引用
+- [ ] 后端：解决admin对于使用mybatis联表多对多等字段的注解解析，填充AdminObject
+- [ ] 后端：增加埋点服务或者说优化日志模块，将信息收集存储到消息队列中并对外进行接口输出，使其可以通过观测器进行数据采集
+- [ ] 后端：扩展一个限速器AOP，通过注解可以设置限速频率
+- [ ] 前端：改进密码修改表单安全性
+- [ ] 前端：优化前端删除操作体验
+- [ ] 前端：添加前端对数据的修改
 
-- [ ] 实现RBAC权限控制模型
-- [ ] 考虑删除Token只保留Session作为权限校验
-- [ ] 解决Admin无法处理用户自定义实体类继承其他类的情况
-- [ ] 完善优化日志输出对warn级别添加黄色
-- [ ] 设计消息系统，拟使用观察者设计模式对行为进行监听
-- [ ] 改进密码修改表单安全性
-- [ ] 优化前端删除操作体验
+## 📝 此版本修改内容
+- [ ] 对权限控制模型进行了迭代3.0版本，设计了权限表角色表与其两种关联表，用户->权限的映射放入了缓存中避免重复查询与恶意攻击
+- [ ] 将config全局配置与env环境的服务层进行解耦，两部分作为Service单独使用
+- [ ] 对前端的token存储进行了优化，取消了cookie存储从而避免将不必要的token发送给服务端
+- [ ] 沿用上上版本，保留了拦截器，但不再使用排除机制而是主动选择admin/*接口进行token校验
 
 ## 🤝 参与贡献
 
