@@ -1,9 +1,14 @@
 package cn.muzisheng.pear.properties;
 
+import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.config.CacheConfig;
+import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.model.CacheStrategyEnum;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.util.concurrent.TimeUnit;
+
 /**
  * 缓存默认属性
  **/
@@ -14,12 +19,8 @@ public class CacheProperties {
     private long expire;
     private int capacity;
     private String strategy;
-    private String cacheName;
-    private Redis redis=new Redis();
-    // 采用Redis缓存是否启用Pear框架默认配置
-    public static class Redis {
-        private boolean enable;
-    }
+    private String timeUnit;
+
     /**
      * 将properties属性应用到CacheConfig中
      **/
@@ -33,10 +34,23 @@ public class CacheProperties {
         if (strategy != null&& !strategy.isEmpty()&& CacheStrategyEnum.contains(strategy)){
             config.setStrategy(CacheStrategyEnum.strategyOf( strategy));
         }
-        if (cacheName != null&& !cacheName.isEmpty()){
-            config.setCacheName(cacheName);
+        if (timeUnit != null&& !timeUnit.isEmpty()){
+            try{
+                String newTimeUnit = timeUnit;
+                switch (newTimeUnit) {
+                    case "ns" -> newTimeUnit = Constant.NANOSECONDS_TIME_UNIT;
+                    case "µs" -> newTimeUnit = Constant.MICROSECONDS_TIME_UNIT;
+                    case "us" -> newTimeUnit = Constant.MILLISECONDS_TIME_UNIT;
+                    case "ms" -> newTimeUnit = Constant.SECONDS_TIME_UNIT;
+                    case "s" -> newTimeUnit = Constant.MINUTES_TIME_UNIT;
+                    case "m" -> newTimeUnit = Constant.HOURS_TIME_UNIT;
+                    case "h" -> newTimeUnit = Constant.DAYS_TIME_UNIT;
+                }
+            config.setTimeUnit(TimeUnit.valueOf(newTimeUnit));
+            }catch (IllegalArgumentException e){
+                throw new GeneralException("Invalid time unit: " + timeUnit);
+            }
         }
-        config.setEnable(this.redis.enable);
 
     }
 }

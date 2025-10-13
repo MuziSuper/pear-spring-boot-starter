@@ -1,36 +1,52 @@
 package cn.muzisheng.pear.cache;
 
-import cn.muzisheng.pear.CacheInterface;
+import cn.muzisheng.pear.CacheTemplate;
 import cn.muzisheng.pear.config.CacheConfig;
 import cn.muzisheng.pear.model.ExpiredCacheValue;
 
 import java.util.LinkedHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  * LRU缓存, 基于LinkedHashMap实现, 使用读写锁保证线程安全，超过最大容量后，最近最久未使用的数据会被清除
  **/
-public class LRUCache<K,V> implements CacheInterface<K,V> {
+public class LRUCacheTemplate<K,V> implements CacheTemplate<K,V> {
     private final LinkedHashMap<K, ExpiredCacheValue<V>> cache;
     private final ReadWriteLock readWriteLock=new ReentrantReadWriteLock();
     private final Lock readLock=readWriteLock.readLock();
     private final Lock writeLock=readWriteLock.writeLock();
     private final long expire;
-    private final String cacheName;
-
-    public LRUCache(int capacity, long expire, String cacheName) {
+    private final TimeUnit timeUnit;
+    private final Class<K> keyClass;
+    private final Class<V> valueClass;
+    public LRUCacheTemplate(int capacity, long expire, TimeUnit timeUnit,Class<K> keyClass, Class<V> valueClass) {
         this.expire = expire;
-        this.cacheName = cacheName;
-        cache = new LinkedHashMap<>(capacity,0.75f,true){
+        this.timeUnit = timeUnit;
+        this.keyClass = keyClass;
+        this.valueClass = valueClass;
+        if(capacity==0) cache=new LinkedHashMap<>();
+        else cache = new LinkedHashMap<>(capacity,0.75f,true){
             @Override
             protected boolean removeEldestEntry(java.util.Map.Entry<K,ExpiredCacheValue<V>> eldest) {
                 return size()>capacity;
             }
         };
     }
-    public LRUCache(CacheConfig config) {
-         this(config.getCapacity(),config.getExpire(),config.getCacheName());
+
+    public LRUCacheTemplate(CacheConfig config, Class<K> keyClass, Class<V> valueClass) {
+         this(config.getCapacity(),config.getExpire(),config.getTimeUnit(),keyClass,valueClass);
+    }
+    /**
+     * 判断缓存的key和value的类型是否匹配
+     * @param keyClass 缓存的key的类型
+     * @param valueClass 缓存的value的类型
+     * @return 如果匹配则返回true，否则返回false
+     **/
+    @Override
+    public<HK,HV> boolean isCompatible(Class<HK> keyClass, Class<HV> valueClass){
+        return this.keyClass.isAssignableFrom(keyClass)&&this.valueClass.isAssignableFrom(valueClass);
     }
     @Override
     public void put(K key,V value){
@@ -50,12 +66,13 @@ public class LRUCache<K,V> implements CacheInterface<K,V> {
                 return null;
             }
             ExpiredCacheValue<V> expiredCacheValue= cache.get(key);
-            if(System.currentTimeMillis()-expiredCacheValue.getLastTime()>expire){
-                remove(key);
-                return null;
-            }else {
+            if(expiredCacheValue==null) return null;
+            if(System.currentTimeMillis()-expiredCacheValue.getLastTime()<expire * timeUnit.toMillis(1)||expire==0L){
                 expiredCacheValue.setLastTime(System.currentTimeMillis());
                 return expiredCacheValue.getVal();
+            }else {
+                remove(key);
+                return null;
             }
         }finally {
             readLock.unlock();
@@ -80,10 +97,10 @@ public class LRUCache<K,V> implements CacheInterface<K,V> {
         }
     }
     @Override
-    public Long size(){
+    public long size(){
         readLock.lock();
         try{
-            return (long) cache.size();
+            return cache.size();
         }finally {
             readLock.unlock();
         }
@@ -97,6 +114,17 @@ public class LRUCache<K,V> implements CacheInterface<K,V> {
             readLock.unlock();
         }
     }
+
+    @Override
+    public Class<K> getKeyClass() {
+        return this.keyClass;
+    }
+
+    @Override
+    public Class<V> getValueClass() {
+        return this.valueClass;
+    }
+
     @Override
     public boolean containsKey(K key) {
         readLock.lock();

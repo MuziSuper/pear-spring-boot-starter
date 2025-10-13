@@ -1,6 +1,6 @@
 package cn.muzisheng.pear.cache;
 
-import cn.muzisheng.pear.CacheInterface;
+import cn.muzisheng.pear.CacheTemplate;
 import cn.muzisheng.pear.config.CacheConfig;
 import cn.muzisheng.pear.model.ExpiredCacheValue;
 
@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -15,7 +16,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  * LFU缓存，访问次数越少，越早被删除，使用三个数据结构以及读写锁实现
  **/
-public class LFUCache<K, V> implements CacheInterface<K, V> {
+public class LFUCacheTemplate<K, V> implements CacheTemplate<K, V> {
     private final int capacity;
     private final Map<K, ExpiredCacheValue<V>> cache; // 存储键值对
     private final Map<K, Integer> frequencyMap; // 存储键的访问频率
@@ -24,18 +25,35 @@ public class LFUCache<K, V> implements CacheInterface<K, V> {
     private final Lock readLock = lock.readLock();
     private final Lock writeLock = lock.writeLock();
     private final long expire;
-    private final String cacheName;
+    private final TimeUnit timeUnit;
+    private final Class<K> keyClass;
+    private final Class<V> valueClass;
 
-    public LFUCache(int capacity, long expire,String cacheName) {
+    public LFUCacheTemplate(int capacity, long expire, TimeUnit timeUnit, Class<K> keyClass, Class<V> valueClass) {
         this.capacity = capacity;
         this.expire = expire;
-        this.cacheName = cacheName;
+        this.timeUnit = timeUnit;
         this.cache = new HashMap<>();
         this.frequencyMap = new HashMap<>();
         this.frequencyKeysMap = new TreeMap<>();
+        this.keyClass = keyClass;
+        this.valueClass = valueClass;
     }
-    public LFUCache(CacheConfig config){
-        this(config.getCapacity(),config.getExpire(),config.getCacheName());
+
+    public LFUCacheTemplate(CacheConfig config, Class<K> keyClass, Class<V> valueClass) {
+        this(config.getCapacity(), config.getExpire(), config.getTimeUnit(), keyClass, valueClass);
+    }
+
+    /**
+     * 判断缓存的key和value的类型是否匹配
+     *
+     * @param keyClass   缓存的key的类型
+     * @param valueClass 缓存的value的类型
+     * @return 如果匹配则返回true，否则返回false
+     **/
+    @Override
+    public <HK, HV> boolean isCompatible(Class<HK> keyClass, Class<HV> valueClass) {
+        return this.keyClass.isAssignableFrom(keyClass) && this.valueClass.isAssignableFrom(valueClass);
     }
 
     @Override
@@ -50,10 +68,7 @@ public class LFUCache<K, V> implements CacheInterface<K, V> {
         } finally {
             readLock.unlock();
         }
-        if (System.currentTimeMillis() - value.getLastTime() > expire) {
-            remove(key);
-            return null;
-        } else {
+        if (System.currentTimeMillis() - value.getLastTime() < expire * timeUnit.toMillis(1) || expire == 0L) {
             try {
                 try {
                     writeLock.lock();
@@ -63,41 +78,64 @@ public class LFUCache<K, V> implements CacheInterface<K, V> {
                     writeLock.unlock();
                 }
                 return value.getVal();
-            }finally {
+            } finally {
                 readLock.unlock();
             }
+        } else {
+            remove(key);
+            return null;
         }
 
     }
 
     @Override
     public void put(K key, V value) {
+        ExpiredCacheValue<V> expiredCacheValue;
+        readLock.lock();
+        try {
+            expiredCacheValue = cache.get(key);
+        } finally {
+            readLock.unlock();
+        }
+        // 键已存在则更新值并增加频率之后退出，若键已存在且已过期，则移除该键执行后续逻辑
+        if (expiredCacheValue != null) {
+            if (System.currentTimeMillis() - expiredCacheValue.getLastTime() < expire * timeUnit.toMillis(1) || expire == 0L) {
+                expiredCacheValue.setVal(value);
+                expiredCacheValue.setLastTime(System.currentTimeMillis());
+                writeLock.lock();
+                try {
+                    try {
+                        cache.put(key, expiredCacheValue);
+                        incrementFrequency(key);
+                        return;
+                    } finally {
+                        readLock.lock();
+                        writeLock.unlock();
+                    }
+                } finally {
+                    readLock.unlock();
+                }
+            }
+            remove(key);
+        }
+        // 键不存在，则创建新的键值对
+        ExpiredCacheValue<V> newExpiredCacheValue = new ExpiredCacheValue<>(System.currentTimeMillis(), value);
+        newExpiredCacheValue.setVal(value);
+        newExpiredCacheValue.setLastTime(System.currentTimeMillis());
         writeLock.lock();
         try {
-            if (capacity <= 0) {
-                return;
-            }
-
-            ExpiredCacheValue<V> expiredCacheValue = cache.get(key);
-            if (cache.containsKey(key) && System.currentTimeMillis() - expiredCacheValue.getLastTime() <= expire) {
-                expiredCacheValue.setVal(value);
-                // 键已存在，更新值并增加频率
-                cache.put(key, expiredCacheValue);
+            try {
+                while (cache.size() > capacity && capacity != 0) {
+                    removeLeastFrequent();
+                }
+                cache.put(key, newExpiredCacheValue);
                 incrementFrequency(key);
-                return;
+            } finally {
+                readLock.lock();
+                writeLock.unlock();
             }
-
-            if (cache.size() >= capacity) {
-                // 移除使用频率最低的键
-                removeLeastFrequent();
-            }
-            // 添加新键值对
-            ExpiredCacheValue<V> newValue = new ExpiredCacheValue<>(System.currentTimeMillis(), value);
-            cache.put(key, newValue);
-            frequencyMap.put(key, 1);
-            frequencyKeysMap.computeIfAbsent(1, k -> new LinkedHashSet<>()).add(key);
         } finally {
-            writeLock.unlock();
+            readLock.unlock();
         }
     }
 
@@ -105,15 +143,15 @@ public class LFUCache<K, V> implements CacheInterface<K, V> {
      * 更新键的访问次数与频率到元素映射的集合
      **/
     private void incrementFrequency(K key) {
-        int frequency = frequencyMap.get(key);
-        frequencyMap.put(key, frequency + 1);
-
+        int frequency = frequencyMap.getOrDefault(key, 0) + 1;
+        frequencyMap.put(key, frequency);
         // 从旧频率集合中移除
-        frequencyKeysMap.get(frequency).remove(key);
-        if (frequencyKeysMap.get(frequency).isEmpty()) {
-            frequencyKeysMap.remove(frequency);
+        if (frequencyKeysMap.containsKey(frequency)) {
+            frequencyKeysMap.get(frequency).remove(key);
+            if (frequencyKeysMap.get(frequency).isEmpty()) {
+                frequencyKeysMap.remove(frequency);
+            }
         }
-
         // 添加到新频率集合
         frequencyKeysMap.computeIfAbsent(frequency + 1, k -> new LinkedHashSet<>()).add(key);
     }
@@ -163,10 +201,10 @@ public class LFUCache<K, V> implements CacheInterface<K, V> {
     }
 
     @Override
-    public Long size() {
+    public long size() {
         readLock.lock();
         try {
-            return (long) cache.size();
+            return cache.size();
         } finally {
             readLock.unlock();
         }
@@ -197,10 +235,19 @@ public class LFUCache<K, V> implements CacheInterface<K, V> {
     @Override
     public String toString() {
         return "LFUCache{" +
-                "cacheName="+cacheName+
                 ", cache=" + cache.toString() +
                 ", frequencyMap=" + frequencyMap.toString() +
                 ", frequencyKeysMap=" + frequencyKeysMap.toString() +
                 '}';
+    }
+
+    @Override
+    public Class<K> getKeyClass() {
+        return keyClass;
+    }
+
+    @Override
+    public Class<V> getValueClass() {
+        return valueClass;
     }
 }

@@ -3,6 +3,8 @@ package cn.muzisheng.pear;
 import org.springframework.stereotype.Component;
 
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.TimeUnit;
+
 public class Constant {
     // 密码加密
     public static final String APP_USER_PASSWORD_SALT = "PEAR_APPLICATION_SALT";
@@ -51,13 +53,21 @@ public class Constant {
     // Jpa默认配置
     public static final boolean DB_AUTO_CREATE = true;
 
+    // 时间单位
+    public static final String NANOSECONDS_TIME_UNIT="NANOSECONDS";
+    public static final String MICROSECONDS_TIME_UNIT="MICROSECONDS";
+    public static final String MILLISECONDS_TIME_UNIT="MILLISECONDS";
+    public static final String SECONDS_TIME_UNIT="SECONDS";
+    public static final String MINUTES_TIME_UNIT="MINUTES";
+    public static final String HOURS_TIME_UNIT="HOURS";
+    public static final String DAYS_TIME_UNIT="DAYS";
 
     // cache默认配置
     public static final Long CACHE_DEFAULT_EXPIRED=24*60*60*1000L;
+    public static final TimeUnit CACHE_DEFAULT_TIME_UNIT=TimeUnit.MILLISECONDS;
     public static final int CACHE_DEFAULT_CAPACITY=200;
     public static final String CACHE_DEFAULT_STRATEGY = "LRU";
-    public static final String CACHE_DEFAULT_NAME = "PEAR_CACHE";
-    public static final boolean CACHE_DEFAULT_REDIS_ENABLE = true;
+    public static final String REDIS_PREFIX="pear_prefix: ";
 
     // config默认配置
     public static final String AUTH_PREFIX = "/auth";
@@ -125,6 +135,11 @@ public class Constant {
     public static final String ADMIN_DELETE="ADMIN_DELETE";
     public static final String PERMISSION_WRITER="PERMISSION_WRITER";
     public static final String PERMISSION_SYNC="PERMISSION_SYNC";
+
+    // pear的内置缓存名
+    public static final String PEAR_CONFIG_CACHE_NAME="configCache";
+    public static final String PEAR_ENV_CACHE_NAME="envCache";
+    public static final String PEAR_PERMISSION_CACHE_NAME="permissionCache";
 
 
     // pear角色类型

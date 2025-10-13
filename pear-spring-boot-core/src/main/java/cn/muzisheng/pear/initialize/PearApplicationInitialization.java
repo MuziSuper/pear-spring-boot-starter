@@ -1,14 +1,13 @@
 package cn.muzisheng.pear.initialize;
 
-import cn.muzisheng.pear.CacheTemplate;
+import cn.muzisheng.pear.CacheContainer;
+import cn.muzisheng.pear.CacheFactory;
 import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.config.CacheConfig;
 import cn.muzisheng.pear.dao.UserDAO;
-import cn.muzisheng.pear.entity.Role;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.UserException;
 import cn.muzisheng.pear.service.ConfigService;
-import cn.muzisheng.pear.service.Impl.RoleServiceImpl;
 import cn.muzisheng.pear.service.PermissionService;
 import cn.muzisheng.pear.service.RoleService;
 import org.apache.commons.cli.*;
@@ -31,22 +30,18 @@ public class PearApplicationInitialization implements CommandLineRunner {
     private final ConfigService configService;
     private final PermissionService permissionService;
     private final RoleService roleService;
+    private final CacheContainer cacheContainer;
     private final static Logger LOG = LoggerFactory.getLogger(PearApplicationInitialization.class);
-    public static CacheTemplate<String, String> configCacheTemplate;
-    public static CacheTemplate<String, String> envCacheTemplate;
-    public static CacheTemplate<Long,long[]> PermissionTemplate;
 
 
-    public PearApplicationInitialization(UserDAO userDAO, CacheConfig config, ConfigService configService, RoleService roleService, PermissionService permissionService, Role role) {
+    public PearApplicationInitialization(UserDAO userDAO, CacheConfig config, ConfigService configService, RoleService roleService, PermissionService permissionService,CacheContainer cacheContainer) {
         LOG.info("PearApplicationInitialization注册完成");
         this.userDAO = userDAO;
         this.configService = configService;
         this.permissionService = permissionService;
         this.roleService = roleService;
-        // 初始化缓存
-        configCacheTemplate = new CacheTemplate.Builder<String, String>().cacheStrategy(config).cacheName("pear_cache").build();
-        envCacheTemplate = new CacheTemplate.Builder<String, String>().cacheStrategy(config).cacheName("per_env").build();
-        PermissionTemplate = new CacheTemplate.Builder<Long, long[]>().cacheStrategy(config).cacheName("pear_permission").build();
+        this.cacheContainer = cacheContainer;
+
     }
 
     @Override
@@ -79,6 +74,10 @@ public class PearApplicationInitialization implements CommandLineRunner {
             /*
              * 处理数据库参数，可以使用mysql与sqlite，并且配合memory参数使用sqlite内存模式
              */
+
+            cacheContainer.createCache(Constant.PEAR_CONFIG_CACHE_NAME, String.class, String.class);
+            cacheContainer.createCache(Constant.PEAR_ENV_CACHE_NAME, String.class, String.class);
+            cacheContainer.createCache(Constant.PEAR_PERMISSION_CACHE_NAME, Long.class, long[].class);
 
             // Pear基础角色与权限入库
             permissionService.createPermission(Constant.ADMIN_CREATE,"ADMIN can be created.");

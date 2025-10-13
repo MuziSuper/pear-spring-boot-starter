@@ -1,13 +1,15 @@
 package cn.muzisheng.pear.service.Impl;
 
+import cn.muzisheng.pear.CacheContainer;
+import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.dao.PermissionDAO;
 import cn.muzisheng.pear.dao.RoleDAO;
 import cn.muzisheng.pear.dao.UserDAO;
+import cn.muzisheng.pear.entity.Config;
 import cn.muzisheng.pear.entity.Permission;
 import cn.muzisheng.pear.entity.Role;
 import cn.muzisheng.pear.entity.User;
 import cn.muzisheng.pear.exception.AuthorizationException;
-import cn.muzisheng.pear.initialize.PearApplicationInitialization;
 import cn.muzisheng.pear.service.PermissionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,19 +22,23 @@ public class PermissionServiceImpl implements PermissionService {
     private final UserDAO userDAO;
     private final RoleDAO roleDAO;
     private final PermissionDAO permissionDAO;
+    private final CacheContainer cacheContainer;
     private final Logger LOG = LoggerFactory.getLogger(PermissionServiceImpl.class);
+    private final Config config;
 
-    public PermissionServiceImpl(UserDAO userDAO, RoleDAO roleDAO, PermissionDAO permissionDAO) {
+    public PermissionServiceImpl(UserDAO userDAO, RoleDAO roleDAO, PermissionDAO permissionDAO, CacheContainer cacheContainer, Config config) {
         this.userDAO = userDAO;
         this.roleDAO = roleDAO;
         this.permissionDAO = permissionDAO;
+        this.cacheContainer = cacheContainer;
+        this.config = config;
     }
 
     @Override
     public long[] getPermissionIds(long userId) {
         long[] permissionsIds;
-        if (PearApplicationInitialization.PermissionTemplate != null) {
-            permissionsIds = PearApplicationInitialization.PermissionTemplate.get(userId);
+        if (cacheContainer.contains(Constant.PEAR_PERMISSION_CACHE_NAME)) {
+            permissionsIds = cacheContainer.get(Constant.PEAR_PERMISSION_CACHE_NAME, userId);
             if(permissionsIds != null&&permissionsIds.length!=0) return permissionsIds;
         }
         User user = userDAO.getUserById(userId);
@@ -49,8 +55,8 @@ public class PermissionServiceImpl implements PermissionService {
             }
         }
         permissionsIds = tempSet.stream().mapToLong(Long::longValue).toArray();
-        if (PearApplicationInitialization.PermissionTemplate != null) {
-            PearApplicationInitialization.PermissionTemplate.put(userId, permissionsIds);
+        if (cacheContainer.contains(Constant.PEAR_PERMISSION_CACHE_NAME)) {
+            cacheContainer.put(Constant.PEAR_PERMISSION_CACHE_NAME, userId, permissionsIds);
         }
         return permissionsIds;
 
@@ -94,8 +100,8 @@ public class PermissionServiceImpl implements PermissionService {
         if (!permissionDAO.deletePermission(permissionId)) {
             return false;
         }
-        if (PearApplicationInitialization.PermissionTemplate != null) {
-            PearApplicationInitialization.PermissionTemplate.clear();
+        if (cacheContainer.contains(Constant.PEAR_PERMISSION_CACHE_NAME)) {
+            cacheContainer.clear(Constant.PEAR_PERMISSION_CACHE_NAME);
         }
         return true;
     }
@@ -107,8 +113,8 @@ public class PermissionServiceImpl implements PermissionService {
         Permission permission = permissionDAO.getPermissionById(permissionId);
         if (permission == null) return false;
         if (permissionDAO.addPermission(roleId, permissionId)) {
-            if (PearApplicationInitialization.PermissionTemplate != null) {
-                PearApplicationInitialization.PermissionTemplate.remove(roleId);
+            if (cacheContainer.contains(Constant.PEAR_PERMISSION_CACHE_NAME)) {
+                cacheContainer.remove(Constant.PEAR_PERMISSION_CACHE_NAME, roleId);
             }
             return true;
         }

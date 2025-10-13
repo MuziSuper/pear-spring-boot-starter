@@ -93,6 +93,7 @@ public class HookAspect {
             allow = withAdminAuth(verification, user);
             LOG.info("\n---System-level verification operation log----\nUseId: {}\naction: {}", user.getId(), method.getName());
         }
+        // 用户级校验
         if (verification.UserVerify() && adminObject != null && allow) {
             allow = accessCheck(adminObject, request, user);
             LOG.info("\n---User-level verification operation log----\nUseId: {}\naction: {}", user.getId(), method.getName());

@@ -1,45 +1,33 @@
 package cn.muzisheng.pear.service.Impl;
 
+import cn.muzisheng.pear.CacheContainer;
 import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.service.ConfigService;
 import cn.muzisheng.pear.dao.ConfigDAO;
 import cn.muzisheng.pear.entity.Config;
-import cn.muzisheng.pear.initialize.PearApplicationInitialization;
-import jakarta.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.env.Environment;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.stream.Stream;
 
 @Service
 public class ConfigServiceImpl implements ConfigService {
     private final ConfigDAO configDAO;
     private final static Logger LOG = LoggerFactory.getLogger(ConfigServiceImpl.class);
-
-    public ConfigServiceImpl(ConfigDAO configDAO) {
+    private final CacheContainer cacheContainer;
+    public ConfigServiceImpl(ConfigDAO configDAO, CacheContainer cacheContainer) {
         this.configDAO = configDAO;
+        this.cacheContainer = cacheContainer;
     }
 
 
     @Override
     public void setValue(String key, String value, String format, boolean autoload, boolean pub) {
         key = key.toLowerCase();
-        PearApplicationInitialization.configCacheTemplate.remove(key);
+        if(cacheContainer.contains(Constant.PEAR_CONFIG_CACHE_NAME)){
+            cacheContainer.put(Constant.PEAR_CONFIG_CACHE_NAME, key, value);
+        }
         Config config = new Config();
         config.setKey(key);
         config.setValue(value);
@@ -54,8 +42,8 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public String getValue(String key) {
         key = key.toLowerCase();
-        if (PearApplicationInitialization.configCacheTemplate != null) {
-            String value = PearApplicationInitialization.configCacheTemplate.get(key);
+        if (cacheContainer.contains(Constant.PEAR_CONFIG_CACHE_NAME)) {
+            String value = cacheContainer.get(Constant.PEAR_CONFIG_CACHE_NAME, key);
             if (value != null) {
                 return value;
             }
@@ -64,8 +52,8 @@ public class ConfigServiceImpl implements ConfigService {
         if (config == null) {
             return null;
         }
-        if (PearApplicationInitialization.configCacheTemplate != null) {
-            PearApplicationInitialization.configCacheTemplate.put(key, config.getValue());
+        if (cacheContainer.contains(Constant.PEAR_CONFIG_CACHE_NAME)) {
+            cacheContainer.put(Constant.PEAR_CONFIG_CACHE_NAME, key, config.getValue());
         }
         return config.getValue();
     }
@@ -122,8 +110,8 @@ public class ConfigServiceImpl implements ConfigService {
     public void loadAutoLoads() {
         List<Config> configs = configDAO.getConfigsWithTrueAutoload();
         for (Config config : configs) {
-            if (PearApplicationInitialization.configCacheTemplate != null) {
-                PearApplicationInitialization.configCacheTemplate.put(config.getKey(), config.getValue());
+            if (cacheContainer.contains(Constant.PEAR_CONFIG_CACHE_NAME)) {
+                cacheContainer.put(Constant.PEAR_CONFIG_CACHE_NAME, config.getKey(), config.getValue());
             }
         }
     }
@@ -132,8 +120,8 @@ public class ConfigServiceImpl implements ConfigService {
     public Config[] loadPublicConfigs() {
         List<Config> configs = configDAO.getConfigsWithTruePub();
         for (Config config : configs) {
-            if (PearApplicationInitialization.configCacheTemplate != null) {
-                PearApplicationInitialization.configCacheTemplate.put(config.getKey(), config.getValue());
+            if (cacheContainer.contains(Constant.PEAR_CONFIG_CACHE_NAME)) {
+                cacheContainer.put(Constant.PEAR_CONFIG_CACHE_NAME, config.getKey(), config.getValue());
             }
         }
         return configs.toArray(new Config[0]);

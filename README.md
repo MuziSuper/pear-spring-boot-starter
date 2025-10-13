@@ -302,9 +302,9 @@ Pear支持多种配置方式，包括：
 # ==================================
 # 缓存配置 (Cache)
 # ==================================
-app.cacheTemplate.expire=86400000  # 缓存过期时间(毫秒)，默认24小时
-app.cacheTemplate.capacity=20      # 缓存容量，默认20
-app.cacheTemplate.strategy=LRU     # 缓存策略，默认LRU
+app.cacheFactory.expire=86400000  # 缓存过期时间(毫秒)，默认24小时
+app.cacheFactory.capacity=20      # 缓存容量，默认20
+app.cacheFactory.strategy=LRU     # 缓存策略，默认LRU
 
 # ==================================
 # 环境配置 (Site)
@@ -427,10 +427,10 @@ public interface CacheInterface<K,V> {
 
 // 缓存策略模式
 public class CacheStrategy<K, V> {
-  private CacheInterface<K, V> cacheTemplate;
+  private CacheInterface<K, V> cacheFactory;
   
-  public void setCacheStrategy(CacheInterface<K, V> cacheTemplate) {
-    this.cacheTemplate = cacheTemplate;
+  public void setCacheStrategy(CacheInterface<K, V> cacheFactory) {
+    this.cacheFactory = cacheFactory;
   }
   
   // ...其他方法...
@@ -513,9 +513,7 @@ public ResponseEntity<Result<Map<String, Object>>> handleUpdate(...) {
 - [ ] 后端：通过观察者模式对所有事件进行监听，当触发事件并且开发者绑定了观察者时进行事件存储与输出
 - [ ] 后端：解决Admin无法处理用户自定义实体类继承其他类的情况
 - [ ] 后端：完善优化日志输出对warn级别添加黄色
-- [ ] 后端：将缓存容器统一交由AdminContainer进行管理,由cacheName为唯一键K,HK为数据键，HV为数据值,默认配置控制的是默认创建的容器缓存策略，用户可自定义缓存策略
 - [ ] 后端：将项目中所有的直接引用（字符串，如所有admin的接口以及拦截器的拦截路径等）转换为从Config或者Env的符号引用
-- [ ] 后端：解决admin对于使用mybatis联表多对多等字段的注解解析，填充AdminObject
 - [ ] 后端：增加埋点服务或者说优化日志模块，将信息收集存储到消息队列中并对外进行接口输出，使其可以通过观测器进行数据采集
 - [ ] 后端：扩展一个限速器AOP，通过注解可以设置限速频率
 - [ ] 前端：改进密码修改表单安全性
@@ -523,10 +521,7 @@ public ResponseEntity<Result<Map<String, Object>>> handleUpdate(...) {
 - [ ] 前端：添加前端对数据的修改
 
 ## 📝 此版本修改内容
-- [ ] 对权限控制模型进行了迭代3.0版本，设计了权限表角色表与其两种关联表，用户->权限的映射放入了缓存中避免重复查询与恶意攻击
-- [ ] 将config全局配置与env环境的服务层进行解耦，两部分作为Service单独使用
-- [ ] 对前端的token存储进行了优化，取消了cookie存储从而避免将不必要的token发送给服务端
-- [ ] 沿用上上版本，保留了拦截器，但不再使用排除机制而是主动选择admin/*接口进行token校验
+- [ ] 后端：优化了缓存系统，将缓存容器统一交由AdminContainer进行管理，让系统内部与对外服务都可以创建使用不同的缓存
 
 ## 🤝 参与贡献
 

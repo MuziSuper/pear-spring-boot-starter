@@ -1,5 +1,7 @@
 package cn.muzisheng.pear.service.Impl;
 
+import cn.muzisheng.pear.CacheContainer;
+import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.initialize.PearApplicationInitialization;
 import cn.muzisheng.pear.service.EnvService;
 import jakarta.annotation.Nullable;
@@ -17,22 +19,24 @@ import java.util.Properties;
 public class EnvServiceImpl implements EnvService {
     private final static Logger LOG = LoggerFactory.getLogger(EnvServiceImpl.class);
     private final Environment environment;
-    public EnvServiceImpl(Environment environment){
+    private final CacheContainer cacheContainer;
+    public EnvServiceImpl(Environment environment, CacheContainer cacheContainer){
         this.environment = environment;
+        this.cacheContainer = cacheContainer;
     }
     @Override
     @Nullable
     public String getEnv(String key) {
-        if (PearApplicationInitialization.envCacheTemplate != null) {
-            String value = PearApplicationInitialization.envCacheTemplate.get(key);
+        if (cacheContainer.contains(Constant.PEAR_ENV_CACHE_NAME)) {
+            String value = cacheContainer.get(Constant.PEAR_ENV_CACHE_NAME, key);
             if (value != null) {
                 // 刷新缓存
-                PearApplicationInitialization.envCacheTemplate.put(key, value);
+                cacheContainer.put(Constant.PEAR_ENV_CACHE_NAME, key, value);
                 return value;
             }
             value = searchAllEnv(key);
             if (value != null) {
-                PearApplicationInitialization.envCacheTemplate.put(key, value);
+                cacheContainer.put(Constant.PEAR_ENV_CACHE_NAME, key, value);
                 return value;
             }
         }
@@ -83,8 +87,8 @@ public class EnvServiceImpl implements EnvService {
                     properties.load(inputStream);
                     for (String propertiesKey : properties.stringPropertyNames())   {
                         String propertiesValue=properties.getProperty(propertiesKey);
-                        if(PearApplicationInitialization.envCacheTemplate!= null){
-                            PearApplicationInitialization.envCacheTemplate.put(key, propertiesValue);
+                        if(cacheContainer.contains(Constant.PEAR_ENV_CACHE_NAME)){
+                            cacheContainer.put(Constant.PEAR_ENV_CACHE_NAME, key, propertiesValue);
                         }
                         if(propertiesKey.equalsIgnoreCase(key)){
                             map.put(key, propertiesValue);
