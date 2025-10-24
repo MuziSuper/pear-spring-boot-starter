@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 /**
- * @apiNote 权限校验, 主要分为系统级权限校验和用户级权限校验，对Operation行为
+ * 权限校验, 主要分为系统级权限校验和用户级权限校验，对Operation行为
  **/
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

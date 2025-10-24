@@ -13,6 +13,7 @@ import cn.muzisheng.pear.service.ConfigService;
 import cn.muzisheng.pear.service.PermissionService;
 import cn.muzisheng.pear.service.RoleService;
 import cn.muzisheng.pear.service.UserService;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -72,9 +73,7 @@ public class HookAspect {
             }
         }
 
-        if (request == null) {
-            throw new IllegalException("Request not found.");
-        }
+        if (request == null) throw new IllegalException("Request not found.");
 
         // 获取当前用户
         User user = userService.currentUser(request);
@@ -107,6 +106,7 @@ public class HookAspect {
      *
      * @param adminObject 通用类对象
      * @param request     请求
+     * @param user        当前用户
      * @throws ForbiddenException 身份校验不通过
      **/
     private boolean accessCheck(AdminObject adminObject, HttpServletRequest request, User user) {
@@ -122,13 +122,15 @@ public class HookAspect {
 
     /**
      * 系统级校验用户是否登录，未登录则抛出异常
+     *
+     * @param verification 注解
+     * @param user         当前用户
      * @throws ForbiddenException 用户权限不足
      **/
     private boolean withAdminAuth(Verification verification, User user) {
         String permissionCode = verification.Permission();
-        if(permissionCode.equals(Constant.ADMIN_NULL)) return true;
+        if (permissionCode.equals(Constant.ADMIN_NULL)) return true;
         Permission permission = permissionService.getPermissionByCode(permissionCode);
-        if(permissionService.hasPermission(user.getId(), permission.getId())) return true;
-        else throw new ForbiddenException("forbidden");
+        return permissionService.hasPermission(user.getId(), permission.getId());
     }
 }

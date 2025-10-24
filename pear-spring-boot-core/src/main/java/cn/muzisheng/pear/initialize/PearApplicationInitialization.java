@@ -1,7 +1,6 @@
 package cn.muzisheng.pear.initialize;
 
 import cn.muzisheng.pear.CacheContainer;
-import cn.muzisheng.pear.CacheFactory;
 import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.config.CacheConfig;
 import cn.muzisheng.pear.dao.UserDAO;
@@ -150,19 +149,6 @@ public class PearApplicationInitialization implements CommandLineRunner {
 
         // 构建入口
         AdminContainer.buildAdminObjects(AdminContainer.getAllAdminObjects());
-        userAddFunc();
-    }
-
-    private void userAddFunc() {
-        AdminContainer.AdminFactory adminFactory = new AdminContainer.AdminFactory(User.class);
-        adminFactory.setBeforeUpdate((request, adminObject, object) -> {
-            if (object.containsKey("password")) {
-                Object password = object.get("password");
-                if (password instanceof String pwdStr && !pwdStr.isEmpty()) {
-                    object.put("password", userDAO.HashPassword(pwdStr));
-                }
-            }
-        });
     }
 
 

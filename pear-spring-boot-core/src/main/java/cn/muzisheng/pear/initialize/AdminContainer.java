@@ -2,6 +2,7 @@ package cn.muzisheng.pear.initialize;
 
 import cn.muzisheng.pear.CamelToSnakeUtil;
 import cn.muzisheng.pear.annotation.PearField;
+import cn.muzisheng.pear.exception.AdminErrorException;
 import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.handler.*;
 import cn.muzisheng.pear.model.*;
@@ -37,16 +38,26 @@ public class AdminContainer {
     }
 
     /**
-     * 添加adminObject的tableName字段进入adminObjectMap
+     * 添加adminObject进入Pear容器
      **/
     protected static void addAdminObject(AdminObject adminObject) {
         if (adminObjectMap.containsKey(adminObject.getTableName())) {
-            LOG.warn("The database table named \"" + adminObject.getTableName() + "\" already exists.");
+            throw new AdminErrorException("The databases table named "+adminObject.getTableName()+" has been injected into the Pear container. Please check for any conflicts in the entity class names.");
         }
         adminObjects.add(adminObject);
         // tableName为唯一,覆盖掉原先的表名重复的adminObject
         adminObjectMap.put(adminObject.getTableName(), adminObject);
     }
+    /**
+     * 添加多个adminObject进入Pear容器
+     */
+    protected static void addAdminObjects(List<AdminObject> objects) {
+        for (AdminObject adminObject : objects) {
+            addAdminObject(adminObject);
+        }
+    }
+
+
 
     /**
      * 获取adminObject

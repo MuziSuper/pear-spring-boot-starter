@@ -20,12 +20,11 @@ import java.util.concurrent.TimeUnit;
  * 缓存工厂类，根据不同缓存配置创建缓存并存储在缓存容器中
  **/
 @Component
-public class CacheFactory {
+class CacheFactory {
     private final CacheConfig cacheConfig;
     private final RedisSupport redisSupport;
 
-    @Autowired
-    public CacheFactory(CacheConfig cacheConfig, @Nullable RedisSupport redisSupport){
+    CacheFactory(CacheConfig cacheConfig, @Nullable RedisSupport redisSupport){
         this.cacheConfig = cacheConfig;
         this.redisSupport = redisSupport;
     }
@@ -42,7 +41,7 @@ public class CacheFactory {
      * @return CacheTemplate对象
      * @throws CacheException 选择Redis缓存策略但未配置RedisTemplate对象
      **/
-    public <K,V> CacheTemplate<K,V> createCacheTemplate(long expire, TimeUnit timeUnit, int capacity, CacheStrategyEnum strategy, Class<K> keyClass, Class<V> valueClass){
+     <K,V> CacheTemplate<K,V> createCacheTemplate(long expire, TimeUnit timeUnit, int capacity, CacheStrategyEnum strategy, Class<K> keyClass, Class<V> valueClass){
             if (capacity < 0) {
                 capacity=cacheConfig.getCapacity();
             }

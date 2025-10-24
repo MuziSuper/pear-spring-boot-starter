@@ -59,7 +59,6 @@ public class PermissionServiceImpl implements PermissionService {
             cacheContainer.put(Constant.PEAR_PERMISSION_CACHE_NAME, userId, permissionsIds);
         }
         return permissionsIds;
-
     }
 
     @Override
@@ -149,11 +148,17 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public boolean removePermission(long roleId, long permissionId) {
+        Role role = roleDAO.getRoleById(roleId);
+        if(role==null) return false;
+        if(Constant.ROLE_SUPERUSER.equals(role.getRoleName())) return false;
         return permissionDAO.removePermission(roleId, permissionId);
     }
 
     @Override
     public boolean removePermissions(long roleId, long[] permissionIds) {
+        Role role = roleDAO.getRoleById(roleId);
+        if(role==null) return false;
+        if(Constant.ROLE_SUPERUSER.equals(role.getRoleName())) return false;
         return permissionDAO.removePermissions(roleId, permissionIds);
     }
 

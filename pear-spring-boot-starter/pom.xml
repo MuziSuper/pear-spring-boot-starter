@@ -6,8 +6,10 @@
     <parent>
         <groupId>cn.muzisheng.pear</groupId>
         <artifactId>pear</artifactId>
-        <version>1.2.2</version>
+        <version>1.3.1</version>
     </parent>
+    <description>web</description>
+    <url>https://github.com/muzisheng/pear</url>
     <name>pear-spring-boot-starter</name>
     <artifactId>pear-spring-boot-starter</artifactId>
     <packaging>jar</packaging>

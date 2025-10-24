@@ -1,5 +1,6 @@
 package cn.muzisheng.pear.service.Impl;
 
+import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.dao.RoleDAO;
 import cn.muzisheng.pear.entity.Role;
 import cn.muzisheng.pear.service.RoleService;
@@ -31,9 +32,15 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public boolean deleteRole(long roleId) {
+        Role role = getRole(roleId);
+        if(role==null) return false;
+        if (pearHasRole(role)) return false;
         return roleDAO.deleteRole(roleId);
     }
-
+    private boolean pearHasRole(Role role) {
+        String roleName = role.getRoleName();
+        return Constant.ROLE_SUPERUSER.equals(roleName)||Constant.ROLE_STAFF.equals(roleName)||Constant.ROLE_SECRETARY.equals(roleName)||Constant.ROLE_FINANCE.equals(roleName)||Constant.ROLE_CUSTOMER.equals(roleName);
+    }
     @Override
     public Role getRole(long roleId) {
         return roleDAO.getRoleById(roleId);
@@ -63,6 +70,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public boolean deleteUserRole(long userId, long roleId) {
+        Role role = getRole(roleId);
+        if (role==null||Constant.ROLE_SUPERUSER.equals(role.getRoleName())) return false;
         return roleDAO.removeRole(userId, roleId);
     }
 
@@ -75,6 +84,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void clearUserRole(long userId) {
+        long[] roleIds =getRoles(userId);
+        for(long roleId:roleIds){
+            Role role = getRole(roleId);
+            if (Constant.ROLE_SUPERUSER.equals(role.getRoleName())) return;
+        }
         roleDAO.clearUserRole(userId);
     }
 

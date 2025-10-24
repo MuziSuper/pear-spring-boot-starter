@@ -28,6 +28,8 @@ public class PearBeanInitialization implements BeanPostProcessor {
         if (bean.getClass().isAnnotationPresent(PearObject.class)) {
             Class<?> clazz = bean.getClass();
             PearObject pearObjectAnnotation = clazz.getAnnotation(PearObject.class);
+            if(!pearObjectAnnotation.isLoad()) return bean;
+
             AdminObject object = new AdminObject();
             object.setModel(clazz);
             object.setModelElem(bean);
@@ -65,8 +67,16 @@ public class PearBeanInitialization implements BeanPostProcessor {
             Set<String> primaryKeys = new HashSet<>();
             Set<String> uniqueKeys = new HashSet<>();
 
-            Field[] fields = clazz.getDeclaredFields();
-            for (Field field : fields) {
+            HashSet<Field> fieldsSet = new HashSet<>();
+            Class<?> tempClass = clazz;
+            while(tempClass != Object.class){
+                Field[] superFields = tempClass.getDeclaredFields();
+                fieldsSet.addAll(Arrays.asList(superFields));
+                tempClass = tempClass.getSuperclass();
+
+            }
+
+            for (Field field : fieldsSet) {
                 if (field.isAnnotationPresent(PearField.class)) {
                     PearField pearFieldAnnotation = field.getAnnotation(PearField.class);
                     // 对name的处理，优先使用Column注解的name字段去除反引号，其次是原属性名

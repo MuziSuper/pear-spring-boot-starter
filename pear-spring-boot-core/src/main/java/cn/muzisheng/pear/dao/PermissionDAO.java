@@ -63,6 +63,20 @@ public class PermissionDAO {
         return permissionIds;
     }
     /**
+     * 获取权限Id集
+     * @param roleId 角色Ids
+     **/
+    public long[] getPermissions(long[] roleId) {
+        QueryWrapper<RolePermissionAss> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role_id", roleId);
+        List<RolePermissionAss> rolePermissionAsses =rolePermissionAssMapper.selectList(queryWrapper);
+        long[] permissionIds = new long[rolePermissionAsses.size()];
+        for (int i = 0; i < rolePermissionAsses.size(); i++) {
+            permissionIds[i] = rolePermissionAsses.get(i).getPermissionId();
+        }
+        return permissionIds;
+    }
+    /**
      * 更新权限,主键Id为主键进行查找更新描述与权限限定词
      * @param permission 权限
      **/

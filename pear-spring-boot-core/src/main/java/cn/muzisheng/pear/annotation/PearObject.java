@@ -46,4 +46,8 @@ public @interface PearObject {
      * 是否显示此表
      **/
     boolean isInvisible() default false;
+    /**
+     * 是否将此实体类加载进AdminObject
+     */
+    boolean isLoad() default true;
 }

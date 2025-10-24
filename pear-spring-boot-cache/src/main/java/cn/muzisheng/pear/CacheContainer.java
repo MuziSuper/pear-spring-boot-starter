@@ -4,6 +4,7 @@ import cn.muzisheng.pear.config.CacheConfig;
 import cn.muzisheng.pear.exception.CacheException;
 import cn.muzisheng.pear.model.CacheStrategyEnum;
 import jakarta.annotation.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,6 @@ public class CacheContainer {
     private final CacheFactory cacheFactory;
     private final CacheConfig cacheConfig;
     private final ConcurrentHashMap<String, CacheTemplate<?, ?>> cacheTemplateMap = new ConcurrentHashMap<>();
-
     public CacheContainer(CacheFactory cacheFactory, CacheConfig cacheConfig) {
         this.cacheFactory = cacheFactory;
         this.cacheConfig = cacheConfig;
@@ -30,21 +30,22 @@ public class CacheContainer {
      * @param strategy   缓存策略
      * @param keyClass   缓存键类型
      * @param valueClass 缓存值类型
+     * @param <K>         缓存键类型
+     * @param <V>         缓存值类型
      * @throws CacheException 如果原本存在该缓存名
      **/
-    @SuppressWarnings("unchecked")
-    public <K, V> CacheTemplate<K, V> createCache(String cacheName, long expire, TimeUnit timeUnit, int capacity, CacheStrategyEnum strategy, Class<K> keyClass, Class<V> valueClass) {
-        if (strategy == null || expire < 0 || capacity < 0) return null;
+    public <K, V> boolean createCache(String cacheName, long expire, TimeUnit timeUnit, int capacity, CacheStrategyEnum strategy, Class<K> keyClass, Class<V> valueClass) {
+        if (strategy == null || expire < 0 || capacity < 0) return false;
         if (StringUtil.isEmpty(cacheName)) cacheName = RandomStrUtil.getRandomStr(10);
         CacheTemplate<K, V> cacheTemplate = cacheFactory.createCacheTemplate(expire, timeUnit, capacity, strategy, keyClass, valueClass);
         CacheTemplate<?, ?> existing = cacheTemplateMap.putIfAbsent(cacheName, cacheTemplate);
         if (existing != null) {
-            if (existing.isCompatible(keyClass, valueClass))
+            if (!existing.getKeyClass().equals(keyClass)||!existing.getValueClass().equals(valueClass))
                 throw new CacheException("The cache already exists, but there is an error in the type matching of the key-value pair.");
-            return (CacheTemplate<K, V>) existing;
+            return true;
         }
         cacheTemplateMap.put(cacheName, cacheTemplate);
-        return cacheTemplate;
+        return true;
     }
 
     /**
@@ -53,17 +54,21 @@ public class CacheContainer {
      * @param cacheName  缓存名称，主键值, 若传入字符串为空则随机生成一个十位随机字符串
      * @param keyClass   缓存键类型
      * @param valueClass 缓存值类型
+     * @param <K>         缓存键类型
+     * @param <V>         缓存值类型
      * @throws CacheException 如果原本存在该缓存名
      **/
-    public <K, V> CacheTemplate<K, V> createCache(String cacheName, Class<K> keyClass, Class<V> valueClass) {
+    public <K, V> boolean createCache(String cacheName, Class<K> keyClass, Class<V> valueClass) {
         return createCache(cacheName, cacheConfig.getExpire(), cacheConfig.getTimeUnit(), cacheConfig.getCapacity(), cacheConfig.getStrategy(), keyClass, valueClass);
     }
 
     /**
-     * 获取对应缓存中key映射的值，若缓存不存在则返回null。若你使用放入缓存内的不同值类型来接收返回值，则会抛出无法解决的ClassCastException异常，推荐使用get(String cacheName, K key, Class<V> valueClazz)方法。
+     * 获取对应缓存中key映射的值，若缓存不存在则返回null。若你使用放入缓存内的不同值类型来接收返回值，则会抛出无法解决的ClassCastException异常，推荐使用get(String cacheName, K key, Class valueClazz)方法。
      *
      * @param cacheName 缓存名称
      * @param key       缓存key
+     * @param <K>         缓存键类型
+     * @param <V>         缓存值类型
      * @return 缓存值
      * @throws CacheException 如果缓存键值对类型不匹配
      **/
@@ -89,6 +94,8 @@ public class CacheContainer {
      * @param cacheName 缓存名称
      * @param key       缓存key
      * @param valueClazz 缓存值类型
+     * @param <K>         缓存键类型
+     * @param <V>         缓存值类型
      * @return 缓存值
      * @throws CacheException 如果缓存键值对类型不匹配
      **/
@@ -110,13 +117,14 @@ public class CacheContainer {
         }
     }
 
-
     /**
      * 向缓存中添加缓存键值对
      *
      * @param cacheName 缓存名称
      * @param key       缓存key
      * @param value     缓存值
+     * @param <K>         缓存键类型
+     * @param <V>         缓存值类型
      * @throws CacheException 如果缓存键值对类型不匹配
      **/
     @SuppressWarnings("unchecked")
@@ -136,6 +144,7 @@ public class CacheContainer {
      *
      * @param cacheName 缓存名称
      * @param key       缓存key
+     * @param <K>         缓存键类型
      * @throws CacheException 如果缓存键值对类型不匹配
      **/
     @SuppressWarnings("unchecked")
@@ -173,6 +182,7 @@ public class CacheContainer {
      *
      * @param cacheName 缓存名称
      * @param key       缓存key
+     * @param <K>         缓存键类型
      * @throws CacheException 如果缓存键值对类型不匹配
      **/
     @SuppressWarnings("unchecked")
@@ -196,19 +206,4 @@ public class CacheContainer {
         cacheTemplate.clear();
     }
 
-//    public static void main(String[] args) {
-//        CacheConfig cacheConfig = new CacheConfig.Builder()
-//                .expire(10)
-//                .capacity(100)
-//                .strategy(CacheStrategyEnum.LFU)
-//                .build();
-//        CacheFactory cacheFactory = new CacheFactory(null, cacheConfig);
-//        CacheContainer cacheContainer = new CacheContainer(cacheFactory, cacheConfig);
-//        cacheContainer.createCache("test", String.class, int[].class,null);
-//        cacheContainer.put("test", "testKey", new int[]{1,2});
-//       int[] value1 = cacheContainer.get("test", "testKey");
-//        System.out.println(Arrays.toString(value1));
-//        int[] value2 =cacheContainer.get("test", "testKey", int[].class);
-//        System.out.println(Arrays.toString(value2));
-//    }
 }

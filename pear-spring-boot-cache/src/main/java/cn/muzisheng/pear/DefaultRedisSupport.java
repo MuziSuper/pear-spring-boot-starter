@@ -8,13 +8,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConditionalOnClass(name = "org.springframework.data.redis.core.RedisTemplate")
 public class DefaultRedisSupport implements RedisSupport{
     private final RedisTemplate<String, Object> redisTemplate;
     public DefaultRedisSupport(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
-
 
     @Override
     public RedisTemplate<String, Object> getRedisTemplate() {

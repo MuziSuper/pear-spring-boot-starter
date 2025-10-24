@@ -38,16 +38,7 @@ public class RedisCacheTemplate<K, V> implements CacheTemplate<K, V> {
     public String buildKey(K key) {
         return CACHE_PREFIX + ":" + key;
     }
-    /**
-     * 判断缓存的key和value的类型是否匹配
-     * @param keyClass 缓存的key的类型
-     * @param valueClass 缓存的value的类型
-     * @return 如果匹配则返回true，否则返回false
-     **/
-    @Override
-    public<HK,HV> boolean isCompatible(Class<HK> keyClass, Class<HV> valueClass){
-        return this.keyClass.isAssignableFrom(keyClass)&&this.valueClass.isAssignableFrom(valueClass);
-    }
+
     @Override
     public Class<K> getKeyClass() {
         return this.keyClass;

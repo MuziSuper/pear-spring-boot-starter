@@ -44,17 +44,6 @@ public class LFUCacheTemplate<K, V> implements CacheTemplate<K, V> {
         this(config.getCapacity(), config.getExpire(), config.getTimeUnit(), keyClass, valueClass);
     }
 
-    /**
-     * 判断缓存的key和value的类型是否匹配
-     *
-     * @param keyClass   缓存的key的类型
-     * @param valueClass 缓存的value的类型
-     * @return 如果匹配则返回true，否则返回false
-     **/
-    @Override
-    public <HK, HV> boolean isCompatible(Class<HK> keyClass, Class<HV> valueClass) {
-        return this.keyClass.isAssignableFrom(keyClass) && this.valueClass.isAssignableFrom(valueClass);
-    }
 
     @Override
     public V get(K key) {
