@@ -27,6 +27,7 @@ public class Constant {
     public static final int ILLEGAL_EXCEPTION = 400;
     public static final int UNAPPROVED_EXCEPTION = 401;
     public static final int FORBIDDEN_EXCEPTION = 403;
+    public static final int NOT_FOUND_EXCEPTION = 404;
 
     // 缓存类型
     public static final String CACHE_TYPE_LRU = "LRU";
@@ -42,6 +43,8 @@ public class Constant {
 
     // session的用户id键名
     public static final String SESSION_USER_ID = "_pear_uid";
+    // 当前请求中的用户对象键名
+    public static final String REQUEST_CURRENT_USER = "_pear_current_user";
 
     // token默认配置
     public static final long TOKEN_DEFAULT_EXPIRE_DAY = 7 * 24 * 60 * 60 * 1000L;

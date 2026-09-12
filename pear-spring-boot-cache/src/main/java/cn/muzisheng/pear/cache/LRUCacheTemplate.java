@@ -51,7 +51,7 @@ public class LRUCacheTemplate<K,V> implements CacheTemplate<K,V> {
     }
     @Override
     public V get(K key){
-        readLock.lock();
+        writeLock.lock();
         try{
             if(!cache.containsKey(key)){
                 return null;
@@ -62,11 +62,11 @@ public class LRUCacheTemplate<K,V> implements CacheTemplate<K,V> {
                 expiredCacheValue.setLastTime(System.currentTimeMillis());
                 return expiredCacheValue.getVal();
             }else {
-                remove(key);
+                cache.remove(key);
                 return null;
             }
         }finally {
-            readLock.unlock();
+            writeLock.unlock();
         }
     }
     @Override

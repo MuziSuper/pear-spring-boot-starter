@@ -7,9 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@lombok.EqualsAndHashCode(callSuper = false)
 @TableName("user_role_ass")
 @Entity(name = "user_role_ass")
-public class UserRoleAss {
+public class UserRoleAss extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -8,13 +8,14 @@ import lombok.Data;
 
 @Entity(name = "permission")
 @Data
+@lombok.EqualsAndHashCode(callSuper = false)
 @TableName("permission")
 @PearObject(
         desc = "Permission Information.",
         path = "permission",
         pluralName = "permissions"
 )
-public class Permission {
+public class Permission extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @PearField(isPrimaryKey = true,isEdit = false)

@@ -3,13 +3,13 @@ package cn.muzisheng.pear.exception;
  * 当前用户权限不足
  * code：403
  **/
-public class ForbiddenException extends RuntimeException{
-        public ForbiddenException(){}
+public class ForbiddenException extends BaseException{
+        public ForbiddenException(){ super(ErrorCode.FORBIDDEN); }
         public ForbiddenException(String message){
-            super(message);
+            super(ErrorCode.FORBIDDEN, message);
         }
         public ForbiddenException(String message, Throwable cause){
-            super(message, cause);
+            super(ErrorCode.FORBIDDEN, message, cause);
         }
 
 }

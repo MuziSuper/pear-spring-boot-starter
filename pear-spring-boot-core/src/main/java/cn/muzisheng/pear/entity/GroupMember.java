@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
  * 组成员
  **/
 @Data
+@lombok.EqualsAndHashCode(callSuper = false)
 @Entity(name = "`group_member`")
 @TableName("group_member")
 @PearObject(
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
         group = "group"
 
 )
-public class GroupMember {
+public class GroupMember extends BaseEntity {
     /**
      * 组成员id
      **/

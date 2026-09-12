@@ -19,13 +19,14 @@ import java.time.LocalDateTime;
  **/
 @Entity(name = "product")
 @Data
+@lombok.EqualsAndHashCode(callSuper = false)
 @TableName("product")
 @PearObject(
         desc = "Product Information.",
         path = "/product",
         pluralName = "products"
 )
-public class Product {
+public class Product extends BaseEntity {
     /**
      * 货品id
      **/

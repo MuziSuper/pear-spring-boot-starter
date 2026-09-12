@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
  * 用户组
  **/
 @Data
+@lombok.EqualsAndHashCode(callSuper = false)
 @Entity(name = "`group`")
 @TableName("`group`")
 @PearObject(
@@ -22,7 +23,7 @@ import java.time.LocalDateTime;
         path = "/group",
         pluralName = "groups"
 )
-public class Group {
+public class Group extends BaseEntity {
     /**
      * 用户组id
      **/

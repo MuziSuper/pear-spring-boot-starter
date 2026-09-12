@@ -1,58 +1,57 @@
-# Pear 单体应用快速开发框架
+# Pear Spring Boot Starter
 
 <div align="center">
-    <img src="favicon.svg" alt="Pear Logo" width="200" height="200">
-    <h1>Pear Spring Boot Starter</h1>
-    <p>🚀 专为Java开发者设计的单体应用快速开发框架</p>
-    <p>
-        <a href="README.md">中文</a> | <a href="README_EN.md">English</a>
-    </p>
-    <p>
-        <a href="https://spring.io/projects/spring-boot">
-            <img src="https://img.shields.io/badge/Spring%20Boot-3.3.x-brightgreen.svg" alt="Spring Boot">
-        </a>
-        <a href="https://www.oracle.com/java/">
-            <img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="JDK">
-        </a>
-        <a href="https://mybatis.org/">
-            <img src="https://img.shields.io/badge/MyBatis-3.5.x-yellow.svg" alt="MyBatis">
-        </a>
-        <a href="https://maven.apache.org/">
-            <img src="https://img.shields.io/badge/Maven-3.9+-purple.svg" alt="Maven">
-        </a>
-        <a href="https://github.com/MuziSuper/pear-spring-boot-starter/releases">
-            <img src="https://img.shields.io/github/v/release/MuziSuper/pear-spring-boot-starter" alt="Release">
-        </a>
-        <a href="https://github.com/MuziSuper/pear-spring-boot-starter/blob/main/LICENSE">
-            <img src="https://img.shields.io/github/license/MuziSuper/pear-spring-boot-starter" alt="License">
-        </a>
-    </p>
-    <p>
-        <a href="https://github.com/MuziSuper/pear-spring-boot-starter/stargazers">
-            <img src="https://img.shields.io/github/stars/MuziSuper/pear-spring-boot-starter?style=social" alt="GitHub stars">
-        </a>
-        <a href="https://github.com/MuziSuper/pear-spring-boot-starter/network">
-            <img src="https://img.shields.io/github/forks/MuziSuper/pear-spring-boot-starter?style=social" alt="GitHub forks">
-        </a>
-    </p>
+  <img src="favicon.svg" alt="Pear Logo" width="160" height="160">
+  <p>面向 Spring Boot 单体应用的快速后台管理 starter</p>
+  <p><a href="README.md">中文</a> | <a href="README_EN.md">English</a></p>
+  <p>
+    <a href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/badge/Spring%20Boot-3.3.x-brightgreen.svg" alt="Spring Boot"></a>
+    <a href="https://www.oracle.com/java/"><img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="JDK"></a>
+    <a href="https://mybatis.org/"><img src="https://img.shields.io/badge/MyBatis--Plus-3.5.x-yellow.svg" alt="MyBatis-Plus"></a>
+    <a href="https://maven.apache.org/"><img src="https://img.shields.io/badge/Maven-3.9+-purple.svg" alt="Maven"></a>
+  </p>
 </div>
 
-## ✨ 特性
+## 项目简介
 
-- 🛠️ **开箱即用**: 快速集成到Spring Boot项目中
-- 🎨 **可视化后台**: 内置美观的管理界面
-- ⚡ **高效开发**: 通过注解自动生成CRUD接口
-- 🔄 **钩子机制**: 支持数据处理前后自定义逻辑
-- 📊 **日志系统**: 多级别日志记录与归档
-- 🔥 **缓存系统**: 支持LRU与LFU缓存策略与Redis模式
-- 🔐 **权限控制**: 用户态和系统态权限分级校验
-- 🧠 **智能配置**: 支持properties文件与配置类双模式配置
+Pear 是一个用于快速构建单体应用后台管理能力的 Spring Boot starter。业务项目引入 starter 后，可以通过 `@PearApplication` 启用自动配置，并使用 `@PearObject`、`@PearField` 标注实体类，让框架自动收集模型元数据，生成统一的后台 CRUD 能力、权限校验、用户登录注册页面和基础配置。
 
-## 📦 快速开始
+核心能力：
 
-### Maven依赖
+- 注解驱动的后台模型注册
+- 内置登录、注册、仪表盘页面
+- 通用 `/admin/{model}` CRUD 接口
+- RBAC 角色权限与 `@Verification` 校验切面
+- LRU、LFU、Redis 三类缓存实现
+- 可通过 properties 或自定义 Bean 覆盖默认配置
+- Maven Central 发布所需的 sources、javadoc、GPG 签名流程
 
-```properties
+## 模块结构
+
+| 模块 | 说明 |
+| --- | --- |
+| `pear-spring-boot-starter` | 对外 starter，包含自动配置入口、页面模板、静态资源和 SQL 脚本 |
+| `pear-spring-boot-basic` | 配置对象、配置属性、异常与自动配置 |
+| `pear-spring-boot-core` | 注解、实体、DAO、Service、AdminObject 容器、权限切面 |
+| `pear-spring-boot-web` | Web API、页面路由、JWT 拦截器 |
+| `pear-spring-boot-cache` | 缓存容器、缓存工厂、LRU/LFU/Redis 实现 |
+| `pear-spring-boot-utils` | JWT、时间、字符串、ID、命名转换等工具 |
+| `pear-spring-boot-constant` | 框架常量 |
+
+## 环境要求
+
+- JDK 17 或更高版本
+- Maven 3.9 或更高版本
+- Spring Boot 3.3.x
+- MySQL 或其他兼容 JPA/MyBatis-Plus 的数据源
+
+项目统一使用 Java 17 作为发布字节码基线，父 POM 通过 `maven.compiler.release=17` 固定输出版本；即使 Maven 运行在 JDK 21、JDK 25 等较新 JDK 上，也会产出 Java 17 兼容的 jar。
+
+## 快速开始
+
+### 1. 添加依赖
+
+```xml
 <dependency>
   <groupId>cn.muzisheng.pear</groupId>
   <artifactId>pear-spring-boot-starter</artifactId>
@@ -60,22 +59,13 @@
 </dependency>
 ```
 
-## 🖥️ 界面预览
+### 2. 启用 Pear
 
-| 登录页面 | 注册页面 | 仪表盘 |
-|---------|---------|--------|
-| ![登录页面](login.png) | ![注册页面](register.png) | ![仪表盘](dashboard.png) |
-
-**默认访问路径:**
-- 登录: `http://localhost:8080/auth/login`
-- 注册: `http://localhost:8080/auth/register`
-- 仪表盘: `http://localhost:8080/auth/dashboard`
-
-## 📚 使用指南
-
-### 启用Pear
-1. 通过在主启动类上添加`@PearApplication`注解启用Pear的所有条件化配置；
 ```java
+import cn.muzisheng.pear.PearApplication;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 @SpringBootApplication
 @PearApplication
 public class DemoApplication {
@@ -84,11 +74,40 @@ public class DemoApplication {
     }
 }
 ```
-2. 在properties配置文件中添加`spring.jpa.hibernate.ddl-auto= update`与MySQL数据库配置，会自动在该MySQL库中创建多个框架需要使用到的基础表结构；
 
-### 实体类定义
+### 3. 配置数据源
 
-使用[@PearObject](file:///Applications/LocalGit/pear-spring-boot-starter/pear-spring-boot-core/src/main/java/cn/muzisheng/pear/annotation/PearObject.java#L7-L46)和[@PearField](file:///Applications/LocalGit/pear-spring-boot-starter/pear-spring-boot-core/src/main/java/cn/muzisheng/pear/annotation/PearField.java#L9-L62)注解定义实体类，框架会自动生成对应的实体的增删改查接口，并在后台页面中提供数据管理，根据配置信息对应字段会有相应的状态。
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/pear_demo?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+spring.datasource.username=root
+spring.datasource.password=your_password
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+```
+
+### 4. 创建超级管理员
+
+启动应用时传入 `-u` 和 `-p` 参数即可创建或更新超级管理员密码：
+
+```bash
+java -jar demo.jar -u admin@example.com -p your_password
+```
+
+默认页面：
+
+| 页面 | 地址 |
+| --- | --- |
+| 登录 | `http://localhost:8080/auth/login` |
+| 注册 | `http://localhost:8080/auth/register` |
+| 仪表盘 | `http://localhost:8080/auth/dashboard` |
+| 设置 | `http://localhost:8080/auth/settings` |
+
+## 实体接入
+
+实体类使用 `@PearObject` 标记为后台模型，字段使用 `@PearField` 描述前端展示、编辑、过滤、排序和搜索行为。实体仍可同时使用 JPA 和 MyBatis-Plus 注解。
+
 ```java
 package cn.muzisheng.pear.example;
 
@@ -103,433 +122,291 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-/**
- * 示例类展示如何使用@PearObject和@PearField注解
- */
 @Data
 @Component
-@TableName("example_demo")
+@Entity(name = "product")
+@TableName("product")
 @PearObject(
-    TableName = "custom_table_name",  // 自定义表名
-    group = "example",               // 分组
-    desc = "这是一个示例类，用于展示Pear注解的使用",  // 描述
-    path = "/example/demo",          // 访问路径
-    editPage = "/demo/edit",         // 编辑页面地址
-    listPage = "/demo/list",         // 列表页面地址
-    pluralName = "demos",            // 复数名称
-    iconUrl = "/icons/demo.png",     // 图标URL
-    isInvisible = false              // 是否隐藏
+    group = "shop",
+    desc = "Product information.",
+    path = "/product",
+    pluralName = "products"
 )
-public class ExampleDemo {
-
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @PearField(
-        isPrimaryKey = true,         // 主键
-        isShow = true,               // 显示
-        isEdit = false,              // 不可编辑
-        isFilterable = true,         // 可过滤
-        isOrderable = true,          // 可排序
-        isSearchable = true,         // 可搜索
-        isRequire = true,            // 必填
-        placeholder = "自动生成ID",    // 提示信息
-        label = "ID"                 // 显示标签
-    )
+    @PearField(isPrimaryKey = true, isEdit = false, label = "ID")
     private Long id;
 
-    @TableField(value = "demo_name")
-    @PearField(
-        isShow = true,
-        isEdit = true,
-        isFilterable = true,
-        isOrderable = true,
-        isSearchable = true,
-        isRequire = true,
-        placeholder = "请输入名称",
-        label = "名称",
-        isUniqueKey = true           // 唯一键
-    )
+    @Column(nullable = false)
+    @PearField(label = "Name", placeholder = "Product name")
     private String name;
 
-    @PearField(
-        isShow = true,
-        isEdit = true,
-        isFilterable = false,
-        isOrderable = false,
-        isSearchable = true,
-        isRequire = false,
-        placeholder = "请输入描述",
-        label = "描述"
-    )
-    private String description;
+    @PearField(label = "Price", isFilterable = true, isOrderable = true)
+    private Double price;
 
-    @PearField(
-        isShow = true,
-        isEdit = true,
-        isFilterable = true,
-        isOrderable = true,
-        isSearchable = false,
-        isRequire = false,
-        placeholder = "是否激活",
-        label = "状态"
-    )
-    private Boolean active;
-
-    @TableField(fill = FieldFill.INSERT, value = "create_time")
-    @PearField(
-        isShow = true,
-        isEdit = false,
-        isAutoInsertTime = true,     // 自动插入时间
-        label = "创建时间"
-    )
-    private LocalDateTime createTime;
-
-    @TableField(fill = FieldFill.INSERT_UPDATE, value = "update_time")
-    @PearField(
-        isShow = true,
-        isEdit = false,
-        isAutoUpdateTime = true,     // 自动更新时间
-        label = "更新时间"
-    )
-    private LocalDateTime updateTime;
+    @TableField(fill = FieldFill.INSERT, value = "gmt_created")
+    @Column(name = "gmt_created")
+    @PearField(isEdit = false, isAutoInsertTime = true, label = "Created At")
+    private LocalDateTime gmtCreated;
 
     @Transient
-    @PearField(
-        isShow = false,              // 不显示
-        isEdit = false,              // 不可编辑
-        notColumn = true             // 非数据库字段
-    )
-    private String tempField;
+    private String displayText;
 }
 ```
 
+### `@PearObject`
 
-### 注解说明
-#### PearObject 注解
+| 属性 | 默认值 | 说明 |
+| --- | --- | --- |
+| `TableName` | `""` | 数据库表名。优先级低于 JPA `@Entity(name=...)` 和 MyBatis-Plus `@TableName` |
+| `group` | `""` | 后台模型分组 |
+| `desc` | `""` | 模型描述 |
+| `path` | `""` | 模型访问路径 |
+| `editPage` | `""` | 自定义编辑页面地址 |
+| `listPage` | `""` | 自定义列表页面地址 |
+| `pluralName` | `""` | 模型复数名称 |
+| `iconUrl` | `""` | 模型图标地址 |
+| `isInvisible` | `false` | 是否在后台隐藏 |
+| `isLoad` | `true` | 是否加载进 Pear 后台模型容器 |
 
-PearObject 是一个用于标注实体类的注解，用于定义与数据库表相关的元数据信息。
+### `@PearField`
 
-#### 功能说明
-- 标记实体类为 Pear 框架管理的对象
-- 定义实体对应的数据库表名、访问路径等配置
-- 支持配置前端展示相关属性，如页面地址、图标等
+| 属性 | 默认值 | 说明 |
+| --- | --- | --- |
+| `isShow` | `true` | 是否在页面展示 |
+| `isEdit` | `true` | 是否允许编辑 |
+| `isFilterable` | `true` | 是否允许过滤 |
+| `isOrderable` | `true` | 是否允许排序 |
+| `isSearchable` | `true` | 是否参与关键字搜索 |
+| `isRequire` | `true` | 是否必填 |
+| `isPrimaryKey` | `false` | 是否主键 |
+| `isUniqueKey` | `false` | 是否唯一键 |
+| `placeholder` | `""` | 表单提示文本 |
+| `isAutoUpdateTime` | `false` | 更新时自动写入当前时间 |
+| `isAutoInsertTime` | `false` | 创建时自动写入当前时间 |
+| `label` | `""` | 前端显示名称 |
 
-#### 属性列表
+### 启动后补充模型配置
 
-| 属性 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| TableName | String | "" | 数据库表名 |
-| group | String | "" | 模型分组 |
-| desc | String | "" | 模型描述 |
-| path | String | "" | 访问路径 |
-| editPage | String | "" | 编辑页面地址 |
-| listPage | String | "" | 列表页面地址 |
-| pluralName | String | "" | 复数名称 |
-| iconUrl | String | "" | 图URL |
-| isInvisible | boolean | false | 是否隐藏 |
-
----
-
-#### PearField 注解
-
-PearField 是一个用于标注实体类字段的注解，用于定义字段在数据库和前端展示中的行为，必须依托PearObject 注解。
-
-#### 功能说明
-- 定义字段在数据库操作和前端展示中的各种属性
-- 控制字段的显示、编辑、搜索等行为
-- 支持自动时间戳功能
-
-#### 属性列表
-
-| 属性 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| isShow | boolean | true | 是否显示 |
-| isEdit | boolean | true | 是否可编辑 |
-| isFilterable | boolean | true | 是否可过滤 |
-| isOrderable | boolean | true | 是否可排序 |
-| isSearchable | boolean | true | 是否可搜索 |
-| isRequire | boolean | true | 是否必填 |
-| isPrimaryKey | boolean | false | 是否主键 |
-| isUniqueKey | boolean | false | 是否唯一键 |
-| placeholder | String | "" | 默认值 |
-| isAutoUpdateTime | boolean | false | 是否自动更新时间 |
-| isAutoInsertTime | boolean | false | 是否自动插入时间 |
-| label | String | "" | 客户端显示名称 |
-### 初始化配置
-当实体类被@PearObject注解，其类与字段信息就会封装成一个AdminObject对象，存储在AdminContainer容器中，可以在项目CommandLineRunner初始化时通过AdminObject.BuilderFactory对象对某个实体类的AdminObject对象进一步配置，如添加前后置钩子函数等：
+Pear 会在 Bean 初始化阶段把 `@PearObject` 实体收集到 `AdminContainer`。如果需要补充钩子、排序、展示字段等配置，可以在 `CommandLineRunner` 中使用 `AdminContainer.AdminFactory`。
 
 ```java
+import cn.muzisheng.pear.Constant;
+import cn.muzisheng.pear.initialize.AdminContainer;
+import cn.muzisheng.pear.model.Order;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
 @Component
-public class PearInitializer implements CommandLineRunner {
+public class PearAdminInitializer implements CommandLineRunner {
+    @Override
+    public void run(String... args) {
+        AdminContainer.AdminFactory factory = new AdminContainer.AdminFactory("product");
 
-  @Override
-  public void run(String... args) {
-    // 1. 获取基础模型
-    List<AdminObject> adminObjects = AdminContainer.getAllAdminObjects();
-    
-    // 2. 配置自定义模型
-    AdminObject.BuilderFactory builder = new AdminObject.BuilderFactory(Product.class)
-      .setBeforeCreate((request, product) -> {
-        // 创建前逻辑
-        product.setCreatedAt(LocalDateTime.now());
-        return product;
-      })
-      .setBeforeUpdate((request, product) -> {
-        // 更新前逻辑
-        product.setUpdatedAt(LocalDateTime.now());
-        return product;
-      })
-      .setOrder(new Order("createdAt", Constant.ORDER_OP_DESC));
-    
-    // 3. 构建所有模型
-    AdminContainer.buildAdminObjects(adminObjects);
-  }
+        factory.addOrder(new Order("gmt_created", Constant.ORDER_OP_DESC));
+        factory.setBeforeCreate((request, adminObject, data) -> {
+            data.putIfAbsent("name", "Untitled product");
+        });
+        factory.setAccessCheck((request, adminObject, user) -> user.getEnabled());
+    }
 }
 ```
 
+## 配置项
 
-## ⚙️ 系统配置
+所有默认配置都可以通过 `application.properties` 覆盖，也可以在业务项目中注入同类型 Bean 覆盖自动配置。
 
-### 配置方式说明
-
-Pear支持多种配置方式，包括：
-
-1. **properties文件配置**：通过application.properties进行传统配置
-2. **配置类配置**：通过Java配置类进行类型安全的配置
-
-### properties配置示例
 ```properties
-# ==================================
-# 缓存配置 (Cache)
-# ==================================
-app.cacheFactory.expire=86400000  # 缓存过期时间(毫秒)，默认24小时
-app.cacheFactory.capacity=20      # 缓存容量，默认20
-app.cacheFactory.strategy=LRU     # 缓存策略，默认LRU
+# Cache
+pear.starter.cache.expire=86400000
+pear.starter.cache.capacity=200
+pear.starter.cache.strategy=LRU
+pear.starter.cache.time-unit=MILLISECONDS
 
-# ==================================
-# 环境配置 (Site)
-# ==================================
-app.site.auth-prefix=/auth         # 认证路径前缀
-app.site.login-url=/auth/login     # 登录页面URL
-app.site.dashboard-url=/auth/dashboard  # 仪表盘URL
+# Token
+pear.starter.token.head=Bearer 
+pear.starter.token.expire=604800000
+pear.starter.token.issue=pear
+pear.starter.token.subject=authentication
 
-# ==================================
-# 日志配置 (Log)
-# ==================================
-app.log.level=INFO                 # 日志级别
-app.log.stdout-pattern=%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %-17black(%thread) %-82green(%logger{70}-%line) %highlight(%msg){black} %highlight(%ex){red} \n  # 标准输出格式
-app.log.file-pattern=%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n  # 文件输出格式
-app.log.file-path=log              # 日志文件路径
-app.log.log-catalogue-address=log/log-day    # 日志目录
-app.log.warn-catalogue-address=log/warn-day  # 警告日志目录
-app.log.error-catalogue-address=log/error-day  # 错误日志目录
+# User
+pear.starter.user.password-salt=PEAR_APPLICATION_SALT
 
-# ==================================
-# Token配置
-# ==================================
-app.token.salt=pear_token_         # Token盐值
-app.token.head=Bearer              # Token头前缀
-app.token.expire=604800000         # Token过期时间(毫秒)，默认7天
-app.token.issue=pear               # Token签发者
-app.token.subject=authentication   # Token主题
+# Site
+pear.starter.site.auth-prefix=/auth
 
-# ==================================
-# 用户密码配置
-# ==================================
-app.user.password.salt=PEAR_APPLICATION_SALT  # 密码加密盐值
+# Log
+pear.starter.log.level=INFO
+pear.starter.log.file-path=log
+pear.starter.log.log-catalogue-address=log/log-day
+pear.starter.log.warn-catalogue-address=log/warn-day
+pear.starter.log.error-catalogue-address=log/error-day
 ```
 
-### 配置类配置示例
+自定义配置 Bean 示例：
 
 ```java
+import cn.muzisheng.pear.config.CacheConfig;
+import cn.muzisheng.pear.config.TokenConfig;
+import cn.muzisheng.pear.config.UserConfig;
+import cn.muzisheng.pear.model.CacheStrategyEnum;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 @Configuration
 public class PearConfig {
-  
     @Bean
     public CacheConfig cacheConfig() {
-        return CacheConfig.builder()
-            .expire(3600000)    // 1小时
-            .capacity(500)      // 容量500
-            .strategy(CacheStrategyEnum.LFU)  // 使用LFU策略
+        return new CacheConfig.Builder()
+            .expire(3600000)
+            .capacity(500)
+            .strategy(CacheStrategyEnum.LFU)
             .build();
     }
-  
+
     @Bean
     public TokenConfig tokenConfig() {
         return TokenConfig.builder()
-            .salt("custom_salt")
-            .expire(86400000L)  // 24小时
             .head("Bearer ")
-            .issue("pear_admin")
-            .subject("auth")
+            .expire(86400000L)
+            .issue("pear-admin")
+            .subject("authentication")
             .build();
     }
-  
+
     @Bean
     public UserConfig userConfig() {
-        return UserConfig.builder()
-            .passwordSalt("user_custom_salt")
-            .build();
-    }
-    
-    @Bean
-    public SiteConfig siteConfig() {
-        return SiteConfig.builder()
-            .authPrefix("/admin")
-            .loginUrl("/admin/login")
-            .dashboardUrl("/admin/dashboard")
-            .build();
-    }
-    
-    @Bean
-    public LogConfig logConfig() {
-        return LogConfig.builder()
-            .level("DEBUG")
-            .stdoutPattern("%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n")
-            .filePath("logs")
+        return new UserConfig.Builder()
+            .passwordSalt("custom-user-salt")
             .build();
     }
 }
-
 ```
 
+## API 概览
 
-## 🏗️ 系统架构
+### 用户接口
 
-### 后端架构
+| 方法 | 路径 | 说明 |
+| --- | --- | --- |
+| `POST` | `/user/register` | 注册用户 |
+| `POST` | `/user/login` | 登录并返回 token |
+| `POST` | `/user/info` | 获取当前用户信息 |
 
-- **核心框架**: Spring Boot 3.3.x
-- **ORM**: MyBatis-Plus 3.5.x
-- **认证**: JWT Token
-- **日志**: Logback
-- **缓存**: 内置LRU/LFU缓存(可扩展Redis)
+### 后台接口
 
-## 📌 系统特性详解
+后台接口由 `JWTInterceptor` 拦截，需要在请求头中携带 `Authorization`。
 
-### 多策略缓存系统
+| 方法 | 路径 | 说明 |
+| --- | --- | --- |
+| `GET` | `/admin/` | 获取静态资源和后台模型信息 |
+| `POST` | `/admin/json` | 获取当前用户、站点信息和模型元数据 |
+| `POST` | `/admin/{model}` | 查询列表；无请求体时按主键/唯一键获取单条 |
+| `PUT` | `/admin/{model}` | 创建数据 |
+| `PATCH` | `/admin/{model}` | 更新数据 |
+| `DELETE` | `/admin/{model}` | 删除数据 |
 
-Pear实现了基于策略模式的缓存系统，支持LRU和LFU两种缓存淘汰算法：
+## 权限模型
 
-1. **LRU(最近最少使用)**：基于LinkedHashMap实现，适合访问具有时间局部性的场景
-2. **LFU(最不经常使用)**：基于TreeMap和LinkedHashSet实现，基于访问频率进行淘汰
-3. **Redis**: 基于Redis实现，缓存淘汰策略自动跟随Redis配置
+Pear 内置 RBAC 权限体系，并通过 `@Verification` 切面执行两层校验：
 
-```java
-// 缓存接口定义
-public interface CacheInterface<K,V> {
-  V get(K key);
-  void put(K key, V value);
-  void remove(K key);
-  int size();
-  void clear();
-  boolean containsKey(K key);
-}
+- 系统级校验：检查当前用户是否拥有方法要求的权限码。
+- 用户级校验：执行模型上的 `AccessCheck` 钩子，用于业务自定义授权。
 
-// 缓存策略模式
-public class CacheStrategy<K, V> {
-  private CacheInterface<K, V> cacheFactory;
-  
-  public void setCacheStrategy(CacheInterface<K, V> cacheFactory) {
-    this.cacheFactory = cacheFactory;
-  }
-  
-  // ...其他方法...
-}
+内置权限码：
 
-// LRU缓存实现
-public class LRUCacheUtil<K,V> implements CacheInterface<K,V> {
-  // 基于LinkedHashMap实现
-}
+| 权限 | 说明 |
+| --- | --- |
+| `ADMIN_CREATE` | 创建权限 |
+| `ADMIN_DELETE` | 删除权限 |
+| `ADMIN_UPDATE` | 更新权限 |
+| `ADMIN_SELECT` | 查询权限 |
+| `PERMISSION_WRITER` | 权限写操作 |
+| `PERMISSION_SYNC` | 权限锁定 |
+| `ADMIN_NULL` | 空权限 |
 
-// LFU缓存实现
-public class LFUCacheUtil<K,V> implements CacheInterface<K,V> {
-  // 基于TreeMap和LinkedHashSet实现
-}
+内置角色：
+
+| 角色 | 说明 |
+| --- | --- |
+| `superuser` | 超级管理员，拥有全部管理权限 |
+| `staff` | 员工，可访问后台并查询数据 |
+| `customer` | 客户，默认无法登录后台 |
+| `finance` | 财务，可读写除权限外的数据 |
+| `secretary` | 秘书，可读写数据但不能修改管理员权限 |
+
+## 构建与验证
+
+```bash
+mvn test
+mvn -DskipTests package
+mvn -DskipTests -Dgpg.skip verify
 ```
 
+`package` 阶段会为每个 jar 模块生成：
 
-### 权限控制
-Pear框架实现了基于角色的权限控制(RBAC)系统，采用双层权限校验机制：
+- 主 jar
+- `-sources.jar`
+- `-javadoc.jar`
 
-#### 权限架构
-- 系统级权限校验：基于用户角色和预定义权限进行校验
-- 用户级权限校验：通过自定义钩子函数实现灵活的权限控制
-#### 核心组件
-- Permission(权限)：最小的权限单元，定义具体的操作权限
-- Role(角色)：权限的集合，可分配给用户
-- User(用户)：系统用户，通过角色获得相应权限
-#### 权限校验机制
-Pear框架通过@Verification注解实现权限控制：
-```java
-// 权限注解定义
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Verification {
-    // 是否启用系统级权限校验，默认为启用
-    boolean SystemVerify() default true;
-    // 是否启用用户级权限校验，默认为启用
-    boolean UserVerify() default true;
-    // 权限代码
-    String Permission() default Constant.ADMIN_NULL;
-}
+## 发布到 Maven Central
 
-// 使用示例
-@Verification(Permission = Constant.ADMIN_UPDATE)
-public ResponseEntity<Result<Map<String, Object>>> handleUpdate(...) {
-    // 方法实现
-}
+项目使用 Sonatype Central Publisher Portal 的 `central-publishing-maven-plugin`。发布前请确认：
 
+- Central Portal 已完成命名空间验证。
+- `~/.m2/settings.xml` 中存在 id 为 `central` 的 server。
+- 本机或 CI 已配置可用 GPG 私钥。
+- 当前 release 版本号尚未发布过。
+
+`settings.xml` 示例：
+
+```xml
+<settings>
+  <servers>
+    <server>
+      <id>central</id>
+      <username>your-token-username</username>
+      <password>your-token-password</password>
+    </server>
+  </servers>
+</settings>
 ```
-#### 内置权限类型
-框架预定义了以下权限类型：
-- ADMIN_CREATE：创建权限
-- ADMIN_DELETE：删除权限
-- ADMIN_UPDATE：更新权限
-- ADMIN_SELECT：查询权限
-- PERMISSION_WRITER：写操作权限
-- PERMISSION_SYNC：锁定权限(推荐仅用于superuser角色，从而保证管理员超级权限不会被修改)
-- ADMIN_NULL：无权限
-#### 内置角色类型
-框架预定义了以下角色：
-- ROLE_SUPERUSER：超级管理员，拥有所有权限
-- ROLE_STAFF：员工，可访问后台系统和查询数据
-- ROLE_CUSTOMER：客户，无法登录后台系统
-- ROLE_FINANCE：财务，可读写除权限外的所有数据
-- ROLE_SECRETARY：秘书，可读写所有数据但不能修改管理员权限
-权限校验流程
-1. 系统级校验：
-检查方法上的@Verification注解，根据用户角色获取其拥有的权限ID集合，验证用户是否拥有执行操作所需的权限
-2. 用户级校验：
-执行自定义的AccessCheck钩子函数，允许开发者实现复杂的权限逻辑
-3. 权限缓存
-为了提高性能，用户权限ID集合会被缓存：使用PearApplicationInitialization.PermissionTemplate缓存用户权限，当权限或角色发生变化时，自动清除相关缓存
 
+发布命令：
 
+```bash
+mvn clean deploy
+```
 
-## 🚧 待办事项
-- [ ] 后端：优化第三代权限系统
-- [ ] 后端：限流限速注解，限流通过配置类创建的线程池控制，需要限流时注入此类执行方法从而达到目的，限速通过令牌桶实现，需要限速时注入此类执行方法从而达到目的
-- [ ] 后端：将Admin的DAO层重构，不依赖mybatis采用JDBC原始实现
-- [ ] 后端：通过观察者模式对所有事件进行监听，当触发事件并且开发者绑定了观察者时进行事件存储与输出
-- [ ] 后端：完善优化日志输出对warn级别添加黄色
-- [ ] 后端：将项目中所有的直接引用（字符串，如所有admin的接口以及拦截器的拦截路径等）转换为从Config或者Env的符号引用
-- [ ] 后端：增加埋点服务或者说优化日志模块，将信息收集存储到消息队列中并对外进行接口输出，使其可以通过观测器进行数据采集
-- [ ] 前端：改进密码修改表单安全性
-- [ ] 前端：优化前端删除操作体验
-- [ ] 前端：添加前端对数据的修改
+## 界面预览
 
-## 📝 各版本修改内容
+| 登录页面 | 注册页面 | 仪表盘 |
+| --- | --- | --- |
+| ![登录页面](login.png) | ![注册页面](register.png) | ![仪表盘](dashboard.png) |
 
-- 1.3.1 解决了Admin无法处理用户自定义实体类继承的情况
+## 版本记录
 
-## 🤝 参与贡献
+| 版本 | 说明 |
+| --- | --- |
+| `1.3.1` | 修复 Admin 处理用户自定义实体继承场景的问题；统一 Java 17 构建与 Maven Central 发布配置 |
 
-1. Fork 本项目
-2. 创建新分支 (`git checkout -b feature/your-feature`)
-3. 提交更改 (`git commit -am 'Add some feature'`)
-4. 推送到分支 (`git push origin feature/your-feature`)
-5. 创建Pull Request
+## 待办事项
 
-## 📄 许可证
+- 优化第三代权限系统。
+- 将 Admin DAO 层逐步改造为更安全的参数化 SQL 实现。
+- 引入事件观察机制，用于注册、登录、数据变更等事件扩展。
+- 完善日志归档与观测能力。
+- 优化前端数据编辑、删除和密码修改体验。
 
-[MIT License](https://github.com/MuziSuper/pear-spring-boot-starter/blob/main/LICENSE) © 2025 MuziSuper
+## 贡献
+
+1. Fork 本项目。
+2. 创建功能分支：`git checkout -b feature/your-feature`。
+3. 提交更改：`git commit -m "Add your feature"`。
+4. 推送分支：`git push origin feature/your-feature`。
+5. 创建 Pull Request。
+
+## 许可证
+
+[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) © 2025 MuziSuper

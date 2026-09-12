@@ -13,6 +13,7 @@ import cn.muzisheng.pear.model.*;
 import cn.muzisheng.pear.params.AdminQueryResult;
 import cn.muzisheng.pear.params.Filter;
 import cn.muzisheng.pear.params.QueryForm;
+import cn.muzisheng.pear.params.SqlQuery;
 import cn.muzisheng.pear.service.ConfigService;
 import cn.muzisheng.pear.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,10 +55,18 @@ public class AdminServiceImpl implements AdminService {
         // 根据query传参，来获取数据库中存储的某表的数据，
         // 若自定义了beforeRender就调用， 将实例进行序列化传给客户端
         if (request.getContentLength() <= 0) {
-            return handleGetOne(request, model, adminObject, queryForm);
+            if (!getPrimaryValues(request, adminObject).isEmpty()) {
+                return handleGetOne(request, model, adminObject, queryForm);
+            }
+            queryForm = new QueryForm();
+            AdminQueryResult result = queryObjects(request, model, adminObject, queryForm);
+            response.setData(result);
+            return response.value();
         }
         // 处理请求体中的数据
-        queryForm.defaultPrepareQuery();
+        if (queryForm == null) {
+            queryForm = new QueryForm();
+        }
         AdminQueryResult result = queryObjects(request, model, adminObject, queryForm);
         response.setData(result);
         return response.value();
@@ -76,11 +85,12 @@ public class AdminServiceImpl implements AdminService {
         Response<Map<String, Object>> response = new Response<>();
         // 根据query值遍历并获取其映射数据库表的主键或唯一键键值对
         Map<String, Object> params = getPrimaryValues(request, adminObject);
-        if (params.isEmpty() && data == null) {
-            throw new IllegalException("Both the query parameter and the request body are null.");
+        if (data == null || data.isEmpty()) {
+            throw new IllegalException("The request body cannot be empty.");
         }
         // 获取整合好的数据
         Map<String, Object> res = unmarshalFrom(adminObject, data, params, true);
+        validateRequiredFields(adminObject, res);
 
         if (adminObject.getBeforeCreate() != null) {
             try {
@@ -90,8 +100,9 @@ public class AdminServiceImpl implements AdminService {
                 throw new HookException("beforeCreate error: " + e.getMessage());
             }
         }
+        validateDataFields(adminObject, res);
         try {
-            if (adminMapper.create(model, res) < 1) {
+            if (adminMapper.create(adminObject.getTableName(), res) < 1) {
                 LOG.error("admin creation failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
                 throw new AdminErrorException("admin creation failed. " + (res.get("email") != null ? "email: " + res.get("email") : ""));
             }
@@ -121,12 +132,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ResponseEntity<Result<Map<String, Object>>> handleUpdate(HttpServletRequest request, String model, AdminObject adminObject, Map<String, Object> data) {
         Map<String, Object> keys = getPrimaryValues(request, adminObject);
-        if (keys.isEmpty() || data.isEmpty()) {
+        if (keys.isEmpty() || data == null || data.isEmpty()) {
             throw new IllegalException("The parameter or primary key is empty.");
         }
         List<Map<String, Object>> list;
         try {
-            list = adminMapper.selectFirst(model, keys);
+            list = adminMapper.selectFirst(adminObject.getTableName(), keys);
         } catch (Exception e) {
             throw new SqlStatementException(e.getMessage());
         }
@@ -143,8 +154,9 @@ public class AdminServiceImpl implements AdminService {
                 throw new HookException("beforeUpdate error");
             }
         }
+        validateDataFields(adminObject, res);
         try {
-            if (adminMapper.update(model, keys, res) < 1) {
+            if (adminMapper.update(adminObject.getTableName(), keys, res) < 1) {
                 LOG.error("admin update failed. {}", res.get("email") != null ? "email: " + res.get("email") : "");
                 throw new AdminErrorException("admin update failed. " + (res.get("email") != null ? "email: " + res.get("email") : ""));
             }
@@ -166,7 +178,7 @@ public class AdminServiceImpl implements AdminService {
         }
         List<Map<String, Object>> list;
         try {
-            list = adminMapper.selectFirst(model, keys);
+            list = adminMapper.selectFirst(adminObject.getTableName(), keys);
         } catch (Exception e) {
             throw new SqlStatementException(e.getMessage());
         }
@@ -182,7 +194,7 @@ public class AdminServiceImpl implements AdminService {
             }
         }
         try {
-            if (adminMapper.delete(model, keys) < 1) {
+            if (adminMapper.delete(adminObject.getTableName(), keys) < 1) {
                 LOG.error("admin delete failed. The key is {}", keys);
             }
         } catch (Exception e) {
@@ -293,7 +305,7 @@ public class AdminServiceImpl implements AdminService {
                 }
             }
 
-            body.put(adminField.getFieldName(), convertValue(targetClass, val));
+            body.put(adminField.getFieldName(), convertValue(adminField.getFieldName(), targetClass, val));
         }
         flushTime(adminObject, body, initial);
         if (adminObject.getIgnores() != null) {
@@ -304,7 +316,11 @@ public class AdminServiceImpl implements AdminService {
         return body;
     }
 
-    private Object convertValue(Class<?> targetClass, Object val) {
+    /**
+     * 将客户端传入值转换为字段类型，转换失败时返回明确的 400 参数错误。
+     **/
+    private Object convertValue(String fieldName, Class<?> targetClass, Object val) {
+        targetClass = wrapPrimitive(targetClass);
         if (val.getClass() == targetClass) {
             if (targetClass.equals(Boolean.class)) {
                 if ((Boolean) val) {
@@ -317,45 +333,43 @@ public class AdminServiceImpl implements AdminService {
         }
         try {
             if (targetClass.equals(Integer.class)) {
-                val = formatAsInt(val);
+                val = formatAsInt(fieldName, val);
             } else if (targetClass.equals(Long.class)) {
-                val = formatAsLong(val);
+                val = formatAsLong(fieldName, val);
             } else if (targetClass.equals(Double.class)) {
-                val = formatAsDouble(val);
+                val = formatAsDouble(fieldName, val);
             } else if (targetClass.equals(Float.class)) {
-                val = formatAsFloat(val);
+                val = formatAsFloat(fieldName, val);
             } else if (targetClass.equals(Boolean.class)) {
+                if (!(val instanceof String)) {
+                    throw invalidFieldValue(fieldName);
+                }
                 String valString = (String) val;
                 if (valString.equalsIgnoreCase("true") || valString.equalsIgnoreCase("on") || valString.equalsIgnoreCase("yes") || valString.equals("1")) {
                     val = 1;
                 } else if (valString.equalsIgnoreCase("false") || valString.equalsIgnoreCase("off") || valString.equalsIgnoreCase("no") || valString.equals("0")) {
                     val = 0;
                 } else {
-                    val = 0;
+                    throw invalidFieldValue(fieldName);
                 }
             } else if (targetClass.equals(LocalDateTime.class)) {
                 val = TimeTransitionUtil.stringToLocalDateTime((String) val);
             } else if (targetClass.equals(LocalDate.class)) {
-                val = TimeTransitionUtil.stringToLocalDateTime((String) val);
+                val = TimeTransitionUtil.stringToLocalDate((String) val);
             } else if (targetClass.equals(Date.class)) {
                 val = TimeTransitionUtil.stringToDate((String) val);
             } else if (targetClass.equals(LocalTime.class)) {
                 val = TimeTransitionUtil.stringToLocalTime((String) val);
             } else {
-                try {
-                    val = objectMapper.convertValue(val, targetClass);
-                } catch (IllegalArgumentException e) {
-                    val = null;
-                }
+                val = objectMapper.convertValue(val, targetClass);
             }
-        } catch (TimeException e) {
-            LOG.info("target type:{}, but cannot parse date: {}", targetClass, val);
-            val = null;
+        } catch (RuntimeException e) {
+            throw invalidFieldValue(fieldName);
         }
         return val;
     }
 
-    private Object formatAsFloat(Object val) {
+    private Object formatAsFloat(String fieldName, Object val) {
         if (val instanceof Float) {
             return val;
         } else if (val instanceof Double) {
@@ -365,18 +379,21 @@ public class AdminServiceImpl implements AdminService {
         } else if (val instanceof Long) {
             val = ((Long) val).floatValue();
         } else if (val instanceof String) {
-            if (val.equals("")) {
-                val = 0;
-                return val;
+            if (((String) val).isBlank()) {
+                throw invalidFieldValue(fieldName);
             }
-            val = Float.parseFloat((String) val);
+            try {
+                val = Float.parseFloat((String) val);
+            } catch (NumberFormatException e) {
+                throw invalidFieldValue(fieldName);
+            }
         } else {
-            val = 0;
+            throw invalidFieldValue(fieldName);
         }
         return val;
     }
 
-    private Object formatAsDouble(Object val) {
+    private Object formatAsDouble(String fieldName, Object val) {
         if (val instanceof Double) {
             return val;
         } else if (val instanceof Float) {
@@ -386,18 +403,21 @@ public class AdminServiceImpl implements AdminService {
         } else if (val instanceof Long) {
             val = ((Long) val).doubleValue();
         } else if (val instanceof String) {
-            if (val.equals("")) {
-                val = 0;
-                return val;
+            if (((String) val).isBlank()) {
+                throw invalidFieldValue(fieldName);
             }
-            val = Double.parseDouble((String) val);
+            try {
+                val = Double.parseDouble((String) val);
+            } catch (NumberFormatException e) {
+                throw invalidFieldValue(fieldName);
+            }
         } else {
-            val = 0;
+            throw invalidFieldValue(fieldName);
         }
         return val;
     }
 
-    private Object formatAsLong(Object val) {
+    private Object formatAsLong(String fieldName, Object val) {
         if (val instanceof Long) {
             return val;
         } else if (val instanceof Double) {
@@ -407,18 +427,21 @@ public class AdminServiceImpl implements AdminService {
         } else if (val instanceof Integer) {
             val = ((Integer) val).longValue();
         } else if (val instanceof String) {
-            if (val.equals("")) {
-                val = 0;
-                return val;
+            if (((String) val).isBlank()) {
+                throw invalidFieldValue(fieldName);
             }
-            val = Long.parseLong((String) val);
+            try {
+                val = Long.parseLong((String) val);
+            } catch (NumberFormatException e) {
+                throw invalidFieldValue(fieldName);
+            }
         } else {
-            val = 0;
+            throw invalidFieldValue(fieldName);
         }
         return val;
     }
 
-    private Object formatAsInt(Object val) {
+    private Object formatAsInt(String fieldName, Object val) {
         if (val instanceof Integer) {
             return val;
         } else if (val instanceof Double) {
@@ -428,15 +451,34 @@ public class AdminServiceImpl implements AdminService {
         } else if (val instanceof Long) {
             val = ((Long) val).intValue();
         } else if (val instanceof String) {
-            if (val.equals("")) {
-                val = 0;
-                return val;
+            if (((String) val).isBlank()) {
+                throw invalidFieldValue(fieldName);
             }
-            val = Integer.parseInt((String) val);
+            try {
+                val = Integer.parseInt((String) val);
+            } catch (NumberFormatException e) {
+                throw invalidFieldValue(fieldName);
+            }
         } else {
-            val = 0;
+            throw invalidFieldValue(fieldName);
         }
         return val;
+    }
+
+    private IllegalException invalidFieldValue(String fieldName) {
+        return new IllegalException("Invalid value for field " + fieldName + ".");
+    }
+
+    private Class<?> wrapPrimitive(Class<?> targetClass) {
+        if (!targetClass.isPrimitive()) {
+            return targetClass;
+        }
+        if (targetClass == int.class) return Integer.class;
+        if (targetClass == long.class) return Long.class;
+        if (targetClass == double.class) return Double.class;
+        if (targetClass == float.class) return Float.class;
+        if (targetClass == boolean.class) return Boolean.class;
+        return targetClass;
     }
 
     /**
@@ -497,108 +539,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 拼接数据库db的查询子句,筛选子句，排序子句，获取查询总数，
-     * 携带外键连接的表其所有数据，将多条总数据放入映射集合与列表中，
-     * 封装在r AdminQueryResult中
+     * 查询后台对象列表，按 AdminObject 配置校验字段白名单并生成参数绑定 SQL。
      **/
     private AdminQueryResult queryObjects(HttpServletRequest request, String model, AdminObject adminObject, QueryForm queryForm) {
         AdminQueryResult r = new AdminQueryResult();
+        queryForm.validate();
         if (queryForm.isForeignMode()) {
             queryForm.setLimit(0);
         }
-        String whereClause = "";
-        if (queryForm.getFilters() != null) {
-            for (Filter filter : queryForm.getFilters()) {
-                String queryClause = filter.getQueryClause();
-                if (queryClause != null) {
-                    // 如果是like操作，则构造LIKE语句whereClause，先不带WHERE,下文还有限定字筛选
-                    if (Constant.FILTER_OP_LIKE.equals(filter.getOp())) {
-                        if (filter.getValue() instanceof Object[] values) {
-                            List<String> conditions = new ArrayList<>();
-                            for (Object value : values) {
-                                if (value instanceof String strValue) {
-                                    if (strValue.isEmpty()) {
-                                        continue;
-                                    }
-                                    // 转义双引号，并构造 LIKE 语句
-                                    String escapedValue = strValue.replace("\"", "\\\"");
-                                    String condition = String.format("`%s`.`%s` LIKE '%%%s%%'", adminObject.getTableName(), filter.getName(), escapedValue);
-                                    conditions.add(condition);
-                                }
-                            }
-                            if (!conditions.isEmpty()) {
-                                // 因为多个筛选条件则拼接OR语句
-                                whereClause = String.join(" OR ", conditions);
-                            }
-                        } else {
-                            Object value = filter.getValue();
-                            if (value instanceof String strValue) {
-                                if (strValue.isEmpty()) {
-                                    continue;
-                                }
-                                String escapedValue = strValue.replace("\"", "\\\"");
-                                whereClause = String.format("`%s`.`%s` LIKE '%%%s%%'", adminObject.getTableName(), filter.getName(), escapedValue);
-                            }
-                        }
-                        // 如果是between操作，则构造BETWEEN语句,也不带WHERE
-                    } else if (Constant.FILTER_OP_BETWEEN.equals(filter.getOp())) {
-                        if (filter.getValue() instanceof List<?> values) {
-                            if (values.size() == 2) {
-                                // `user`.name BETWEEN 'John' AND 'Doe'
-                                if ((values.get(0) instanceof Integer && values.get(1) instanceof Integer) || (values.get(0) instanceof Float && values.get(1) instanceof Float)) {
-                                    whereClause = String.format("`%s`.%s %s %s AND %s", adminObject.getTableName(), filter.getName(), queryClause, values.get(0), values.get(1));
-                                } else {
-                                    whereClause = String.format("`%s`.%s %s '%s' AND '%s'", adminObject.getTableName(), filter.getName(), queryClause, values.get(0), values.get(1));
-                                }
-                            } else {
-                                throw new GeneralException("Expected an Object[] value with length 2 for between operation but got " + values.size());
-                            }
-                        } else {
-                            throw new GeneralException("Expected an Object[] value for between operation but got " + filter.getValue().getClass().getName());
-                        }
-                    } else {
-                        whereClause = String.format("`%s`.%s'%s'", adminObject.getTableName(), queryClause, filter.getValue());
-                    }
-                }
-            }
-        }
-        // 排序子句，不加ORDER BY
-        List<Order> orders;
-        StringBuilder orderClause = new StringBuilder();
-        if (queryForm.getOrders() != null && !queryForm.getOrders().isEmpty()) {
-            orders = queryForm.getOrders();
-        } else {
-            orders = adminObject.getOrders();
-        }
-        if (orders != null) {
-            for (Order order : orders) {
-                if (!orderClause.isEmpty()) {
-                    orderClause.append(",");
-                }
-                orderClause.append(String.format("`%s`.`%s` %s", adminObject.getTableName(), order.getName(), order.getOp().toUpperCase()));
-            }
-        }
-        StringBuilder whereClauseBuilder = new StringBuilder();
-        if (queryForm.getKeyword() != null) {
-            for (String searchField : adminObject.getSearches()) {
-                if (!whereClauseBuilder.isEmpty()) {
-                    whereClauseBuilder.append(" OR ");
-                }
-                whereClauseBuilder.append(String.format("`%s`.`%s` LIKE '%%%s%%'", adminObject.getTableName(), searchField, queryForm.getKeyword()));
-            }
-        }
-        StringBuilder showClause = new StringBuilder();
-        if (adminObject.getShows() != null) {
-            for (String viewField : adminObject.getShows()) {
-                if (!showClause.isEmpty()) {
-                    showClause.append(" ,");
-                }
-                showClause.append(String.format("`%s`.`%s`", adminObject.getTableName(), viewField));
-            }
-        } else {
-            showClause.append("*");
-        }
-        List<Map<String, Object>> result = adminMapper.query(adminObject.getTableName(), showClause.toString(), whereClause, orderClause.toString(), whereClauseBuilder.toString(), queryForm.getLimit());
+        SqlQuery sqlQuery = buildSqlQuery(adminObject, queryForm);
+        List<Map<String, Object>> result = adminMapper.query(sqlQuery);
         if (adminObject.getBeforeRender() != null) {
             try {
                 adminObject.getBeforeRender().execute(request, adminObject, result);
@@ -614,6 +564,350 @@ public class AdminServiceImpl implements AdminService {
         r.setItems(result);
         r.setTotalCount(result.size());
         return r;
+    }
+
+    /**
+     * 构建安全查询对象：字段、表名、排序方向使用白名单，所有动态值使用 MyBatis 绑定参数。
+     **/
+    private SqlQuery buildSqlQuery(AdminObject adminObject, QueryForm queryForm) {
+        SqlQuery sqlQuery = new SqlQuery();
+        String tableName = adminObject.getTableName();
+        validateIdentifier(tableName, "table name");
+        sqlQuery.setTableName(tableName);
+        sqlQuery.setShowClause(buildShowClause(adminObject, queryForm));
+        sqlQuery.setOrderClause(buildOrderClause(adminObject, queryForm));
+        sqlQuery.setLimit(queryForm.getLimit());
+
+        List<String> conditions = new ArrayList<>();
+        if (queryForm.getFilters() != null) {
+            for (Filter filter : queryForm.getFilters()) {
+                String condition = buildFilterCondition(adminObject, filter, sqlQuery);
+                if (!condition.isEmpty()) {
+                    conditions.add(condition);
+                }
+            }
+        }
+        String keywordCondition = buildKeywordCondition(adminObject, queryForm, sqlQuery);
+        if (!keywordCondition.isEmpty()) {
+            conditions.add(keywordCondition);
+        }
+        sqlQuery.setWhereClause(String.join(" AND ", conditions));
+        return sqlQuery;
+    }
+
+    /**
+     * 生成 SELECT 字段片段；请求 viewFields 只能来自 shows 白名单。
+     **/
+    private String buildShowClause(AdminObject adminObject, QueryForm queryForm) {
+        List<String> viewFields = queryForm.getViewFields();
+        if (viewFields == null || viewFields.isEmpty()) {
+            viewFields = adminObject.getShows();
+        } else {
+            validateConfiguredFields(viewFields, adminObject.getShows(), "viewFields");
+        }
+        if (viewFields == null || viewFields.isEmpty()) {
+            return "*";
+        }
+        List<String> columns = new ArrayList<>();
+        Set<String> allColumns = getColumnFields(adminObject);
+        for (String viewField : viewFields) {
+            validateField(viewField, allColumns, "viewFields");
+            columns.add(qualifiedColumn(adminObject.getTableName(), viewField));
+        }
+        return String.join(" ,", columns);
+    }
+
+    /**
+     * 生成 ORDER BY 片段；字段来自 orderables 或数据库字段白名单，方向只允许 asc/desc。
+     **/
+    private String buildOrderClause(AdminObject adminObject, QueryForm queryForm) {
+        List<Order> orders;
+        StringBuilder orderClause = new StringBuilder();
+        if (queryForm.getOrders() != null && !queryForm.getOrders().isEmpty()) {
+            orders = queryForm.getOrders();
+        } else {
+            orders = adminObject.getOrders();
+        }
+        Set<String> allowedOrderFields = configuredFieldSet(adminObject.getOrderables());
+        if (allowedOrderFields.isEmpty()) {
+            allowedOrderFields = getColumnFields(adminObject);
+        }
+        if (orders != null) {
+            for (Order order : orders) {
+                String field = order.getName();
+                String direction = order.getOp();
+                validateField(field, allowedOrderFields, "orders");
+                validateOrderDirection(direction);
+                if (!orderClause.isEmpty()) {
+                    orderClause.append(",");
+                }
+                orderClause.append(qualifiedColumn(adminObject.getTableName(), field)).append(" ").append(direction.toUpperCase(Locale.ROOT));
+            }
+        }
+        return orderClause.toString();
+    }
+
+    /**
+     * 生成单个 filter 条件；多个 LIKE 值会在一个 filter 内部以 OR 连接。
+     **/
+    private String buildFilterCondition(AdminObject adminObject, Filter filter, SqlQuery sqlQuery) {
+        if (filter == null) {
+            return "";
+        }
+        Set<String> allowedFilterFields = configuredFieldSet(adminObject.getFilterables());
+        if (allowedFilterFields.isEmpty()) {
+            allowedFilterFields = getColumnFields(adminObject);
+        }
+        validateField(filter.getName(), allowedFilterFields, "filters");
+        String column = qualifiedColumn(adminObject.getTableName(), filter.getName());
+        String op = normalizedFilterOperator(filter.getOp());
+        if (Constant.FILTER_OP_LIKE.equalsIgnoreCase(filter.getOp())) {
+            List<Object> values = normalizeValues(filter.getValue());
+            List<String> likes = new ArrayList<>();
+            for (Object value : values) {
+                if (value == null || value.toString().isEmpty()) {
+                    continue;
+                }
+                String bindName = addBinding(sqlQuery, "%" + value + "%");
+                likes.add(column + " LIKE #{bindings." + bindName + "}");
+            }
+            return likes.isEmpty() ? "" : "(" + String.join(" OR ", likes) + ")";
+        }
+
+        if (Constant.FILTER_OP_BETWEEN.equalsIgnoreCase(filter.getOp())) {
+            List<Object> values = normalizeValues(filter.getValue());
+            if (values.size() != 2) {
+                throw new IllegalException("Expected two values for between operation.");
+            }
+            String start = addBinding(sqlQuery, values.get(0));
+            String end = addBinding(sqlQuery, values.get(1));
+            return column + " BETWEEN #{bindings." + start + "} AND #{bindings." + end + "}";
+        }
+
+        if (Constant.FILTER_OP_IN.equalsIgnoreCase(filter.getOp()) || Constant.FILTER_OP_NOT_IN.equalsIgnoreCase(filter.getOp())) {
+            List<Object> values = normalizeValues(filter.getValue());
+            if (values.isEmpty()) {
+                throw new IllegalException("Expected at least one value for in operation.");
+            }
+            List<String> placeholders = new ArrayList<>();
+            for (Object value : values) {
+                String bindName = addBinding(sqlQuery, value);
+                placeholders.add("#{bindings." + bindName + "}");
+            }
+            return column + " " + op + " (" + String.join(", ", placeholders) + ")";
+        }
+
+        if (filter.getValue() == null && Constant.FILTER_OP_IS_NOT.equalsIgnoreCase(filter.getOp())) {
+            return column + " IS NOT NULL";
+        }
+        String bindName = addBinding(sqlQuery, filter.getValue());
+        return column + " " + op + " #{bindings." + bindName + "}";
+    }
+
+    /**
+     * 生成 keyword 查询条件；searchFields 参数只能来自 searches 白名单。
+     **/
+    private String buildKeywordCondition(AdminObject adminObject, QueryForm queryForm, SqlQuery sqlQuery) {
+        if (queryForm.getKeyword() == null) {
+            return "";
+        }
+        List<String> searchFields = queryForm.getSearchFields();
+        if (searchFields == null || searchFields.isEmpty()) {
+            searchFields = adminObject.getSearches();
+        } else {
+            validateConfiguredFields(searchFields, adminObject.getSearches(), "searchFields");
+        }
+        if (searchFields == null || searchFields.isEmpty()) {
+            return "";
+        }
+        String bindName = addBinding(sqlQuery, "%" + queryForm.getKeyword() + "%");
+        List<String> conditions = new ArrayList<>();
+        Set<String> allColumns = getColumnFields(adminObject);
+        for (String searchField : searchFields) {
+            validateField(searchField, allColumns, "searchFields");
+            conditions.add(qualifiedColumn(adminObject.getTableName(), searchField) + " LIKE #{bindings." + bindName + "}");
+        }
+        return "(" + String.join(" OR ", conditions) + ")";
+    }
+
+    /**
+     * 新增或更新前校验写入字段必须是模型中的真实数据库列。
+     **/
+    private void validateDataFields(AdminObject adminObject, Map<String, Object> data) {
+        Set<String> columns = getColumnFields(adminObject);
+        for (String field : data.keySet()) {
+            validateField(field, columns, "fields");
+        }
+    }
+
+    /**
+     * 创建时校验必填字段，忽略非数据库列、忽略字段、自动生成字段和自动时间字段。
+     **/
+    private void validateRequiredFields(AdminObject adminObject, Map<String, Object> data) {
+        if (adminObject.getRequires() == null || adminObject.getRequires().isEmpty()) {
+            return;
+        }
+        Set<String> requiredFields = new LinkedHashSet<>(adminObject.getRequires());
+        if (adminObject.getIgnores() != null) {
+            requiredFields.removeAll(adminObject.getIgnores().keySet());
+        }
+        if (adminObject.getFields() != null) {
+            for (AdminField field : adminObject.getFields()) {
+                if (Boolean.TRUE.equals(field.getNotColumn()) || Boolean.TRUE.equals(field.getIsAutoId())
+                        || Boolean.TRUE.equals(field.getIsAutoInsertTime()) || Boolean.TRUE.equals(field.getIsAutoUpdateTime())) {
+                    requiredFields.remove(field.getFieldName());
+                }
+            }
+        }
+        for (String field : requiredFields) {
+            Object value = data.get(field);
+            if (value == null || (value instanceof String str && str.isBlank())) {
+                throw new IllegalException("Required field is missing: " + field);
+            }
+        }
+    }
+
+    /**
+     * 将合法 filter 操作符映射为 SQL 操作符。
+     **/
+    private String normalizedFilterOperator(String op) {
+        if (op == null) {
+            throw new IllegalException("Invalid filter operator.");
+        }
+        return switch (op.toLowerCase(Locale.ROOT)) {
+            case Constant.FILTER_OP_IS_NOT -> "IS NOT";
+            case Constant.FILTER_OP_EQUAL -> "=";
+            case Constant.FILTER_OP_NOT_EQUAL -> "<>";
+            case Constant.FILTER_OP_IN -> "IN";
+            case Constant.FILTER_OP_NOT_IN -> "NOT IN";
+            case Constant.FILTER_OP_GREATER -> ">";
+            case Constant.FILTER_OP_GREATER_OR_EQUAL -> ">=";
+            case Constant.FILTER_OP_LESS -> "<";
+            case Constant.FILTER_OP_LESS_OR_EQUAL -> "<=";
+            case Constant.FILTER_OP_LIKE -> "LIKE";
+            case Constant.FILTER_OP_BETWEEN -> "BETWEEN";
+            default -> throw new IllegalException("Invalid filter operator: " + op);
+        };
+    }
+
+    /**
+     * 校验排序方向只允许 asc 或 desc。
+     **/
+    private void validateOrderDirection(String direction) {
+        if (direction == null || (!Constant.ORDER_OP_ASC.equalsIgnoreCase(direction) && !Constant.ORDER_OP_DESC.equalsIgnoreCase(direction))) {
+            throw new IllegalException("Invalid order direction: " + direction);
+        }
+    }
+
+    /**
+     * 添加一个 MyBatis 绑定参数并返回参数名。
+     **/
+    private String addBinding(SqlQuery sqlQuery, Object value) {
+        String name = "p" + sqlQuery.getBindings().size();
+        sqlQuery.getBindings().put(name, value);
+        return name;
+    }
+
+    /**
+     * 将数组、集合或单值统一为列表。
+     **/
+    private List<Object> normalizeValues(Object value) {
+        if (value == null) {
+            return Collections.emptyList();
+        }
+        if (value instanceof Collection<?> collection) {
+            return new ArrayList<>(collection);
+        }
+        if (value instanceof Object[] values) {
+            return Arrays.asList(values);
+        }
+        return Collections.singletonList(value);
+    }
+
+    /**
+     * 返回模型中的真实数据库字段。
+     **/
+    private Set<String> getColumnFields(AdminObject adminObject) {
+        Set<String> columns = new LinkedHashSet<>();
+        if (adminObject.getFields() != null) {
+            for (AdminField field : adminObject.getFields()) {
+                if (Boolean.TRUE.equals(field.getNotColumn())) {
+                    continue;
+                }
+                if (field.getFieldName() != null && !field.getFieldName().isEmpty()) {
+                    validateIdentifier(field.getFieldName(), "field name");
+                    columns.add(field.getFieldName());
+                }
+            }
+        }
+        addConfiguredFields(columns, adminObject.getShows());
+        addConfiguredFields(columns, adminObject.getEdits());
+        addConfiguredFields(columns, adminObject.getFilterables());
+        addConfiguredFields(columns, adminObject.getOrderables());
+        addConfiguredFields(columns, adminObject.getSearches());
+        addConfiguredFields(columns, adminObject.getPrimaryKeys());
+        addConfiguredFields(columns, adminObject.getUniqueKeys());
+        return columns;
+    }
+
+    /**
+     * 将配置字段加入白名单，并做 SQL 标识符格式校验。
+     **/
+    private void addConfiguredFields(Set<String> target, List<String> fields) {
+        if (fields == null) {
+            return;
+        }
+        for (String field : fields) {
+            validateIdentifier(field, "field name");
+            target.add(field);
+        }
+    }
+
+    /**
+     * 将字段配置转换为 Set。
+     **/
+    private Set<String> configuredFieldSet(List<String> fields) {
+        Set<String> set = new LinkedHashSet<>();
+        addConfiguredFields(set, fields);
+        return set;
+    }
+
+    /**
+     * 校验请求字段必须属于指定配置白名单。
+     **/
+    private void validateConfiguredFields(List<String> fields, List<String> allowedFields, String label) {
+        Set<String> allowed = configuredFieldSet(allowedFields);
+        for (String field : fields) {
+            validateField(field, allowed, label);
+        }
+    }
+
+    /**
+     * 校验字段属于白名单。
+     **/
+    private void validateField(String field, Set<String> allowedFields, String label) {
+        validateIdentifier(field, "field name");
+        if (allowedFields == null || !allowedFields.contains(field)) {
+            throw new IllegalException("Invalid " + label + " field: " + field);
+        }
+    }
+
+    /**
+     * 校验 SQL 标识符格式。
+     **/
+    private void validateIdentifier(String identifier, String label) {
+        if (identifier == null || !identifier.matches("[A-Za-z_][A-Za-z0-9_]*")) {
+            throw new IllegalException("Invalid " + label + ": " + identifier);
+        }
+    }
+
+    /**
+     * 生成带表名前缀的安全列名。
+     **/
+    private String qualifiedColumn(String tableName, String fieldName) {
+        validateIdentifier(tableName, "table name");
+        validateIdentifier(fieldName, "field name");
+        return "`" + tableName + "`.`" + fieldName + "`";
     }
 
 
@@ -671,9 +965,11 @@ public class AdminServiceImpl implements AdminService {
      **/
     private Map<String, Object> getPrimaryValues(HttpServletRequest request, AdminObject adminObject) {
         Map<String, Object> queryMap = new HashMap<>();
+        Set<String> columns = getColumnFields(adminObject);
         boolean keysExist = false;
         if (adminObject.getPrimaryKeys() != null) {
             for (String field : adminObject.getPrimaryKeys()) {
+                validateField(field, columns, "primaryKeys");
                 String param = request.getParameter(field);
                 if (param != null) {
                     queryMap.put(field, param);
@@ -686,6 +982,7 @@ public class AdminServiceImpl implements AdminService {
         }
         if (adminObject.getUniqueKeys() != null) {
             for (String field : adminObject.getUniqueKeys()) {
+                validateField(field, columns, "uniqueKeys");
                 String param = request.getParameter(field);
                 if (param != null) {
                     queryMap.put(field, param);

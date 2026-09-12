@@ -1,18 +1,16 @@
 package cn.muzisheng.pear.dao;
 
 import cn.muzisheng.pear.config.UserConfig;
+import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.mapper.UserMapper;
 import cn.muzisheng.pear.entity.User;
-import cn.muzisheng.pear.exception.ScaleException;
+import cn.muzisheng.pear.service.PasswordService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import lombok.Data;
-import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
@@ -23,11 +21,17 @@ public class UserDAO {
     private final UserMapper userMapper;
 
     private final UserConfig userConfig;
+    private final PasswordService passwordService;
 
     @Autowired
-    public UserDAO(UserMapper userMapper, UserConfig userConfig){
+    public UserDAO(UserMapper userMapper, UserConfig userConfig, PasswordService passwordService){
         this.userMapper = userMapper;
         this.userConfig=userConfig;
+        this.passwordService = passwordService;
+    }
+
+    public UserDAO(UserMapper userMapper, UserConfig userConfig){
+        this(userMapper, userConfig, new PasswordService(userConfig));
     }
 
     /**
@@ -68,6 +72,7 @@ public class UserDAO {
      **/
 
     public boolean setPassword(User user, String password) {
+        validatePassword(password);
         String newPassword = HashPassword(password);
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         // 设置新的密码
@@ -91,6 +96,7 @@ public class UserDAO {
      * 根据邮箱创建用户
      **/
     public User createUser(String email, String password) {
+        validatePassword(password);
         User user = new User(email, HashPassword(password));
         user.setActivated(false);
         user.setEnabled(true);
@@ -115,19 +121,17 @@ public class UserDAO {
     }
 
     /**
-     * 密码加密
+     * 密码加密。保留方法名兼容旧调用，新密码统一使用带版本前缀的 BCrypt。
      **/
     public String HashPassword(String password) {
-        if("".equals(password)){
-            return "";
-        }
-        try {
-            MessageDigest md5=MessageDigest.getInstance("SHA-256");
-            byte[] digest=md5.digest((userConfig.getPasswordSalt() + password).getBytes());
-            return bytesToHex(digest);
-        } catch (NoSuchAlgorithmException e) {
-            throw new ScaleException("The password encryption algorithm is not supported",e);
-        }
+        return passwordService.encode(password);
+    }
+
+    /**
+     * 旧 SHA-256(passwordSalt + password) 哈希，仅用于历史用户登录兼容。
+     **/
+    public String legacyHashPassword(String password) {
+        return passwordService.legacyHash(password);
     }
     public User getUserById(long userId){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -142,24 +146,9 @@ public class UserDAO {
     public User decodeHashToken(String hashPassword,boolean useLastLogin){
         return null;
     }
-    /**
-     * 将字节数组转换为十六进制字符串
-     **/
-    public static String bytesToHex(byte[] bytes) {
-        try {
-            return Hex.encodeHexString(bytes);
-        } catch (Exception e) {
-            throw new ScaleException("Bytes cannot be converted to hexadecimal strings, password encryption failure", e);
-        }
-    }
-    /**
-     * 将十六进制字符串转换为字节数组
-     **/
-    public static byte[] hexToBytes(String hexString) {
-        try {
-            return Hex.decodeHex(hexString.toCharArray());
-        } catch (Exception e) {
-            throw new ScaleException("Hexadecimal strings cannot be converted to bytes, password decode failure", e);
+    private void validatePassword(String password) {
+        if (password == null || password.isBlank()) {
+            throw new IllegalException("Password cannot be empty.");
         }
     }
 }

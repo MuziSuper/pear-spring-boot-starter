@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
  * 用户组扩展信息
  **/
 @Data
+@lombok.EqualsAndHashCode(callSuper = false)
 @Entity(name = "group_extra")
 @TableName("group_extra")
 @PearObject(
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Component;
         pluralName = "groupExtras",
         group = "group"
 )
-public class GroupExtra {
+public class GroupExtra extends BaseEntity {
     /**
      * 主键
      **/

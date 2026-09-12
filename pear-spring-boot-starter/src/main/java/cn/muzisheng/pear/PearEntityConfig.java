@@ -1,8 +1,10 @@
 package cn.muzisheng.pear;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
 
-@EntityScan("cn.muzisheng.pear")
+/**
+ * Registers JPA entities provided by Pear without changing the application's own entity scan.
+ */
+@EntityScan(basePackageClasses = PearAutoConfig.class)
 public class PearEntityConfig {
 }

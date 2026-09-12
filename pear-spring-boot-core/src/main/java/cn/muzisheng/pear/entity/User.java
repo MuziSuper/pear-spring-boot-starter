@@ -5,6 +5,7 @@ import cn.muzisheng.pear.annotation.PearObject;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@lombok.EqualsAndHashCode(callSuper = false)
 @TableName("`user`")
 @PearObject(
         desc = "User Information.",
@@ -27,7 +29,7 @@ import java.util.Set;
         pluralName = "users",
         group = "user"
 )
-public class User{
+public class User extends BaseEntity {
     // 主键
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,8 +44,9 @@ public class User{
     @PearField
     private String email;
     // 密码
+    @JsonIgnore
     @Column(length = 128)
-    @PearField(isShow = false,isSearchable = false)
+    @PearField(isShow = false, isSearchable = false, isFilterable = false, isOrderable = false)
     private String password;
     // 电话
     @Column(length = 64)
@@ -76,13 +79,15 @@ public class User{
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
     // 最后一次登陆ip
+    @JsonIgnore
     @Column(length = 128,name = "last_login_ip")
     @TableField(value = "last_login_ip")
-    @PearField
+    @PearField(isShow = false, isSearchable = false, isFilterable = false, isOrderable = false)
     private String lastLoginIp;
     // 用户来源渠道
+    @JsonIgnore
     @Column(length = 64)
-    @PearField
+    @PearField(isShow = false, isSearchable = false, isFilterable = false, isOrderable = false)
     private String source;
     // 语言环境
     @Column(length = 20)
@@ -93,10 +98,12 @@ public class User{
     @PearField
     private String timezone;
     // 用户信息
-    @PearField
+    @JsonIgnore
+    @PearField(isShow = false, isSearchable = false, isFilterable = false, isOrderable = false)
     private String profile;
     // 用户认证令牌
-    @PearField
+    @JsonIgnore
+    @PearField(isShow = false, isEdit = false, isSearchable = false, isFilterable = false, isOrderable = false)
     private String token;
     // 创建时间
     @Column(name = "gmt_created")

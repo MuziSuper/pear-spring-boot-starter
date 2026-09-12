@@ -44,7 +44,6 @@ public class CacheContainer {
                 throw new CacheException("The cache already exists, but there is an error in the type matching of the key-value pair.");
             return true;
         }
-        cacheTemplateMap.put(cacheName, cacheTemplate);
         return true;
     }
 

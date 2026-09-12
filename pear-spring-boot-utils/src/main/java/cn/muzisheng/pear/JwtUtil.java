@@ -4,11 +4,11 @@ import cn.muzisheng.pear.config.TokenConfig;
 import cn.muzisheng.pear.exception.AuthorizationException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SecureDigestAlgorithm;
-import io.jsonwebtoken.security.WeakKeyException;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.Date;
@@ -16,34 +16,51 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
+    private static final int HS256_MIN_KEY_BYTES = 32;
 
     /**
      * 加密算法
      */
     private final static SecureDigestAlgorithm<SecretKey, SecretKey> ALGORITHM = Jwts.SIG.HS256;
     /**
-     * 过期时间(单位:秒)
+     * 过期时间(单位:毫秒)
      */
     private final long JWT_EXPIRE;
     private final String JWT_HEAD;
     private final String JWT_ISSUE;
     private final String JWT_SUBJECT;
     private final SecretKey KEY;
-    public JwtUtil(TokenConfig tokenConfig) {
-        this.JWT_EXPIRE = tokenConfig.getExpire();
-        this.JWT_HEAD = tokenConfig.getHead();
-        this.JWT_ISSUE = tokenConfig.getIssue();
-        this.JWT_SUBJECT = tokenConfig.getSubject();
 
-        try {
-            byte[] decode = Base64.getDecoder().decode(Constant.TOKEN_DEFAULT_SALT);
-            this.KEY =  new SecretKeySpec(decode, 0, decode.length,"HmacSHA256");
-        }catch (WeakKeyException e){
-            throw new JwtException("The salt is too weak.");
-        }
-    }
     /**
-     * 根据用户email生成token
+     * 根据 TokenConfig 初始化 JWT 工具。
+     **/
+    public JwtUtil(TokenConfig tokenConfig) {
+        this.JWT_EXPIRE = positiveOrDefault(tokenConfig.getExpire(), Constant.TOKEN_DEFAULT_EXPIRE_DAY);
+        this.JWT_HEAD = textOrDefault(tokenConfig.getHead(), Constant.TOKEN_DEFAULT_SECRET_PREFIX);
+        this.JWT_ISSUE = textOrDefault(tokenConfig.getIssue(), Constant.TOKEN_DEFAULT_ISSUER);
+        this.JWT_SUBJECT = textOrDefault(tokenConfig.getSubject(), Constant.TOKEN_DEFAULT_SUBJECT);
+        this.KEY = buildKey(textOrDefault(tokenConfig.getSecret(), Constant.TOKEN_DEFAULT_SALT));
+    }
+
+    /**
+     * 根据配置的 secret 构建 HS256 签名密钥，支持 Base64 编码值或原始字符串。
+     **/
+    private SecretKey buildKey(String secret) {
+        byte[] keyBytes;
+        try {
+            byte[] decoded = Base64.getDecoder().decode(secret);
+            keyBytes = decoded.length >= HS256_MIN_KEY_BYTES ? decoded : secret.getBytes(StandardCharsets.UTF_8);
+        } catch (IllegalArgumentException e) {
+            keyBytes = secret.getBytes(StandardCharsets.UTF_8);
+        }
+        if (keyBytes.length < HS256_MIN_KEY_BYTES) {
+            throw new JwtException("The token secret is too weak. HS256 requires at least 32 bytes.");
+        }
+        return new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA256");
+    }
+
+    /**
+     * 根据用户 email 生成 token。
      */
     public String generateTokenWithEmail(String email) {
         String uuid=UUIDUtil.generateId();
@@ -63,17 +80,19 @@ public class JwtUtil {
                 .compact();
         return JWT_HEAD + jwtStr;
     }
+
     /**
-     * 刷新token
+     * 基于合法旧 token 刷新 token。
      **/
     public String refreshToken(String token) {
-     String email = getEmailFromToken(token);
-     return getEmailFromToken(email);
+        String email = getEmailFromToken(token);
+        return generateTokenWithEmail(email);
     }
 
 
     /**
-     * 从token中获取登录用户名,如果返回null,说明token已经过期
+     * 从 token 中获取登录邮箱。
+     *
      * @throws AuthorizationException bad token or token expired
      */
     public String getEmailFromToken(String token){
@@ -81,43 +100,50 @@ public class JwtUtil {
         Claims claims = claimsJws.getPayload();
         return claims.get("email", String.class);
     }
+
     /**
-     * 删除token前缀
+     * 删除配置的 token 前缀，前缀不匹配时拒绝认证。
      **/
     public String delTokenPrefix(String token){
-        return token.replace(Constant.TOKEN_DEFAULT_SECRET_PREFIX,"");
+        if (token == null || !token.startsWith(JWT_HEAD)) {
+            throw new AuthorizationException("bad token prefix");
+        }
+        return token.substring(JWT_HEAD.length());
     }
+
     /**
-     * 从token中获取Claim
+     * 从 token 中获取 Claim，并校验 issuer 与 subject。
+     *
      * @throws AuthorizationException bad token or token expired
      */
     private Jws<Claims> getClaimFromToken(String token) {
         Jws<Claims> claims;
         try {
         claims = Jwts.parser()
+                .requireIssuer(JWT_ISSUE)
+                .requireSubject(JWT_SUBJECT)
                 .verifyWith(KEY)
                 .build()
                 .parseSignedClaims(delTokenPrefix(token));
-        }catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e){
-            throw new AuthorizationException("bad token",e);
         }catch (ExpiredJwtException e){
             throw new AuthorizationException("token expired",e);
+        }catch (JwtException | IllegalArgumentException e){
+            throw new AuthorizationException("bad token",e);
         }
         return claims;
     }
 
-//    private String optimizeSalt(String salt){
-//        StringBuilder buffer = new StringBuilder();
-//        for (int i = 0; i < salt.length(); i++) {
-//            char c = salt.charAt(i);
-//            if (c >= 'a' && c <= 'z') {
-//                buffer.append(c);
-//            } else if (c >= 'A' && c <= 'Z') {
-//                buffer.append(c);
-//            } else if (c >= '0' && c <= '9') {
-//                buffer.append(c);
-//            }
-//        }
-//        return buffer.toString();
-//    }
+    private String textOrDefault(String value, String defaultValue) {
+        if (value == null || value.isEmpty()) {
+            return defaultValue;
+        }
+        return value;
+    }
+
+    private long positiveOrDefault(Long value, long defaultValue) {
+        if (value == null || value <= 0) {
+            return defaultValue;
+        }
+        return value;
+    }
 }

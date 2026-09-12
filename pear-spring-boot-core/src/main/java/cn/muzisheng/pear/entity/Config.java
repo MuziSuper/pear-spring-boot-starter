@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 @Data
+@lombok.EqualsAndHashCode(callSuper = false)
 @Entity(name = "config")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Component;
         pluralName = "Configs",
         group = "config"
 )
-public class Config {
+public class Config extends BaseEntity {
     @Id
     @PearField(isPrimaryKey = true, isEdit = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -47,145 +47,132 @@ public class LFUCacheTemplate<K, V> implements CacheTemplate<K, V> {
 
     @Override
     public V get(K key) {
-        ExpiredCacheValue<V> value;
+        writeLock.lock();
         try {
-            readLock.lock();
-            if (!cache.containsKey(key)) {
+            ExpiredCacheValue<V> value = cache.get(key);
+            if (value == null) {
                 return null;
             }
-            value = cache.get(key);
-        } finally {
-            readLock.unlock();
-        }
-        if (System.currentTimeMillis() - value.getLastTime() < expire * timeUnit.toMillis(1) || expire == 0L) {
-            try {
-                try {
-                    writeLock.lock();
-                    incrementFrequency(key);
-                } finally {
-                    readLock.lock();
-                    writeLock.unlock();
-                }
-                return value.getVal();
-            } finally {
-                readLock.unlock();
+            if (isExpired(value)) {
+                removeInternal(key);
+                return null;
             }
-        } else {
-            remove(key);
-            return null;
+            value.setLastTime(System.currentTimeMillis());
+            incrementFrequencyInternal(key);
+            return value.getVal();
+        } finally {
+            writeLock.unlock();
         }
-
     }
 
     @Override
     public void put(K key, V value) {
-        ExpiredCacheValue<V> expiredCacheValue;
-        readLock.lock();
-        try {
-            expiredCacheValue = cache.get(key);
-        } finally {
-            readLock.unlock();
-        }
-        // 键已存在则更新值并增加频率之后退出，若键已存在且已过期，则移除该键执行后续逻辑
-        if (expiredCacheValue != null) {
-            if (System.currentTimeMillis() - expiredCacheValue.getLastTime() < expire * timeUnit.toMillis(1) || expire == 0L) {
-                expiredCacheValue.setVal(value);
-                expiredCacheValue.setLastTime(System.currentTimeMillis());
-                writeLock.lock();
-                try {
-                    try {
-                        cache.put(key, expiredCacheValue);
-                        incrementFrequency(key);
-                        return;
-                    } finally {
-                        readLock.lock();
-                        writeLock.unlock();
-                    }
-                } finally {
-                    readLock.unlock();
-                }
-            }
-            remove(key);
-        }
-        // 键不存在，则创建新的键值对
-        ExpiredCacheValue<V> newExpiredCacheValue = new ExpiredCacheValue<>(System.currentTimeMillis(), value);
-        newExpiredCacheValue.setVal(value);
-        newExpiredCacheValue.setLastTime(System.currentTimeMillis());
         writeLock.lock();
         try {
-            try {
-                while (cache.size() > capacity && capacity != 0) {
-                    removeLeastFrequent();
-                }
-                cache.put(key, newExpiredCacheValue);
-                incrementFrequency(key);
-            } finally {
-                readLock.lock();
-                writeLock.unlock();
+            ExpiredCacheValue<V> expiredCacheValue = cache.get(key);
+            // 键已存在且未过期时更新值、滑动过期时间并增加频率。
+            if (expiredCacheValue != null && !isExpired(expiredCacheValue)) {
+                expiredCacheValue.setVal(value);
+                expiredCacheValue.setLastTime(System.currentTimeMillis());
+                incrementFrequencyInternal(key);
+                return;
             }
+            if (expiredCacheValue != null) {
+                removeInternal(key);
+            }
+            if (capacity > 0 && cache.size() >= capacity) {
+                evictLeastFrequentInternal();
+            }
+            ExpiredCacheValue<V> newExpiredCacheValue = new ExpiredCacheValue<>(System.currentTimeMillis(), value);
+            cache.put(key, newExpiredCacheValue);
+            frequencyMap.put(key, 1);
+            frequencyKeysMap.computeIfAbsent(1, k -> new LinkedHashSet<>()).add(key);
         } finally {
-            readLock.unlock();
+            writeLock.unlock();
         }
     }
 
     /**
-     * 更新键的访问次数与频率到元素映射的集合
+     * 判断缓存值是否过期，调用方无需持锁但通常已持有写锁。
      **/
-    private void incrementFrequency(K key) {
-        int frequency = frequencyMap.getOrDefault(key, 0) + 1;
-        frequencyMap.put(key, frequency);
-        // 从旧频率集合中移除
-        if (frequencyKeysMap.containsKey(frequency)) {
-            frequencyKeysMap.get(frequency).remove(key);
-            if (frequencyKeysMap.get(frequency).isEmpty()) {
+    private boolean isExpired(ExpiredCacheValue<V> value) {
+        if (value == null) {
+            return true;
+        }
+        return expire != 0L && System.currentTimeMillis() - value.getLastTime() >= expire * timeUnit.toMillis(1);
+    }
+
+    /**
+     * 更新键的访问次数。调用方必须已持有写锁。
+     **/
+    private void incrementFrequencyInternal(K key) {
+        Integer oldFrequency = frequencyMap.get(key);
+        if (oldFrequency == null) {
+            oldFrequency = 0;
+        }
+        if (oldFrequency > 0) {
+            LinkedHashSet<K> oldKeys = frequencyKeysMap.get(oldFrequency);
+            if (oldKeys != null) {
+                oldKeys.remove(key);
+                if (oldKeys.isEmpty()) {
+                    frequencyKeysMap.remove(oldFrequency);
+                }
+            }
+        }
+        int newFrequency = oldFrequency + 1;
+        frequencyMap.put(key, newFrequency);
+        frequencyKeysMap.computeIfAbsent(newFrequency, k -> new LinkedHashSet<>()).add(key);
+    }
+
+    /**
+     * 淘汰访问频率最低 bucket 中最早进入的键。调用方必须已持有写锁。
+     **/
+    private void evictLeastFrequentInternal() {
+        if (frequencyKeysMap.isEmpty()) {
+            return;
+        }
+        Integer lowestFrequency = frequencyKeysMap.firstKey();
+        LinkedHashSet<K> keysWithLowestFrequency = frequencyKeysMap.get(lowestFrequency);
+        if (keysWithLowestFrequency == null || keysWithLowestFrequency.isEmpty()) {
+            frequencyKeysMap.remove(lowestFrequency);
+            return;
+        }
+
+        // 同频率下淘汰最早进入该频率 bucket 的 key。
+        K keyToRemove = keysWithLowestFrequency.iterator().next();
+        removeInternal(keyToRemove);
+    }
+
+    /**
+     * 同步删除三份 LFU 结构。调用方必须已持有写锁。
+     **/
+    private void removeInternal(K key) {
+        if (!cache.containsKey(key)) {
+            return;
+        }
+        cache.remove(key);
+        Integer frequency = frequencyMap.remove(key);
+        if (frequency == null) {
+            return;
+        }
+        LinkedHashSet<K> keys = frequencyKeysMap.get(frequency);
+        if (keys != null) {
+            keys.remove(key);
+            if (keys.isEmpty()) {
                 frequencyKeysMap.remove(frequency);
             }
         }
-        // 添加到新频率集合
-        frequencyKeysMap.computeIfAbsent(frequency + 1, k -> new LinkedHashSet<>()).add(key);
-    }
-
-    private void removeLeastFrequent() {
-        Integer lowestFrequency = frequencyKeysMap.firstKey();
-        LinkedHashSet<K> keysWithLowestFrequency = frequencyKeysMap.get(lowestFrequency);
-
-        // 获取并移除第一个键（LRU策略处理相同频率的情况）
-        K keyToRemove = keysWithLowestFrequency.iterator().next();
-        keysWithLowestFrequency.remove(keyToRemove);
-        if (keysWithLowestFrequency.isEmpty()) {
-            frequencyKeysMap.remove(lowestFrequency);
-        }
-
-        cache.remove(keyToRemove);
-        frequencyMap.remove(keyToRemove);
     }
 
     /**
-     * 移除缓存
+     * 移除缓存。
      **/
     public void remove(K key) {
-        readLock.lock();
+        writeLock.lock();
         try {
-            if (!cache.containsKey(key)) {
-                return;
-            }
-            readLock.unlock();
-            writeLock.lock();
-            try {
-                int frequency = frequencyMap.get(key);
-                frequencyMap.remove(key);
-                frequencyKeysMap.get(frequency).remove(key);
-                if (frequencyKeysMap.get(frequency).isEmpty()) {
-                    frequencyKeysMap.remove(frequency);
-                }
-
-                cache.remove(key);
-            } finally {
-                readLock.lock();
-                writeLock.unlock();
-            }
+            removeInternal(key);
         } finally {
-            readLock.unlock();
+            writeLock.unlock();
         }
     }
 
@@ -223,11 +210,16 @@ public class LFUCacheTemplate<K, V> implements CacheTemplate<K, V> {
 
     @Override
     public String toString() {
-        return "LFUCache{" +
-                ", cache=" + cache.toString() +
-                ", frequencyMap=" + frequencyMap.toString() +
-                ", frequencyKeysMap=" + frequencyKeysMap.toString() +
-                '}';
+        readLock.lock();
+        try {
+            return "LFUCache{" +
+                    ", cache=" + cache +
+                    ", frequencyMap=" + frequencyMap +
+                    ", frequencyKeysMap=" + frequencyKeysMap +
+                    '}';
+        } finally {
+            readLock.unlock();
+        }
     }
 
     @Override

@@ -12,24 +12,4 @@
     <url>https://github.com/muzisheng/pear</url>
     <artifactId>pear-spring-boot-constant</artifactId>
     <name>pear-spring-boot-constant</name>
-    <build>
-        <plugins>
-            <!-- 生成 Javadoc -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.6.0</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-        </plugins>
-    </build>
 </project>

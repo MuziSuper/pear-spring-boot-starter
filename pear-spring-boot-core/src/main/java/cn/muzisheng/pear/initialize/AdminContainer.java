@@ -2,15 +2,19 @@ package cn.muzisheng.pear.initialize;
 
 import cn.muzisheng.pear.CamelToSnakeUtil;
 import cn.muzisheng.pear.annotation.PearField;
+import cn.muzisheng.pear.annotation.PearObject;
 import cn.muzisheng.pear.exception.AdminErrorException;
 import cn.muzisheng.pear.exception.GeneralException;
 import cn.muzisheng.pear.handler.*;
 import cn.muzisheng.pear.model.*;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -29,6 +33,7 @@ public class AdminContainer {
     private static final Logger LOG = LoggerFactory.getLogger(AdminContainer.class);
     private static final List<AdminObject> adminObjects = new LinkedList<>();
     private static final Map<String, AdminObject> adminObjectMap = new HashMap<>();
+    private static final Map<Class<?>, AdminObject> adminObjectClassMap = new HashMap<>();
 
     /**
      * 获取所有adminObject
@@ -41,12 +46,21 @@ public class AdminContainer {
      * 添加adminObject进入Pear容器
      **/
     protected static void addAdminObject(AdminObject adminObject) {
-        if (adminObjectMap.containsKey(adminObject.getTableName())) {
-            throw new AdminErrorException("The databases table named "+adminObject.getTableName()+" has been injected into the Pear container. Please check for any conflicts in the entity class names.");
+        if (adminObject == null || adminObject.getModel() == null) {
+            throw new AdminErrorException("AdminObject or model cannot be null.");
+        }
+        String tableName = normalizeIdentifier(adminObject.getTableName());
+        if (tableName.isEmpty()) {
+            throw new AdminErrorException("AdminObject tableName cannot be empty. model: " + adminObject.getModel().getName());
+        }
+        adminObject.setTableName(tableName);
+        AdminObject existing = adminObjectMap.get(tableName);
+        if (existing != null) {
+            throw new AdminErrorException("The database table named " + tableName + " has already been injected into the Pear container. conflict models: " + existing.getModel().getName() + " and " + adminObject.getModel().getName());
         }
         adminObjects.add(adminObject);
-        // tableName为唯一,覆盖掉原先的表名重复的adminObject
-        adminObjectMap.put(adminObject.getTableName(), adminObject);
+        adminObjectMap.put(tableName, adminObject);
+        adminObjectClassMap.put(adminObject.getModel(), adminObject);
     }
     /**
      * 添加多个adminObject进入Pear容器
@@ -74,8 +88,7 @@ public class AdminContainer {
      * @param clazz 类对象
      **/
     private static AdminObject getAdminObject(Class<?> clazz) {
-        String tableName = CamelToSnakeUtil.toSnakeCase(clazz.getSimpleName());
-        return getAdminObject(tableName);
+        return adminObjectClassMap.get(clazz);
     }
 
     /**
@@ -92,12 +105,8 @@ public class AdminContainer {
      **/
     public static void buildAdminObjects(List<AdminObject> objects) {
         for (AdminObject adminObject : objects) {
-            try {
-                // 处理AdminObject数据
-                build(adminObject);
-            } catch (GeneralException e) {
-                LOG.error(e.getMessage());
-            }
+            // 处理AdminObject数据；元数据错误必须启动期 fail-fast。
+            build(adminObject);
         }
     }
 
@@ -124,7 +133,7 @@ public class AdminContainer {
         List<AdminField> list = new ArrayList<>();
 
         // 获取model的所有字段
-        for (Field field : model.getDeclaredFields()) {
+        for (Field field : scanModelFields(model)) {
             // 忽略钩子方法
             if (field.getType() == BeforeCreate.class || field.getType() == BeforeUpdate.class || field.getType() == BeforeDelete.class || field.getType() == BeforeRender.class || field.getType() == AccessCheck.class || field.getType() == AfterCreate.class) {
                 continue;
@@ -132,7 +141,7 @@ public class AdminContainer {
             AdminField adminField = new AdminField();
             // adminField存入name字段与临时的fieldName
             adminField.setName(field.getName());
-            adminField.setFieldName(CamelToSnakeUtil.toSnakeCase(field.getName()));
+            adminField.setFieldName(resolveColumnName(field));
             /*
              * 若为实体类对象，则递归，这部分还没做，先非对象
              */
@@ -181,20 +190,19 @@ public class AdminContainer {
             }
 
             // adminField存入NotColumn
-            Transient ignore = field.getAnnotation(Transient.class);
-            if (ignore != null) {
+            if (isNotColumn(field)) {
                 adminField.setNotColumn(true);
             }
 
             // adminField将主键存入primary
-            if (field.getAnnotation(Id.class) != null) {
+            if (isPrimaryField(field) && !Boolean.TRUE.equals(adminField.getNotColumn())) {
                 adminField.setPrimary(true);
             }
 
             Column column = field.getAnnotation(Column.class);
             if (column != null) {
                 // adminField存入unique
-                if (column.unique()) {
+                if (column.unique() && !Boolean.TRUE.equals(adminField.getNotColumn())) {
                     // adminField将唯一字段存入primary
                     adminField.setPrimary(true);
                 }
@@ -202,8 +210,6 @@ public class AdminContainer {
                 if (column.nullable()) {
                     adminField.setCanNull(true);
                 }
-                // adminField存入name
-                adminField.setFieldName(column.name().replaceAll("`", ""));
             }
             // adminField存入isAutoId
             GeneratedValue generatedValue = field.getAnnotation(GeneratedValue.class);
@@ -217,15 +223,15 @@ public class AdminContainer {
             // 当字段标记为唯一键或主键时，如果以id结尾则将字段名以键值对方式存入primaryKeyMap中，
             // 并且如果当前类中存在此字段对应类属性，则将类属性名与字段名存入primaryKeyMap中，
             // 最后将主键和唯一键分别存入primaryKeys和uniqueKeys中
-            if ((column != null && column.unique()) || field.getAnnotation(Id.class) != null) {
-                String keyName = adminField.getName();
+            if ((isPrimaryField(field) || isUniqueField(field)) && !Boolean.TRUE.equals(adminField.getNotColumn())) {
+                String keyName = adminField.getFieldName();
                 // 如果字段以id结尾，则其为外键
                 if (field.getName().endsWith("id") || field.getName().endsWith("Id") || field.getName().endsWith("ID")) {
                     String idName = field.getName().substring(0, field.getName().length() - 2);
                     if (!idName.isEmpty()) {
                         // 获取model的外键对应的实体类字段
                         try {
-                            Field foreignField = model.getDeclaredField(idName);
+                            Field foreignField = findModelField(model, idName);
                             keyName = CamelToSnakeUtil.toSnakeCase(foreignField.getName());
                         } catch (NoSuchFieldException e) {
                             LOG.warn("No such foreign field: {} in model: {}", idName, model.getName());
@@ -239,18 +245,14 @@ public class AdminContainer {
                     }
                 }
                 // 将主键和唯一键分别存入primaryKeys和uniqueKeys中
-                if (field.getAnnotation(Id.class) != null) {
-                    if (adminObject.getPrimaryKeys() == null) {
-                        adminObject.setPrimaryKeys(new ArrayList<>());
-                    }
+                if (isPrimaryField(field)) {
+                    ensurePrimaryKeys(adminObject);
                     if (!adminObject.getPrimaryKeys().contains(keyName)) {
                         adminObject.getPrimaryKeys().add(keyName);
                     }
                 } else {
-                    if (adminObject.getUniqueKeys() == null) {
-                        adminObject.setUniqueKeys(new ArrayList<>());
-                    }
-                    if (!adminObject.getPrimaryKeys().contains(keyName)) {
+                    ensureUniqueKeys(adminObject);
+                    if (!adminObject.getUniqueKeys().contains(keyName)) {
                         adminObject.getUniqueKeys().add(keyName);
                     }
                 }
@@ -263,7 +265,7 @@ public class AdminContainer {
                 if (!idName.isEmpty()) {
                     // 获取model的外键对应的实体类字段
                     try {
-                        Field foreignField = model.getDeclaredField(idName);
+                        Field foreignField = findModelField(model, idName);
                         // 忽略外键对应的类属性
                         if (adminObject.getIgnores() == null) {
                             adminObject.setIgnores(new HashMap<>());
@@ -298,6 +300,142 @@ public class AdminContainer {
             adminObject.setFields(list);
         }
     }
+
+    /**
+     * 根据实体注解解析表名，按 JPA Table、Entity、MyBatis-Plus TableName、PearObject、类名 snake_case 的优先级处理。
+     **/
+    public static String resolveTableName(Class<?> clazz, PearObject pearObject) {
+        String tableName = "";
+        Table table = clazz.getAnnotation(Table.class);
+        if (table != null) {
+            tableName = normalizeIdentifier(table.name());
+        }
+        if (tableName.isEmpty()) {
+            Entity entity = clazz.getAnnotation(Entity.class);
+            if (entity != null) {
+                tableName = normalizeIdentifier(entity.name());
+            }
+        }
+        if (tableName.isEmpty()) {
+            TableName tableNameAnnotation = clazz.getAnnotation(TableName.class);
+            if (tableNameAnnotation != null) {
+                tableName = normalizeIdentifier(tableNameAnnotation.value());
+            }
+        }
+        if (tableName.isEmpty() && pearObject != null) {
+            tableName = normalizeIdentifier(pearObject.TableName());
+        }
+        if (tableName.isEmpty()) {
+            tableName = normalizeIdentifier(CamelToSnakeUtil.toSnakeCase(clazz.getSimpleName()));
+        }
+        if (tableName.isEmpty()) {
+            throw new AdminErrorException("Cannot resolve table name for model: " + clazz.getName());
+        }
+        return tableName;
+    }
+
+    /**
+     * 扫描模型字段：父类到子类顺序稳定，子类同名字段覆盖父类字段。
+     **/
+    public static List<Field> scanModelFields(Class<?> model) {
+        LinkedList<Class<?>> hierarchy = new LinkedList<>();
+        Class<?> current = model;
+        while (current != null && current != Object.class) {
+            hierarchy.addFirst(current);
+            current = current.getSuperclass();
+        }
+        LinkedHashMap<String, Field> fields = new LinkedHashMap<>();
+        for (Class<?> clazz : hierarchy) {
+            for (Field field : clazz.getDeclaredFields()) {
+                if (fields.containsKey(field.getName())) {
+                    fields.remove(field.getName());
+                }
+                fields.put(field.getName(), field);
+            }
+        }
+        return new ArrayList<>(fields.values());
+    }
+
+    /**
+     * 解析数据库列名，空注解值不会覆盖默认字段名。
+     **/
+    public static String resolveColumnName(Field field) {
+        Column column = field.getAnnotation(Column.class);
+        if (column != null) {
+            String name = normalizeIdentifier(column.name());
+            if (!name.isEmpty()) {
+                return name;
+            }
+        }
+        TableField tableField = field.getAnnotation(TableField.class);
+        if (tableField != null) {
+            String name = normalizeIdentifier(tableField.value());
+            if (!name.isEmpty()) {
+                return name;
+            }
+        }
+        return normalizeIdentifier(CamelToSnakeUtil.toSnakeCase(field.getName()));
+    }
+
+    /**
+     * 判断字段是否不映射数据库列。
+     **/
+    public static boolean isNotColumn(Field field) {
+        TableField tableField = field.getAnnotation(TableField.class);
+        return field.isAnnotationPresent(Transient.class) || (tableField != null && !tableField.exist());
+    }
+
+    /**
+     * 查找模型字段，支持继承字段与子类覆盖。
+     **/
+    public static Field findModelField(Class<?> model, String fieldName) throws NoSuchFieldException {
+        for (Field field : scanModelFields(model)) {
+            if (field.getName().equals(fieldName)) {
+                return field;
+            }
+        }
+        throw new NoSuchFieldException(fieldName);
+    }
+
+    /**
+     * 清理注解中的 SQL 标识符值。
+     **/
+    public static String normalizeIdentifier(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.trim().replace("`", "");
+    }
+
+    /**
+     * 判断字段是否为主键来源。
+     **/
+    public static boolean isPrimaryField(Field field) {
+        PearField pearField = field.getAnnotation(PearField.class);
+        return field.isAnnotationPresent(Id.class) || (pearField != null && pearField.isPrimaryKey());
+    }
+
+    /**
+     * 判断字段是否为唯一键来源。
+     **/
+    public static boolean isUniqueField(Field field) {
+        PearField pearField = field.getAnnotation(PearField.class);
+        Column column = field.getAnnotation(Column.class);
+        return (column != null && column.unique()) || (pearField != null && pearField.isUniqueKey());
+    }
+
+    private static void ensurePrimaryKeys(AdminObject adminObject) {
+        if (adminObject.getPrimaryKeys() == null) {
+            adminObject.setPrimaryKeys(new ArrayList<>());
+        }
+    }
+
+    private static void ensureUniqueKeys(AdminObject adminObject) {
+        if (adminObject.getUniqueKeys() == null) {
+            adminObject.setUniqueKeys(new ArrayList<>());
+        }
+    }
+
     @Getter
     // 对外提供用于修改adminObject的属性
     public static class AdminFactory {

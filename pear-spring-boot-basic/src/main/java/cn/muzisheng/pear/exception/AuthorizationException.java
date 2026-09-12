@@ -3,12 +3,12 @@ package cn.muzisheng.pear.exception;
  * 未登录认证
  * code: 401
  **/
-public class AuthorizationException extends RuntimeException{
-    public AuthorizationException(){}
+public class AuthorizationException extends BaseException{
+    public AuthorizationException(){ super(ErrorCode.UNAUTHORIZED); }
     public AuthorizationException(String message){
-        super(message);
+        super(ErrorCode.UNAUTHORIZED, message);
     }
     public AuthorizationException(String message, Throwable cause){
-        super(message, cause);
+        super(ErrorCode.UNAUTHORIZED, message, cause);
     }
 }

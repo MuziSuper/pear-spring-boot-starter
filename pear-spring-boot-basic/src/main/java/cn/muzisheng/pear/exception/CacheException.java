@@ -3,14 +3,14 @@ package cn.muzisheng.pear.exception;
  * 未登录认证
  * code: 508
  **/
-public class CacheException extends RuntimeException{
+public class CacheException extends BaseException{
     public CacheException(){
-        super();
+        super(ErrorCode.SYSTEM_ERROR);
     }
     public CacheException(String message){
-        super(message);
+        super(ErrorCode.SYSTEM_ERROR, message);
     }
     public CacheException(String message, Throwable cause){
-        super(message, cause);
+        super(ErrorCode.SYSTEM_ERROR, message, cause);
     }
 }

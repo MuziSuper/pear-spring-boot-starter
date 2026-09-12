@@ -1,21 +1,17 @@
 package cn.muzisheng.pear.initialize;
 
-import cn.muzisheng.pear.CamelToSnakeUtil;
 import cn.muzisheng.pear.PluralUtil;
 import cn.muzisheng.pear.annotation.PearField;
 import cn.muzisheng.pear.annotation.PearObject;
+import cn.muzisheng.pear.model.AdminIcon;
 import cn.muzisheng.pear.model.AdminObject;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.HashSet;
 
 /**
  * 在bean被加载前通过PearObject与PearField注解填充AdminObject对象存入AdminContainer中
@@ -37,65 +33,41 @@ public class PearBeanInitialization implements BeanPostProcessor {
             object.setDesc(pearObjectAnnotation.desc());
             object.setGroup(pearObjectAnnotation.group());
             // path字段最高优先级为PearObject注解的path字段，其次是类名
-            if (pearObjectAnnotation.path() == null || pearObjectAnnotation.path().isEmpty()) {
-                object.setPath("/" + object.getName());
-            }
+            object.setPath(defaultIfBlank(pearObjectAnnotation.path(), "/" + object.getName()));
             // pluralName字段最高优先级为PearObject注解的pluralName字段，其次是类名的复数
-            if (pearObjectAnnotation.pluralName() == null || pearObjectAnnotation.pluralName().isEmpty()) {
-                object.setPluralName(PluralUtil.pluralize(object.getName()));
+            object.setPluralName(defaultIfBlank(pearObjectAnnotation.pluralName(), PluralUtil.pluralize(object.getName())));
+            object.setEditPage(emptyToNull(pearObjectAnnotation.editPage()));
+            object.setListPage(emptyToNull(pearObjectAnnotation.listPage()));
+            object.setInvisible(pearObjectAnnotation.isInvisible());
+            if (!emptyToNull(pearObjectAnnotation.iconUrl()).isEmpty()) {
+                AdminIcon icon = new AdminIcon();
+                icon.setUrl(emptyToNull(pearObjectAnnotation.iconUrl()));
+                object.setIcon(icon);
             }
-            // tableName字段最高优先级为JPA自动创建表的表名优先，其次是mybatisPlus指定的表名，再是PearObject注解的TableName,否则使用驼峰式类名
-            if (clazz.isAnnotationPresent(Entity.class)) {
-                Entity entity = clazz.getAnnotation(Entity.class);
-                object.setTableName(entity.name().replaceAll("`", ""));
-            } else if (clazz.isAnnotationPresent(TableName.class)) {
-                TableName tablename = clazz.getAnnotation(TableName.class);
-                object.setTableName(tablename.value().replaceAll("`", ""));
-            } else if(pearObjectAnnotation.TableName() != null&&!pearObjectAnnotation.TableName().isEmpty()){
-                object.setTableName(pearObjectAnnotation.TableName().replaceAll("`", ""));
-            }else{
-                object.setTableName(CamelToSnakeUtil.toSnakeCase(object.getName()));
-            }
+            object.setTableName(AdminContainer.resolveTableName(clazz, pearObjectAnnotation));
 
             // 类信息填充完毕，以下对字段信息进行填充
-            Set<String> shows = new HashSet<>();
-            Set<String> edits = new HashSet<>();
-            Set<String> filterables = new HashSet<>();
-            Set<String> Orderables = new HashSet<>();
-            Set<String> searches = new HashSet<>();
-            Set<String> requires = new HashSet<>();
-            Set<String> primaryKeys = new HashSet<>();
-            Set<String> uniqueKeys = new HashSet<>();
+            Set<String> shows = new LinkedHashSet<>();
+            Set<String> edits = new LinkedHashSet<>();
+            Set<String> filterables = new LinkedHashSet<>();
+            Set<String> Orderables = new LinkedHashSet<>();
+            Set<String> searches = new LinkedHashSet<>();
+            Set<String> requires = new LinkedHashSet<>();
+            Set<String> primaryKeys = new LinkedHashSet<>();
+            Set<String> uniqueKeys = new LinkedHashSet<>();
 
-            HashSet<Field> fieldsSet = new HashSet<>();
-            Class<?> tempClass = clazz;
-            while(tempClass != Object.class){
-                Field[] superFields = tempClass.getDeclaredFields();
-                fieldsSet.addAll(Arrays.asList(superFields));
-                tempClass = tempClass.getSuperclass();
-
-            }
-
-            for (Field field : fieldsSet) {
+            for (Field field : AdminContainer.scanModelFields(clazz)) {
                 if (field.isAnnotationPresent(PearField.class)) {
                     PearField pearFieldAnnotation = field.getAnnotation(PearField.class);
-                    // 对name的处理，优先使用Column注解的name字段去除反引号，其次是原属性名
-                    String name = "";
-                    if (field.isAnnotationPresent(Column.class)) {
-                        Column column = field.getAnnotation(Column.class);
-                        // 去除反引号，获取mybaitsPlus指定的字段名
-                        name = column.name().replaceAll("`", "");
-                    }else if(field.isAnnotationPresent(TableField.class)){
-                        TableField tableField = field.getAnnotation(TableField.class);
-                        name = tableField.value().replaceAll("`", "");
-                    }else{
-                        name = field.getName();
+                    if (AdminContainer.isNotColumn(field)) {
+                        continue;
                     }
-                    if (name.isEmpty()) {
-                        name = field.getName();
-                    }
+                    String name = AdminContainer.resolveColumnName(field);
                     if (pearFieldAnnotation.isEdit()) {
                         edits.add(name);
+                    }
+                    if (field.isAnnotationPresent(GeneratedValue.class)) {
+                        edits.remove(name);
                     }
                     if (pearFieldAnnotation.isShow()) {
                         shows.add(name);
@@ -112,11 +84,10 @@ public class PearBeanInitialization implements BeanPostProcessor {
                     if (pearFieldAnnotation.isRequire()) {
                         requires.add(name);
                     }
-                    if (pearFieldAnnotation.isUniqueKey()) {
-                        uniqueKeys.add(name);
-                    }
-                    if (pearFieldAnnotation.isPrimaryKey()) {
+                    if (AdminContainer.isPrimaryField(field)) {
                         primaryKeys.add(name);
+                    } else if (AdminContainer.isUniqueField(field)) {
+                        uniqueKeys.add(name);
                     }
                 }
             }
@@ -131,5 +102,20 @@ public class PearBeanInitialization implements BeanPostProcessor {
             AdminContainer.addAdminObject(object);
         }
         return bean;
+    }
+
+    /**
+     * 返回去除空白后的注解值，空值时使用默认值。
+     **/
+    private String defaultIfBlank(String value, String defaultValue) {
+        String normalized = emptyToNull(value);
+        return normalized.isEmpty() ? defaultValue : normalized;
+    }
+
+    /**
+     * 将 null 转为空串，并 trim。
+     **/
+    private String emptyToNull(String value) {
+        return value == null ? "" : value.trim();
     }
 }

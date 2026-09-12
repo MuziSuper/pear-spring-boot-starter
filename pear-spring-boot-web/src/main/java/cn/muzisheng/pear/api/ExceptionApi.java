@@ -2,11 +2,16 @@ package cn.muzisheng.pear.api;
 
 import cn.muzisheng.pear.Constant;
 import cn.muzisheng.pear.exception.*;
-import cn.muzisheng.pear.params.ExceptionResponse;
+import cn.muzisheng.pear.vo.common.ErrorVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
 
@@ -15,64 +20,93 @@ import java.time.LocalDateTime;
  **/
 @ControllerAdvice
 public class ExceptionApi {
+    private static final Logger LOG = LoggerFactory.getLogger(ExceptionApi.class);
+
+    /**
+     * 统一构建异常响应，保持 status/message/time 结构。
+     **/
+    private ResponseEntity<ErrorVO> response(int status, String message, HttpStatus httpStatus) {
+        ErrorVO errorResponse = new ErrorVO(status, message, LocalDateTime.now());
+        return new ResponseEntity<>(errorResponse, httpStatus);
+    }
+
     @ExceptionHandler(IllegalException.class)
-    public ResponseEntity<ExceptionResponse> handleIllegalException(IllegalException e) {
-        ExceptionResponse errorResponse = new ExceptionResponse(Constant.ILLEGAL_EXCEPTION, e.getMessage() == null ? Constant.ILLEGAL_MESSAGE_EXCEPTION : e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorVO> handleIllegalException(IllegalException e) {
+        return response(Constant.ILLEGAL_EXCEPTION, e.getMessage() == null ? Constant.ILLEGAL_MESSAGE_EXCEPTION : e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({
+            HttpMessageNotReadableException.class,
+            MethodArgumentTypeMismatchException.class,
+            MissingServletRequestParameterException.class,
+            java.lang.IllegalArgumentException.class
+    })
+    public ResponseEntity<ErrorVO> handleBadRequest(Exception e) {
+        LOG.warn("bad request: {}", e.getMessage());
+        return response(Constant.ILLEGAL_EXCEPTION, Constant.ILLEGAL_MESSAGE_EXCEPTION, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AuthorizationException.class)
-    public ResponseEntity<ExceptionResponse> handleAuthorizationException(AuthorizationException e) {
-        ExceptionResponse errorResponse = new ExceptionResponse(Constant.UNAPPROVED_EXCEPTION, e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<ErrorVO> handleAuthorizationException(AuthorizationException e) {
+        return response(Constant.UNAPPROVED_EXCEPTION, e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity<ExceptionResponse> handleForbiddenException(ForbiddenException e) {
-        ExceptionResponse errorResponse = new ExceptionResponse(Constant.FORBIDDEN_EXCEPTION, e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    public ResponseEntity<ErrorVO> handleForbiddenException(ForbiddenException e) {
+        return response(Constant.FORBIDDEN_EXCEPTION, e.getMessage(), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorVO> handleNotFoundException(NotFoundException e) {
+        return response(Constant.NOT_FOUND_EXCEPTION, e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(GeneralException.class)
-    public ResponseEntity<ExceptionResponse> handleGeneralException(GeneralException e) {
-        ExceptionResponse errorResponse = new ExceptionResponse(Constant.GENERAL_EXCEPTION, e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<ErrorVO> handleGeneralException(GeneralException e) {
+        return response(Constant.GENERAL_EXCEPTION, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ScaleException.class)
-    public ResponseEntity<ExceptionResponse> handleScaleException(ScaleException e) {
-        ExceptionResponse errorResponse = new ExceptionResponse(Constant.USER_EXCEPTION, e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<ErrorVO> handleScaleException(ScaleException e) {
+        return response(Constant.SCALE_EXCEPTION, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @ExceptionHandler(UserException.class)
-    public ResponseEntity<ExceptionResponse> handleUserException(UserException e) {
-        ExceptionResponse errorResponse = new ExceptionResponse(Constant.SCALE_EXCEPTION, e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_GATEWAY);
+    public ResponseEntity<ErrorVO> handleUserException(UserException e) {
+        return response(Constant.USER_EXCEPTION, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @ExceptionHandler(HookException.class)
-    public ResponseEntity<ExceptionResponse> handleHookException(HookException e) {
-        ExceptionResponse errorResponse = new ExceptionResponse(Constant.HOOK_EXCEPTION, e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.GATEWAY_TIMEOUT);
+    public ResponseEntity<ErrorVO> handleHookException(HookException e) {
+        return response(Constant.HOOK_EXCEPTION, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @ExceptionHandler(SqlStatementException.class)
-    public ResponseEntity<ExceptionResponse> handleSqlStatementException(SqlStatementException e) {
-        ExceptionResponse errorResponse = new ExceptionResponse(Constant.SQL_EXCEPTION, e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.HTTP_VERSION_NOT_SUPPORTED);
+    public ResponseEntity<ErrorVO> handleSqlStatementException(SqlStatementException e) {
+        return response(Constant.SQL_EXCEPTION, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @ExceptionHandler(TimeException.class)
-    public ResponseEntity<ExceptionResponse> handleTimeException(TimeException e) {
-        ExceptionResponse errorResponse = new ExceptionResponse(Constant.TIME_EXCEPTION, e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.VARIANT_ALSO_NEGOTIATES);
+    public ResponseEntity<ErrorVO> handleTimeException(TimeException e) {
+        return response(Constant.TIME_EXCEPTION, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @ExceptionHandler(AdminErrorException.class)
-    public ResponseEntity<ExceptionResponse> handleTimeException(AdminErrorException e) {
-        ExceptionResponse errorResponse = new ExceptionResponse(Constant.ADMIN_EXCEPTION, e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INSUFFICIENT_STORAGE);
+    public ResponseEntity<ErrorVO> handleTimeException(AdminErrorException e) {
+        return response(Constant.ADMIN_EXCEPTION, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @ExceptionHandler(CacheException.class)
-    public ResponseEntity<ExceptionResponse> handleCacheExecption(CacheException e) {
-        ExceptionResponse errorResponse = new ExceptionResponse(Constant.CACHE_EXCEPTION, e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.LOOP_DETECTED);
+    public ResponseEntity<ErrorVO> handleCacheExecption(CacheException e) {
+        return response(Constant.CACHE_EXCEPTION, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /** Handles future BaseException subclasses without requiring a new Advice method. */
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<ErrorVO> handleBaseException(BaseException e) {
+        HttpStatus status = HttpStatus.valueOf(e.getErrorCode().getHttpStatus());
+        String message = e.getMessage() == null ? e.getErrorCode().getCode() : e.getMessage();
+        return new ResponseEntity<>(new ErrorVO(e.getErrorCode().getHttpStatus(), message, LocalDateTime.now()), status);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorVO> handleException(Exception e) {
+        LOG.error("unexpected server error", e);
+        return response(Constant.GENERAL_EXCEPTION, "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 

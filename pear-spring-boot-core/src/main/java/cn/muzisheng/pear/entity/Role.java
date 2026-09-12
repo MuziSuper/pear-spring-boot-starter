@@ -11,13 +11,14 @@ import java.util.Set;
 
 @Entity(name = "role")
 @Data
+@lombok.EqualsAndHashCode(callSuper = false)
 @TableName("role")
 @PearObject(
         desc = "Role Information.",
         path = "/role",
         pluralName = "roles"
 )
-public class Role {
+public class Role extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @PearField(isPrimaryKey = true,isEdit = false)

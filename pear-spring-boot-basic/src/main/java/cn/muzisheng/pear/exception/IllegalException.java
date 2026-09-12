@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
  * code: 400
  **/
 @Component
-public class IllegalException extends RuntimeException{
+public class IllegalException extends BaseException{
 
     public IllegalException(){
-        super();
+        super(ErrorCode.VALIDATION_ERROR);
     }
     public IllegalException(String message){
-        super(message);
+        super(ErrorCode.VALIDATION_ERROR, message);
     }
 }

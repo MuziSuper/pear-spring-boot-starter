@@ -101,6 +101,10 @@ public class PearApplicationInitialization implements CommandLineRunner {
             if (cmd.hasOption("u") && cmd.hasOption("p")) {
                 String email = cmd.getOptionValue("u");
                 String password = cmd.getOptionValue("p");
+                if (password == null || password.isBlank()) {
+                    LOG.error("superuser password cannot be empty, the superuser is {}", email);
+                    throw new UserException(email, "password cannot be empty");
+                }
                 User user = userDAO.getUserByEmail(email);
                 if (user != null) {
                     if (!userDAO.setPassword(user, password)) {

@@ -1,6 +1,7 @@
 package cn.muzisheng.pear.params;
 
 import cn.muzisheng.pear.Constant;
+import cn.muzisheng.pear.exception.IllegalException;
 import cn.muzisheng.pear.model.Order;
 import lombok.Data;
 
@@ -48,10 +49,56 @@ public class QueryForm {
      **/
     public void defaultPrepareQuery() {
         if(this.pos<0){
-            this.pos=0;
+            throw new IllegalException("Query pos cannot be negative.");
         }
         if(this.limit<0||this.limit> Constant.DEFAULT_QUERY_LIMIT){
-            this.limit=Constant.DEFAULT_QUERY_LIMIT;
+            throw new IllegalException("Query limit is out of range.");
+        }
+    }
+
+    /**
+     * 校验查询表单基础结构，字段白名单由 AdminServiceImpl 负责。
+     **/
+    public void validate() {
+        defaultPrepareQuery();
+        validateFilters();
+        validateOrders();
+        validateFieldList(viewFields, "viewFields");
+        validateFieldList(searchFields, "searchFields");
+    }
+
+    private void validateFilters() {
+        if (filters == null) {
+            return;
+        }
+        for (Filter filter : filters) {
+            if (filter == null) {
+                throw new IllegalException("Filter cannot be null.");
+            }
+            filter.validate();
+        }
+    }
+
+    private void validateOrders() {
+        if (orders == null) {
+            return;
+        }
+        for (Order order : orders) {
+            if (order == null) {
+                throw new IllegalException("Order cannot be null.");
+            }
+            order.validate();
+        }
+    }
+
+    private void validateFieldList(List<String> fields, String label) {
+        if (fields == null) {
+            return;
+        }
+        for (String field : fields) {
+            if (field == null || field.isBlank()) {
+                throw new IllegalException(label + " cannot contain empty field.");
+            }
         }
     }
 }

@@ -7,9 +7,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
+@lombok.EqualsAndHashCode(callSuper = false)
 @Entity(name = "role_permission_ass")
 @TableName("role_permission_ass")
-public class RolePermissionAss {
+public class RolePermissionAss extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
