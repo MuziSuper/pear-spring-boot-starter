@@ -236,13 +236,32 @@ pear.starter.user.password-salt=PEAR_APPLICATION_SALT
 # Site
 pear.starter.site.auth-prefix=/auth
 
-# Log
-pear.starter.log.level=INFO
-pear.starter.log.file-path=log
-pear.starter.log.log-catalogue-address=log/log-day
-pear.starter.log.warn-catalogue-address=log/warn-day
-pear.starter.log.error-catalogue-address=log/error-day
 ```
+
+### Pear Logging
+
+After the Pear starter is added, it loads `logback-spring.xml` by default. Logs are written to the console and asynchronously split into INFO, WARN, and ERROR files. Files roll daily and are retained for 30 days by default. Override the defaults with:
+
+| Property | Default | Purpose |
+| --- | --- | --- |
+| `pear.starter.log.level` | `INFO` | Global root log level, such as `DEBUG`, `INFO`, `WARN`, or `ERROR` |
+| `pear.starter.log.stdout-pattern` | `%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{40} - %msg%n` | Console output pattern for Pear logs |
+| `pear.starter.log.file-pattern` | `%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n` | Log file output pattern |
+| `pear.starter.log.file-path` | `log` | Root directory for current INFO, WARN, and ERROR log files |
+| `pear.starter.log.info-directory` | `${pear.starter.log.file-path}/info` | INFO rolling log directory |
+| `pear.starter.log.warn-directory` | `${pear.starter.log.file-path}/warn` | WARN rolling log directory |
+| `pear.starter.log.error-directory` | `${pear.starter.log.file-path}/error` | ERROR rolling log directory |
+| `pear.starter.log.max-history` | `30` | Retention days for each rolling log type |
+| `pear.starter.log.queue-size` | `512` | Capacity of each asynchronous logging queue |
+
+For example, write logs to an application-specific directory and retain them for 14 days:
+
+```properties
+pear.starter.log.file-path=/var/log/demo
+pear.starter.log.max-history=14
+```
+
+Applications can point `logging.config` at a custom Logback file to fully replace Pear's default configuration, or reuse and adjust the appenders and root logger in their own `logback-spring.xml`.
 
 Custom bean example:
 

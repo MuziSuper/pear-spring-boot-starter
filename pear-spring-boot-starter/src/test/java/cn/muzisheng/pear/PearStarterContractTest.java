@@ -9,7 +9,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Verifies that starter packaging preserves explicit activation and does not impose logging.
+ * Verifies that starter packaging preserves explicit activation and default logging resources.
  */
 class PearStarterContractTest {
 
@@ -21,8 +21,8 @@ class PearStarterContractTest {
     }
 
     @Test
-    void starterResourcesDoNotOverrideHostLogging() {
+    void starterResourcesContainDefaultLoggingConfiguration() {
         assertTrue(new ClassPathResource("static/favicon.ico").exists());
-        assertTrue(new ClassPathResource("logback/pear-logback-spring.xml").exists());
+        assertTrue(new ClassPathResource("logback-spring.xml").exists());
     }
 }

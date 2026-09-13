@@ -236,13 +236,32 @@ pear.starter.user.password-salt=PEAR_APPLICATION_SALT
 # Site
 pear.starter.site.auth-prefix=/auth
 
-# Log
-pear.starter.log.level=INFO
-pear.starter.log.file-path=log
-pear.starter.log.log-catalogue-address=log/log-day
-pear.starter.log.warn-catalogue-address=log/warn-day
-pear.starter.log.error-catalogue-address=log/error-day
 ```
+
+### Pear 日志配置
+
+引入 Pear starter 后，框架默认加载 `logback-spring.xml`：日志同时输出到控制台，并按 INFO、WARN、ERROR 分类异步写入文件；文件按天滚动，默认保留 30 天。可使用以下配置项覆盖默认值：
+
+| 配置项 | 默认值 | 作用 |
+| --- | --- | --- |
+| `pear.starter.log.level` | `INFO` | 全局根日志级别，例如 `DEBUG`、`INFO`、`WARN`、`ERROR` |
+| `pear.starter.log.stdout-pattern` | `%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{40} - %msg%n` | Pear 控制台日志输出格式 |
+| `pear.starter.log.file-pattern` | `%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n` | 日志文件输出格式 |
+| `pear.starter.log.file-path` | `log` | 当前 INFO、WARN、ERROR 日志文件的根目录 |
+| `pear.starter.log.info-directory` | `${pear.starter.log.file-path}/info` | INFO 滚动日志目录 |
+| `pear.starter.log.warn-directory` | `${pear.starter.log.file-path}/warn` | WARN 滚动日志目录 |
+| `pear.starter.log.error-directory` | `${pear.starter.log.file-path}/error` | ERROR 滚动日志目录 |
+| `pear.starter.log.max-history` | `30` | 每类滚动日志保留天数 |
+| `pear.starter.log.queue-size` | `512` | 每个异步日志队列的容量 |
+
+例如，将日志写入应用指定目录并保留 14 天：
+
+```properties
+pear.starter.log.file-path=/var/log/demo
+pear.starter.log.max-history=14
+```
+
+业务项目可通过 `logging.config` 指向自定义 Logback 文件，完整覆盖 Pear 默认日志配置；也可以在自身 `logback-spring.xml` 中复用或调整同名 appender 和 root logger。
 
 自定义配置 Bean 示例：
 
